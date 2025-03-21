@@ -25,9 +25,10 @@ const FeatureCard = ({
       ref={ref}
       className={cn(
         "bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-700",
-        inView ? `opacity-100 translate-y-0 delay-[${delay}ms]` : "opacity-0 translate-y-10",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
         className
       )}
+      style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
     >
       <div className="p-6">
         <h3 className="text-lg font-display font-semibold mb-4 pb-4 border-b border-gray-100 text-sapp-dark">

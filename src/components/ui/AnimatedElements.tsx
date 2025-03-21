@@ -27,16 +27,21 @@ export const Animated = ({
     threshold,
   });
 
+  const getAnimationClasses = () => {
+    if (animation === 'fade-in') return 'opacity-0';
+    if (animation === 'fade-up') return 'opacity-0 translate-y-10';
+    if (animation === 'fade-down') return 'opacity-0 -translate-y-10';
+    if (animation === 'fade-left') return 'opacity-0 translate-x-10';
+    if (animation === 'fade-right') return 'opacity-0 -translate-x-10';
+    return '';
+  };
+
   return (
     <div
       ref={ref}
       className={cn(
         `transition-all duration-${duration}`,
-        animation === 'fade-in' && 'opacity-0',
-        animation === 'fade-up' && 'opacity-0 translate-y-10',
-        animation === 'fade-down' && 'opacity-0 -translate-y-10',
-        animation === 'fade-left' && 'opacity-0 translate-x-10',
-        animation === 'fade-right' && 'opacity-0 -translate-x-10',
+        getAnimationClasses(),
         inView && 'opacity-100 translate-y-0 translate-x-0',
         className
       )}
@@ -72,7 +77,7 @@ export const AnimatedText = ({
   });
 
   const words = text.split(' ');
-  const Tag = tag as keyof JSX.IntrinsicElements;
+  const Tag = tag;
 
   return (
     <Tag ref={ref} className={className}>

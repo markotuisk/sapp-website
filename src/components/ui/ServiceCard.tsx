@@ -30,8 +30,9 @@ const ServiceCard = ({
       ref={ref}
       className={cn(
         "bg-white rounded-xl overflow-hidden group transition-all duration-700 shadow-md hover:shadow-xl border border-gray-100 h-full flex flex-col",
-        inView ? `opacity-100 translate-y-0 delay-[${delay}ms]` : "opacity-0 translate-y-10"
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       )}
+      style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
     >
       <div className="p-6 flex-grow">
         <div className="bg-sapp-blue/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-sapp-blue group-hover:text-white">
