@@ -63,7 +63,7 @@ const Navbar = () => {
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
               alt="SAPP Security Logo" 
-              className="h-10 w-10"
+              className="h-16 w-16" // Increased from h-10 w-10 to h-16 w-16
             />
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl text-sapp-dark">
