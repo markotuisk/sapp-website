@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -144,8 +143,10 @@ const Navbar = () => {
             >
               <Link to="/client-area" className="inline-flex items-center justify-center gap-2">
                 <LogIn className="h-4 w-4" />
-                <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full">Client Area</span>
-                <span className="absolute inset-0 flex items-center justify-center z-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">Client Area</span>
+                <span className="relative z-10 transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-0">Client Area</span>
+                <span className="absolute inset-0 flex items-center justify-center z-0 -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                  Access Now
+                </span>
               </Link>
             </Button>
           
@@ -153,8 +154,10 @@ const Navbar = () => {
               variant="default" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
             >
-              <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full">Get in Touch</span>
-              <span className="absolute inset-0 flex items-center justify-center z-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">Get in Touch</span>
+              <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0">Get in Touch</span>
+              <span className="absolute inset-0 flex items-center justify-center z-0 scale-50 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+                Contact Us
+              </span>
             </Button>
           </div>
 
