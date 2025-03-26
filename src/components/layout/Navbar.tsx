@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Menu, X, LogIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import LanguageSelector from './LanguageSelector';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -136,6 +138,8 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
+            <LanguageSelector />
+            
             <Button 
               variant="default" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
@@ -181,6 +185,10 @@ const Navbar = () => {
         )}
       >
         <nav className="container px-4 py-6 flex flex-col space-y-6">
+          <div className="py-2 border-b border-gray-100 mb-2">
+            <LanguageSelector />
+          </div>
+          
           <a
             href="#"
             onClick={() => setMobileMenuOpen(false)}
