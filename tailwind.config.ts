@@ -1,4 +1,3 @@
-
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import animatePlugin from "tailwindcss-animate";
@@ -58,7 +57,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "sapp-blue": "#0057B8",
+        "sapp-blue": "#20798C",
         "sapp-dark": "#2A2A2A",
         "sapp-gray": "#6B7280",
         "accent-teal": "#20798C",
