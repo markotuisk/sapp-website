@@ -165,7 +165,7 @@ html {
 
 /* Enhanced focus styles */
 :focus-visible {
-  outline: 2px solid theme('colors.sapp-blue');
+  outline: 2px solid theme('colors.accent-teal');
   outline-offset: 2px;
 }
 

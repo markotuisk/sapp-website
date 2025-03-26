@@ -61,6 +61,8 @@ const config = {
         "sapp-blue": "#0057B8",
         "sapp-dark": "#2A2A2A",
         "sapp-gray": "#6B7280",
+        "accent-teal": "#20798C",
+        "accent-dark-blue": "#032B3B",
       },
       borderRadius: {
         lg: "var(--radius)",
