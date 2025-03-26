@@ -1,10 +1,11 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Shield, AlertCircle } from 'lucide-react';
+import { Shield, AlertCircle, X } from 'lucide-react';
 import { toast } from 'sonner';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -43,13 +44,26 @@ const ClientArea = () => {
     }, 1500);
   };
 
+  const handleClose = () => {
+    navigate('/');
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       
       <main className="flex-grow pt-32 pb-20">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
+            {/* Close Button */}
+            <button 
+              onClick={handleClose}
+              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors z-10"
+              aria-label="Close"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            
             {/* Header */}
             <div className="bg-gradient-to-r from-sapp-dark to-sapp-blue p-8 text-white">
               <div className="flex flex-col md:flex-row items-center justify-between">
