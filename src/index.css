@@ -126,6 +126,12 @@
       linear-gradient(90deg, rgba(220, 220, 220, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
+  
+  /* New utility for network connections effect */
+  .bg-network {
+    background-image: radial-gradient(rgba(255, 59, 59, 0.2) 2px, transparent 2px);
+    background-size: 50px 50px;
+  }
 }
 
 /* Custom scrollbar */
@@ -187,4 +193,20 @@ html {
 .blur-load > img {
   opacity: 0;
   transition: opacity 200ms ease-in-out;
+}
+
+/* Animated connection lines - inspired by the neon network image */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    box-shadow: 0 0 10px rgb(255, 62, 62);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgb(255, 62, 62), 0 0 30px rgba(255, 62, 62, 0.5);
+  }
+}
+
+.glow-pulse {
+  animation: pulse-glow 3s infinite;
 }
