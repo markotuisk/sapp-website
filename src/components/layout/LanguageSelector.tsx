@@ -30,10 +30,10 @@ const LanguageSelector = () => {
             <Globe 
               className={cn(
                 "h-6 w-6 animate-spin-slow",
-                currentLanguage.code === 'en' && "text-blue-600",
-                currentLanguage.code === 'de' && "text-yellow-600",
-                currentLanguage.code === 'nl' && "text-orange-600",
-                currentLanguage.code === 'fr' && "text-blue-700"
+                currentLanguage.code === 'en' && "text-[#032B3B]",
+                currentLanguage.code === 'de' && "text-[#032B3B]",
+                currentLanguage.code === 'nl' && "text-[#032B3B]",
+                currentLanguage.code === 'fr' && "text-[#032B3B]"
               )} 
             />
           </div>
