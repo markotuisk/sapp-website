@@ -55,15 +55,6 @@ const ClientArea = () => {
       <main className="flex-grow pt-32 pb-20">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
-            {/* Close Button */}
-            <button 
-              onClick={handleClose}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors z-10"
-              aria-label="Close"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            
             {/* Header */}
             <div className="bg-gradient-to-r from-sapp-dark to-sapp-blue p-8 text-white">
               <div className="flex flex-col md:flex-row items-center justify-between">
@@ -163,11 +154,24 @@ const ClientArea = () => {
                 </div>
               </div>
               
-              <div className="flex items-center justify-center mt-8 p-4 border-t border-gray-100">
-                <Shield className="h-5 w-5 text-sapp-blue mr-2" />
-                <p className="text-sm text-slate-600">
-                  Your privacy is our priority. We will only use your information to notify you about our Client Area.
-                </p>
+              <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
+                <div className="flex items-center">
+                  <Shield className="h-5 w-5 text-sapp-blue mr-2" />
+                  <p className="text-sm text-slate-600">
+                    Your privacy is our priority. We will only use your information to notify you about our Client Area.
+                  </p>
+                </div>
+                
+                {/* Close Button - Moved to bottom right */}
+                <Button 
+                  onClick={handleClose}
+                  variant="outline"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  size="sm"
+                >
+                  Close
+                  <X className="h-4 w-4" />
+                </Button>
               </div>
             </div>
           </div>
