@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -15,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -142,10 +141,10 @@ const Navbar = () => {
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
               asChild
             >
-              <Link to="/virtual-office" className="inline-flex items-center justify-center gap-2">
+              <Link to="/client-area" className="inline-flex items-center justify-center gap-2">
                 <LogIn className="h-4 w-4" />
-                <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full">Virtual Office</span>
-                <span className="absolute inset-0 flex items-center justify-center z-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">Virtual Office</span>
+                <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full">Client Area</span>
+                <span className="absolute inset-0 flex items-center justify-center z-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">Client Area</span>
               </Link>
             </Button>
           
@@ -215,12 +214,12 @@ const Navbar = () => {
           ))}
           
           <Link
-            to="/virtual-office"
+            to="/client-area"
             onClick={() => setMobileMenuOpen(false)}
             className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100 flex items-center"
           >
             <LogIn className="h-5 w-5 mr-2" />
-            Virtual Office
+            Client Area
           </Link>
           
           <Button 

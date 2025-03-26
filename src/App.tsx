@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import VirtualOffice from "./pages/VirtualOffice";
+import ClientArea from "./pages/VirtualOffice"; // Updated import name
 
 const queryClient = new QueryClient();
 
@@ -18,7 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/virtual-office" element={<VirtualOffice />} />
+          <Route path="/client-area" element={<ClientArea />} /> {/* Updated route path */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -28,3 +28,4 @@ const App = () => (
 );
 
 export default App;
+

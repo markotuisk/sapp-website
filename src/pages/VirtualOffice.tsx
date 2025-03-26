@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -10,7 +9,7 @@ import { toast } from 'sonner';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
-const VirtualOffice = () => {
+const ClientArea = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -29,7 +28,7 @@ const VirtualOffice = () => {
     
     // Simulate API call
     setTimeout(() => {
-      toast.success(`Thank you, ${name}! We'll notify you when our Virtual Office is ready.`, {
+      toast.success(`Thank you, ${name}! We'll notify you when our Client Area is ready.`, {
         duration: 5000,
       });
       setIsSubmitting(false);
@@ -55,7 +54,7 @@ const VirtualOffice = () => {
             <div className="bg-gradient-to-r from-sapp-dark to-sapp-blue p-8 text-white">
               <div className="flex flex-col md:flex-row items-center justify-between">
                 <div className="text-center md:text-left">
-                  <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Virtual Office</h1>
+                  <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Client Area</h1>
                   <p className="text-blue-100 text-lg">Coming Soon</p>
                 </div>
                 <img 
@@ -71,17 +70,17 @@ const VirtualOffice = () => {
               <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
                 <div className="md:w-1/2">
                   <h2 className="text-2xl font-display font-bold text-sapp-dark mb-4">
-                    Our Virtual Office is Under Construction
+                    Our Client Area is Under Construction
                   </h2>
                   <p className="text-sapp-gray mb-4">
-                    We're building a secure virtual environment where you can connect with our team, 
+                    We're building a secure online environment where you can connect with our team, 
                     schedule meetings, and access our services remotely.
                   </p>
                   <div className="flex items-start gap-3 mb-4 bg-blue-50 p-4 rounded-md">
                     <AlertCircle className="h-6 w-6 text-sapp-blue flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-sapp-dark">
-                      Be the first to know when we launch! Sign up for an exclusive invitation to our Virtual 
-                      Office Opening Ceremony.
+                      Be the first to know when we launch! Sign up for an exclusive invitation to our Client 
+                      Area Opening Ceremony.
                     </p>
                   </div>
                 </div>
@@ -131,7 +130,7 @@ const VirtualOffice = () => {
                         >
                           I agree to receive notifications. My information will not be shared with 
                           third parties or used for advertising purposes, but solely to notify me about 
-                          the Virtual Office Opening Ceremony.
+                          the Client Area Opening Ceremony.
                         </Label>
                       </div>
                       
@@ -153,7 +152,7 @@ const VirtualOffice = () => {
               <div className="flex items-center justify-center mt-8 p-4 border-t border-gray-100">
                 <Shield className="h-5 w-5 text-sapp-blue mr-2" />
                 <p className="text-sm text-slate-600">
-                  Your privacy is our priority. We will only use your information to notify you about our Virtual Office.
+                  Your privacy is our priority. We will only use your information to notify you about our Client Area.
                 </p>
               </div>
             </div>
@@ -166,4 +165,4 @@ const VirtualOffice = () => {
   );
 };
 
-export default VirtualOffice;
+export default ClientArea;
