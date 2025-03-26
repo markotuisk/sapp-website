@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Shield, AlertCircle, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { toast } from 'sonner';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -155,18 +154,10 @@ const ClientArea = () => {
               </div>
               
               <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
-                <div className="flex items-center">
-                  <Shield className="h-5 w-5 text-sapp-blue mr-2" />
-                  <p className="text-sm text-slate-600">
-                    We protect your privacy and will only use your info to notify you about our Client Area.
-                  </p>
-                </div>
-                
-                {/* Close Button - Moved to bottom right */}
                 <Button 
                   onClick={handleClose}
                   variant="outline"
-                  className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                  className="ml-auto flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
                   size="sm"
                 >
                   Close
@@ -184,4 +175,3 @@ const ClientArea = () => {
 };
 
 export default ClientArea;
-
