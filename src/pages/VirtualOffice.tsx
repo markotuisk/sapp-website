@@ -158,7 +158,7 @@ const ClientArea = () => {
                 <div className="flex items-center">
                   <Shield className="h-5 w-5 text-sapp-blue mr-2" />
                   <p className="text-sm text-slate-600">
-                    Your privacy is our priority. We will only use your information to notify you about our Client Area.
+                    We protect your privacy and will only use your info to notify you about our Client Area.
                   </p>
                 </div>
                 
@@ -184,3 +184,4 @@ const ClientArea = () => {
 };
 
 export default ClientArea;
+
