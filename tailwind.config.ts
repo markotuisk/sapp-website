@@ -1,3 +1,4 @@
+
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import animatePlugin from "tailwindcss-animate";
@@ -67,8 +68,8 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        display: ["var(--font-display)", ...fontFamily.sans],
+        sans: ["Inter", ...fontFamily.sans],
+        display: ["SF Pro Display", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {
