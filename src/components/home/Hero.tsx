@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
@@ -52,7 +53,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            We provide comprehensive technical security services for corporate clients worldwide,
+            We provide technical security services for corporate clients in the UK and Europe,
             protecting your sensitive meetings, high-value events, and critical infrastructure.
           </p>
           
