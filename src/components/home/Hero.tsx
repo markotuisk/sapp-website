@@ -42,7 +42,7 @@ const Hero = () => {
           >
             Securing Tomorrow: 
             <span className="block">
-              <span className="text-sapp-blue">Risk Management</span> for a Connected World
+              <span className="text-sapp-blue">Strategic Risk Control</span> in a Connected World
             </span>
           </h1>
           
@@ -53,8 +53,8 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            We provide technical security services for corporate clients in the UK and Europe,
-            protecting your sensitive meetings, high-value events, and critical infrastructure.
+            Physical and Digital, Seamlessly Protected.
+            Technical security for UK and European corporates, safeguarding meetings, events, and infrastructure.
           </p>
           
           {/* CTA Buttons */}
