@@ -33,24 +33,10 @@ const Hero = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Logo mark (animated) */}
-          <div 
-            className={cn(
-              "inline-flex items-center justify-center mb-8 transition-all duration-700",
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
-            )}
-          >
-            <img 
-              src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
-              alt="SAPP Security Logo" 
-              className="h-24 w-24 md:h-32 md:w-32"
-            />
-          </div>
-          
           {/* Headline */}
           <h1 
             className={cn(
-              "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark leading-tight mb-6 transition-all duration-700 delay-100",
+              "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark leading-tight mb-6 transition-all duration-700",
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >

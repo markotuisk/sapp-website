@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -64,9 +65,12 @@ const Navbar = () => {
               alt="SAPP Security Logo" 
               className="h-10 w-10"
             />
-            <span className="font-display font-bold text-xl text-sapp-dark">
-              SAPP <span className="text-sapp-blue">Security</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="font-display font-bold text-xl text-sapp-dark">
+                SAPP <span className="text-sapp-blue">Security</span>
+              </span>
+              <span className="text-xs text-sapp-gray leading-tight">Security and Privacy Partners</span>
+            </div>
           </a>
 
           {/* Desktop navigation with dropdown */}
