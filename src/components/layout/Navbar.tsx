@@ -138,8 +138,6 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <LanguageSelector />
-            
             <Button 
               variant="default" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
@@ -162,6 +160,8 @@ const Navbar = () => {
                 Contact Us
               </span>
             </Button>
+            
+            <LanguageSelector />
           </div>
 
           <button
@@ -185,7 +185,7 @@ const Navbar = () => {
         )}
       >
         <nav className="container px-4 py-6 flex flex-col space-y-6">
-          <div className="py-2 border-b border-gray-100 mb-2">
+          <div className="flex justify-end mb-2">
             <LanguageSelector />
           </div>
           
