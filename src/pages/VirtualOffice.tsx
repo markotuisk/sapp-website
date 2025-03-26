@@ -53,7 +53,14 @@ const VirtualOffice = () => {
           <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-sapp-dark to-sapp-blue p-8 text-white text-center">
-              <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Virtual Office</h1>
+              <div className="flex items-center justify-center gap-4">
+                <img 
+                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
+                  alt="SAPP Security Logo" 
+                  className="h-12 w-12"
+                />
+                <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Virtual Office</h1>
+              </div>
               <p className="text-blue-100 text-lg">Coming Soon</p>
             </div>
             
