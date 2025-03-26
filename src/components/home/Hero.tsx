@@ -40,9 +40,9 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            From boardroom 
+            Securing Tomorrow: 
             <span className="block">
-              to <span className="text-sapp-blue">server room</span>: Complete technical security solutions
+              <span className="text-sapp-blue">Risk Management</span> for a Connected World
             </span>
           </h1>
           
