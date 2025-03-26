@@ -1,4 +1,3 @@
-
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import animatePlugin from "tailwindcss-animate";
@@ -23,29 +22,6 @@ const config = {
     extend: {
       animation: {
         "spin-slow": "spin 10s linear infinite",
-        "float": "float 15s ease-in-out infinite",
-        "connection-1": "connection 3s ease-in-out infinite",
-        "connection-2": "connection 4s ease-in-out infinite alternate",
-        "connection-3": "connection 5s ease-in-out infinite alternate-reverse",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        "float": {
-          "0%, 100%": { transform: "translateY(0) scale(1)" },
-          "50%": { transform: "translateY(-20px) scale(1.05)" },
-        },
-        "connection": {
-          "0%": { height: "0", opacity: "0.3" },
-          "50%": { height: "100%", opacity: "0.7" },
-          "100%": { height: "0", opacity: "0.3" },
-        },
       },
       colors: {
         border: "hsl(var(--border))",
@@ -95,6 +71,16 @@ const config = {
       fontFamily: {
         sans: ["Inter", ...fontFamily.sans],
         display: ["SF Pro Display", ...fontFamily.sans],
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
     },
   },
