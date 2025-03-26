@@ -66,16 +66,18 @@ const Hero = () => {
           >
             <Button 
               size="lg" 
-              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300"
+              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
             >
-              Explore Services
+              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">Explore Services</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300"
+              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative"
             >
-              Contact Us
+              <span className="relative z-10 group-hover:text-sapp-blue transition-colors duration-300">Contact Us</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover:w-full"></span>
             </Button>
           </div>
         </div>

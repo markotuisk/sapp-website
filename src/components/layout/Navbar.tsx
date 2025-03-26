@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -31,7 +30,6 @@ const Navbar = () => {
     };
   }, []);
 
-  // Main navigation links
   const mainNavLinks = [
     { name: 'Home', href: '#' },
     { name: 'About', href: '#about' },
@@ -39,7 +37,6 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
-  // Services submenu links
   const serviceLinks = [
     { name: 'Event Security', href: '#event-security', description: 'Real-time protection for confidential business meetings and high-profile events.' },
     { name: 'Physical Security Audits', href: '#security-audits', description: 'Comprehensive assessments to identify security gaps and provide recommendations.' },
@@ -58,7 +55,6 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-24 md:h-28">
-          {/* Logo */}
           <a href="#" className="flex items-center space-x-2 flex-shrink-0 group">
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
@@ -73,11 +69,9 @@ const Navbar = () => {
             </div>
           </a>
 
-          {/* Desktop navigation with dropdown */}
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
-                {/* Home link */}
                 <NavigationMenuItem>
                   <NavigationMenuLink 
                     href="#"
@@ -91,7 +85,6 @@ const Navbar = () => {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
                 
-                {/* Services dropdown */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger 
                     className={cn(
@@ -123,7 +116,6 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 
-                {/* Other main navigation items */}
                 {mainNavLinks.slice(1).map((link, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink 
@@ -142,15 +134,14 @@ const Navbar = () => {
             </NavigationMenu>
           </div>
 
-          {/* Call to action button */}
           <Button 
             variant="default" 
-            className="hidden md:flex ml-2 bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md"
+            className="hidden md:flex ml-2 bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
           >
-            Get in Touch
+            <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full">Get in Touch</span>
+            <span className="absolute inset-0 flex items-center justify-center z-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">Get in Touch</span>
           </Button>
 
-          {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden flex items-center text-sapp-dark"
@@ -165,7 +156,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div
         className={cn(
           'fixed inset-0 bg-white z-40 pt-16 transform transition-transform duration-300 ease-in-out md:hidden',
@@ -173,7 +163,6 @@ const Navbar = () => {
         )}
       >
         <nav className="container px-4 py-6 flex flex-col space-y-6">
-          {/* Main navigation links for mobile */}
           <a
             href="#"
             onClick={() => setMobileMenuOpen(false)}
@@ -182,7 +171,6 @@ const Navbar = () => {
             Home
           </a>
           
-          {/* Services links for mobile */}
           <div className="py-2 border-b border-gray-100">
             <p className="text-lg font-medium text-sapp-dark mb-2">Services</p>
             <div className="pl-4 flex flex-col space-y-3">
@@ -199,7 +187,6 @@ const Navbar = () => {
             </div>
           </div>
           
-          {/* Other main links for mobile */}
           {mainNavLinks.slice(1).map((link, index) => (
             <a
               key={index}
@@ -213,9 +200,10 @@ const Navbar = () => {
           
           <Button 
             variant="default" 
-            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-4"
+            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-4 group relative overflow-hidden"
           >
-            Get in Touch
+            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2">Get in Touch</span>
+            <span className="absolute left-0 w-0 h-full bg-sapp-dark z-0 transition-all duration-300 group-hover:w-full"></span>
           </Button>
         </nav>
       </div>
