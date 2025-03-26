@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from "sonner";
 
 const LanguageSelector = () => {
   const { currentLanguage, setLanguage } = useLanguage();
@@ -19,7 +20,13 @@ const LanguageSelector = () => {
         value={currentLanguage.code}
         onValueChange={(value) => {
           const language = languages.find(lang => lang.code === value);
-          if (language) setLanguage(language);
+          if (language) {
+            setLanguage(language);
+            toast(`Language changed to ${language.name}`, {
+              description: "The website language has been updated.",
+              duration: 3000,
+            });
+          }
         }}
       >
         <SelectTrigger 

@@ -8,8 +8,12 @@ import { EventSecurity, SecurityAudits, TechnologyInstallations, CyberSecurity }
 import Partners from '@/components/home/Partners';
 import Contact from '@/components/home/Contact';
 import { useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 const Index = () => {
+  const { t } = useLanguage();
+  
   // Apply smooth scrolling behavior for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
@@ -46,6 +50,24 @@ const Index = () => {
         <CyberSecurity />
         <Partners />
         <Contact />
+        
+        {/* Language demonstration block */}
+        <div className="container mx-auto py-8 text-center bg-gray-50 rounded-lg my-8">
+          <h2 className="text-2xl font-bold mb-4">Translation Example</h2>
+          <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
+            <div className="font-semibold">Menu Item:</div>
+            <div><TranslatedText textKey="home" /></div>
+            
+            <div className="font-semibold">Section:</div>
+            <div><TranslatedText textKey="services" /></div>
+            
+            <div className="font-semibold">Action:</div>
+            <div><TranslatedText textKey="learnMore" /></div>
+            
+            <div className="font-semibold">Button:</div>
+            <div><TranslatedText textKey="contactUs" /></div>
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
