@@ -54,15 +54,15 @@ const VirtualOffice = () => {
             {/* Header */}
             <div className="bg-gradient-to-r from-sapp-dark to-sapp-blue p-8 text-white">
               <div className="flex flex-col md:flex-row items-center justify-between">
-                <img 
-                  src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png" 
-                  alt="SAPP Security Logo" 
-                  className="h-32 w-32 mb-4 md:mb-0 transform transition-transform duration-300 hover:scale-105"
-                />
-                <div className="text-center md:text-right">
+                <div className="text-center md:text-left">
                   <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Virtual Office</h1>
                   <p className="text-blue-100 text-lg">Coming Soon</p>
                 </div>
+                <img 
+                  src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png" 
+                  alt="SAPP Security Logo" 
+                  className="h-32 w-32 mt-4 md:mt-0 transform transition-transform duration-300 hover:scale-105"
+                />
               </div>
             </div>
             
