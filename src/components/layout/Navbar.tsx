@@ -61,7 +61,7 @@ const Navbar = () => {
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2 flex-shrink-0">
             <img 
-              src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
+              src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
               alt="SAPP Security Logo" 
               className="h-10 w-10"
             />
