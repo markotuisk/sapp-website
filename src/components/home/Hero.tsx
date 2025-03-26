@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Shield, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Hero = () => {
@@ -12,7 +12,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-slate-50">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
       {/* Background elements */}
       <div className="absolute inset-0 bg-grid opacity-30"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/60"></div>
@@ -26,7 +26,7 @@ const Hero = () => {
       ></div>
       <div 
         className={cn(
-          "absolute w-64 h-64 rounded-full bg-sapp-lightBlue/10 blur-3xl bottom-20 -left-20 transition-all duration-3000",
+          "absolute w-64 h-64 rounded-full bg-sapp-dark/5 blur-3xl bottom-20 -left-20 transition-all duration-3000",
           isLoaded ? "opacity-30 animate-float" : "opacity-0"
         )}
       ></div>
@@ -36,11 +36,15 @@ const Hero = () => {
           {/* Logo mark (animated) */}
           <div 
             className={cn(
-              "inline-flex items-center justify-center p-3 bg-white rounded-full shadow-xl mb-6 transition-all duration-700",
+              "inline-flex items-center justify-center mb-8 transition-all duration-700",
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
             )}
           >
-            <Shield className="h-10 w-10 text-sapp-blue" />
+            <img 
+              src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
+              alt="SAPP Security Logo" 
+              className="h-24 w-24 md:h-32 md:w-32"
+            />
           </div>
           
           {/* Headline */}
@@ -83,7 +87,7 @@ const Hero = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-sapp-blue text-sapp-blue hover:bg-sapp-blue/10 w-full sm:w-auto transition-all duration-300"
+              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300"
             >
               Contact Us
             </Button>

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Shield, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -59,7 +60,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2 flex-shrink-0">
-            <Shield className="h-8 w-8 text-sapp-blue" />
+            <img 
+              src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
+              alt="SAPP Security Logo" 
+              className="h-10 w-10"
+            />
             <span className="font-display font-bold text-xl text-sapp-dark">
               SAPP <span className="text-sapp-blue">Security</span>
             </span>

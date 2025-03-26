@@ -69,13 +69,13 @@ export default {
 				},
 				// Custom colors
 				sapp: {
-					dark: '#0F172A',     // Very dark blue
-					navy: '#1E293B',     // Dark navy
-					blue: '#3B82F6',     // Primary blue
-					lightBlue: '#93C5FD', // Light blue
-					gray: '#64748B',     // Medium gray
-					lightGray: '#E2E8F0', // Light gray
-					offWhite: '#F8FAFC', // Off-white
+					dark: '#032B3B',     // Updated to the specified dark accent
+					navy: '#1E293B',     // Keep navy
+					blue: '#20798C',     // Updated to the specified blue accent
+					lightBlue: '#93C5FD', // Keep light blue
+					gray: '#64748B',     // Keep medium gray
+					lightGray: '#E2E8F0', // Keep light gray
+					offWhite: '#F8FAFC', // Keep off-white
 				}
 			},
 			borderRadius: {
