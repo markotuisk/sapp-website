@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -61,7 +60,7 @@ const Navbar = () => {
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2 flex-shrink-0">
             <img 
-              src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
+              src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
               alt="SAPP Security Logo" 
               className="h-10 w-10"
             />

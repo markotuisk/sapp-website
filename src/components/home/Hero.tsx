@@ -41,7 +41,7 @@ const Hero = () => {
             )}
           >
             <img 
-              src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
+              src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
               alt="SAPP Security Logo" 
               className="h-24 w-24 md:h-32 md:w-32"
             />
