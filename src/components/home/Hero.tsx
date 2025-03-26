@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
@@ -40,9 +39,9 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Your trusted technical 
+            From boardroom 
             <span className="block">
-              <span className="text-sapp-blue">security</span> and privacy partner
+              to <span className="text-sapp-blue">server room</span>: Complete technical security solutions
             </span>
           </h1>
           
