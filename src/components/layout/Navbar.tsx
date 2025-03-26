@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -57,13 +56,13 @@ const Navbar = () => {
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-24 md:h-28">
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2 flex-shrink-0">
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
               alt="SAPP Security Logo" 
-              className="h-16 w-16" // Increased from h-10 w-10 to h-16 w-16
+              className="h-16 w-16"
             />
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl text-sapp-dark">
