@@ -81,14 +81,14 @@ const Hero = () => {
             </Button>
           </div>
         </div>
-        
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <a href="#about" className="flex flex-col items-center text-sapp-gray hover:text-sapp-blue transition-colors">
-            <span className="text-xs font-medium mb-2">Discover More</span>
-            <ChevronDown className="h-5 w-5" />
-          </a>
-        </div>
+      </div>
+      
+      {/* Scroll indicator - Fixed to bottom of viewport */}
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+        <a href="#about" className="flex flex-col items-center text-sapp-gray hover:text-sapp-blue transition-colors duration-300 group">
+          <span className="text-xs font-medium mb-2 group-hover:translate-y-1 transition-transform">Discover More</span>
+          <ChevronDown className="h-5 w-5 group-hover:scale-110 transition-transform" />
+        </a>
       </div>
     </section>
   );
