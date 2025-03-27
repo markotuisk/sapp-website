@@ -40,18 +40,18 @@ const CustomCursor = () => {
 
   return (
     <>
-      {/* Main cursor */}
+      {/* Main cursor - small red laser dot */}
       <div 
-        className="fixed pointer-events-none z-[9999] w-4 h-4 rounded-full bg-sapp-blue mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
+        className="fixed pointer-events-none z-[9999] w-2 h-2 rounded-full bg-[#ea384c] mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
         style={{ 
           left: `${position.x}px`, 
           top: `${position.y}px`,
         }}
       />
 
-      {/* Follower cursor with delay effect */}
+      {/* Follower cursor with soft shadow effect */}
       <div 
-        className="fixed pointer-events-none z-[9998] w-8 h-8 rounded-full bg-white/30 border border-sapp-blue/40 backdrop-blur-sm transition-all duration-500 ease-out transform -translate-x-1/2 -translate-y-1/2"
+        className="fixed pointer-events-none z-[9998] w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm transition-all duration-500 ease-out transform -translate-x-1/2 -translate-y-1/2"
         style={{ 
           left: `${position.x}px`, 
           top: `${position.y}px`,
