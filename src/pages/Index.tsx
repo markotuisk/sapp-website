@@ -1,4 +1,3 @@
-
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -14,7 +13,6 @@ import TranslatedText from '@/components/ui/TranslatedText';
 const Index = () => {
   const { t } = useLanguage();
   
-  // Apply smooth scrolling behavior for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -51,7 +49,6 @@ const Index = () => {
         <Partners />
         <Contact />
         
-        {/* Language demonstration block */}
         <div className="container mx-auto py-8 text-center bg-gray-50 rounded-lg my-8">
           <h2 className="text-2xl font-bold mb-4">Translation Example</h2>
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
