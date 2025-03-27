@@ -33,18 +33,19 @@ const Navbar = () => {
     };
   }, []);
 
+  // Updated main navigation links based on sitemap
   const mainNavLinks = [
-    { name: 'Home', href: '#' },
     { name: 'About', href: '#about' },
     { name: 'Partners', href: '#partners' },
     { name: 'Contact', href: '#contact' },
+    { name: 'Resources', href: '#resources' },
   ];
 
+  // Updated service links based on sitemap
   const serviceLinks = [
     { name: 'Event Security', href: '#event-security', description: 'Real-time protection for confidential business meetings and high-profile events.' },
-    { name: 'Physical Security Audits', href: '#security-audits', description: 'Comprehensive assessments to identify security gaps and provide recommendations.' },
-    { name: 'Technology Installations', href: '#technology', description: 'Implementation of cutting-edge security systems tailored to your needs.' },
-    { name: 'Cyber Security', href: '#cyber-security', description: 'Specialized solutions focusing on IoT device security and network protection.' },
+    { name: 'Audits', href: '#security-audits', description: 'Comprehensive assessments to identify security gaps and provide recommendations.' },
+    { name: 'Technology', href: '#technology', description: 'Implementation of cutting-edge security systems tailored to your needs.' },
   ];
 
   return (
@@ -58,7 +59,8 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-24 md:h-28">
-          <a href="#" className="flex items-center space-x-2 flex-shrink-0 group">
+          {/* Logo now serves as the home link */}
+          <a href="/" className="flex items-center space-x-2 flex-shrink-0 group">
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
               alt="SAPP Security Logo" 
@@ -75,19 +77,7 @@ const Navbar = () => {
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
-                <NavigationMenuItem>
-                  <NavigationMenuLink 
-                    href="#"
-                    className={cn(
-                      'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group',
-                      isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
-                    )}
-                  >
-                    Home
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                
+                {/* Services dropdown */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger 
                     className={cn(
@@ -119,7 +109,8 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 
-                {mainNavLinks.slice(1).map((link, index) => (
+                {/* Main navigation links */}
+                {mainNavLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink 
                       href={link.href}
@@ -178,6 +169,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Mobile menu */}
       <div
         className={cn(
           'fixed inset-0 bg-white z-40 pt-16 transform transition-transform duration-300 ease-in-out md:hidden',
@@ -188,14 +180,6 @@ const Navbar = () => {
           <div className="flex justify-end mb-2">
             <LanguageSelector />
           </div>
-          
-          <a
-            href="#"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
-          >
-            Home
-          </a>
           
           <div className="py-2 border-b border-gray-100">
             <p className="text-lg font-medium text-sapp-dark mb-2">Services</p>
@@ -213,7 +197,8 @@ const Navbar = () => {
             </div>
           </div>
           
-          {mainNavLinks.slice(1).map((link, index) => (
+          {/* Main nav links in mobile menu */}
+          {mainNavLinks.map((link, index) => (
             <a
               key={index}
               href={link.href}
