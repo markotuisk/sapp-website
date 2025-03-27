@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -37,13 +36,13 @@ const Navbar = () => {
   }, []);
 
   const mainNavLinks = [
-    { key: 'eventSecurity', href: '#event-security' },
-    { key: 'audits', href: '#security-audits' },
-    { key: 'installations', href: '#technology' },
-    { key: 'resources', href: '#resources' },
-    { key: 'about', href: '#about' },
-    { key: 'partners', href: '#partners' },
-    { key: 'contact', href: '#contact' },
+    { key: 'eventSecurity' as const, href: '#event-security' },
+    { key: 'audits' as const, href: '#security-audits' },
+    { key: 'installations' as const, href: '#technology' },
+    { key: 'resources' as const, href: '#resources' },
+    { key: 'about' as const, href: '#about' },
+    { key: 'partners' as const, href: '#partners' },
+    { key: 'contact' as const, href: '#contact' },
   ];
 
   return (
@@ -79,7 +78,7 @@ const Navbar = () => {
                     <NavigationMenuLink 
                       href={link.href}
                       className={cn(
-                        'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group',
+                        'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group whitespace-nowrap',
                         isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
                       )}
                     >
@@ -99,7 +98,9 @@ const Navbar = () => {
               asChild
             >
               <Link to="/client-area" className="inline-flex items-center justify-center gap-2">
-                <span className="relative z-10 transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-0"><TranslatedText textKey="clientArea" /></span>
+                <span className="relative z-10 transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-0">
+                  <TranslatedText textKey="clientArea" />
+                </span>
                 <span className="absolute inset-0 flex items-center justify-center z-0 -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
                   <TranslatedText textKey="accessNow" />
                 </span>
@@ -108,9 +109,11 @@ const Navbar = () => {
           
             <Button 
               variant="default" 
-              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
+              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden whitespace-nowrap"
             >
-              <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0"><TranslatedText textKey="getInTouch" /></span>
+              <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0">
+                <TranslatedText textKey="getInTouch" />
+              </span>
               <span className="absolute inset-0 flex items-center justify-center z-0 scale-50 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
                 <TranslatedText textKey="contactUs" />
               </span>
@@ -168,7 +171,9 @@ const Navbar = () => {
             variant="default" 
             className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-4 group relative overflow-hidden"
           >
-            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2"><TranslatedText textKey="getInTouch" /></span>
+            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2">
+              <TranslatedText textKey="getInTouch" />
+            </span>
             <span className="absolute left-0 w-0 h-full bg-sapp-dark z-0 transition-all duration-300 group-hover:w-full"></span>
           </Button>
         </nav>

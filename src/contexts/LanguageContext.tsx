@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = {
@@ -34,7 +33,8 @@ type TranslationKey =
   | 'resources'
   | 'clientArea'
   | 'getInTouch'
-  | 'accessNow';
+  | 'accessNow'
+  | 'brandTagline';
 
 type Translations = {
   [key in Language['code']]: {
@@ -62,12 +62,13 @@ export const translations: Translations = {
     resources: 'Resources',
     clientArea: 'Client Area',
     getInTouch: 'Get in Touch',
-    accessNow: 'Access Now'
+    accessNow: 'Access Now',
+    brandTagline: 'Security and Privacy Partners'
   },
   de: {
     home: 'Startseite',
     about: 'Über uns',
-    services: 'Dienstleistungen',
+    services: 'Dienste',
     contact: 'Kontakt',
     learnMore: 'Mehr erfahren',
     contactUs: 'Kontaktiere uns',
@@ -78,12 +79,13 @@ export const translations: Translations = {
     exploreServices: 'Dienste entdecken',
     discoverMore: 'Mehr entdecken',
     eventSecurity: 'Veranstaltungssicherheit',
-    audits: 'Prüfungen',
+    audits: 'Audits',
     installations: 'Installationen',
     resources: 'Ressourcen',
     clientArea: 'Kundenbereich',
-    getInTouch: 'Kontakt aufnehmen',
-    accessNow: 'Jetzt zugreifen'
+    getInTouch: 'Kontakt',
+    accessNow: 'Zugreifen',
+    brandTagline: 'Security and Privacy Partners'
   },
   nl: {
     home: 'Home',
@@ -103,8 +105,9 @@ export const translations: Translations = {
     installations: 'Installaties',
     resources: 'Hulpbronnen',
     clientArea: 'Klantomgeving',
-    getInTouch: 'Neem contact op',
-    accessNow: 'Nu toegang'
+    getInTouch: 'Contact',
+    accessNow: 'Toegang',
+    brandTagline: 'Security and Privacy Partners'
   },
   fr: {
     home: 'Accueil',
@@ -124,8 +127,9 @@ export const translations: Translations = {
     installations: 'Installations',
     resources: 'Ressources',
     clientArea: 'Espace client',
-    getInTouch: 'Prendre contact',
-    accessNow: 'Accéder maintenant'
+    getInTouch: 'Contact',
+    accessNow: 'Accéder',
+    brandTagline: 'Security and Privacy Partners'
   },
 };
 
