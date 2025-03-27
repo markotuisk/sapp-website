@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = {
@@ -29,6 +30,7 @@ type TranslationKey =
   | 'discoverMore'
   | 'eventSecurity'
   | 'audits'
+  | 'securityAudits'
   | 'installations'
   | 'resources'
   | 'clientArea'
@@ -58,6 +60,7 @@ export const translations: Translations = {
     discoverMore: 'Discover More',
     eventSecurity: 'Event Security',
     audits: 'Audits',
+    securityAudits: 'Security Audits',
     installations: 'Installations',
     resources: 'Resources',
     clientArea: 'Client Area',
@@ -80,6 +83,7 @@ export const translations: Translations = {
     discoverMore: 'Mehr entdecken',
     eventSecurity: 'Veranstaltungssicherheit',
     audits: 'Audits',
+    securityAudits: 'Sicherheitsaudits',
     installations: 'Installationen',
     resources: 'Ressourcen',
     clientArea: 'Kundenbereich',
@@ -102,6 +106,7 @@ export const translations: Translations = {
     discoverMore: 'Ontdek meer',
     eventSecurity: 'Evenementbeveiliging',
     audits: 'Audits',
+    securityAudits: 'Beveiligingsaudits',
     installations: 'Installaties',
     resources: 'Hulpbronnen',
     clientArea: 'Klantomgeving',
@@ -124,6 +129,7 @@ export const translations: Translations = {
     discoverMore: 'Découvrir plus',
     eventSecurity: 'Sécurité événementielle',
     audits: 'Audits',
+    securityAudits: 'Audits de sécurité',
     installations: 'Installations',
     resources: 'Ressources',
     clientArea: 'Espace client',
