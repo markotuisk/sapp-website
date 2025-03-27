@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
@@ -50,7 +49,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            We provide comprehensive technical security services for corporate clients worldwide bringing together compliance, physical and cyber security.
+            We provide comprehensive technical security services for corporate clients in the United Kingdom and Europe, bringing together compliance, physical and cyber security.
           </p>
           
           {/* CTA Buttons */}
