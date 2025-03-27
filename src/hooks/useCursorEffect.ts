@@ -15,7 +15,10 @@ export const useCursorEffect = () => {
     document.body.style.cursor = 'none';
     
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      // For smoother movement, you can use requestAnimationFrame
+      requestAnimationFrame(() => {
+        setPosition({ x: e.clientX, y: e.clientY });
+      });
       setHidden(false);
     };
 
