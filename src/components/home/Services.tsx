@@ -3,18 +3,22 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
 import { Shield, AlertTriangle, MonitorCheck, Wifi } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 const Services = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const { t } = useLanguage();
 
   const services = [
     {
       icon: <Shield className="h-6 w-6 text-sapp-blue" />,
-      title: "Event Security",
-      description: "Real-time protection for confidential business meetings and high-profile events.",
+      title: t('eventSecurity'),
+      description: "Real-time protection for high-profile confidential meetings and events.",
       items: [
         "Venue Security Audits",
         "Event Monitoring",
@@ -27,7 +31,7 @@ const Services = () => {
     },
     {
       icon: <AlertTriangle className="h-6 w-6 text-sapp-blue" />,
-      title: "Security Audits",
+      title: t('securityAudits'),
       description: "Comprehensive assessments to identify security gaps and provide risk-based recommendations.",
       items: [
         "Physical Security Assessments",
@@ -41,7 +45,7 @@ const Services = () => {
     },
     {
       icon: <MonitorCheck className="h-6 w-6 text-sapp-blue" />,
-      title: "Technology Installations",
+      title: t('installations'),
       description: "Implementation of cutting-edge security systems tailored to your organization's needs.",
       items: [
         "CCTV Systems",
@@ -55,7 +59,7 @@ const Services = () => {
     },
     {
       icon: <Wifi className="h-6 w-6 text-sapp-blue" />,
-      title: "Cyber Security",
+      title: t('cyberSecurity'),
       description: "Specialized solutions focusing on IoT device security and network protection.",
       items: [
         "IoT Device Security",
@@ -80,7 +84,7 @@ const Services = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            Our Services
+            <TranslatedText textKey="services" />
           </span>
           <h2 
             className={cn(
@@ -88,7 +92,7 @@ const Services = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Comprehensive <span className="text-sapp-blue">security solutions</span> for your business
+            Comprehensive <span className="text-sapp-blue"><TranslatedText textKey="securitySolutions" /></span> for your business
           </h2>
           <p 
             className={cn(

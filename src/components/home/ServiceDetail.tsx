@@ -1,9 +1,10 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { Shield, AlertTriangle, MonitorCheck, Wifi } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 interface ServiceDetailProps {
   id: string;
@@ -82,7 +83,7 @@ const ServiceDetail = ({
               inView ? "opacity-100 translate-y-0 delay-500" : "opacity-0 translate-y-10"
             )}
           >
-            Learn More About {title}
+            <TranslatedText textKey="learnMore" /> {title}
           </Button>
         </div>
       </div>
@@ -90,43 +91,47 @@ const ServiceDetail = ({
   );
 };
 
-const EventSecurity = () => (
-  <ServiceDetail
-    id="event-security"
-    title="Event Security"
-    description="We focus on high-profile event security providing real-time protection for confidential business meetings. We have been supporting management and board meetings, results rehearsals, sports events, brainstorming and strategy planning meetings with technical security for 20 years."
-    icon={<Shield className="h-8 w-8 text-sapp-blue" />}
-    featureCards={[
-      {
-        title: "Event Types",
-        features: [
-          "Board meetings",
-          "Management meetings",
-          "Rehearsals",
-          "Negotiations",
-          "Deal Rooms",
-          "Green Rooms",
-          "Strategy meetings",
-          "Both on and off-site events"
-        ]
-      },
-      {
-        title: "Security Measures",
-        features: [
-          "Confidentiality and discretion",
-          "Presence of experts",
-          "Real-time monitoring",
-          "Tests and measurements",
-          "Stakeholder liaison",
-          "Incident management",
-          "Containment measures",
-          "Any place, anytime, anywhere"
-        ]
-      }
-    ]}
-    bgColor="bg-slate-50"
-  />
-);
+const EventSecurity = () => {
+  const { t } = useLanguage();
+  
+  return (
+    <ServiceDetail
+      id="event-security"
+      title={t('eventSecurity')}
+      description="Real-time protection for high-profile confidential meetings and events. We are experienced event security and technical support providers for corporate board and management meetings for over 20 years."
+      icon={<Shield className="h-8 w-8 text-sapp-blue" />}
+      featureCards={[
+        {
+          title: "Event Types",
+          features: [
+            "Board meetings",
+            "Management meetings",
+            "Results rehearsals",
+            "Sports events",
+            "Strategy planning",
+            "Brainstorming sessions",
+            "Negotiations",
+            "Both on and off-site events"
+          ]
+        },
+        {
+          title: "Security Measures",
+          features: [
+            "Venue security audits",
+            "Event monitoring",
+            "Secure technology",
+            "Close protection",
+            "Incident management",
+            "Confidentiality assurance",
+            "Real-time protection",
+            "Technical security support"
+          ]
+        }
+      ]}
+      bgColor="bg-slate-50"
+    />
+  );
+};
 
 const SecurityAudits = () => (
   <ServiceDetail
