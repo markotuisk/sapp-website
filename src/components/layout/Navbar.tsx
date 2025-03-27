@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -33,8 +32,8 @@ const Navbar = () => {
     };
   }, []);
 
-  // Updated main navigation links based on sitemap
   const mainNavLinks = [
+    { name: 'Services', href: '#services' },
     { name: 'Event Security', href: '#event-security' },
     { name: 'Audits', href: '#security-audits' },
     { name: 'Technology', href: '#technology' },
@@ -55,7 +54,6 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-24 md:h-28">
-          {/* Logo now serves as the home link */}
           <a href="/" className="flex items-center space-x-2 flex-shrink-0 group">
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
@@ -73,7 +71,6 @@ const Navbar = () => {
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
-                {/* Main navigation links */}
                 {mainNavLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink 
@@ -133,7 +130,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div
         className={cn(
           'fixed inset-0 bg-white z-40 pt-16 transform transition-transform duration-300 ease-in-out md:hidden',
@@ -145,7 +141,6 @@ const Navbar = () => {
             <LanguageSelector />
           </div>
           
-          {/* Main nav links in mobile menu */}
           {mainNavLinks.map((link, index) => (
             <a
               key={index}
