@@ -23,7 +23,11 @@ type TranslationKey =
   | 'learnMore'
   | 'contactUs'
   | 'securitySolutions'
-  | 'partners';
+  | 'partners'
+  | 'headline'
+  | 'subheadline'
+  | 'exploreServices'
+  | 'discoverMore';
 
 type Translations = {
   [key in Language['code']]: {
@@ -41,6 +45,10 @@ export const translations: Translations = {
     contactUs: 'Contact Us',
     securitySolutions: 'Security Solutions',
     partners: 'Partners',
+    headline: 'Your trusted technical security and privacy partner',
+    subheadline: 'We provide comprehensive technical security services for corporate clients in the United Kingdom and Europe, bringing together compliance, physical and cyber security.',
+    exploreServices: 'Explore Services',
+    discoverMore: 'Discover More'
   },
   de: {
     home: 'Startseite',
@@ -51,6 +59,10 @@ export const translations: Translations = {
     contactUs: 'Kontaktiere uns',
     securitySolutions: 'Sicherheitslösungen',
     partners: 'Partner',
+    headline: 'Ihr vertrauenswürdiger Partner für technische Sicherheit und Datenschutz',
+    subheadline: 'Wir bieten umfassende technische Sicherheitsdienste für Firmenkunden im Vereinigten Königreich und Europa und verbinden dabei Compliance, physische und Cybersicherheit.',
+    exploreServices: 'Dienste entdecken',
+    discoverMore: 'Mehr entdecken'
   },
   nl: {
     home: 'Home',
@@ -61,6 +73,10 @@ export const translations: Translations = {
     contactUs: 'Neem contact op',
     securitySolutions: 'Beveiligingsoplossingen',
     partners: 'Partners',
+    headline: 'Uw betrouwbare technische beveiligings- en privacypartner',
+    subheadline: 'Wij bieden uitgebreide technische beveiligingsdiensten voor zakelijke klanten in het Verenigd Koninkrijk en Europa, waarbij we compliance, fysieke en cyberbeveiliging samenbrengen.',
+    exploreServices: 'Diensten verkennen',
+    discoverMore: 'Ontdek meer'
   },
   fr: {
     home: 'Accueil',
@@ -71,6 +87,10 @@ export const translations: Translations = {
     contactUs: 'Contactez-nous',
     securitySolutions: 'Solutions de sécurité',
     partners: 'Partenaires',
+    headline: 'Votre partenaire de confiance en matière de sécurité technique et de confidentialité',
+    subheadline: 'Nous fournissons des services complets de sécurité technique pour les clients professionnels au Royaume-Uni et en Europe, en associant conformité, sécurité physique et cybersécurité.',
+    exploreServices: 'Explorer les services',
+    discoverMore: 'Découvrir plus'
   },
 };
 

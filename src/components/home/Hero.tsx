@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,7 +41,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Your trusted technical security and privacy partner
+            <TranslatedText textKey="headline" />
           </h1>
           
           {/* Subheadline */}
@@ -49,7 +51,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            We provide comprehensive technical security services for corporate clients in the United Kingdom and Europe, bringing together compliance, physical and cyber security.
+            <TranslatedText textKey="subheadline" />
           </p>
           
           {/* CTA Buttons */}
@@ -63,7 +65,9 @@ const Hero = () => {
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
             >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">Explore Services</span>
+              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                <TranslatedText textKey="exploreServices" />
+              </span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
             <Button 
@@ -71,7 +75,9 @@ const Hero = () => {
               size="lg" 
               className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
             >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">Contact Us</span>
+              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                <TranslatedText textKey="contactUs" />
+              </span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
           </div>
@@ -81,7 +87,9 @@ const Hero = () => {
       {/* Scroll indicator - Fixed to bottom of viewport */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
         <a href="#about" className="flex flex-col items-center text-sapp-gray hover:text-sapp-blue transition-colors duration-300 group">
-          <span className="text-xs font-medium mb-2 group-hover:translate-y-1 transition-transform">Discover More</span>
+          <span className="text-xs font-medium mb-2 group-hover:translate-y-1 transition-transform">
+            <TranslatedText textKey="discoverMore" />
+          </span>
           <ChevronDown className="h-5 w-5 group-hover:scale-110 transition-transform" />
         </a>
       </div>
