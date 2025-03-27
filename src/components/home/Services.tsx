@@ -46,13 +46,16 @@ const Services = () => {
     {
       icon: <MonitorCheck className="h-6 w-6 text-sapp-blue" />,
       title: t('installations'),
-      description: "Implementation of cutting-edge security systems tailored to your organization's needs.",
+      description: "Implementation of cutting-edge security systems covering CCTV, access control, speech privacy, and more.",
       items: [
         "CCTV Systems",
         "Access Control Systems",
         "Visitor Management Systems",
         "Speech Privacy Systems",
-        "Mobile Security Systems"
+        "Sound Masking Systems",
+        "Mobile Security Systems",
+        "Network Security Systems",
+        "Privacy Screen Systems"
       ],
       href: "#technology",
       delay: 300,

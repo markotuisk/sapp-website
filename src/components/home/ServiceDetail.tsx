@@ -187,43 +187,48 @@ const SecurityAudits = () => {
   );
 };
 
-const TechnologyInstallations = () => (
-  <ServiceDetail
-    id="technology"
-    title="Technology Installations"
-    description="Our installation services cover a multitude of security systems ranging from CCTV, access control and visitor management systems, speech privacy and sound masking systems, mobile and network security systems as well as privacy screen systems."
-    icon={<MonitorCheck className="h-8 w-8 text-sapp-blue" />}
-    featureCards={[
-      {
-        title: "Security Technology",
-        features: [
-          "Global cloud-based standards",
-          "CCTV, intruder alarms",
-          "Access control, tailgating",
-          "Office technology security",
-          "Security for off-network devices",
-          "Focus on system integrations",
-          "Categorise & prioritise locations",
-          "Small-Medium-Large offices"
-        ]
-      },
-      {
-        title: "Additional Services",
-        features: [
-          "Smart Technology Support",
-          "Risk Assessments",
-          "Security Audits",
-          "Security Projects",
-          "Compliance Audits",
-          "Automated Reporting",
-          "On-site v desktop assessments",
-          "Ongoing maintenance"
-        ]
-      }
-    ]}
-    bgColor="bg-slate-50"
-  />
-);
+const TechnologyInstallations = () => {
+  const { t } = useLanguage();
+  
+  return (
+    <ServiceDetail
+      id="technology"
+      title={t('installations')}
+      highlightText="Cutting-edge security technology"
+      description="Our installation services cover a multitude of security systems ranging from CCTV, access control and visitor management systems, speech privacy and sound masking systems, mobile and network security systems as well as privacy screen systems."
+      icon={<MonitorCheck className="h-8 w-8 text-sapp-blue" />}
+      featureCards={[
+        {
+          title: "Security Technology",
+          features: [
+            "CCTV systems",
+            "Access control systems",
+            "Visitor management systems",
+            "Speech privacy systems",
+            "Sound masking systems",
+            "Mobile security systems",
+            "Network security systems",
+            "Privacy screen systems"
+          ]
+        },
+        {
+          title: "Best Practices",
+          features: [
+            "Layered security approach",
+            "Regular system testing",
+            "Proactive maintenance",
+            "User training programs",
+            "Integration of systems",
+            "Scalable solutions",
+            "Future-proof technology",
+            "Compliance with standards"
+          ]
+        }
+      ]}
+      bgColor="bg-slate-50"
+    />
+  );
+};
 
 const CyberSecurity = () => (
   <ServiceDetail
