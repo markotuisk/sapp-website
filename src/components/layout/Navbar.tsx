@@ -35,17 +35,13 @@ const Navbar = () => {
 
   // Updated main navigation links based on sitemap
   const mainNavLinks = [
+    { name: 'Event Security', href: '#event-security' },
+    { name: 'Audits', href: '#security-audits' },
+    { name: 'Technology', href: '#technology' },
+    { name: 'Resources', href: '#resources' },
     { name: 'About', href: '#about' },
     { name: 'Partners', href: '#partners' },
     { name: 'Contact', href: '#contact' },
-    { name: 'Resources', href: '#resources' },
-  ];
-
-  // Updated service links based on sitemap
-  const serviceLinks = [
-    { name: 'Event Security', href: '#event-security', description: 'Real-time protection for confidential business meetings and high-profile events.' },
-    { name: 'Audits', href: '#security-audits', description: 'Comprehensive assessments to identify security gaps and provide recommendations.' },
-    { name: 'Technology', href: '#technology', description: 'Implementation of cutting-edge security systems tailored to your needs.' },
   ];
 
   return (
@@ -77,38 +73,6 @@ const Navbar = () => {
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
-                {/* Services dropdown */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger 
-                    className={cn(
-                      'px-3 py-2 text-sm font-medium rounded-md transition-colors',
-                      isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue',
-                      'bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent'
-                    )}
-                  >
-                    Services
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                      {serviceLinks.map((service) => (
-                        <li key={service.name} className="row-span-1">
-                          <NavigationMenuLink asChild>
-                            <a
-                              href={service.href}
-                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 focus:bg-slate-100"
-                            >
-                              <div className="text-sm font-medium leading-none text-sapp-blue">{service.name}</div>
-                              <p className="line-clamp-2 text-xs leading-snug text-slate-500">
-                                {service.description}
-                              </p>
-                            </a>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-                
                 {/* Main navigation links */}
                 {mainNavLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
@@ -179,22 +143,6 @@ const Navbar = () => {
         <nav className="container px-4 py-6 flex flex-col space-y-6">
           <div className="flex justify-end mb-2">
             <LanguageSelector />
-          </div>
-          
-          <div className="py-2 border-b border-gray-100">
-            <p className="text-lg font-medium text-sapp-dark mb-2">Services</p>
-            <div className="pl-4 flex flex-col space-y-3">
-              {serviceLinks.map((service, index) => (
-                <a
-                  key={index}
-                  href={service.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-base text-sapp-gray hover:text-sapp-blue transition-colors"
-                >
-                  {service.name}
-                </a>
-              ))}
-            </div>
           </div>
           
           {/* Main nav links in mobile menu */}
