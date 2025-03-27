@@ -36,14 +36,11 @@ const Hero = () => {
           {/* Headline */}
           <h1 
             className={cn(
-              "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark leading-tight mb-6 transition-all duration-700",
+              "text-4xl md:text-5xl lg:text-7xl font-display font-bold text-sapp-dark leading-tight mb-6 transition-all duration-700",
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Securing Tomorrow: 
-            <span className="block">
-              <span className="text-sapp-blue">Strategic Risk Control</span> in a Connected World
-            </span>
+            Your trusted technical security and privacy partner
           </h1>
           
           {/* Subheadline */}
@@ -53,8 +50,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Physical and Digital, Seamlessly Protected.
-            Technical security for UK and European corporates, safeguarding meetings, events, and infrastructure.
+            We provide comprehensive technical security services for corporate clients worldwide bringing together compliance, physical and cyber security.
           </p>
           
           {/* CTA Buttons */}
