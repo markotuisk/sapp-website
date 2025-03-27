@@ -16,15 +16,6 @@ const CustomCursor = () => {
           top: `${position.y}px`,
         }}
       />
-
-      {/* Follower cursor with soft shadow effect - made smaller */}
-      <div 
-        className="fixed pointer-events-none z-[9998] w-5 h-5 rounded-full bg-[#ea384c]/20 backdrop-blur-sm transition-all duration-500 ease-out transform -translate-x-1/2 -translate-y-1/2"
-        style={{ 
-          left: `${position.x}px`, 
-          top: `${position.y}px`,
-        }}
-      />
     </>
   );
 };
