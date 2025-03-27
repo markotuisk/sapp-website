@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
@@ -72,7 +71,7 @@ const Hero = () => {
               size="lg" 
               className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
             >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">Contact Us</span>
+              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">Contact Us</span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
           </div>
