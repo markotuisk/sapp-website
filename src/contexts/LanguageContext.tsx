@@ -27,7 +27,14 @@ type TranslationKey =
   | 'headline'
   | 'subheadline'
   | 'exploreServices'
-  | 'discoverMore';
+  | 'discoverMore'
+  | 'eventSecurity'
+  | 'audits'
+  | 'installations'
+  | 'resources'
+  | 'clientArea'
+  | 'getInTouch'
+  | 'accessNow';
 
 type Translations = {
   [key in Language['code']]: {
@@ -48,7 +55,14 @@ export const translations: Translations = {
     headline: 'Your trusted technical security and privacy partner',
     subheadline: 'We provide comprehensive technical security services for corporate clients in the United Kingdom and Europe, bringing together compliance, physical and cyber security.',
     exploreServices: 'Explore Services',
-    discoverMore: 'Discover More'
+    discoverMore: 'Discover More',
+    eventSecurity: 'Event Security',
+    audits: 'Audits',
+    installations: 'Installations',
+    resources: 'Resources',
+    clientArea: 'Client Area',
+    getInTouch: 'Get in Touch',
+    accessNow: 'Access Now'
   },
   de: {
     home: 'Startseite',
@@ -62,7 +76,14 @@ export const translations: Translations = {
     headline: 'Ihr vertrauenswürdiger Partner für technische Sicherheit und Datenschutz',
     subheadline: 'Wir bieten umfassende technische Sicherheitsdienste für Firmenkunden im Vereinigten Königreich und Europa und verbinden dabei Compliance, physische und Cybersicherheit.',
     exploreServices: 'Dienste entdecken',
-    discoverMore: 'Mehr entdecken'
+    discoverMore: 'Mehr entdecken',
+    eventSecurity: 'Veranstaltungssicherheit',
+    audits: 'Prüfungen',
+    installations: 'Installationen',
+    resources: 'Ressourcen',
+    clientArea: 'Kundenbereich',
+    getInTouch: 'Kontakt aufnehmen',
+    accessNow: 'Jetzt zugreifen'
   },
   nl: {
     home: 'Home',
@@ -76,7 +97,14 @@ export const translations: Translations = {
     headline: 'Uw betrouwbare technische beveiligings- en privacypartner',
     subheadline: 'Wij bieden uitgebreide technische beveiligingsdiensten voor zakelijke klanten in het Verenigd Koninkrijk en Europa, waarbij we compliance, fysieke en cyberbeveiliging samenbrengen.',
     exploreServices: 'Diensten verkennen',
-    discoverMore: 'Ontdek meer'
+    discoverMore: 'Ontdek meer',
+    eventSecurity: 'Evenementbeveiliging',
+    audits: 'Audits',
+    installations: 'Installaties',
+    resources: 'Hulpbronnen',
+    clientArea: 'Klantomgeving',
+    getInTouch: 'Neem contact op',
+    accessNow: 'Nu toegang'
   },
   fr: {
     home: 'Accueil',
@@ -90,7 +118,14 @@ export const translations: Translations = {
     headline: 'Votre partenaire de confiance en matière de sécurité technique et de confidentialité',
     subheadline: 'Nous fournissons des services complets de sécurité technique pour les clients professionnels au Royaume-Uni et en Europe, en associant conformité, sécurité physique et cybersécurité.',
     exploreServices: 'Explorer les services',
-    discoverMore: 'Découvrir plus'
+    discoverMore: 'Découvrir plus',
+    eventSecurity: 'Sécurité événementielle',
+    audits: 'Audits',
+    installations: 'Installations',
+    resources: 'Ressources',
+    clientArea: 'Espace client',
+    getInTouch: 'Prendre contact',
+    accessNow: 'Accéder maintenant'
   },
 };
 

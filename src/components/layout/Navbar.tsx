@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -12,10 +13,13 @@ import {
 import { Menu, X, LogIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
+import TranslatedText from '@/components/ui/TranslatedText';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,13 +37,13 @@ const Navbar = () => {
   }, []);
 
   const mainNavLinks = [
-    { name: 'Event Security', href: '#event-security' },
-    { name: 'Audits', href: '#security-audits' },
-    { name: 'Installations', href: '#technology' },
-    { name: 'Resources', href: '#resources' },
-    { name: 'About', href: '#about' },
-    { name: 'Partners', href: '#partners' },
-    { name: 'Contact', href: '#contact' },
+    { key: 'eventSecurity', href: '#event-security' },
+    { key: 'audits', href: '#security-audits' },
+    { key: 'installations', href: '#technology' },
+    { key: 'resources', href: '#resources' },
+    { key: 'about', href: '#about' },
+    { key: 'partners', href: '#partners' },
+    { key: 'contact', href: '#contact' },
   ];
 
   return (
@@ -79,7 +83,7 @@ const Navbar = () => {
                         isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
                       )}
                     >
-                      {link.name}
+                      <TranslatedText textKey={link.key} />
                       <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
@@ -95,9 +99,9 @@ const Navbar = () => {
               asChild
             >
               <Link to="/client-area" className="inline-flex items-center justify-center gap-2">
-                <span className="relative z-10 transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-0">Client Area</span>
+                <span className="relative z-10 transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-0"><TranslatedText textKey="clientArea" /></span>
                 <span className="absolute inset-0 flex items-center justify-center z-0 -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                  Access Now
+                  <TranslatedText textKey="accessNow" />
                 </span>
               </Link>
             </Button>
@@ -106,9 +110,9 @@ const Navbar = () => {
               variant="default" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
             >
-              <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0">Get in Touch</span>
+              <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0"><TranslatedText textKey="getInTouch" /></span>
               <span className="absolute inset-0 flex items-center justify-center z-0 scale-50 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
-                Contact Us
+                <TranslatedText textKey="contactUs" />
               </span>
             </Button>
             
@@ -147,7 +151,7 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
             >
-              {link.name}
+              <TranslatedText textKey={link.key} />
             </a>
           ))}
           
@@ -157,14 +161,14 @@ const Navbar = () => {
             className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100 flex items-center"
           >
             <LogIn className="h-5 w-5 mr-2" />
-            Client Area
+            <TranslatedText textKey="clientArea" />
           </Link>
           
           <Button 
             variant="default" 
             className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-4 group relative overflow-hidden"
           >
-            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2">Get in Touch</span>
+            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2"><TranslatedText textKey="getInTouch" /></span>
             <span className="absolute left-0 w-0 h-full bg-sapp-dark z-0 transition-all duration-300 group-hover:w-full"></span>
           </Button>
         </nav>
