@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -37,7 +38,7 @@ const Navbar = () => {
 
   const mainNavLinks = [
     { key: 'eventSecurity' as const, href: '#event-security' },
-    { key: 'audits' as const, href: '#security-audits' },
+    { key: 'securityAudits' as const, href: '#security-audits' },
     { key: 'installations' as const, href: '#technology' },
     { key: 'resources' as const, href: '#resources' },
     { key: 'about' as const, href: '#about' },
