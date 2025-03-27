@@ -10,7 +10,7 @@ const CustomCursor = () => {
     <>
       {/* Main cursor - small dark blue dot */}
       <div 
-        className="fixed pointer-events-none z-[9999] w-2 h-2 rounded-full bg-[#032B3B]/80 mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
+        className="fixed pointer-events-none z-[9999] w-2 h-2 rounded-full bg-[#032B3B]/50 mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
         style={{ 
           left: `${position.x}px`, 
           top: `${position.y}px`,
