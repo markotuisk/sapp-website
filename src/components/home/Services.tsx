@@ -2,7 +2,7 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
-import { Shield, AlertTriangle, MonitorCheck, Wifi } from 'lucide-react';
+import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 
@@ -63,13 +63,13 @@ const Services = () => {
     {
       icon: <Wifi className="h-6 w-6 text-sapp-blue" />,
       title: t('cyberSecurity'),
-      description: "Specialized solutions focusing on IoT device security and network protection.",
+      description: "Enterprise-grade cyber security services protecting digital assets and IoT infrastructure from emerging threats.",
       items: [
-        "IoT Device Security",
-        "WiFi Network Security",
-        "Bluetooth Security",
-        "Cellular Network Security",
-        "Cyber Threat Intelligence"
+        "Threat Detection & Response",
+        "Network Security",
+        "IoT Device Protection",
+        "Data Protection",
+        "Security Awareness Training"
       ],
       href: "#cyber-security",
       delay: 400,

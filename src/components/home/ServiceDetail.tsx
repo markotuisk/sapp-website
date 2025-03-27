@@ -2,7 +2,7 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import FeatureCard from '@/components/ui/FeatureCard';
-import { Shield, AlertTriangle, MonitorCheck, Wifi } from 'lucide-react';
+import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Database, Server } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 
@@ -230,43 +230,74 @@ const TechnologyInstallations = () => {
   );
 };
 
-const CyberSecurity = () => (
-  <ServiceDetail
-    id="cyber-security"
-    title="Cyber Security"
-    description="In the vast landscape of cyber threats and security, IoT devices are often a weak link in the overall cyber security strategy. The primary IoT security challenge is a large volume of diverse devices, 98% of which are unencrypted and not visible in the company network."
-    icon={<Wifi className="h-8 w-8 text-sapp-blue" />}
-    featureCards={[
-      {
-        title: "Focus Areas",
-        features: [
-          "IoT Device Security",
-          "WiFi Network Security",
-          "Bluetooth Security",
-          "Cellular Network Security",
-          "Cyber Threat Intelligence",
-          "Network segmentation",
-          "Security policy implementation",
-          "Real-time monitoring"
-        ]
-      },
-      {
-        title: "Implementation",
-        features: [
-          "Automated device inventory",
-          "Network protection",
-          "Vulnerability assessments",
-          "Off-network device security",
-          "Personal device management",
-          "Cyber-physical convergence",
-          "Endpoint security",
-          "Threat response planning"
-        ]
-      }
-    ]}
-    bgColor="bg-white"
-    imagePosition="left"
-  />
-);
+const CyberSecurity = () => {
+  const { t } = useLanguage();
+  
+  return (
+    <ServiceDetail
+      id="cyber-security"
+      title={t('cyberSecurity')}
+      highlightText="Enterprise-grade protection for digital assets"
+      description="We provide comprehensive cyber security services that protect your organization's digital infrastructure from evolving threats. Our approach focuses on securing IoT devices, which are often the most vulnerable points in corporate networks, with 98% being unencrypted and invisible in company networks."
+      icon={<Wifi className="h-8 w-8 text-sapp-blue" />}
+      featureCards={[
+        {
+          title: "Core Services",
+          features: [
+            "Threat Detection & Response",
+            "Vulnerability Management",
+            "Network Security Architecture",
+            "Cloud Security Solutions",
+            "Data Protection & Encryption",
+            "Identity & Access Management",
+            "Security Information & Event Management (SIEM)",
+            "Incident Response Planning"
+          ]
+        },
+        {
+          title: "IoT & Device Security",
+          features: [
+            "IoT Device Inventory & Control",
+            "Automated Threat Detection",
+            "Zero Trust Implementation",
+            "Secure Device Configuration",
+            "Firmware Security Updates",
+            "Network Segmentation",
+            "Wireless Security Protocols",
+            "Mobile Device Management (MDM)"
+          ]
+        },
+        {
+          title: "Compliance & Standards",
+          features: [
+            "ISO 27001 Compliance",
+            "GDPR Data Protection",
+            "NIST Cybersecurity Framework",
+            "PCI DSS Compliance",
+            "Risk Assessment & Management",
+            "Security Policy Development",
+            "Regular Security Audits",
+            "Regulatory Reporting"
+          ]
+        },
+        {
+          title: "Security Training",
+          features: [
+            "Employee Awareness Programs",
+            "Phishing Simulation Exercises",
+            "Security Best Practices",
+            "Social Engineering Defense",
+            "Incident Response Training",
+            "Executive Security Briefings",
+            "Role-based Security Training",
+            "Security Culture Development"
+          ]
+        }
+      ]}
+      bgColor="bg-white"
+      imagePosition="left"
+    />
+  );
+};
 
 export { EventSecurity, SecurityAudits, TechnologyInstallations, CyberSecurity };
