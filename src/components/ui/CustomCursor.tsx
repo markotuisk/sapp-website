@@ -10,16 +10,16 @@ const CustomCursor = () => {
     <>
       {/* Main cursor - small red laser dot */}
       <div 
-        className="fixed pointer-events-none z-[9999] w-1 h-1 rounded-full bg-[#ea384c]/30 mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
+        className="fixed pointer-events-none z-[9999] w-2 h-2 rounded-full bg-[#ea384c]/30 mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
         style={{ 
           left: `${position.x}px`, 
           top: `${position.y}px`,
         }}
       />
 
-      {/* Follower cursor with soft shadow effect */}
+      {/* Follower cursor with soft shadow effect - made smaller */}
       <div 
-        className="fixed pointer-events-none z-[9998] w-8 h-8 rounded-full bg-[#ea384c]/20 backdrop-blur-sm transition-all duration-500 ease-out transform -translate-x-1/2 -translate-y-1/2"
+        className="fixed pointer-events-none z-[9998] w-5 h-5 rounded-full bg-[#ea384c]/20 backdrop-blur-sm transition-all duration-500 ease-out transform -translate-x-1/2 -translate-y-1/2"
         style={{ 
           left: `${position.x}px`, 
           top: `${position.y}px`,
