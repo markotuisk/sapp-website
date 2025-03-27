@@ -1,0 +1,10 @@
+
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="white"/>
+  <rect x="50" y="60" width="100" height="60" rx="10" fill="#27AE60"/>
+  <path d="M70 80L85 95L70 110" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M95 80H120" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <path d="M95 95H130" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <path d="M95 110H120" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <text x="100" y="150" font-family="Arial" font-size="20" text-anchor="middle" fill="#333333">SOFT dB</text>
+</svg>

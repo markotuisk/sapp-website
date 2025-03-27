@@ -1,0 +1,8 @@
+
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="white"/>
+  <path d="M40 80L70 120H50L20 80H40Z" fill="#2684FF"/>
+  <path d="M90 80L120 120H100L70 80H90Z" fill="#2684FF"/>
+  <path d="M140 80L170 120H150L120 80H140Z" fill="#2684FF"/>
+  <text x="100" y="150" font-family="Arial" font-size="20" text-anchor="middle" fill="#333333">VERKADA</text>
+</svg>

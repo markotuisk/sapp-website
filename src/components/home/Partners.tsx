@@ -3,36 +3,41 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Link } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 const Partners = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const { t } = useLanguage();
 
   const partners = [
     {
       name: "Verkada",
       description: "Cloud-based security systems",
-      logo: "/placeholder.svg"
+      logo: "/lovable-uploads/verkada-logo.svg", // Placeholder - we'll use the placeholder SVG until a real logo is uploaded
+      link: "https://www.verkada.com"
     },
     {
-      name: "NCSC",
-      description: "National Cyber Security Centre",
-      logo: "/placeholder.svg",
-      link: "https://www.ncsc.gov.uk/information/ncsc-assured-cyber-security-consultancy"
+      name: "Ubiquiti",
+      description: "Network solutions & IoT devices",
+      logo: "/lovable-uploads/ubiquiti-logo.svg", // Placeholder
+      link: "https://www.ui.com"
     },
     {
-      name: "Bulletproof",
-      description: "Cyber security services",
-      logo: "/placeholder.svg",
-      link: "https://www.bulletproof.co.uk"
+      name: "SOFT dB",
+      description: "Sound masking & acoustic solutions",
+      logo: "/lovable-uploads/softdb-logo.svg", // Placeholder
+      link: "https://www.softdb.com"
     },
     {
-      name: "Redscan",
-      description: "Managed security services",
-      logo: "/placeholder.svg",
-      link: "https://www.redscan.com"
+      name: "MobileWatch",
+      description: "Mobile security solutions",
+      logo: "/lovable-uploads/mobilewatch-logo.svg", // Placeholder
+      link: "https://mobilewatch.eu"
     }
   ];
 
@@ -50,7 +55,7 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            Our Partners
+            <TranslatedText textKey="partners" defaultText="Our Partners" />
           </span>
           <h2 
             className={cn(
@@ -58,7 +63,7 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Working with <span className="text-sapp-blue">industry leaders</span>
+            Working with <span className="text-sapp-blue"><TranslatedText textKey="industryLeaders" defaultText="industry leaders" /></span>
           </h2>
           <p 
             className={cn(
@@ -66,8 +71,10 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            We collaborate with trusted partners to deliver comprehensive security solutions that protect
-            your organization from both physical and cyber threats.
+            <TranslatedText 
+              textKey="partnersDescription" 
+              defaultText="We collaborate with trusted partners to deliver comprehensive security solutions that protect your organization from both physical and cyber threats."
+            />
           </p>
         </div>
 
@@ -103,7 +110,7 @@ const Partners = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-sapp-blue text-sm font-medium hover:underline"
                   >
-                    Visit Website
+                    <TranslatedText textKey="visitWebsite" defaultText="Visit Website" />
                     <Link className="h-3.5 w-3.5 ml-1" />
                   </a>
                 </div>
@@ -125,17 +132,19 @@ const Partners = () => {
           
           <div className="relative z-10 md:max-w-xl">
             <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-              Become a SAPP Security Partner
+              <TranslatedText textKey="becomePartner" defaultText="Become a SAPP Security Partner" />
             </h3>
             <p className="text-gray-300 mb-6">
-              Join our network of technology partners and security experts to deliver 
-              cutting-edge security solutions to organizations worldwide.
+              <TranslatedText 
+                textKey="becomePartnerDescription" 
+                defaultText="Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide."
+              />
             </p>
             <Button 
               size="lg"
               className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
             >
-              Partner With Us
+              <TranslatedText textKey="partnerWithUs" defaultText="Partner With Us" />
             </Button>
           </div>
         </div>
