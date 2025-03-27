@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -110,7 +111,7 @@ const EventSecurity = () => {
     <ServiceDetail
       id="event-security"
       title={t('eventSecurity')}
-      description="Real-time protection for high-profile confidential meetings and events. We are experienced event security and technical support providers for corporate board and management meetings for over 20 years."
+      description="Real-time protection for high-profile confidential meetings and events. We are experienced event security and technical support providers for corporate board and management meetings for over 20 years. We coordinate with specialized third-party providers to ensure comprehensive coverage."
       icon={<Shield className="h-8 w-8 text-sapp-blue" />}
       featureCards={[
         {
@@ -138,6 +139,19 @@ const EventSecurity = () => {
             "Real-time protection",
             "Technical security support"
           ]
+        },
+        {
+          title: "Third-Party Integrations",
+          features: [
+            "Executive protection services",
+            "Credentials verification",
+            "Specialized threat assessment",
+            "Communication security experts",
+            "Event security staffing",
+            "VIP security coordination",
+            "Mobile security units",
+            "Temporary secure infrastructure"
+          ]
         }
       ]}
       bgColor="bg-slate-50"
@@ -153,7 +167,7 @@ const SecurityAudits = () => {
       id="security-audits"
       title={t('securityAudits')}
       highlightText="Certified ISO27001 physical security audits"
-      description="These external audits are on-site service visits to objectively evaluate the state of play of the physical and information security processes and technology at your organisation. The objective of the security audit is to detect and identify any potential gaps and oversights providing detailed risk-based recommendations for improvement. The security audits can be both comprehensive and tailored to the organisation's specific requirement, such as TSCM, assessment of access control systems etc."
+      description="These external audits are on-site service visits to objectively evaluate the state of play of the physical and information security processes and technology at your organisation. The objective of the security audit is to detect and identify any potential gaps and oversights providing detailed risk-based recommendations for improvement. We collaborate with specialized third-party certification bodies to ensure compliance with all relevant standards."
       icon={<AlertTriangle className="h-8 w-8 text-sapp-blue" />}
       featureCards={[
         {
@@ -179,6 +193,19 @@ const SecurityAudits = () => {
             "Follow-up support",
             "Compliance verification"
           ]
+        },
+        {
+          title: "Third-Party Services",
+          features: [
+            "ISO certification support",
+            "Regulatory compliance assistance",
+            "Independent verification",
+            "Industry-specific compliance",
+            "Security clearance facilitation",
+            "External pen testing coordination",
+            "Specialized vulnerability scanning",
+            "Security program development"
+          ]
         }
       ]}
       bgColor="bg-white"
@@ -195,7 +222,7 @@ const TechnologyInstallations = () => {
       id="technology"
       title={t('installations')}
       highlightText="Cutting-edge security technology"
-      description="Our installation services cover a multitude of security systems ranging from CCTV, access control and visitor management systems, speech privacy and sound masking systems, mobile and network security systems as well as privacy screen systems."
+      description="Our installation services cover a multitude of security systems ranging from CCTV, access control and visitor management systems, speech privacy and sound masking systems, mobile and network security systems as well as privacy screen systems. We integrate with leading third-party technology providers to ensure your systems are state-of-the-art."
       icon={<MonitorCheck className="h-8 w-8 text-sapp-blue" />}
       featureCards={[
         {
@@ -223,6 +250,19 @@ const TechnologyInstallations = () => {
             "Future-proof technology",
             "Compliance with standards"
           ]
+        },
+        {
+          title: "Third-Party Technology Partners",
+          features: [
+            "Enterprise security platform integration",
+            "Corporate identity management systems",
+            "Biometric access control solutions",
+            "AI-powered surveillance analytics",
+            "Cloud security storage solutions",
+            "Managed security service providers",
+            "Corporate IoT security frameworks",
+            "Enterprise systems compatibility"
+          ]
         }
       ]}
       bgColor="bg-slate-50"
@@ -238,7 +278,7 @@ const CyberSecurity = () => {
       id="cyber-security"
       title={t('cyberSecurity')}
       highlightText="Enterprise-grade protection for digital assets"
-      description="We provide comprehensive cyber security services that protect your organization's digital infrastructure from evolving threats. Our approach focuses on securing IoT devices, which are often the most vulnerable points in corporate networks, with 98% being unencrypted and invisible in company networks."
+      description="We provide comprehensive cyber security services that protect your organization's digital infrastructure from evolving threats. Our approach focuses on securing IoT devices, which are often the most vulnerable points in corporate networks, with 98% being unencrypted and invisible in company networks. We partner with industry-leading third-party security providers to offer complete protection."
       icon={<Wifi className="h-8 w-8 text-sapp-blue" />}
       featureCards={[
         {
@@ -291,6 +331,19 @@ const CyberSecurity = () => {
             "Executive Security Briefings",
             "Role-based Security Training",
             "Security Culture Development"
+          ]
+        },
+        {
+          title: "Third-Party Security Solutions",
+          features: [
+            "Enterprise-grade SOC services",
+            "Managed detection and response (MDR)",
+            "Cloud access security brokers (CASB)",
+            "Advanced endpoint protection platforms",
+            "Next-generation firewall implementation",
+            "Third-party penetration testing",
+            "Digital forensics capabilities",
+            "Security orchestration and automation"
           ]
         }
       ]}

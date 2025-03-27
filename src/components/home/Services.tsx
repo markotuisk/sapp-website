@@ -18,13 +18,14 @@ const Services = () => {
     {
       icon: <Shield className="h-6 w-6 text-sapp-blue" />,
       title: t('eventSecurity'),
-      description: "Real-time protection for high-profile confidential meetings and events.",
+      description: "Real-time protection for high-profile confidential meetings and events. We coordinate with third-party specialists where required.",
       items: [
         "Venue Security Audits",
         "Event Monitoring",
         "Secure Technology",
         "Close Protection",
-        "Incident Management"
+        "Incident Management",
+        "Third-Party Event Security Integration"
       ],
       href: "#event-security",
       delay: 100,
@@ -32,13 +33,14 @@ const Services = () => {
     {
       icon: <AlertTriangle className="h-6 w-6 text-sapp-blue" />,
       title: t('securityAudits'),
-      description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations.",
+      description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations. Coordinated with compliance partners.",
       items: [
         "Physical Security Assessments",
         "Security Systems Testing",
         "Penetration Tests",
         "Compliance Audits",
-        "TSCM Inspections"
+        "TSCM Inspections",
+        "Third-Party Certification Support"
       ],
       href: "#security-audits",
       delay: 200,
@@ -46,7 +48,7 @@ const Services = () => {
     {
       icon: <MonitorCheck className="h-6 w-6 text-sapp-blue" />,
       title: t('installations'),
-      description: "Implementation of cutting-edge security systems covering CCTV, access control, speech privacy, and more.",
+      description: "Implementation of cutting-edge security systems covering CCTV, access control, speech privacy, and more. Seamless integration with existing enterprise systems.",
       items: [
         "CCTV Systems",
         "Access Control Systems",
@@ -55,7 +57,7 @@ const Services = () => {
         "Sound Masking Systems",
         "Mobile Security Systems",
         "Network Security Systems",
-        "Privacy Screen Systems"
+        "Enterprise System Integration"
       ],
       href: "#technology",
       delay: 300,
@@ -63,13 +65,14 @@ const Services = () => {
     {
       icon: <Wifi className="h-6 w-6 text-sapp-blue" />,
       title: t('cyberSecurity'),
-      description: "Enterprise-grade cyber security services protecting digital assets and IoT infrastructure from emerging threats.",
+      description: "Enterprise-grade cyber security services protecting digital assets and IoT infrastructure from emerging threats. Partnerships with leading cybersecurity providers.",
       items: [
         "Threat Detection & Response",
         "Network Security",
         "IoT Device Protection",
         "Data Protection",
-        "Security Awareness Training"
+        "Security Awareness Training",
+        "Third-Party Security Integrations"
       ],
       href: "#cyber-security",
       delay: 400,
@@ -104,7 +107,7 @@ const Services = () => {
             )}
           >
             We provide a wide range of technical security services designed to protect
-            your organization's most valuable assets and information.
+            your organization's most valuable assets and information, with seamless integration of industry-leading third-party solutions where needed.
           </p>
         </div>
 
