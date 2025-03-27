@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -18,25 +17,25 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud-based security systems",
-      logo: "/lovable-uploads/verkada-logo.svg", // Placeholder - we'll use the placeholder SVG until a real logo is uploaded
+      logo: "/lovable-uploads/verkada-logo.svg",
       link: "https://www.verkada.com"
     },
     {
       name: "Ubiquiti",
       description: "Network solutions & IoT devices",
-      logo: "/lovable-uploads/ubiquiti-logo.svg", // Placeholder
+      logo: "/lovable-uploads/ubiquiti-logo.svg",
       link: "https://www.ui.com"
     },
     {
       name: "SOFT dB",
       description: "Sound masking & acoustic solutions",
-      logo: "/lovable-uploads/softdb-logo.svg", // Placeholder
+      logo: "/lovable-uploads/softdb-logo.svg",
       link: "https://www.softdb.com"
     },
     {
       name: "MobileWatch",
-      description: "Mobile security solutions",
-      logo: "/lovable-uploads/mobilewatch-logo.svg", // Placeholder
+      description: "RF security monitoring similar to Bastille Networks, specialized in wireless threat detection",
+      logo: "/lovable-uploads/mobilewatch-logo.svg",
       link: "https://mobilewatch.eu"
     }
   ];
@@ -55,7 +54,7 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            <TranslatedText textKey="partners" defaultText="Our Partners" />
+            <TranslatedText textKey="partners" />
           </span>
           <h2 
             className={cn(
@@ -63,7 +62,7 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Working with <span className="text-sapp-blue"><TranslatedText textKey="industryLeaders" defaultText="industry leaders" /></span>
+            Working with <span className="text-sapp-blue"><TranslatedText textKey="industryLeaders" /></span>
           </h2>
           <p 
             className={cn(
@@ -71,10 +70,7 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            <TranslatedText 
-              textKey="partnersDescription" 
-              defaultText="We collaborate with trusted partners to deliver comprehensive security solutions that protect your organization from both physical and cyber threats."
-            />
+            <TranslatedText textKey="partnersDescription" />
           </p>
         </div>
 

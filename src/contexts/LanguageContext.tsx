@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = {
@@ -36,7 +35,13 @@ type TranslationKey =
   | 'clientArea'
   | 'getInTouch'
   | 'accessNow'
-  | 'brandTagline';
+  | 'brandTagline'
+  | 'industryLeaders'
+  | 'partnersDescription'
+  | 'visitWebsite'
+  | 'becomePartner'
+  | 'becomePartnerDescription'
+  | 'partnerWithUs';
 
 type Translations = {
   [key in Language['code']]: {
@@ -66,7 +71,13 @@ export const translations: Translations = {
     clientArea: 'Client Area',
     getInTouch: 'Get in Touch',
     accessNow: 'Access Now',
-    brandTagline: 'Security and Privacy Partners'
+    brandTagline: 'Security and Privacy Partners',
+    industryLeaders: 'industry leaders',
+    partnersDescription: 'We collaborate with trusted partners to deliver comprehensive security solutions that protect your organization from both physical and cyber threats.',
+    visitWebsite: 'Visit Website',
+    becomePartner: 'Become a SAPP Security Partner',
+    becomePartnerDescription: 'Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide.',
+    partnerWithUs: 'Partner With Us'
   },
   de: {
     home: 'Startseite',
@@ -89,7 +100,13 @@ export const translations: Translations = {
     clientArea: 'Kundenbereich',
     getInTouch: 'Kontakt',
     accessNow: 'Zugreifen',
-    brandTagline: 'Security and Privacy Partners'
+    brandTagline: 'Security and Privacy Partners',
+    industryLeaders: 'Branchenführer',
+    partnersDescription: 'Wir arbeiten mit vertrauenswürdigen Partnern zusammen, um umfassende Sicherheitslösungen zu liefern, die Ihre Organisation vor physischen und Cyber-Bedrohungen schützen.',
+    visitWebsite: 'Website besuchen',
+    becomePartner: 'Werden Sie SAPP Sicherheitspartner',
+    becomePartnerDescription: 'Schließen Sie sich unserem Netzwerk von Technologiepartnern und Sicherheitsexperten an, um weltweit hochmoderne Sicherheitslösungen für Organisationen anzubieten.',
+    partnerWithUs: 'Partner werden'
   },
   nl: {
     home: 'Home',
@@ -112,7 +129,13 @@ export const translations: Translations = {
     clientArea: 'Klantomgeving',
     getInTouch: 'Contact',
     accessNow: 'Toegang',
-    brandTagline: 'Security and Privacy Partners'
+    brandTagline: 'Security and Privacy Partners',
+    industryLeaders: 'marktleiders',
+    partnersDescription: 'We werken samen met betrouwbare partners om uitgebreide beveiligingsoplossingen te leveren die uw organisatie beschermen tegen zowel fysieke als cyberbedreigingen.',
+    visitWebsite: 'Website bezoeken',
+    becomePartner: 'Word een SAPP Beveiligingspartner',
+    becomePartnerDescription: 'Sluit u aan bij ons netwerk van technologiepartners en beveiligingsexperts om geavanceerde beveiligingsoplossingen te leveren aan organisaties wereldwijd.',
+    partnerWithUs: 'Partner met ons'
   },
   fr: {
     home: 'Accueil',
@@ -135,7 +158,13 @@ export const translations: Translations = {
     clientArea: 'Espace client',
     getInTouch: 'Contact',
     accessNow: 'Accéder',
-    brandTagline: 'Security and Privacy Partners'
+    brandTagline: 'Security and Privacy Partners',
+    industryLeaders: 'leaders de l\'industrie',
+    partnersDescription: 'Nous collaborons avec des partenaires de confiance pour offrir des solutions de sécurité complètes qui protègent votre organisation contre les menaces physiques et cybernétiques.',
+    visitWebsite: 'Visiter le site',
+    becomePartner: 'Devenez partenaire de sécurité SAPP',
+    becomePartnerDescription: 'Rejoignez notre réseau de partenaires technologiques et d\'experts en sécurité pour fournir des solutions de sécurité de pointe aux organisations du monde entier.',
+    partnerWithUs: 'Devenez partenaire'
   },
 };
 
