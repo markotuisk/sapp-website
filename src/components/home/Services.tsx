@@ -32,7 +32,7 @@ const Services = () => {
     {
       icon: <AlertTriangle className="h-6 w-6 text-sapp-blue" />,
       title: t('securityAudits'),
-      description: "Comprehensive assessments to identify security gaps and provide risk-based recommendations.",
+      description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations.",
       items: [
         "Physical Security Assessments",
         "Security Systems Testing",

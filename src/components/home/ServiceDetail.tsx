@@ -17,6 +17,7 @@ interface ServiceDetailProps {
   }[];
   imagePosition?: 'left' | 'right';
   bgColor?: string;
+  highlightText?: string;
 }
 
 const ServiceDetail = ({
@@ -27,6 +28,7 @@ const ServiceDetail = ({
   featureCards,
   imagePosition = 'right',
   bgColor = 'bg-slate-50',
+  highlightText,
 }: ServiceDetailProps) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -46,6 +48,16 @@ const ServiceDetail = ({
           >
             {icon}
           </div>
+          {highlightText && (
+            <h3 
+              className={cn(
+                "text-xl md:text-2xl font-display text-sapp-blue mb-4 transition-all duration-500 delay-75",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              {highlightText}
+            </h3>
+          )}
           <h2 
             className={cn(
               "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
@@ -133,42 +145,47 @@ const EventSecurity = () => {
   );
 };
 
-const SecurityAudits = () => (
-  <ServiceDetail
-    id="security-audits"
-    title="Security Audits"
-    description="These external audits are on-site service visits to objectively evaluate the state of play of the physical and information security processes and technology at your organisation. The objective of the security audit is to detect and identify any potential gaps and oversights providing detailed risk-based recommendations for improvement."
-    icon={<AlertTriangle className="h-8 w-8 text-sapp-blue" />}
-    featureCards={[
-      {
-        title: "Audit Types",
-        features: [
-          "Physical Security Assessments",
-          "Security Systems Testing",
-          "Penetration Tests",
-          "Compliance Audits",
-          "Technology Tests",
-          "TSCM Inspections",
-          "Awareness Trainings"
-        ]
-      },
-      {
-        title: "Methodology",
-        features: [
-          "Comprehensive analysis",
-          "Tailored assessments",
-          "Risk-based evaluation",
-          "Detailed documentation",
-          "Actionable recommendations",
-          "Follow-up support",
-          "Compliance verification"
-        ]
-      }
-    ]}
-    bgColor="bg-white"
-    imagePosition="left"
-  />
-);
+const SecurityAudits = () => {
+  const { t } = useLanguage();
+  
+  return (
+    <ServiceDetail
+      id="security-audits"
+      title={t('securityAudits')}
+      highlightText="Certified ISO27001 physical security audits"
+      description="These external audits are on-site service visits to objectively evaluate the state of play of the physical and information security processes and technology at your organisation. The objective of the security audit is to detect and identify any potential gaps and oversights providing detailed risk-based recommendations for improvement. The security audits can be both comprehensive and tailored to the organisation's specific requirement, such as TSCM, assessment of access control systems etc."
+      icon={<AlertTriangle className="h-8 w-8 text-sapp-blue" />}
+      featureCards={[
+        {
+          title: "Audit Types",
+          features: [
+            "Physical Security Assessments",
+            "Security Systems Testing",
+            "Penetration Tests",
+            "Compliance Audits",
+            "Technology Tests",
+            "TSCM Inspections",
+            "Awareness Trainings"
+          ]
+        },
+        {
+          title: "Methodology",
+          features: [
+            "Comprehensive analysis",
+            "Tailored assessments",
+            "Risk-based evaluation",
+            "Detailed documentation",
+            "Actionable recommendations",
+            "Follow-up support",
+            "Compliance verification"
+          ]
+        }
+      ]}
+      bgColor="bg-white"
+      imagePosition="left"
+    />
+  );
+};
 
 const TechnologyInstallations = () => (
   <ServiceDetail
