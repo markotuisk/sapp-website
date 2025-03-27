@@ -40,7 +40,7 @@ const Navbar = () => {
     { key: 'eventSecurity' as const, href: '#event-security' },
     { key: 'securityAudits' as const, href: '#security-audits' },
     { key: 'installations' as const, href: '#technology' },
-    { key: 'resources' as const, href: '#resources' },
+    { key: 'cyberSecurity' as const, href: '#cyber-security' },
     { key: 'about' as const, href: '#about' },
     { key: 'partners' as const, href: '#partners' },
     { key: 'contact' as const, href: '#contact' },

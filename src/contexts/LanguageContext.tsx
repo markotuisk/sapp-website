@@ -32,7 +32,7 @@ type TranslationKey =
   | 'audits'
   | 'securityAudits'
   | 'installations'
-  | 'resources'
+  | 'cyberSecurity'
   | 'clientArea'
   | 'getInTouch'
   | 'accessNow'
@@ -62,7 +62,7 @@ export const translations: Translations = {
     audits: 'Audits',
     securityAudits: 'Security Audits',
     installations: 'Installations',
-    resources: 'Resources',
+    cyberSecurity: 'Cyber Security',
     clientArea: 'Client Area',
     getInTouch: 'Get in Touch',
     accessNow: 'Access Now',
@@ -85,7 +85,7 @@ export const translations: Translations = {
     audits: 'Audits',
     securityAudits: 'Sicherheitsaudits',
     installations: 'Installationen',
-    resources: 'Ressourcen',
+    cyberSecurity: 'Cybersicherheit',
     clientArea: 'Kundenbereich',
     getInTouch: 'Kontakt',
     accessNow: 'Zugreifen',
@@ -108,7 +108,7 @@ export const translations: Translations = {
     audits: 'Audits',
     securityAudits: 'Beveiligingsaudits',
     installations: 'Installaties',
-    resources: 'Hulpbronnen',
+    cyberSecurity: 'Cyberbeveiliging',
     clientArea: 'Klantomgeving',
     getInTouch: 'Contact',
     accessNow: 'Toegang',
@@ -131,7 +131,7 @@ export const translations: Translations = {
     audits: 'Audits',
     securityAudits: 'Audits de sécurité',
     installations: 'Installations',
-    resources: 'Ressources',
+    cyberSecurity: 'Cybersécurité',
     clientArea: 'Espace client',
     getInTouch: 'Contact',
     accessNow: 'Accéder',
