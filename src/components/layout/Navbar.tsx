@@ -36,14 +36,15 @@ const Navbar = () => {
     };
   }, []);
 
+  // Updated to use proper routes for service pages
   const mainNavLinks = [
-    { key: 'eventSecurity' as const, href: '#event-security' },
-    { key: 'securityAudits' as const, href: '#security-audits' },
-    { key: 'installations' as const, href: '#technology' },
-    { key: 'cyberSecurity' as const, href: '#cyber-security' },
-    { key: 'about' as const, href: '#about' },
-    { key: 'partners' as const, href: '#partners' },
-    { key: 'contact' as const, href: '#contact' },
+    { key: 'eventSecurity' as const, href: '/event-security' },
+    { key: 'securityAudits' as const, href: '/security-audits' },
+    { key: 'installations' as const, href: '/installations' },
+    { key: 'cyberSecurity' as const, href: '/cyber-security' },
+    { key: 'about' as const, href: '/#about' },
+    { key: 'partners' as const, href: '/#partners' },
+    { key: 'contact' as const, href: '/#contact' },
   ];
 
   return (
@@ -57,7 +58,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-24 md:h-28">
-          <a href="/" className="flex items-center space-x-2 flex-shrink-0 group">
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 group">
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
               alt="SAPP Security Logo" 
@@ -69,23 +70,36 @@ const Navbar = () => {
               </span>
               <span className="text-xs text-sapp-gray leading-tight">Security and Privacy Partners</span>
             </div>
-          </a>
+          </Link>
 
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
                 {mainNavLinks.map((link, index) => (
                   <NavigationMenuItem key={index}>
-                    <NavigationMenuLink 
-                      href={link.href}
-                      className={cn(
-                        'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group whitespace-nowrap',
-                        isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
-                      )}
-                    >
-                      <TranslatedText textKey={link.key} />
-                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                    </NavigationMenuLink>
+                    {link.href.startsWith('/#') ? (
+                      <NavigationMenuLink 
+                        href={link.href}
+                        className={cn(
+                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group whitespace-nowrap',
+                          isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
+                        )}
+                      >
+                        <TranslatedText textKey={link.key} />
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                      </NavigationMenuLink>
+                    ) : (
+                      <Link 
+                        to={link.href}
+                        className={cn(
+                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group whitespace-nowrap flex items-center',
+                          isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
+                        )}
+                      >
+                        <TranslatedText textKey={link.key} />
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                      </Link>
+                    )}
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>
@@ -149,14 +163,25 @@ const Navbar = () => {
           </div>
           
           {mainNavLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
-            >
-              <TranslatedText textKey={link.key} />
-            </a>
+            link.href.startsWith('/#') ? (
+              <a
+                key={index}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
+              >
+                <TranslatedText textKey={link.key} />
+              </a>
+            ) : (
+              <Link
+                key={index}
+                to={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
+              >
+                <TranslatedText textKey={link.key} />
+              </Link>
+            )
           ))}
           
           <Link

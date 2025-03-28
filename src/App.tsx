@@ -8,7 +8,11 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import CustomCursor from "./components/ui/CustomCursor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ClientArea from "./pages/VirtualOffice"; // Updated import name
+import ClientArea from "./pages/VirtualOffice";
+import EventSecurity from "./pages/EventSecurity";
+import SecurityAudits from "./pages/SecurityAudits";
+import Installations from "./pages/Installations";
+import CyberSecurity from "./pages/CyberSecurity";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +26,11 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/client-area" element={<ClientArea />} /> {/* Updated route path */}
+            <Route path="/client-area" element={<ClientArea />} />
+            <Route path="/event-security" element={<EventSecurity />} />
+            <Route path="/security-audits" element={<SecurityAudits />} />
+            <Route path="/installations" element={<Installations />} />
+            <Route path="/cyber-security" element={<CyberSecurity />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

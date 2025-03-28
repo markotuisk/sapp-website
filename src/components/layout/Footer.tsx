@@ -1,6 +1,7 @@
 
 import { Shield, Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -35,24 +36,24 @@ const Footer = () => {
             <h3 className="font-display text-lg font-semibold mb-6">Services</h3>
             <ul className="space-y-4">
               <li>
-                <a href="#event-security" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                <Link to="/event-security" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
                   Event Security
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#security-audits" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                <Link to="/security-audits" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
                   Security Audits
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#technology" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                <Link to="/installations" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
                   Technology Installations
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#cyber-security" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                <Link to="/cyber-security" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
                   Cyber Security
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -62,12 +63,12 @@ const Footer = () => {
             <h3 className="font-display text-lg font-semibold mb-6">Company</h3>
             <ul className="space-y-4">
               <li>
-                <a href="#about" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                <a href="/#about" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#partners" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                <a href="/#partners" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
                   Partners
                 </a>
               </li>

@@ -5,6 +5,7 @@ import ServiceCard from '@/components/ui/ServiceCard';
 import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
   const [ref, inView] = useInView({
@@ -27,7 +28,7 @@ const Services = () => {
         "Incident Management",
         "Third-Party Event Security Integration"
       ],
-      href: "#event-security",
+      href: "/event-security", // Updated to use new route
       delay: 100,
     },
     {
@@ -42,7 +43,7 @@ const Services = () => {
         "TSCM Inspections",
         "Third-Party Certification Support"
       ],
-      href: "#security-audits",
+      href: "/security-audits", // Updated to use new route
       delay: 200,
     },
     {
@@ -59,7 +60,7 @@ const Services = () => {
         "Network Security Systems",
         "Enterprise System Integration"
       ],
-      href: "#technology",
+      href: "/installations", // Updated to use new route
       delay: 300,
     },
     {
@@ -74,7 +75,7 @@ const Services = () => {
         "Security Awareness Training",
         "Third-Party Security Integrations"
       ],
-      href: "#cyber-security",
+      href: "/cyber-security", // Updated to use new route
       delay: 400,
     }
   ];
@@ -113,7 +114,9 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <ServiceCard key={index} {...service} />
+            <Link key={index} to={service.href} className="block">
+              <ServiceCard {...service} />
+            </Link>
           ))}
         </div>
       </div>
