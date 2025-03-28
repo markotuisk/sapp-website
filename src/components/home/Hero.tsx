@@ -101,7 +101,7 @@ const Hero = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
               <img 
-                src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
+                src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
                 alt="Security Technology" 
                 className="relative z-10 rounded-xl shadow-2xl"
               />
