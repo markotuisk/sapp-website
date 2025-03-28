@@ -81,23 +81,23 @@ const Navbar = () => {
                       <NavigationMenuLink 
                         href={link.href}
                         className={cn(
-                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group whitespace-nowrap',
+                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap',
                           isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
                         )}
                       >
                         <TranslatedText textKey={link.key} />
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
                       </NavigationMenuLink>
                     ) : (
                       <Link 
                         to={link.href}
                         className={cn(
-                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group whitespace-nowrap flex items-center',
+                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap flex items-center',
                           isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
                         )}
                       >
                         <TranslatedText textKey={link.key} />
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sapp-blue transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
                       </Link>
                     )}
                   </NavigationMenuItem>
@@ -168,18 +168,20 @@ const Navbar = () => {
                 key={index}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
+                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100 relative group/nav"
               >
                 <TranslatedText textKey={link.key} />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
               </a>
             ) : (
               <Link
                 key={index}
                 to={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100"
+                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100 relative group/nav"
               >
                 <TranslatedText textKey={link.key} />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
               </Link>
             )
           ))}
