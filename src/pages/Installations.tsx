@@ -20,8 +20,15 @@ const Installations = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white">
-          <div className="container mx-auto px-4">
+        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-cover bg-center opacity-5" 
+            style={{ 
+              backgroundImage: "url('/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png')",
+              backgroundBlendMode: "overlay"
+            }}
+          ></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <div 
                 ref={ref}
@@ -96,32 +103,70 @@ const Installations = () => {
                   <TranslatedText textKey="contactUs" />
                 </Button>
               </div>
-              <div className="bg-slate-100 p-8 rounded-xl">
-                <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Third-Party Technology Partners</h3>
-                <p className="text-sapp-gray mb-6">
-                  We integrate with leading third-party technology providers to ensure your systems are state-of-the-art.
-                </p>
-                <ul className="space-y-4">
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Enterprise security platform integration</h4>
-                    <p className="text-sm text-sapp-gray">Seamless integration with leading enterprise security management platforms.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Biometric access control solutions</h4>
-                    <p className="text-sm text-sapp-gray">Advanced biometric identification systems for enhanced access security.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">AI-powered surveillance analytics</h4>
-                    <p className="text-sm text-sapp-gray">Cutting-edge AI systems for intelligent monitoring and threat detection.</p>
-                  </li>
-                </ul>
+              <div className="relative">
+                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+                <img 
+                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+                  alt="Security Installation Services" 
+                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Gallery Section */}
+        <section className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-8 text-center">
+              Our Installation Portfolio
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="relative rounded-xl overflow-hidden shadow-lg h-64 group">
+                <img 
+                  src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
+                  alt="CCTV Installation" 
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/70 to-transparent flex items-end">
+                  <div className="p-6">
+                    <h3 className="text-xl font-display font-bold text-white">CCTV Systems</h3>
+                    <p className="text-white/80 text-sm">Advanced surveillance solutions</p>
+                  </div>
+                </div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-lg h-64 group">
+                <img 
+                  src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
+                  alt="Access Control" 
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/70 to-transparent flex items-end">
+                  <div className="p-6">
+                    <h3 className="text-xl font-display font-bold text-white">Access Control</h3>
+                    <p className="text-white/80 text-sm">Secure entry management systems</p>
+                  </div>
+                </div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-lg h-64 group">
+                <img 
+                  src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
+                  alt="Network Security" 
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/70 to-transparent flex items-end">
+                  <div className="p-6">
+                    <h3 className="text-xl font-display font-bold text-white">Network Security</h3>
+                    <p className="text-white/80 text-sm">Comprehensive digital protection</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-slate-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to upgrade your security infrastructure?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">

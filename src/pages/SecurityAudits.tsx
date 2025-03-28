@@ -20,8 +20,15 @@ const SecurityAudits = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white">
-          <div className="container mx-auto px-4">
+        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-cover bg-center opacity-5" 
+            style={{ 
+              backgroundImage: "url('/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png')",
+              backgroundBlendMode: "overlay"
+            }}
+          ></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <div 
                 ref={ref}
@@ -64,7 +71,15 @@ const SecurityAudits = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div>
+              <div className="relative order-2 md:order-1">
+                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+                <img 
+                  src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
+                  alt="Security Audit Process" 
+                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                />
+              </div>
+              <div className="order-1 md:order-2">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
                   Comprehensive Security Audit Services
                 </h2>
@@ -96,32 +111,35 @@ const SecurityAudits = () => {
                   <TranslatedText textKey="contactUs" />
                 </Button>
               </div>
-              <div className="bg-slate-100 p-8 rounded-xl">
-                <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Third-Party Certification Services</h3>
-                <p className="text-sapp-gray mb-6">
-                  We collaborate with specialized third-party certification bodies to ensure compliance with all relevant standards.
-                </p>
-                <ul className="space-y-4">
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">ISO certification support</h4>
-                    <p className="text-sm text-sapp-gray">Comprehensive assistance with ISO 27001, 22301, and other relevant standards.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Regulatory compliance assistance</h4>
-                    <p className="text-sm text-sapp-gray">Expert guidance on meeting industry-specific regulatory requirements.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">External pen testing coordination</h4>
-                    <p className="text-sm text-sapp-gray">Arrangement and oversight of specialized penetration testing services.</p>
-                  </li>
-                </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Image Banner Section */}
+        <section className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <div className="relative rounded-xl overflow-hidden">
+              <img 
+                src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
+                alt="Security Audit Technology" 
+                className="w-full h-64 object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-sapp-dark/70 to-transparent flex items-center">
+                <div className="px-10 max-w-lg">
+                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                    Identify Security Vulnerabilities
+                  </h3>
+                  <p className="text-white/90">
+                    Our comprehensive audits help you identify and address security gaps before they can be exploited.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-slate-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to improve your security posture?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">

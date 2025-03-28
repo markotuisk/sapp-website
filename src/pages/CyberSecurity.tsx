@@ -20,8 +20,15 @@ const CyberSecurity = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white">
-          <div className="container mx-auto px-4">
+        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-cover bg-center opacity-5" 
+            style={{ 
+              backgroundImage: "url('/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png')",
+              backgroundBlendMode: "overlay"
+            }}
+          ></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <div 
                 ref={ref}
@@ -64,7 +71,7 @@ const CyberSecurity = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div>
+              <div className="order-2 md:order-1">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
                   Comprehensive Cyber Security Services
                 </h2>
@@ -100,32 +107,76 @@ const CyberSecurity = () => {
                   <TranslatedText textKey="contactUs" />
                 </Button>
               </div>
-              <div className="bg-slate-100 p-8 rounded-xl">
-                <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Third-Party Security Solutions</h3>
-                <p className="text-sapp-gray mb-6">
-                  We partner with industry-leading third-party security providers to offer complete protection.
-                </p>
-                <ul className="space-y-4">
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Enterprise-grade SOC services</h4>
-                    <p className="text-sm text-sapp-gray">24/7 Security Operations Center monitoring and response capabilities.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Managed detection and response (MDR)</h4>
-                    <p className="text-sm text-sapp-gray">Advanced threat detection and incident response services.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Digital forensics capabilities</h4>
-                    <p className="text-sm text-sapp-gray">Expert digital forensics for incident investigation and recovery.</p>
-                  </li>
-                </ul>
+              <div className="relative order-1 md:order-2">
+                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+                <img 
+                  src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
+                  alt="Cyber Security Services" 
+                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features with Images Section */}
+        <section className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-12 text-center">
+              Comprehensive Digital Protection
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-xl shadow-md overflow-hidden group">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
+                    alt="Threat Detection" 
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-display font-bold text-sapp-dark mb-3">Threat Detection & Response</h3>
+                  <p className="text-sapp-gray text-sm">
+                    Our advanced threat detection systems identify and neutralize cyber threats before they can impact your business.
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl shadow-md overflow-hidden group">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
+                    alt="Data Encryption" 
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-display font-bold text-sapp-dark mb-3">Data Encryption & Protection</h3>
+                  <p className="text-sapp-gray text-sm">
+                    We implement robust encryption protocols to ensure your sensitive data remains secure at all times.
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl shadow-md overflow-hidden group">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+                    alt="Security Training" 
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-display font-bold text-sapp-dark mb-3">Security Awareness Training</h3>
+                  <p className="text-sapp-gray text-sm">
+                    We provide comprehensive security training to help your team recognize and avoid potential security threats.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-slate-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to enhance your cyber security?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">

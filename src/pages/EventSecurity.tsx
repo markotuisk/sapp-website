@@ -20,8 +20,15 @@ const EventSecurity = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white">
-          <div className="container mx-auto px-4">
+        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-cover bg-center opacity-5" 
+            style={{ 
+              backgroundImage: "url('/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png')",
+              backgroundBlendMode: "overlay"
+            }}
+          ></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <div 
                 ref={ref}
@@ -88,32 +95,43 @@ const EventSecurity = () => {
                   <TranslatedText textKey="contactUs" />
                 </Button>
               </div>
-              <div className="bg-slate-100 p-8 rounded-xl">
-                <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Third-Party Integrations</h3>
-                <p className="text-sapp-gray mb-6">
-                  We seamlessly integrate with specialized third-party security providers to ensure comprehensive coverage for your events.
-                </p>
-                <ul className="space-y-4">
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Executive Protection Services</h4>
-                    <p className="text-sm text-sapp-gray">Specialized close protection for executives and VIPs during events.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Credentials Verification</h4>
-                    <p className="text-sm text-sapp-gray">Advanced identity verification and access control systems.</p>
-                  </li>
-                  <li className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-sapp-dark mb-2">Technical Security Support</h4>
-                    <p className="text-sm text-sapp-gray">Specialized equipment and technical expertise for complex security requirements.</p>
-                  </li>
-                </ul>
+              <div className="relative">
+                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+                <img 
+                  src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
+                  alt="Event Security Services" 
+                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Image Banner Section */}
+        <section className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <div className="relative rounded-xl overflow-hidden">
+              <img 
+                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+                alt="Security Technology" 
+                className="w-full h-64 object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-sapp-dark/70 to-transparent flex items-center">
+                <div className="px-10 max-w-lg">
+                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                    Secure Every Aspect of Your Events
+                  </h3>
+                  <p className="text-white/90">
+                    From physical security to digital protection, we ensure your events remain confidential and secure.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-slate-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
