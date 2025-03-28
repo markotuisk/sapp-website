@@ -10,6 +10,7 @@ interface ServiceCardProps {
   items: string[];
   delay?: number;
   href: string;
+  imagePath?: string;
 }
 
 const ServiceCard = ({ 
@@ -18,7 +19,8 @@ const ServiceCard = ({
   description, 
   items, 
   delay = 0,
-  href 
+  href,
+  imagePath
 }: ServiceCardProps) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -34,10 +36,28 @@ const ServiceCard = ({
       )}
       style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
     >
-      <div className="p-6 flex-grow">
-        <div className="bg-sapp-blue/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-sapp-blue group-hover:text-white">
-          {icon}
+      {imagePath && (
+        <div className="relative h-48 overflow-hidden">
+          <img 
+            src={imagePath} 
+            alt={title} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+          <div className="absolute bottom-0 left-0 p-4">
+            <div className="bg-sapp-blue/90 backdrop-blur-sm w-12 h-12 rounded-lg flex items-center justify-center mb-1 text-white">
+              {icon}
+            </div>
+          </div>
         </div>
+      )}
+      
+      <div className="p-6 flex-grow">
+        {!imagePath && (
+          <div className="bg-sapp-blue/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-sapp-blue group-hover:text-white">
+            {icon}
+          </div>
+        )}
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-6">{description}</p>
         <ul className="space-y-2">

@@ -67,57 +67,71 @@ const About = () => {
       <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
       
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span 
-            ref={ref}
-            className={cn(
-              "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-            )}
-          >
-            About Us
-          </span>
-          <h2 
-            className={cn(
-              "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            Security expertise driven by <span className="text-sapp-blue">innovation</span>
-          </h2>
-          <p 
-            className={cn(
-              "text-sapp-gray text-lg transition-all duration-500 delay-200",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            SAPP Security is a natural evolution from a UK-based counter espionage company, 
-            now offering wider technical security expertise and automation of multiple security systems.
-          </p>
+        <div className="flex flex-col lg:flex-row items-center gap-12 mb-16">
+          <div className="lg:w-1/2 order-2 lg:order-1">
+            <div 
+              className={cn(
+                "relative rounded-xl overflow-hidden shadow-2xl transition-all duration-700",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              )}
+            >
+              <img 
+                src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
+                alt="Security Operations Center" 
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/50 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <h3 className="text-xl font-bold mb-1">Security Operations Center</h3>
+                <p className="text-sm text-white/80">State-of-the-art monitoring and response capabilities</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:w-1/2 order-1 lg:order-2">
+            <span 
+              ref={ref}
+              className={cn(
+                "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+              )}
+            >
+              About Us
+            </span>
+            <h2 
+              className={cn(
+                "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              Security expertise driven by <span className="text-sapp-blue">innovation</span>
+            </h2>
+            <p 
+              className={cn(
+                "text-sapp-gray text-lg mb-6 transition-all duration-500 delay-200",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              SAPP Security is a natural evolution from a UK-based counter espionage company, 
+              now offering wider technical security expertise and automation of multiple security systems.
+            </p>
+            <p 
+              className={cn(
+                "text-sapp-gray mb-8 transition-all duration-500 delay-300",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+            >
+              Our services range from staple physical and information security audits to complex installations of
+              technical security systems. We provide experienced technical security support to high profile corporate
+              meetings and other sensitive events.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {cards.map((card, index) => (
             <AboutCard key={index} {...card} />
           ))}
-        </div>
-
-        <div 
-          className={cn(
-            "max-w-3xl mx-auto text-center bg-white rounded-xl p-8 shadow-lg border border-gray-100 transition-all duration-700",
-            inView ? "opacity-100 translate-y-0 delay-500" : "opacity-0 translate-y-10"
-          )}
-        >
-          <p className="text-sapp-gray mb-6">
-            Our services range from staple physical and information security audits to complex installations of
-            technical security systems. We provide experienced technical security support to high profile corporate
-            meetings and other sensitive events. Our clients range from multinational corporations to high-net-worth
-            individuals.
-          </p>
-          <p className="text-sapp-gray font-medium">
-            We bring together over 20 years of global technical security experience driven by
-            analytical data-based strategies and practical Estonian logic.
-          </p>
         </div>
       </div>
     </section>

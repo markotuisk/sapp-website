@@ -16,6 +16,13 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
       {/* Background elements */}
       <div className="absolute inset-0 bg-grid opacity-30"></div>
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-10" 
+        style={{ 
+          backgroundImage: "url('/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png')",
+          backgroundBlendMode: "overlay"
+        }}
+      ></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/60"></div>
       
       {/* Floating security elements */}
@@ -33,53 +40,73 @@ const Hero = () => {
       ></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Headline */}
-          <h1 
-            className={cn(
-              "text-4xl md:text-5xl lg:text-7xl font-display font-bold text-sapp-dark leading-tight mb-6 transition-all duration-700",
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            )}
-          >
-            <TranslatedText textKey="headline" />
-          </h1>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+          <div className="max-w-2xl text-left md:w-1/2">
+            {/* Headline */}
+            <h1 
+              className={cn(
+                "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark leading-tight mb-6 transition-all duration-700",
+                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              )}
+            >
+              <TranslatedText textKey="headline" />
+            </h1>
+            
+            {/* Subheadline */}
+            <p 
+              className={cn(
+                "text-lg md:text-xl text-sapp-gray mb-8 transition-all duration-700 delay-200",
+                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              )}
+            >
+              <TranslatedText textKey="subheadline" />
+            </p>
+            
+            {/* CTA Buttons */}
+            <div 
+              className={cn(
+                "flex flex-col sm:flex-row items-start gap-4 transition-all duration-700 delay-300",
+                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              )}
+            >
+              <Button 
+                size="lg" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              >
+                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                  <TranslatedText textKey="exploreServices" />
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              >
+                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                  <TranslatedText textKey="contactUs" />
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              </Button>
+            </div>
+          </div>
           
-          {/* Subheadline */}
-          <p 
-            className={cn(
-              "text-lg md:text-xl text-sapp-gray mb-8 max-w-2xl mx-auto transition-all duration-700 delay-200",
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            )}
-          >
-            <TranslatedText textKey="subheadline" />
-          </p>
-          
-          {/* CTA Buttons */}
+          {/* Hero image */}
           <div 
             className={cn(
-              "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 delay-300",
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              "relative md:w-1/2 transition-all duration-1000 delay-500",
+              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
             )}
           >
-            <Button 
-              size="lg" 
-              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-            >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                <TranslatedText textKey="exploreServices" />
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-            >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
-                <TranslatedText textKey="contactUs" />
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-            </Button>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+              <img 
+                src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
+                alt="Security Technology" 
+                className="relative z-10 rounded-xl shadow-2xl"
+              />
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-sapp-blue/10 rounded-full blur-xl"></div>
+            </div>
           </div>
         </div>
       </div>

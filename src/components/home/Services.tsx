@@ -17,7 +17,7 @@ const Services = () => {
 
   const services = [
     {
-      icon: <Shield className="h-6 w-6 text-sapp-blue" />,
+      icon: <Shield className="h-6 w-6" />,
       title: t('eventSecurity'),
       description: "Real-time protection for high-profile confidential meetings and events. We coordinate with third-party specialists where required.",
       items: [
@@ -28,11 +28,12 @@ const Services = () => {
         "Incident Management",
         "Third-Party Event Security Integration"
       ],
-      href: "/event-security", // Updated to use new route
+      href: "/event-security",
       delay: 100,
+      imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
     },
     {
-      icon: <AlertTriangle className="h-6 w-6 text-sapp-blue" />,
+      icon: <AlertTriangle className="h-6 w-6" />,
       title: t('securityAudits'),
       description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations. Coordinated with compliance partners.",
       items: [
@@ -43,11 +44,12 @@ const Services = () => {
         "TSCM Inspections",
         "Third-Party Certification Support"
       ],
-      href: "/security-audits", // Updated to use new route
+      href: "/security-audits",
       delay: 200,
+      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
-      icon: <MonitorCheck className="h-6 w-6 text-sapp-blue" />,
+      icon: <MonitorCheck className="h-6 w-6" />,
       title: t('installations'),
       description: "Implementation of cutting-edge security systems covering CCTV, access control, speech privacy, and more. Seamless integration with existing enterprise systems.",
       items: [
@@ -60,11 +62,12 @@ const Services = () => {
         "Network Security Systems",
         "Enterprise System Integration"
       ],
-      href: "/installations", // Updated to use new route
+      href: "/installations",
       delay: 300,
+      imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
     },
     {
-      icon: <Wifi className="h-6 w-6 text-sapp-blue" />,
+      icon: <Wifi className="h-6 w-6" />,
       title: t('cyberSecurity'),
       description: "Enterprise-grade cyber security services protecting digital assets and IoT infrastructure from emerging threats. Partnerships with leading cybersecurity providers.",
       items: [
@@ -75,8 +78,9 @@ const Services = () => {
         "Security Awareness Training",
         "Third-Party Security Integrations"
       ],
-      href: "/cyber-security", // Updated to use new route
+      href: "/cyber-security",
       delay: 400,
+      imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
     }
   ];
 
