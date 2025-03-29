@@ -12,12 +12,18 @@ export const useCursorEffect = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      setHidden(false); // Make cursor visible once it moves
       requestAnimationFrame(() => {
         setPosition({ x: e.clientX, y: e.clientY });
       });
     };
 
+    const handleMouseLeave = () => {
+      setHidden(true);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
     
     // Reset cursor to default for all elements
     document.body.style.cursor = 'auto';
@@ -25,6 +31,7 @@ export const useCursorEffect = () => {
     // Cleanup on unmount
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
