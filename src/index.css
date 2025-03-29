@@ -93,9 +93,8 @@
     @apply font-display tracking-tight;
   }
   
-  a, button, input, textarea, select, [role="button"],
-  [class*="hover"], [class*="active"], [class*="focus"] {
-    cursor: none !important;
+  a, button, input, textarea, select, [role="button"] {
+    cursor: default; /* Use default cursor instead of none */
   }
 }
 
