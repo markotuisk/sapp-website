@@ -25,11 +25,13 @@ export const useCursorEffect = () => {
     const handleButtonHover = () => {
       setIsHoveringButton(true);
       setHidden(false);
+      document.body.style.cursor = 'pointer'; // Change to pointer cursor
     };
 
     const handleButtonLeave = () => {
       setIsHoveringButton(false);
       setHidden(true);
+      document.body.style.cursor = 'auto'; // Reset to default cursor
     };
 
     // Add event listeners for mouse movement
