@@ -13,8 +13,7 @@ const CustomCursor = () => {
         className="fixed pointer-events-none z-[9999] w-4 h-4 rounded-lg border border-gray-300 mix-blend-difference transition-transform duration-100 ease-out transform -translate-x-1/2 -translate-y-1/2"
         style={{ 
           left: `${position.x}px`, 
-          top: `${position.y}px`,
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+          top: `${position.y}px`
         }}
       />
       {/* Small dot in the center */}
