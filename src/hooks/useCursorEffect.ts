@@ -11,11 +11,10 @@ export const useCursorEffect = () => {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
-    // Add cursor styles to the body
-    document.body.style.cursor = 'none';
+    // Add a more standard cursor style with slight curvature
+    document.body.style.cursor = 'default';
     
     const handleMouseMove = (e: MouseEvent) => {
-      // For smoother movement, you can use requestAnimationFrame
       requestAnimationFrame(() => {
         setPosition({ x: e.clientX, y: e.clientY });
       });
