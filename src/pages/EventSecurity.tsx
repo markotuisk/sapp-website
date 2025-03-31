@@ -1,4 +1,3 @@
-
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -12,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 
 const EventSecurity = () => {
@@ -22,14 +22,16 @@ const EventSecurity = () => {
   });
 
   const [openDialog, setOpenDialog] = useState<string | null>(null);
+  const [dialogStep, setDialogStep] = useState<'form' | 'preview'>('form');
   const [formData, setFormData] = useState({
     name: '',
     organisation: '',
     email: '',
-    phone: ''
+    phone: '',
+    notes: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
@@ -43,6 +45,11 @@ const EventSecurity = () => {
       return;
     }
     
+    // Move to preview step
+    setDialogStep('preview');
+  };
+  
+  const handleSendEmail = () => {
     // Create mailto link with formatted body
     const subject = `Enquiry about ${openDialog} Event Security Services`;
     const body = `
@@ -51,17 +58,29 @@ Organisation: ${formData.organisation}
 Email: ${formData.email}
 Phone: ${formData.phone}
 Service: ${openDialog}
+${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
     `;
     
     // Open email client
     window.location.href = `mailto:contact@sappsecurity.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
     // Show success message
-    toast.success('Your request has been prepared for sending. Your default email application should open shortly.');
+    toast.success('Your email client should open shortly with your request details.');
     
     // Reset form and close dialog
-    setFormData({ name: '', organisation: '', email: '', phone: '' });
+    setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
+    setDialogStep('form');
     setOpenDialog(null);
+  };
+
+  const handleBack = () => {
+    setDialogStep('form');
+  };
+
+  const handleCancel = () => {
+    setDialogStep('form');
+    setOpenDialog(null);
+    setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
   };
 
   const serviceDetails = [
@@ -270,42 +289,114 @@ Service: ${openDialog}
                     <p className="text-sapp-gray text-sm mb-6">{service.description}</p>
                   </CardContent>
                   <CardFooter>
-                    <Dialog open={openDialog === service.title} onOpenChange={(open) => setOpenDialog(open ? service.title : null)}>
+                    <Dialog open={openDialog === service.title} onOpenChange={(open) => {
+                      if (open) {
+                        setOpenDialog(service.title);
+                        setDialogStep('form');
+                      } else {
+                        setOpenDialog(null);
+                        setDialogStep('form');
+                        setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
+                      }
+                    }}>
                       <DialogTrigger asChild>
                         <Button variant="outline" className="w-full">LEARN MORE</Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>Request Information: {service.title}</DialogTitle>
-                          <DialogDescription>
-                            Please provide your details and we'll contact you with more information about our {service.title.toLowerCase()} services.
-                          </DialogDescription>
-                        </DialogHeader>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="name">Your Name</Label>
-                              <Input id="name" value={formData.name} onChange={handleInputChange} required />
+                        {dialogStep === 'form' ? (
+                          <>
+                            <DialogHeader>
+                              <DialogTitle>Request Information: {service.title}</DialogTitle>
+                              <DialogDescription>
+                                Please provide your details and we'll contact you with more information about our {service.title.toLowerCase()} services.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                              <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                  <Label htmlFor="name">Your Name</Label>
+                                  <Input id="name" value={formData.name} onChange={handleInputChange} required />
+                                </div>
+                                <div className="space-y-2">
+                                  <Label htmlFor="organisation">Organisation</Label>
+                                  <Input id="organisation" value={formData.organisation} onChange={handleInputChange} required />
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                  <Label htmlFor="email">Email Address</Label>
+                                  <Input id="email" type="email" value={formData.email} onChange={handleInputChange} required />
+                                </div>
+                                <div className="space-y-2">
+                                  <Label htmlFor="phone">Phone Number</Label>
+                                  <Input id="phone" value={formData.phone} onChange={handleInputChange} />
+                                </div>
+                              </div>
+                              <DialogFooter className="mt-4">
+                                <Button type="submit">Continue to Preview</Button>
+                              </DialogFooter>
+                            </form>
+                          </>
+                        ) : (
+                          <>
+                            <DialogHeader>
+                              <DialogTitle>Preview Your Request</DialogTitle>
+                              <DialogDescription>
+                                Please review your information below before sending. Your default email client will open with this information.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="space-y-4 mt-4">
+                              <div className="bg-slate-50 p-4 rounded-md border border-gray-100">
+                                <h4 className="font-semibold text-sm text-slate-600 mb-2">REQUEST DETAILS</h4>
+                                <div className="space-y-2 text-sm">
+                                  <div className="grid grid-cols-3">
+                                    <span className="text-slate-500 font-medium">Service:</span>
+                                    <span className="col-span-2">{openDialog}</span>
+                                  </div>
+                                  <div className="grid grid-cols-3">
+                                    <span className="text-slate-500 font-medium">Name:</span>
+                                    <span className="col-span-2">{formData.name}</span>
+                                  </div>
+                                  <div className="grid grid-cols-3">
+                                    <span className="text-slate-500 font-medium">Organisation:</span>
+                                    <span className="col-span-2">{formData.organisation}</span>
+                                  </div>
+                                  <div className="grid grid-cols-3">
+                                    <span className="text-slate-500 font-medium">Email:</span>
+                                    <span className="col-span-2">{formData.email}</span>
+                                  </div>
+                                  {formData.phone && (
+                                    <div className="grid grid-cols-3">
+                                      <span className="text-slate-500 font-medium">Phone:</span>
+                                      <span className="col-span-2">{formData.phone}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="notes">Additional Notes (Optional)</Label>
+                                <Textarea 
+                                  id="notes" 
+                                  placeholder="Add any specific questions or requirements" 
+                                  value={formData.notes}
+                                  onChange={handleInputChange}
+                                  className="min-h-[100px] border-gray-200 focus-visible:ring-sapp-blue"
+                                />
+                              </div>
                             </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="organisation">Organisation</Label>
-                              <Input id="organisation" value={formData.organisation} onChange={handleInputChange} required />
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="email">Email Address</Label>
-                              <Input id="email" type="email" value={formData.email} onChange={handleInputChange} required />
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="phone">Phone Number</Label>
-                              <Input id="phone" value={formData.phone} onChange={handleInputChange} />
-                            </div>
-                          </div>
-                          <DialogFooter className="mt-4">
-                            <Button type="submit">Send Request</Button>
-                          </DialogFooter>
-                        </form>
+                            <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
+                              <Button variant="outline" type="button" onClick={handleBack} className="sm:mr-auto">
+                                Back to Form
+                              </Button>
+                              <Button variant="outline" type="button" onClick={handleCancel}>
+                                Cancel
+                              </Button>
+                              <Button type="button" onClick={handleSendEmail}>
+                                Open Email Client
+                              </Button>
+                            </DialogFooter>
+                          </>
+                        )}
                       </DialogContent>
                     </Dialog>
                   </CardFooter>
