@@ -2,6 +2,8 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
+import { Button } from './button';
+import { Link } from 'react-router-dom';
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -11,6 +13,7 @@ interface ServiceCardProps {
   delay?: number;
   href: string;
   imagePath?: string;
+  onLearnMoreClick?: () => void;
 }
 
 const ServiceCard = ({ 
@@ -20,7 +23,8 @@ const ServiceCard = ({
   items, 
   delay = 0,
   href,
-  imagePath
+  imagePath,
+  onLearnMoreClick
 }: ServiceCardProps) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -61,7 +65,7 @@ const ServiceCard = ({
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-6">{description}</p>
         {items.length > 0 && (
-          <ul className="space-y-2">
+          <ul className="space-y-2 mb-6">
             {items.map((item, index) => (
               <li key={index} className="flex items-start">
                 <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
@@ -70,6 +74,24 @@ const ServiceCard = ({
             ))}
           </ul>
         )}
+        <div className="grid grid-cols-2 gap-2 mt-auto">
+          <Link to={href} className="w-full">
+            <Button 
+              variant="outline" 
+              className="w-full transition-all duration-300 hover:scale-105"
+              aria-label={`Read more about ${title}`}
+            >
+              Read Details
+            </Button>
+          </Link>
+          <Button 
+            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 hover:scale-105"
+            aria-label={`Learn more about ${title}`}
+            onClick={onLearnMoreClick}
+          >
+            Learn More
+          </Button>
+        </div>
       </div>
     </div>
   );
