@@ -5,7 +5,6 @@ import { Button } from './button';
 import { Link } from 'react-router-dom';
 
 interface ServiceCardProps {
-  icon?: React.ReactNode; // Made optional as we'll be removing icons
   title: string;
   description: string;
   items: string[];
@@ -49,7 +48,7 @@ const ServiceCard = ({
         </div>
       )}
       
-      <div className="p-6 flex-grow">
+      <div className="p-6 flex-grow flex flex-col">
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-6">{description}</p>
         {items.length > 0 && (
@@ -62,18 +61,18 @@ const ServiceCard = ({
             ))}
           </ul>
         )}
-        <div className="grid grid-cols-2 gap-2 mt-auto">
+        <div className="grid grid-cols-1 gap-2 mt-auto">
           <Link to={href} className="w-full">
             <Button 
               variant="outline" 
-              className="w-full transition-all duration-300 hover:bg-gray-100"
+              className="w-full transition-all duration-300 hover:bg-gray-100 text-left justify-start"
               aria-label={`Read more about ${title}`}
             >
               Read Details
             </Button>
           </Link>
           <Button 
-            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300"
+            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 text-left justify-start"
             aria-label={`Learn more about ${title}`}
             onClick={onLearnMoreClick}
           >

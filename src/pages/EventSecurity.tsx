@@ -1,4 +1,3 @@
-
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -336,13 +335,14 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   href={service.href}
                   imagePath={service.imagePath}
                   onLearnMoreClick={() => handleServiceLearnMore(service.title)}
+                  delay={index * 100}
                 />
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section - Updated routing to /contact */}
+        {/* CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
