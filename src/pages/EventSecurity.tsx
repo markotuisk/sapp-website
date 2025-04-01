@@ -237,7 +237,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Section 4: HOW - Our Approach - Updated layout to grid */}
+        {/* Section 4: HOW - Our Approach - UPDATED to grid layout with animation */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -255,41 +255,59 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   number: 1,
                   title: "Assessment",
                   description: "Comprehensive risk assessment of the venue, participants, and event type",
-                  delay: 0
+                  icon: <FileSearch className="h-8 w-8 text-white" />,
+                  color: "from-sapp-blue to-sapp-blue/80",
+                  delay: 100
                 },
                 {
                   number: 2,
                   title: "Planning",
                   description: "Tailored security plan including technical audits and personnel requirements",
-                  delay: 150
+                  icon: <CalendarCheck className="h-8 w-8 text-white" />,
+                  color: "from-sapp-blue/90 to-sapp-blue/70",
+                  delay: 200
                 },
                 {
                   number: 3,
                   title: "Implementation",
                   description: "Deployment of security measures and monitoring systems before and during the event",
+                  icon: <ShieldCheck className="h-8 w-8 text-white" />,
+                  color: "from-sapp-blue/80 to-sapp-blue/60",
                   delay: 300
                 },
                 {
                   number: 4,
                   title: "Monitoring",
                   description: "Real-time surveillance with immediate incident response capabilities",
-                  delay: 450
+                  icon: <MonitorCheck className="h-8 w-8 text-white" />,
+                  color: "from-sapp-blue/70 to-sapp-blue/50",
+                  delay: 400
                 }
               ].map((step, index) => (
                 <div 
                   key={index} 
-                  className="bg-white p-6 rounded-lg shadow-md border border-gray-100 transition-all duration-500 transform hover:-translate-y-1 hover:shadow-lg"
-                  style={{ 
-                    animationDelay: `${step.delay}ms`,
-                    animation: "fade-in 0.6s ease-out forwards",
-                    opacity: 0
-                  }}
+                  className={cn(
+                    "rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 group",
+                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  )}
+                  style={{ transitionDelay: `${step.delay}ms` }}
                 >
-                  <div className="bg-sapp-blue/10 w-14 h-14 rounded-full flex items-center justify-center mb-4">
-                    <span className="text-sapp-blue font-bold text-xl">{step.number}</span>
+                  <div className={`bg-gradient-to-br ${step.color} p-5`}>
+                    <div className="flex justify-between items-center">
+                      <div className="bg-white/20 rounded-full h-12 w-12 flex items-center justify-center backdrop-blur-sm">
+                        {step.icon}
+                      </div>
+                      <span className="text-white text-5xl font-display font-bold opacity-50">{step.number}</span>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-2 text-sapp-dark">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.description}</p>
+                  <div className="p-5 bg-white">
+                    <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark group-hover:text-sapp-blue transition-colors duration-300">
+                      {step.title}
+                    </h3>
+                    <p className="text-sapp-gray text-sm">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
