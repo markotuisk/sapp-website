@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Menu, X, LogIn } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -20,6 +20,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +47,13 @@ const Navbar = () => {
     { key: 'partners' as const, href: '/#partners' },
     { key: 'contact' as const, href: '/#contact' },
   ];
+
+  const isActivePath = (path: string) => {
+    if (path.startsWith('/#')) {
+      return currentPath === '/' && path.endsWith(location.hash);
+    }
+    return currentPath === path;
+  };
 
   return (
     <header
@@ -74,33 +83,47 @@ const Navbar = () => {
           <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
-                {mainNavLinks.map((link, index) => (
-                  <NavigationMenuItem key={index}>
-                    {link.href.startsWith('/#') ? (
-                      <NavigationMenuLink 
-                        href={link.href}
-                        className={cn(
-                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap',
-                          isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
-                        )}
-                      >
-                        <TranslatedText textKey={link.key} />
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
-                      </NavigationMenuLink>
-                    ) : (
-                      <Link 
-                        to={link.href}
-                        className={cn(
-                          'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap flex items-center',
-                          isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
-                        )}
-                      >
-                        <TranslatedText textKey={link.key} />
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
-                      </Link>
-                    )}
-                  </NavigationMenuItem>
-                ))}
+                {mainNavLinks.map((link, index) => {
+                  const active = isActivePath(link.href);
+                  
+                  return (
+                    <NavigationMenuItem key={index}>
+                      {link.href.startsWith('/#') ? (
+                        <NavigationMenuLink 
+                          href={link.href}
+                          className={cn(
+                            'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap',
+                            active 
+                              ? 'text-sapp-blue font-semibold' 
+                              : isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
+                          )}
+                        >
+                          <TranslatedText textKey={link.key} />
+                          <span className={cn(
+                            "absolute bottom-0 left-0 h-0.5 bg-sapp-blue transition-all duration-300",
+                            active ? "w-full" : "w-0 group-hover/nav:w-full"
+                          )}></span>
+                        </NavigationMenuLink>
+                      ) : (
+                        <Link 
+                          to={link.href}
+                          className={cn(
+                            'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap flex items-center',
+                            active 
+                              ? 'text-sapp-blue font-semibold' 
+                              : isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
+                          )}
+                        >
+                          <TranslatedText textKey={link.key} />
+                          <span className={cn(
+                            "absolute bottom-0 left-0 h-0.5 bg-sapp-blue transition-all duration-300",
+                            active ? "w-full" : "w-0 group-hover/nav:w-full"
+                          )}></span>
+                        </Link>
+                      )}
+                    </NavigationMenuItem>
+                  );
+                })}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -161,29 +184,43 @@ const Navbar = () => {
             <LanguageSelector />
           </div>
           
-          {mainNavLinks.map((link, index) => (
-            link.href.startsWith('/#') ? (
+          {mainNavLinks.map((link, index) => {
+            const active = isActivePath(link.href);
+            
+            return link.href.startsWith('/#') ? (
               <a
                 key={index}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100 relative group/nav"
+                className={cn(
+                  "text-lg font-medium transition-colors py-2 border-b border-gray-100 relative group/nav",
+                  active ? "text-sapp-blue font-semibold" : "text-sapp-dark hover:text-sapp-blue"
+                )}
               >
                 <TranslatedText textKey={link.key} />
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
+                <span className={cn(
+                  "absolute bottom-0 left-0 h-0.5 bg-sapp-blue transition-all duration-300",
+                  active ? "w-full" : "w-0 group-hover/nav:w-full"
+                )}></span>
               </a>
             ) : (
               <Link
                 key={index}
                 to={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-medium text-sapp-dark hover:text-sapp-blue transition-colors py-2 border-b border-gray-100 relative group/nav"
+                className={cn(
+                  "text-lg font-medium transition-colors py-2 border-b border-gray-100 relative group/nav",
+                  active ? "text-sapp-blue font-semibold" : "text-sapp-dark hover:text-sapp-blue" 
+                )}
               >
                 <TranslatedText textKey={link.key} />
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sapp-blue transition-all duration-300 group-hover/nav:w-full"></span>
+                <span className={cn(
+                  "absolute bottom-0 left-0 h-0.5 bg-sapp-blue transition-all duration-300",
+                  active ? "w-full" : "w-0 group-hover/nav:w-full"
+                )}></span>
               </Link>
-            )
-          ))}
+            );
+          })}
           
           <Link
             to="/client-area"

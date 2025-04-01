@@ -22,8 +22,8 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Professional & <span className="text-sapp-blue">Technical</span><br />
-            Security Services
+            Professional &<br />
+            <span className="text-sapp-blue">Technical</span> Security Services
           </h1>
           
           <p 

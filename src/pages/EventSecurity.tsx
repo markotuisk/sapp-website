@@ -1,3 +1,4 @@
+
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -14,7 +15,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import ServiceCard from '@/components/ui/ServiceCard';
-import { Card } from '@/components/ui/card';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
@@ -126,7 +126,9 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                 )}
                 ref={ref}
               >
-                Real-time protection for high-profile confidential meetings and events
+                Real-time <span className="text-sapp-blue">protection</span> for<br />
+                high-profile <span className="text-sapp-blue">confidential</span><br />
+                meetings and events
               </h1>
               <p 
                 className={cn(
@@ -134,7 +136,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                Specialised executive-level Event Security and technical support provider protecting corporate board and management meetings. SAPP Security is experienced in protecting management and board meetings, results rehearsals, sports events, brainstorming and strategy planning meetings with technical security for 20 years.
+                SAPP Security is a trusted provider of executive Event Security, protecting leadership teams at board meetings, earnings rehearsals, and strategic offsites. We deliver discreet technical support to safeguard sensitive decisions and reputations.
               </p>
               
               <div 
