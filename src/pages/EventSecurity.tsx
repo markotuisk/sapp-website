@@ -1,4 +1,4 @@
-import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import ServiceCard from '@/components/ui/ServiceCard';
 import { Card } from '@/components/ui/card';
-import AlertCircle from 'lucide-react/AlertCircle';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
