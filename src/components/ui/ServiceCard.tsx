@@ -1,12 +1,11 @@
 
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { ArrowRight } from 'lucide-react';
 import { Button } from './button';
 import { Link } from 'react-router-dom';
 
 interface ServiceCardProps {
-  icon: React.ReactNode;
+  icon?: React.ReactNode; // Made optional as we'll be removing icons
   title: string;
   description: string;
   items: string[];
@@ -17,7 +16,6 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ 
-  icon, 
   title, 
   description, 
   items, 
@@ -48,20 +46,10 @@ const ServiceCard = ({
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-          <div className="absolute bottom-0 left-0 p-4">
-            <div className="bg-sapp-blue/90 backdrop-blur-sm w-12 h-12 rounded-lg flex items-center justify-center mb-1 text-white">
-              {icon}
-            </div>
-          </div>
         </div>
       )}
       
       <div className="p-6 flex-grow">
-        {!imagePath && (
-          <div className="bg-sapp-blue/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-sapp-blue group-hover:text-white">
-            {icon}
-          </div>
-        )}
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-6">{description}</p>
         {items.length > 0 && (
@@ -78,14 +66,14 @@ const ServiceCard = ({
           <Link to={href} className="w-full">
             <Button 
               variant="outline" 
-              className="w-full transition-all duration-300 hover:scale-105"
+              className="w-full transition-all duration-300 hover:bg-gray-100"
               aria-label={`Read more about ${title}`}
             >
               Read Details
             </Button>
           </Link>
           <Button 
-            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 hover:scale-105"
+            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300"
             aria-label={`Learn more about ${title}`}
             onClick={onLearnMoreClick}
           >

@@ -1,7 +1,45 @@
 
-import { Shield, Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+
+// Custom TikTok icon since it's not available in lucide-react
+const TikTokIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-tiktok"
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
+// Custom SAPP Security logo component
+const SAPPLogo = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-sapp-blue"
+  >
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+    <path d="M8 11h8" />
+    <path d="M12 15V7" />
+  </svg>
+);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,10 +48,10 @@ const Footer = () => {
     <footer className="bg-sapp-dark text-white pt-16 pb-8">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Company info */}
+          {/* Company info - Updated with new logo */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-sapp-blue" />
+              <SAPPLogo />
               <span className="font-display font-bold text-xl">
                 SAPP <span className="text-sapp-blue">Security</span>
               </span>
@@ -27,6 +65,9 @@ const Footer = () => {
               </a>
               <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
                 <Twitter className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
+                <TikTokIcon />
               </a>
             </div>
           </div>
@@ -108,9 +149,11 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-            <Button className="mt-6 bg-sapp-blue hover:bg-sapp-blue/90 text-white">
-              Contact Us
-            </Button>
+            <Link to="/contact">
+              <Button className="mt-6 bg-sapp-blue hover:bg-sapp-blue/90 text-white">
+                Contact Us
+              </Button>
+            </Link>
           </div>
         </div>
         

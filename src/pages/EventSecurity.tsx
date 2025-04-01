@@ -9,12 +9,13 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import ServiceCard from '@/components/ui/ServiceCard';
+import { Card } from '@/components/ui/card';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
@@ -88,28 +89,24 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
   const serviceDetails = [
     {
       title: "Venue Security Audits",
-      icon: <ShieldCheck className="h-6 w-6" />,
       description: "Venues for sensitive and high-profile events typically have weak security. Our audits ensure minimum security measures are in place and your organisation's information remains protected.",
       href: "/services/venue-security-audits",
       imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
     },
     {
       title: "Event Monitoring",
-      icon: <MonitorCheck className="h-6 w-6" />,
       description: "Real-time technical and physical monitoring for confidential meetings, with incident management to handle potential security breaches swiftly and professionally.",
       href: "/services/event-monitoring",
       imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
     },
     {
       title: "Secure Technology",
-      icon: <FileSearch className="h-6 w-6" />,
       description: "Comprehensive audit of all technology used at sensitive meetings with recommendations for more secure alternatives to protect against cyber and espionage attacks.",
       href: "/services/secure-technology",
       imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
       title: "Close Protection",
-      icon: <Users className="h-6 w-6" />,
       description: "Professional close protection services for larger restricted events like AGMs and high-profile executives, especially at venues without on-site security.",
       href: "/services/close-protection",
       imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
@@ -125,8 +122,8 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Section 1: Hero Section with WHAT */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-100 to-white relative overflow-hidden">
+        {/* Section 1: Hero Section with WHAT - Updated with solid color background */}
+        <section className="pt-36 pb-20 bg-slate-100 relative overflow-hidden">
           <div 
             className="container mx-auto px-4 relative z-10"
             ref={ref}
@@ -197,12 +194,12 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Section 3: Quote Banner */}
+        {/* Section 3: Quote Banner - Added animations */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white p-8 rounded-xl shadow-md">
+                <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 animate-[fade-in_0.6s_ease-out]">
                   <div className="relative">
                     <div className="absolute -top-6 -left-6 text-gray-200 opacity-30">
                       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
@@ -212,13 +209,14 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                     <blockquote className="text-xl font-display font-medium text-sapp-dark italic">
                       "Security is always seen as too much until the day it's not enough."
                     </blockquote>
-                    <div className="mt-4 text-sapp-blue font-semibold">
-                      - William H. Webster, former FBI Director
+                    <div className="mt-4">
+                      <div className="text-sapp-blue font-semibold">William H. Webster</div>
+                      <div className="text-sapp-gray text-sm">Former FBI Director</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-white p-8 rounded-xl shadow-md">
+                <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 animate-[fade-in_0.6s_ease-out_0.2s]">
                   <div className="relative">
                     <div className="absolute -top-6 -left-6 text-gray-200 opacity-30">
                       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
@@ -228,8 +226,9 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                     <blockquote className="text-xl font-display font-medium text-sapp-dark italic">
                       "It takes 20 years to build a reputation and a few minutes to ruin it."
                     </blockquote>
-                    <div className="mt-4 text-sapp-blue font-semibold">
-                      - Stephane Nappo, Global Chief Information Security Officer
+                    <div className="mt-4">
+                      <div className="text-sapp-blue font-semibold">Stephane Nappo</div>
+                      <div className="text-sapp-gray text-sm">Global Chief Information Security Officer</div>
                     </div>
                   </div>
                 </div>
@@ -238,7 +237,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Section 4: HOW - Our Approach */}
+        {/* Section 4: HOW - Our Approach - Updated layout to grid */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -250,43 +249,54 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">1</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              {[
+                {
+                  number: 1,
+                  title: "Assessment",
+                  description: "Comprehensive risk assessment of the venue, participants, and event type",
+                  delay: 0
+                },
+                {
+                  number: 2,
+                  title: "Planning",
+                  description: "Tailored security plan including technical audits and personnel requirements",
+                  delay: 150
+                },
+                {
+                  number: 3,
+                  title: "Implementation",
+                  description: "Deployment of security measures and monitoring systems before and during the event",
+                  delay: 300
+                },
+                {
+                  number: 4,
+                  title: "Monitoring",
+                  description: "Real-time surveillance with immediate incident response capabilities",
+                  delay: 450
+                }
+              ].map((step, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white p-6 rounded-lg shadow-md border border-gray-100 transition-all duration-500 transform hover:-translate-y-1 hover:shadow-lg"
+                  style={{ 
+                    animationDelay: `${step.delay}ms`,
+                    animation: "fade-in 0.6s ease-out forwards",
+                    opacity: 0
+                  }}
+                >
+                  <div className="bg-sapp-blue/10 w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                    <span className="text-sapp-blue font-bold text-xl">{step.number}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 text-sapp-dark">{step.title}</h3>
+                  <p className="text-gray-600 text-sm">{step.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Assessment</h3>
-                <p className="text-gray-600 text-sm">Comprehensive risk assessment of the venue, participants, and event type</p>
-              </div>
-              
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">2</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Planning</h3>
-                <p className="text-gray-600 text-sm">Tailored security plan including technical audits and personnel requirements</p>
-              </div>
-              
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">3</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Implementation</h3>
-                <p className="text-gray-600 text-sm">Deployment of security measures and monitoring systems before and during the event</p>
-              </div>
-              
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">4</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Monitoring</h3>
-                <p className="text-gray-600 text-sm">Real-time surveillance with immediate incident response capabilities</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Section 5: Service Columns */}
+        {/* Section 5: Service Columns - Updated to remove icons and align buttons */}
         <section className="py-16 bg-slate-50" id="executive-events">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -302,7 +312,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
               {serviceDetails.map((service, index) => (
                 <ServiceCard 
                   key={index}
-                  icon={service.icon}
                   title={service.title}
                   description={service.description}
                   items={[]}
@@ -315,7 +324,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section - Updated routing to /contact */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
