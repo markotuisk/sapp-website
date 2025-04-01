@@ -349,7 +349,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
               Our team of event security experts is ready to create a tailored security plan for your upcoming corporate events.
             </p>
-            <Link to="/contact">
+            <Link to="/#contact">
               <Button 
                 size="lg" 
                 className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
