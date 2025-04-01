@@ -37,16 +37,7 @@ const ServiceCard = ({
       )}
       style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
     >
-      {imagePath && (
-        <div className="relative h-48 overflow-hidden">
-          <img 
-            src={imagePath} 
-            alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
-        </div>
-      )}
+      {/* Remove large image header/icon block as requested */}
       
       <div className="p-6 flex-grow flex flex-col">
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
@@ -61,18 +52,18 @@ const ServiceCard = ({
             ))}
           </ul>
         )}
-        <div className="grid grid-cols-1 gap-2 mt-auto">
-          <Link to={href} className="w-full">
+        <div className="mt-auto space-y-2">
+          <Link to={href} className="block w-full">
             <Button 
               variant="outline" 
-              className="w-full transition-all duration-300 hover:bg-gray-100 text-left justify-start"
+              className="w-full text-sm py-2 border-sapp-blue text-sapp-dark rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
               aria-label={`Read more about ${title}`}
             >
               Read Details
             </Button>
           </Link>
           <Button 
-            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 text-left justify-start"
+            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm py-2 rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
             aria-label={`Learn more about ${title}`}
             onClick={onLearnMoreClick}
           >
