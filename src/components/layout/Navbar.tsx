@@ -36,10 +36,10 @@ const Navbar = () => {
     };
   }, []);
 
-  // Updated to use proper routes for service pages
+  // Updated to rearrange the order of security audits and event security
   const mainNavLinks = [
-    { key: 'eventSecurity' as const, href: '/event-security' },
     { key: 'securityAudits' as const, href: '/security-audits' },
+    { key: 'eventSecurity' as const, href: '/event-security' },
     { key: 'installations' as const, href: '/installations' },
     { key: 'cyberSecurity' as const, href: '/cyber-security' },
     { key: 'about' as const, href: '/#about' },

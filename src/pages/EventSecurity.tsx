@@ -1,450 +1,283 @@
 
-import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
+import { cn } from '@/lib/utils';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
-import TranslatedText from '@/components/ui/TranslatedText';
-import { useInView } from 'react-intersection-observer';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
+import { Shield, MapPin, CalendarCheck, Laptop, Users, ArrowRight } from 'lucide-react';
 import ServiceCard from '@/components/ui/ServiceCard';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import LearnMoreModal from '@/components/ui/LearnMoreModal';
+import QuoteCard from '@/components/ui/QuoteCard';
 
 const EventSecurity = () => {
-  const { t } = useLanguage();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
-
-  const [openDialog, setOpenDialog] = useState<string | null>(null);
-  const [dialogStep, setDialogStep] = useState<'form' | 'preview'>('form');
-  const [formData, setFormData] = useState({
-    name: '',
-    organisation: '',
-    email: '',
-    phone: '',
-    notes: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Email validation
-    if (!formData.email.includes('@') || !formData.email.includes('.')) {
-      toast.error('Please enter a valid email address');
-      return;
-    }
-    
-    // Move to preview step
-    setDialogStep('preview');
-  };
   
-  const handleSendEmail = () => {
-    // Create mailto link with formatted body
-    const subject = `Enquiry about ${openDialog} Event Security Services`;
-    const body = `
-Name: ${formData.name}
-Organisation: ${formData.organisation}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Service: ${openDialog}
-${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
-    `;
-    
-    // Open email client
-    window.location.href = `mailto:contact@sappsecurity.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Show success message
-    toast.success('Your email client should open shortly with your request details.');
-    
-    // Reset form and close dialog
-    setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
-    setDialogStep('form');
-    setOpenDialog(null);
-  };
-
-  const handleBack = () => {
-    setDialogStep('form');
-  };
-
-  const handleCancel = () => {
-    setDialogStep('form');
-    setOpenDialog(null);
-    setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
-  };
-
-  const serviceDetails = [
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [selectedService, setSelectedService] = useState<number | null>(null);
+  
+  // Scroll to hash on load
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+  
+  const services = [
     {
+      icon: <MapPin className="h-5 w-5" />,
       title: "Venue Security Audits",
-      icon: <ShieldCheck className="h-6 w-6" />,
-      description: "Venues for sensitive and high-profile events typically have weak security. Our audits ensure minimum security measures are in place and your organisation's information remains protected.",
+      description: "Comprehensive assessment of event venues to identify and mitigate security vulnerabilities before your event.",
+      items: [
+        "Physical security assessment",
+        "Access point evaluations",
+        "Technical vulnerabilities scan",
+        "Threat profile creation",
+        "Custom security recommendations"
+      ],
       href: "/services/venue-security-audits",
-      imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
-    },
-    {
-      title: "Event Monitoring",
-      icon: <MonitorCheck className="h-6 w-6" />,
-      description: "Real-time technical and physical monitoring for confidential meetings, with incident management to handle potential security breaches swiftly and professionally.",
-      href: "/services/event-monitoring",
-      imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
-    },
-    {
-      title: "Secure Technology",
-      icon: <FileSearch className="h-6 w-6" />,
-      description: "Comprehensive audit of all technology used at sensitive meetings with recommendations for more secure alternatives to protect against cyber and espionage attacks.",
-      href: "/services/secure-technology",
       imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
+      icon: <CalendarCheck className="h-5 w-5" />,
+      title: "Event Monitoring",
+      description: "Real-time surveillance and monitoring throughout your event to ensure immediate response to any security concerns.",
+      items: [
+        "Live camera monitoring",
+        "Access control oversight",
+        "Credential verification",
+        "Real-time incident response",
+        "Post-event security reporting"
+      ],
+      href: "/services/event-monitoring",
+      imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
+    },
+    {
+      icon: <Laptop className="h-5 w-5" />,
+      title: "Secure Technology",
+      description: "Advanced technical solutions to protect sensitive information and communications during confidential meetings.",
+      items: [
+        "Secure communications setup",
+        "Device screening services",
+        "Anti-eavesdropping measures",
+        "Wireless network security",
+        "Technical surveillance countermeasures"
+      ],
+      href: "/services/secure-technology",
+      imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+    },
+    {
+      icon: <Users className="h-5 w-5" />,
       title: "Close Protection",
-      icon: <Users className="h-6 w-6" />,
-      description: "Professional close protection services for larger restricted events like AGMs and high-profile executives, especially at venues without on-site security.",
+      description: "Professional security personnel for high-profile executives and restricted events requiring enhanced security.",
+      items: [
+        "Executive protection",
+        "Threat assessment",
+        "Discrete security presence",
+        "Travel security planning",
+        "VIP handling protocols"
+      ],
       href: "/services/close-protection",
       imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
     }
   ];
 
-  const handleServiceLearnMore = (serviceTitle: string) => {
-    setOpenDialog(serviceTitle);
-    setDialogStep('form');
+  const handleLearnMoreClick = (index: number) => {
+    setSelectedService(index);
   };
 
+  const handleCloseModal = () => {
+    setSelectedService(null);
+  };
+
+  const handleContactClick = () => {
+    navigate('/#contact');
+    setSelectedService(null);
+  };
+  
+  // Process steps with animations
+  const processSteps = [
+    {
+      number: "01",
+      title: "Assessment",
+      description: "Thorough evaluation of your event's security requirements",
+      delay: 100
+    },
+    {
+      number: "02",
+      title: "Planning",
+      description: "Custom security strategy based on identified needs",
+      delay: 200
+    },
+    {
+      number: "03",
+      title: "Implementation",
+      description: "Deployment of security measures and technology",
+      delay: 300
+    },
+    {
+      number: "04",
+      title: "Monitoring",
+      description: "Continuous oversight throughout event execution",
+      delay: 400
+    },
+    {
+      number: "05",
+      title: "After-Action",
+      description: "Comprehensive review and security improvement recommendations",
+      delay: 500
+    }
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      <main>
-        {/* Section 1: Hero Section with WHAT */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-100 to-white relative overflow-hidden">
-          <div 
-            className="container mx-auto px-4 relative z-10"
-            ref={ref}
-          >
-            <div className="max-w-4xl mx-auto text-center">
+      <main className="pt-32">
+        {/* Hero Section */}
+        <section className="pb-16 relative bg-gradient-to-b from-slate-50 to-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
               <h1 
                 className={cn(
-                  "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
+                  "text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6 text-center transition-all duration-500",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}
+              >
+                Event Security
+              </h1>
+              <p 
+                className={cn(
+                  "text-xl text-sapp-gray text-center mb-10 transition-all duration-500 delay-100",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
                 Real-time protection for high-profile confidential meetings and events
-              </h1>
-              <p 
-                className={cn(
-                  "text-sapp-gray text-lg md:text-xl mb-8 transition-all duration-500 delay-200 max-w-3xl mx-auto",
-                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                )}
-              >
-                Specialised executive-level Event Security and technical support provider protecting corporate board and management meetings. SAPP Security is experienced in protecting management and board meetings, results rehearsals, sports events, brainstorming and strategy planning meetings with technical security for 20 years.
+              </p>
+              <p className="text-sapp-gray text-center mb-8">
+                We are experienced in protecting management and board meetings for over 20 years. 
+                Our team provides comprehensive security solutions for corporate executives, 
+                ensuring your most sensitive gatherings remain secure and private.
               </p>
             </div>
           </div>
         </section>
-
-        {/* Section 2: WHY - The Problem & Solution */}
-        <section className="py-16 bg-white">
+        
+        {/* Quote Section */}
+        <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="flex flex-col justify-center">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
-                  Why Event Security Matters
-                </h2>
-                <p className="text-sapp-gray mb-6">
-                  Protect any meetings or events that are classified confidential, restricted or sensitive with real-time monitoring as live discussions are most vulnerable to potential espionage attacks. Information gatherers always target the weakest link in the organisation and sensitive strategic meetings are usually an easy choice.
-                </p>
-                <p className="text-sapp-gray mb-6">
-                  Public areas and hotels are often booked in advance advising the competition where organisation is vulnerable. Unauthorised surveillance devices can be planted days before business takes control of the rooms. Hotel staff can be easily persuaded to help gather sensitive information and the level of hotel security is usually low.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start">
-                    <Shield className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Board meetings security protocols</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Calendar className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Results rehearsals confidentiality</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FileText className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Strategy planning security</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Users className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Negotiations protection</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="relative">
-                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                <img 
-                  src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
-                  alt="Event Security Services" 
-                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
-                />
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <QuoteCard
+                quote="Security is always seen as too much until the day it's not enough."
+                author="William H. Webster"
+                role="Former FBI Director"
+                color="blue"
+                delay={100}
+              />
+              <QuoteCard
+                quote="It takes 20 years to build a reputation and a few minutes to ruin it."
+                author="Stephane Nappo"
+                role="Global Chief Information Security Officer"
+                color="dark"
+                delay={200}
+              />
             </div>
           </div>
         </section>
-
-        {/* Section 3: Quote Banner */}
-        <section className="py-16 bg-slate-50">
+        
+        {/* Event Security Process */}
+        <section className="py-16 bg-slate-50" ref={ref}>
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white p-8 rounded-xl shadow-md">
-                  <div className="relative">
-                    <div className="absolute -top-6 -left-6 text-gray-200 opacity-30">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M12 12a1 1 0 0 0 1-1V8.558c0-1.156-.616-1.867-1.823-2.470V5c0-1.105-.87-2-1.948-2H4.292c-1.077 0-1.948.895-1.948 2v6a1 1 0 0 0 1 1h1.5v3l2.948-3H12Z"/>
-                      </svg>
-                    </div>
-                    <blockquote className="text-xl font-display font-medium text-sapp-dark italic">
-                      "Security is always seen as too much until the day it's not enough."
-                    </blockquote>
-                    <div className="mt-4 text-sapp-blue font-semibold">
-                      - William H. Webster, former FBI Director
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white p-8 rounded-xl shadow-md">
-                  <div className="relative">
-                    <div className="absolute -top-6 -left-6 text-gray-200 opacity-30">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M12 12a1 1 0 0 0 1-1V8.558c0-1.156-.616-1.867-1.823-2.470V5c0-1.105-.87-2-1.948-2H4.292c-1.077 0-1.948.895-1.948 2v6a1 1 0 0 0 1 1h1.5v3l2.948-3H12Z"/>
-                      </svg>
-                    </div>
-                    <blockquote className="text-xl font-display font-medium text-sapp-dark italic">
-                      "It takes 20 years to build a reputation and a few minutes to ruin it."
-                    </blockquote>
-                    <div className="mt-4 text-sapp-blue font-semibold">
-                      - Stephane Nappo, Global Chief Information Security Officer
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 4: HOW - Our Approach */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
-                How We Secure Your Events
-              </h2>
-              <p className="text-sapp-gray">
-                Executive level Event Security service delivers specialised and enhanced security at a sensitive event, ensures confidentiality and discretion, being prepared for any eventualities, demonstrating the duty of care to organisation's shareholders, bringing awareness of espionage risks to the staff, and ultimately keeping the reputation and competitive advantage of the organisation.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">1</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Assessment</h3>
-                <p className="text-gray-600 text-sm">Comprehensive risk assessment of the venue, participants, and event type</p>
-              </div>
+            <h2 className="text-3xl font-display font-bold text-sapp-dark mb-12 text-center">
+              Our Event Security Process
+            </h2>
+            
+            <div className="flex flex-col md:flex-row justify-between flex-wrap gap-y-6 relative">
+              {/* Background connector line */}
+              <div className="absolute top-12 left-14 right-14 h-1 bg-gradient-to-r from-sapp-blue/20 via-sapp-blue to-sapp-blue/20 hidden md:block"></div>
               
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">2</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Planning</h3>
-                <p className="text-gray-600 text-sm">Tailored security plan including technical audits and personnel requirements</p>
-              </div>
-              
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">3</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Implementation</h3>
-                <p className="text-gray-600 text-sm">Deployment of security measures and monitoring systems before and during the event</p>
-              </div>
-              
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="bg-sapp-blue/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-sapp-blue font-bold text-xl">4</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-sapp-dark">Monitoring</h3>
-                <p className="text-gray-600 text-sm">Real-time surveillance with immediate incident response capabilities</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 5: Service Columns */}
-        <section className="py-16 bg-slate-50" id="executive-events">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
-                How We Secure Executive Events
-              </h2>
-              <p className="text-sapp-gray">
-                Comprehensive protection of sensitive corporate meetings
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {serviceDetails.map((service, index) => (
-                <ServiceCard 
+              {processSteps.map((step, index) => (
+                <div 
                   key={index}
-                  icon={service.icon}
-                  title={service.title}
-                  description={service.description}
-                  items={[]}
-                  href={service.href}
-                  imagePath={service.imagePath}
-                  onLearnMoreClick={() => handleServiceLearnMore(service.title)}
-                />
+                  className={cn(
+                    "bg-white p-6 rounded-lg shadow-md border border-gray-100 w-full md:w-[calc(20%-1rem)] relative z-10 transition-all duration-700 hover:shadow-lg hover:-translate-y-1",
+                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  )}
+                  style={{ transitionDelay: inView ? `${step.delay}ms` : '0ms' }}
+                >
+                  <div className="w-12 h-12 bg-sapp-blue text-white rounded-full flex items-center justify-center font-display font-bold mb-4 mx-auto">
+                    {step.number}
+                  </div>
+                  <h3 className="font-display font-semibold text-center mb-2">{step.title}</h3>
+                  <p className="text-sm text-sapp-gray text-center">{step.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
-
-        {/* CTA Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
-            <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
-              Our team of event security experts is ready to create a tailored security plan for your upcoming corporate events.
+        
+        {/* Executive Events Section */}
+        <section id="executive-events" className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-display font-bold text-sapp-dark mb-4 text-center">
+              How We Secure Executive Events
+            </h2>
+            <p className="text-sapp-gray text-center max-w-3xl mx-auto mb-12">
+              Our specialized services are designed to provide comprehensive protection for sensitive corporate meetings and executive gatherings.
             </p>
-            <Link to="/contact">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {services.map((service, index) => (
+                <div key={index} className="h-full">
+                  <ServiceCard 
+                    {...service}
+                    delay={100 * (index + 1)}
+                    onLearnMoreClick={() => handleLearnMoreClick(index)}
+                  />
+                </div>
+              ))}
+            </div>
+            
+            {selectedService !== null && (
+              <LearnMoreModal
+                title={services[selectedService].title}
+                description={services[selectedService].description}
+                features={services[selectedService].items}
+                isOpen={selectedService !== null}
+                onClose={handleCloseModal}
+                onContact={handleContactClick}
+              />
+            )}
+          </div>
+        </section>
+        
+        {/* CTA Section */}
+        <section className="py-16 bg-gradient-to-r from-sapp-dark to-sapp-dark/90 text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-display font-bold mb-6">Ready to secure your next event?</h2>
+            <p className="max-w-2xl mx-auto mb-8 text-white/80">
+              Our team of security experts is ready to ensure your executive meetings and corporate events have the protection they need.
+            </p>
+            <Link to="/#contact">
               <Button 
                 size="lg" 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 hover:scale-105"
               >
-                <TranslatedText textKey="getInTouch" />
+                Get in Touch
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
         </section>
-
-        {/* Dialog for service inquiry */}
-        <Dialog open={!!openDialog} onOpenChange={(open) => {
-          if (!open) {
-            setOpenDialog(null);
-            setDialogStep('form');
-            setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
-          }
-        }}>
-          <DialogContent className="sm:max-w-md">
-            {dialogStep === 'form' ? (
-              <>
-                <DialogHeader>
-                  <DialogTitle>Request Information: {openDialog}</DialogTitle>
-                  <DialogDescription>
-                    Please provide your details and we'll contact you with more information about our {openDialog?.toLowerCase()} services.
-                  </DialogDescription>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Your Name</Label>
-                      <Input id="name" value={formData.name} onChange={handleInputChange} required 
-                        className="transition-all duration-300 focus:ring-2 focus:ring-sapp-blue focus:border-transparent" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="organisation">Organisation</Label>
-                      <Input id="organisation" value={formData.organisation} onChange={handleInputChange} required 
-                        className="transition-all duration-300 focus:ring-2 focus:ring-sapp-blue focus:border-transparent" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" type="email" value={formData.email} onChange={handleInputChange} required 
-                        className="transition-all duration-300 focus:ring-2 focus:ring-sapp-blue focus:border-transparent" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" value={formData.phone} onChange={handleInputChange} 
-                        className="transition-all duration-300 focus:ring-2 focus:ring-sapp-blue focus:border-transparent" />
-                    </div>
-                  </div>
-                  <DialogFooter className="mt-4">
-                    <Button type="submit" 
-                      className="transition-all duration-300 hover:scale-105 bg-sapp-blue hover:bg-sapp-blue/90">
-                      Continue to Preview
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </>
-            ) : (
-              <>
-                <DialogHeader>
-                  <DialogTitle>Preview Your Request</DialogTitle>
-                  <DialogDescription>
-                    Please review your information below before sending. Your default email client will open with this information.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4 mt-4">
-                  <div className="bg-slate-50 p-4 rounded-md border border-gray-100">
-                    <h4 className="font-semibold text-sm text-slate-600 mb-2">REQUEST DETAILS</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="grid grid-cols-3">
-                        <span className="text-slate-500 font-medium">Service:</span>
-                        <span className="col-span-2">{openDialog}</span>
-                      </div>
-                      <div className="grid grid-cols-3">
-                        <span className="text-slate-500 font-medium">Name:</span>
-                        <span className="col-span-2">{formData.name}</span>
-                      </div>
-                      <div className="grid grid-cols-3">
-                        <span className="text-slate-500 font-medium">Organisation:</span>
-                        <span className="col-span-2">{formData.organisation}</span>
-                      </div>
-                      <div className="grid grid-cols-3">
-                        <span className="text-slate-500 font-medium">Email:</span>
-                        <span className="col-span-2">{formData.email}</span>
-                      </div>
-                      {formData.phone && (
-                        <div className="grid grid-cols-3">
-                          <span className="text-slate-500 font-medium">Phone:</span>
-                          <span className="col-span-2">{formData.phone}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="notes">Additional Notes (Optional)</Label>
-                    <Textarea 
-                      id="notes" 
-                      placeholder="Add any specific questions or requirements" 
-                      value={formData.notes}
-                      onChange={handleInputChange}
-                      className="min-h-[100px] border-gray-200 focus-visible:ring-sapp-blue transition-all duration-300"
-                    />
-                  </div>
-                </div>
-                <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
-                  <Button variant="outline" type="button" onClick={handleBack} className="sm:mr-auto transition-all duration-300 hover:bg-slate-100">
-                    Back to Form
-                  </Button>
-                  <Button variant="outline" type="button" onClick={handleCancel} className="transition-all duration-300 hover:bg-slate-100">
-                    Cancel
-                  </Button>
-                  <Button type="button" onClick={handleSendEmail} className="transition-all duration-300 hover:scale-105 bg-sapp-blue hover:bg-sapp-blue/90">
-                    Open Email Client
-                  </Button>
-                </DialogFooter>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
       </main>
       <Footer />
     </div>

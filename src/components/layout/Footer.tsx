@@ -1,5 +1,5 @@
 
-import { Shield, Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, X, TiktokIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +13,11 @@ const Footer = () => {
           {/* Company info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-sapp-blue" />
+              <img 
+                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
+                alt="SAPP Security Logo" 
+                className="h-8 w-8"
+              />
               <span className="font-display font-bold text-xl">
                 SAPP <span className="text-sapp-blue">Security</span>
               </span>
@@ -26,7 +30,10 @@ const Footer = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
-                <Twitter className="h-5 w-5" />
+                <X className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
+                <TiktokIcon className="h-5 w-5" />
               </a>
             </div>
           </div>
