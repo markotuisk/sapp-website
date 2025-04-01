@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -36,10 +35,9 @@ const Navbar = () => {
     };
   }, []);
 
-  // Updated to use proper routes for service pages
   const mainNavLinks = [
-    { key: 'eventSecurity' as const, href: '/event-security' },
     { key: 'securityAudits' as const, href: '/security-audits' },
+    { key: 'eventSecurity' as const, href: '/event-security' },
     { key: 'installations' as const, href: '/installations' },
     { key: 'cyberSecurity' as const, href: '/cyber-security' },
     { key: 'about' as const, href: '/#about' },
