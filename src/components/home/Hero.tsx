@@ -22,8 +22,8 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Professional &<br />
-            <span className="text-sapp-blue">Technical</span> Security Services
+            Confidential. <br />
+            Controlled. <span className="text-sapp-blue">Protected</span>.
           </h1>
           
           <p 
@@ -32,7 +32,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            <TranslatedText textKey="subheadline" />
+            From compliance to physical and cyber protection, we secure corporate environments with technical precision - flexible to your footprint and priorities.
           </p>
           
           <div 

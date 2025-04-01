@@ -1,3 +1,4 @@
+
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -59,23 +60,6 @@ const Index = () => {
             <p className="text-white/80 text-lg max-w-3xl mx-auto">
               From physical security to cyber defense, SAPP Security delivers comprehensive protection for your organization's most valuable assets.
             </p>
-          </div>
-        </div>
-        
-        <div className="container mx-auto py-8 text-center bg-gray-50 rounded-lg my-8">
-          <h2 className="text-2xl font-bold mb-4">Translation Example</h2>
-          <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-            <div className="font-semibold">Menu Item:</div>
-            <div><TranslatedText textKey="home" /></div>
-            
-            <div className="font-semibold">Section:</div>
-            <div><TranslatedText textKey="services" /></div>
-            
-            <div className="font-semibold">Action:</div>
-            <div><TranslatedText textKey="learnMore" /></div>
-            
-            <div className="font-semibold">Button:</div>
-            <div><TranslatedText textKey="contactUs" /></div>
           </div>
         </div>
       </main>
