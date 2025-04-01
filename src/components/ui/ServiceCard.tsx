@@ -56,14 +56,14 @@ const ServiceCard = ({
           <Link to={href} className="block w-full">
             <Button 
               variant="outline" 
-              className="w-full text-sm py-2 border-sapp-blue text-sapp-dark rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+              className="w-full text-sm py-1.5 px-3 border-sapp-blue text-sapp-dark rounded-md font-medium text-center justify-center transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
               aria-label={`Read more about ${title}`}
             >
               Read Details
             </Button>
           </Link>
           <Button 
-            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm py-2 rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+            className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm py-1.5 px-3 rounded-md font-medium text-center justify-center transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
             aria-label={`Learn more about ${title}`}
             onClick={onLearnMoreClick}
           >
