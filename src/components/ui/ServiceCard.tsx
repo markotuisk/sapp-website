@@ -60,23 +60,16 @@ const ServiceCard = ({
         )}
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-6">{description}</p>
-        <ul className="space-y-2">
-          {items.map((item, index) => (
-            <li key={index} className="flex items-start">
-              <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-              <span className="text-sm text-sapp-gray">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="border-t border-gray-100">
-        <a
-          href={href}
-          className="flex items-center justify-between px-6 py-4 text-sapp-blue font-medium text-sm group-hover:bg-sapp-blue/5 transition-colors"
-        >
-          <span>Learn more</span>
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </a>
+        {items.length > 0 && (
+          <ul className="space-y-2">
+            {items.map((item, index) => (
+              <li key={index} className="flex items-start">
+                <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
+                <span className="text-sm text-sapp-gray">{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

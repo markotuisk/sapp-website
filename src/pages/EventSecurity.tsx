@@ -1,3 +1,4 @@
+
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -7,12 +8,13 @@ import TranslatedText from '@/components/ui/TranslatedText';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import ServiceCard from '@/components/ui/ServiceCard';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
@@ -86,23 +88,31 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
   const serviceDetails = [
     {
       title: "Venue Security Audits",
-      icon: <ShieldCheck className="h-10 w-10 text-sapp-blue" />,
-      description: "Venues for sensitive and high-profile events in most cases have weak security. This applies especially for public venues such as hotels, conference centres, where security gaps are readily used by bad actors. Security audits the event venue prior to at an event ensure that at least minimum security measures are in place and organisation's information intact and protected."
+      icon: <ShieldCheck className="h-6 w-6" />,
+      description: "Venues for sensitive and high-profile events typically have weak security. Our audits ensure minimum security measures are in place and your organisation's information remains protected.",
+      href: "/services/venue-security-audits",
+      imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
     },
     {
       title: "Event Monitoring",
-      icon: <MonitorCheck className="h-10 w-10 text-sapp-blue" />,
-      description: "Live sensitive meetings are usually insufficiently protected against corporate espionage and other information gatherers. Real-time technical and physical monitoring should be a standard business process at any confidential, restricted or sensitive meeting. Event monitoring also includes the incident management service ensuring swift and professional handling of a potentially embarrassing situation avoiding a potential crisis and reputational damage."
+      icon: <MonitorCheck className="h-6 w-6" />,
+      description: "Real-time technical and physical monitoring for confidential meetings, with incident management to handle potential security breaches swiftly and professionally.",
+      href: "/services/event-monitoring",
+      imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
     },
     {
       title: "Secure Technology",
-      icon: <FileSearch className="h-10 w-10 text-sapp-blue" />,
-      description: "Companies typically use a range of communications technology at most of their sensitive events. From security perspective, this leaves them vulnerable to an array of cyber and espionage attacks. Our Event Security service includes the detailed audit of all technology that is used at a sensitive meeting with recommendations for more secure alternatives."
+      icon: <FileSearch className="h-6 w-6" />,
+      description: "Comprehensive audit of all technology used at sensitive meetings with recommendations for more secure alternatives to protect against cyber and espionage attacks.",
+      href: "/services/secure-technology",
+      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
       title: "Close Protection",
-      icon: <Users className="h-10 w-10 text-sapp-blue" />,
-      description: "For larger restricted events such as AGMs and for high-profile executives as well as at venues where there is no on-site security, we work with trusted partners to provide professional close protection services."
+      icon: <Users className="h-6 w-6" />,
+      description: "Professional close protection services for larger restricted events like AGMs and high-profile executives, especially at venues without on-site security.",
+      href: "/services/close-protection",
+      imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
     }
   ];
 
@@ -144,7 +154,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                Specialised executive-level Event Security and technical support provider for corporate board and management meetings. SAPP Security is experienced in supporting management and board meetings, results rehearsals, sports events, brainstorming and strategy planning meetings with technical security for 20 years.
+                Specialised executive-level Event Security and technical support provider protecting corporate board and management meetings. SAPP Security is experienced in supporting management and board meetings, results rehearsals, sports events, brainstorming and strategy planning meetings with technical security for 20 years.
               </p>
             </div>
           </div>
@@ -269,26 +279,34 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
-                Our Event Security Services
+                How We Secure Executive Events
               </h2>
               <p className="text-sapp-gray">
-                Comprehensive protection for your most sensitive corporate gatherings
+                Comprehensive protection of sensitive corporate meetings
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {serviceDetails.map((service, index) => (
-                <Card key={index} className="border border-gray-100 transition-all duration-300 hover:shadow-lg">
-                  <CardHeader>
-                    <div className="mb-4 bg-sapp-blue/10 w-16 h-16 rounded-lg flex items-center justify-center">
-                      {service.icon}
-                    </div>
-                    <CardTitle className="text-xl font-display">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sapp-gray text-sm mb-6">{service.description}</p>
-                  </CardContent>
-                  <CardFooter>
+                <div key={index} className="flex flex-col h-full">
+                  <ServiceCard 
+                    icon={service.icon}
+                    title={service.title}
+                    description={service.description}
+                    items={[]}
+                    href={service.href}
+                    imagePath={service.imagePath}
+                  />
+                  <div className="mt-4 grid grid-cols-2 gap-2">
+                    <Link to={service.href}>
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        aria-label={`Read more about ${service.title}`}
+                      >
+                        Read Details
+                      </Button>
+                    </Link>
                     <Dialog open={openDialog === service.title} onOpenChange={(open) => {
                       if (open) {
                         setOpenDialog(service.title);
@@ -300,7 +318,12 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                       }
                     }}>
                       <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full">LEARN MORE</Button>
+                        <Button 
+                          className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white"
+                          aria-label={`Learn more about ${service.title}`}
+                        >
+                          Learn More
+                        </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-md">
                         {dialogStep === 'form' ? (
@@ -399,8 +422,8 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                         )}
                       </DialogContent>
                     </Dialog>
-                  </CardFooter>
-                </Card>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
