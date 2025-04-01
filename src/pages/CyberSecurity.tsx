@@ -7,9 +7,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const CyberSecurity = () => {
   const { t } = useLanguage();
+  const [isLoaded, setIsLoaded] = useState(true);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -19,50 +22,59 @@ const CyberSecurity = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Hero Section */}
-        <section className="pt-36 pb-20 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-cover bg-center opacity-5" 
-            style={{ 
-              backgroundImage: "url('/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png')",
-              backgroundBlendMode: "overlay"
-            }}
-          ></div>
-          
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <div 
-                ref={ref}
-                className={cn(
-                  "inline-flex items-center justify-center p-3 bg-white rounded-lg shadow-md mb-6 transition-all duration-500",
-                  inView ? "opacity-100 scale-100" : "opacity-0 scale-90"
-                )}
-              >
-                <Wifi className="h-8 w-8 text-sapp-blue" />
-              </div>
-              <h3 
-                className={cn(
-                  "text-xl md:text-2xl font-display text-sapp-blue mb-4 transition-all duration-500 delay-75",
-                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                )}
-              >
-                Enterprise-grade protection for digital assets
-              </h3>
+        {/* Hero Section - Updated to match Events Security page */}
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="flex flex-col items-center justify-center text-center">
               <h1 
                 className={cn(
-                  "text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
+                  "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
+                ref={ref}
               >
-                {t('cyberSecurity')}
+                Enterprise-grade <span className="text-sapp-blue">protection</span><br />
+                for your digital <span className="text-sapp-blue">assets</span><br />
+                against cyber <span className="text-sapp-blue">threats</span>
               </h1>
               <p 
                 className={cn(
-                  "text-sapp-gray text-lg mb-8 transition-all duration-500 delay-200",
+                  "text-sapp-gray text-lg md:text-xl mb-8 transition-all duration-500 delay-200 max-w-3xl mx-auto",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
                 We provide comprehensive cyber security services that protect your organization's digital infrastructure from evolving threats. Our approach focuses on securing IoT devices, which are often the most vulnerable points in corporate networks.
               </p>
+              
+              <div 
+                className={cn(
+                  "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}
+              >
+                <Button 
+                  size="lg" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                >
+                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                    <TranslatedText textKey="exploreServices" />
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                  asChild
+                >
+                  <Link to="/#contact">
+                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                      <TranslatedText textKey="contactUs" />
+                    </span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
