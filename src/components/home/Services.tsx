@@ -5,9 +5,7 @@ import ServiceCard from '@/components/ui/ServiceCard';
 import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import LearnMoreModal from '@/components/ui/LearnMoreModal';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
   const [ref, inView] = useInView({
@@ -16,27 +14,8 @@ const Services = () => {
   });
   
   const { t } = useLanguage();
-  const navigate = useNavigate();
-  const [selectedService, setSelectedService] = useState<number | null>(null);
 
-  // Reordered services with Security Audits first
   const services = [
-    {
-      icon: <AlertTriangle className="h-6 w-6" />,
-      title: t('securityAudits'),
-      description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations. Coordinated with compliance partners.",
-      items: [
-        "Physical Security Assessments",
-        "Security Systems Testing",
-        "Penetration Tests",
-        "Compliance Audits",
-        "TSCM Inspections",
-        "Third-Party Certification Support"
-      ],
-      href: "/security-audits",
-      delay: 100,
-      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
-    },
     {
       icon: <Shield className="h-6 w-6" />,
       title: t('eventSecurity'),
@@ -50,8 +29,24 @@ const Services = () => {
         "Third-Party Event Security Integration"
       ],
       href: "/event-security",
-      delay: 200,
+      delay: 100,
       imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
+    },
+    {
+      icon: <AlertTriangle className="h-6 w-6" />,
+      title: t('securityAudits'),
+      description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations. Coordinated with compliance partners.",
+      items: [
+        "Physical Security Assessments",
+        "Security Systems Testing",
+        "Penetration Tests",
+        "Compliance Audits",
+        "TSCM Inspections",
+        "Third-Party Certification Support"
+      ],
+      href: "/security-audits",
+      delay: 200,
+      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
       icon: <MonitorCheck className="h-6 w-6" />,
@@ -89,19 +84,6 @@ const Services = () => {
     }
   ];
 
-  const handleLearnMoreClick = (index: number) => {
-    setSelectedService(index);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedService(null);
-  };
-
-  const handleContactClick = () => {
-    navigate('/#contact');
-    setSelectedService(null);
-  };
-
   return (
     <section id="services" className="py-24 bg-white relative">
       <div className="container mx-auto px-4">
@@ -136,25 +118,11 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <div key={index}>
-              <ServiceCard 
-                {...service}
-                onLearnMoreClick={() => handleLearnMoreClick(index)}
-              />
-            </div>
+            <Link key={index} to={service.href} className="block">
+              <ServiceCard {...service} />
+            </Link>
           ))}
         </div>
-
-        {selectedService !== null && (
-          <LearnMoreModal
-            title={services[selectedService].title}
-            description={services[selectedService].description}
-            features={services[selectedService].items}
-            isOpen={selectedService !== null}
-            onClose={handleCloseModal}
-            onContact={handleContactClick}
-          />
-        )}
       </div>
     </section>
   );

@@ -1,25 +1,7 @@
 
-import { Mail, Phone, MapPin, Linkedin, X } from 'lucide-react';
+import { Shield, Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-
-// Custom TikTok icon component since it's not included in lucide-react
-const TikTokIcon = () => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className="lucide lucide-tiktok"
-  >
-    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-  </svg>
-);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -31,11 +13,7 @@ const Footer = () => {
           {/* Company info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
-              <img 
-                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
-                alt="SAPP Security Logo" 
-                className="h-8 w-8"
-              />
+              <Shield className="h-8 w-8 text-sapp-blue" />
               <span className="font-display font-bold text-xl">
                 SAPP <span className="text-sapp-blue">Security</span>
               </span>
@@ -48,10 +26,7 @@ const Footer = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
-                <X className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
-                <TikTokIcon />
+                <Twitter className="h-5 w-5" />
               </a>
             </div>
           </div>

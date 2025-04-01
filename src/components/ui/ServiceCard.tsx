@@ -48,6 +48,11 @@ const ServiceCard = ({
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+          <div className="absolute bottom-0 left-0 p-4">
+            <div className="bg-sapp-blue/90 backdrop-blur-sm w-12 h-12 rounded-lg flex items-center justify-center mb-1 text-white">
+              {icon}
+            </div>
+          </div>
         </div>
       )}
       
@@ -73,7 +78,7 @@ const ServiceCard = ({
           <Link to={href} className="w-full">
             <Button 
               variant="outline" 
-              className="w-full transition-all duration-300 hover:scale-105 hover:bg-slate-50"
+              className="w-full transition-all duration-300 hover:scale-105"
               aria-label={`Read more about ${title}`}
             >
               Read Details

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Users } from 'lucide-react';
+import { ArrowLeft, Users } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -21,9 +21,9 @@ const CloseProtection = () => {
               </Button>
             </Link>
             <Link to="/event-security#executive-events">
-              <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[5px]">
+              <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
+                <ArrowLeft className="h-4 w-4" />
                 Back to Event Security
-                <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
           </div>
@@ -38,6 +38,9 @@ const CloseProtection = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
               <div className="absolute bottom-0 left-0 p-8">
+                <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
+                  <Users className="h-8 w-8" />
+                </div>
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Close Protection</h1>
                 <p className="text-white/90 text-lg max-w-2xl">Professional security for high-profile executives and restricted events</p>
               </div>
@@ -52,27 +55,27 @@ const CloseProtection = () => {
               
               <h3 className="text-xl font-display font-semibold text-sapp-dark mt-8">Our Close Protection Process</h3>
               <div className="space-y-4">
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">1. Risk Assessment</h4>
                   <p className="text-sm text-sapp-gray">We conduct a thorough evaluation of security needs based on event type, location, and attendee profiles.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">2. Security Planning</h4>
                   <p className="text-sm text-sapp-gray">Our specialists develop a comprehensive protection strategy tailored to your specific requirements.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">3. Professional Deployment</h4>
                   <p className="text-sm text-sapp-gray">Experienced security personnel are strategically positioned to maintain discreet yet effective protection.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">4. Coordination with Venue Security</h4>
                   <p className="text-sm text-sapp-gray">We work seamlessly with existing security teams to enhance overall protection without duplication of efforts.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">5. Incident Response Protocols</h4>
                   <p className="text-sm text-sapp-gray">Clear procedures are established for various security scenarios, ensuring rapid and appropriate response.</p>
                 </div>
@@ -106,7 +109,7 @@ const CloseProtection = () => {
                 </ul>
                 
                 <div className="mt-6">
-                  <Link to="/#contact">
+                  <Link to="/event-security">
                     <Button className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 hover:scale-105">
                       Request Close Protection
                     </Button>
@@ -125,9 +128,9 @@ const CloseProtection = () => {
               </Button>
             </Link>
             <Link to="/event-security#executive-events">
-              <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[5px]">
+              <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
+                <ArrowLeft className="h-4 w-4" />
                 Back to Event Security
-                <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
           </div>
