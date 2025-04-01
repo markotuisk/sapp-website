@@ -1,3 +1,4 @@
+
 # SAPP Security - Project Documentation
 
 ## 1. Product Overview
@@ -62,6 +63,7 @@ SAPP Security aims to provide comprehensive security solutions across physical a
   - Gray: `#6B7280` (sapp-gray)
   - Accent Teal: `#20798C`
   - Dark Blue: `#032B3B` (accent-dark-blue)
+  - Accent Red: `#ef4444` (red-600) - For CTA emphasis
 
 - **Typography**:
   - Primary Font: Inter (sans-serif)
@@ -72,6 +74,7 @@ SAPP Security aims to provide comprehensive security solutions across physical a
   - Grid backgrounds for section distinction
   - Consistent button styling with hover effects
   - Rounded corners (border-radius) for UI elements
+  - Two-line headline format with accent colors for emphasis
 
 ### Responsive Design
 - Mobile-first approach with responsive breakpoints
@@ -178,6 +181,7 @@ SAPP Security aims to provide comprehensive security solutions across physical a
   - Reordered main navigation items for better user flow
   - Swapped positions of "Event Security" and "Security Audits" in main menu
   - Enhanced mobile navigation responsiveness
+  - Updated "Get in Touch" button to red for better visibility and call-to-action emphasis
 
 - **Button Design Updates**:
   - Reduced button padding for better visual integration
@@ -189,6 +193,8 @@ SAPP Security aims to provide comprehensive security solutions across physical a
   - Refined card layouts for better content hierarchy
   - Standardized button styling across components
   - Enhanced visual integration of interactive elements
+  - Implemented two-line headline format with accent color highlighting in hero sections
+  - Unified hero section design pattern across main pages
 
 #### Technical Updates
 - **Navigation Improvements**:
@@ -200,3 +206,4 @@ SAPP Security aims to provide comprehensive security solutions across physical a
   - Refactored ServiceCard component for better maintainability
   - Updated button component API for consistency
   - Improved component type definitions
+  - Harmonized hero section implementation across pages

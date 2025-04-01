@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -122,7 +123,7 @@ const Navbar = () => {
           
             <Button 
               variant="default" 
-              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden whitespace-nowrap"
+              className="bg-red-600 hover:bg-red-700 text-white rounded-md group relative overflow-hidden whitespace-nowrap shadow-lg shadow-red-600/20"
             >
               <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0">
                 <TranslatedText textKey="getInTouch" />

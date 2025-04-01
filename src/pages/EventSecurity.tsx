@@ -18,6 +18,7 @@ import { Card } from '@/components/ui/card';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
+  const [isLoaded, setIsLoaded] = useState(true);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -41,18 +42,15 @@ const EventSecurity = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Email validation
     if (!formData.email.includes('@') || !formData.email.includes('.')) {
       toast.error('Please enter a valid email address');
       return;
     }
     
-    // Move to preview step
     setDialogStep('preview');
   };
   
   const handleSendEmail = () => {
-    // Create mailto link with formatted body
     const subject = `Enquiry about ${openDialog} Event Security Services`;
     const body = `
 Name: ${formData.name}
@@ -63,13 +61,10 @@ Service: ${openDialog}
 ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
     `;
     
-    // Open email client
     window.location.href = `mailto:contact@sappsecurity.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Show success message
     toast.success('Your email client should open shortly with your request details.');
     
-    // Reset form and close dialog
     setFormData({ name: '', organisation: '', email: '', phone: '', notes: '' });
     setDialogStep('form');
     setOpenDialog(null);
@@ -121,18 +116,15 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Section 1: Hero Section with WHAT - Updated with solid color background */}
-        <section className="pt-36 pb-20 bg-slate-100 relative overflow-hidden">
-          <div 
-            className="container mx-auto px-4 relative z-10"
-            ref={ref}
-          >
-            <div className="max-w-4xl mx-auto text-center">
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="flex flex-col items-center justify-center text-center">
               <h1 
                 className={cn(
                   "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
+                ref={ref}
               >
                 Real-time protection for high-profile confidential meetings and events
               </h1>
@@ -144,11 +136,40 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
               >
                 Specialised executive-level Event Security and technical support provider protecting corporate board and management meetings. SAPP Security is experienced in protecting management and board meetings, results rehearsals, sports events, brainstorming and strategy planning meetings with technical security for 20 years.
               </p>
+              
+              <div 
+                className={cn(
+                  "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}
+              >
+                <Button 
+                  size="lg" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                >
+                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                    Explore Services
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                  asChild
+                >
+                  <Link to="/#contact">
+                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                      Contact Us
+                    </span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Section 2: WHY - The Problem & Solution */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -193,7 +214,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Section 3: Quote Banner - Added animations */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
@@ -236,7 +256,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Section 4: HOW - Our Approach - UPDATED to grid layout with animation */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -313,7 +332,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Section 5: Service Columns - Updated to remove icons and align buttons */}
         <section className="py-16 bg-slate-50" id="executive-events">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -342,7 +360,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
@@ -360,7 +377,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Dialog for service inquiry - Updated to match Client Area style */}
         <Dialog open={!!openDialog} onOpenChange={(open) => {
           if (!open) {
             setOpenDialog(null);
