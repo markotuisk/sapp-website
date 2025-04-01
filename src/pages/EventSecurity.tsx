@@ -1,4 +1,3 @@
-
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -136,7 +135,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                SAPP Security is a trusted provider of executive Event Security, protecting leadership teams at board meetings, earnings rehearsals, and strategic offsites. We deliver discreet technical support to safeguard sensitive decisions and reputations.
+                Experienced Provider of executive Event Security, protecting leadership teams at board meetings, earnings rehearsals, and strategic offsites. We deliver discreet technical support to safeguard sensitive decisions and reputations.
               </p>
               
               <div 
