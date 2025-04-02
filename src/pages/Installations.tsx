@@ -1,5 +1,5 @@
 
-import { MonitorCheck, Wifi, Users, FileText } from 'lucide-react';
+import { MonitorCheck, Wifi, Users, FileText, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,9 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/components/ui/card';
+import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
+import ServiceCard from '@/components/ui/ServiceCard';
 
 const Installations = () => {
   const { t } = useLanguage();
@@ -128,201 +130,75 @@ const Installations = () => {
           </div>
         </section>
 
-        {/* Gallery Section - Redesigned Installation Capabilities with Tabs */}
+        {/* Installation Capabilities Section - Redesigned to match Event Security */}
         <section className="py-16 bg-slate-50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-8 text-center">
-              Our Installation Capabilities
-            </h2>
-            
-            <Tabs defaultValue="cctv" className="w-full max-w-4xl mx-auto">
-              <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full mb-8">
-                <TabsTrigger value="cctv" className="text-sm md:text-base">
-                  <MonitorCheck className="h-4 w-4 mr-2" />
-                  <span className="hidden md:inline">CCTV & Access</span>
-                  <span className="md:hidden">CCTV</span>
-                </TabsTrigger>
-                <TabsTrigger value="privacy" className="text-sm md:text-base">
-                  <Wifi className="h-4 w-4 mr-2" />
-                  <span className="hidden md:inline">Speech Privacy</span>
-                  <span className="md:hidden">Privacy</span>
-                </TabsTrigger>
-                <TabsTrigger value="counter" className="text-sm md:text-base">
-                  <FileText className="h-4 w-4 mr-2" />
-                  <span className="hidden md:inline">Counter-Surveillance</span>
-                  <span className="md:hidden">Counter</span>
-                </TabsTrigger>
-                <TabsTrigger value="network" className="text-sm md:text-base">
-                  <Users className="h-4 w-4 mr-2" />
-                  <span className="hidden md:inline">Network Infrastructure</span>
-                  <span className="md:hidden">Network</span>
-                </TabsTrigger>
-              </TabsList>
-              
-              <div className="bg-white p-8 rounded-xl shadow-md">
-                <TabsContent value="cctv" className="mt-0">
-                  <div className="flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/2">
-                      <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">CCTV, Access & Visitor Systems</h3>
-                      <p className="text-sapp-gray mb-4">
-                        Control visibility, movement, and presence — with systems that scale from single sites to global estates.
-                      </p>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>CCTV systems — from AI-powered cloud surveillance to modest, localised deployments</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Access control solutions — encrypted, skimmer-resistant, and deployable via cloud or local infrastructure</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Visitor management systems — standalone or integrated with physical access layers</span>
-                        </li>
-                      </ul>
-                      <Button 
-                        className="mt-6 bg-sapp-blue/10 hover:bg-sapp-blue/20 text-sapp-blue"
-                        asChild
-                      >
-                        <Link to="/installations/cctv-access">
-                          Learn more about CCTV & Access Solutions
-                        </Link>
-                      </Button>
-                    </div>
-                    <div className="md:w-1/2">
-                      <div className="rounded-lg overflow-hidden h-full bg-slate-100 flex items-center justify-center min-h-[200px]">
-                        <MonitorCheck className="h-16 w-16 text-sapp-blue/30" />
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="privacy" className="mt-0">
-                  <div className="flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/2">
-                      <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Speech Privacy & Sound Masking</h3>
-                      <p className="text-sapp-gray mb-4">
-                        Protect conversations and reduce acoustic exposure in sensitive or shared environments.
-                      </p>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Speech privacy and sound masking systems — for confidential environments and operational discretion</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Smart privacy film — for glass partitions, windows, and high-sensitivity meeting spaces</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Microphone nullification technology — for rooms, venues, and secure vehicles</span>
-                        </li>
-                      </ul>
-                      <Button 
-                        className="mt-6 bg-sapp-blue/10 hover:bg-sapp-blue/20 text-sapp-blue"
-                        asChild
-                      >
-                        <Link to="/installations/speech-privacy">
-                          Learn more about Privacy Solutions
-                        </Link>
-                      </Button>
-                    </div>
-                    <div className="md:w-1/2">
-                      <div className="rounded-lg overflow-hidden h-full bg-slate-100 flex items-center justify-center min-h-[200px]">
-                        <Wifi className="h-16 w-16 text-sapp-blue/30" />
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="counter" className="mt-0">
-                  <div className="flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/2">
-                      <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Countering Surveillance & RF Monitoring</h3>
-                      <p className="text-sapp-gray mb-4">
-                        Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors.
-                      </p>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Espionage and surveillance countermeasures — acoustic, RF, and electromagnetic threat detection</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Technical surveillance countermeasures (TSCM) — regular or ad-hoc sweeps</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Protective monitoring systems — continuous detection of unauthorised signals</span>
-                        </li>
-                      </ul>
-                      <Button 
-                        className="mt-6 bg-sapp-blue/10 hover:bg-sapp-blue/20 text-sapp-blue"
-                        asChild
-                      >
-                        <Link to="/installations/counter-surveillance">
-                          Learn more about Counter-Surveillance
-                        </Link>
-                      </Button>
-                    </div>
-                    <div className="md:w-1/2">
-                      <div className="rounded-lg overflow-hidden h-full bg-slate-100 flex items-center justify-center min-h-[200px]">
-                        <FileText className="h-16 w-16 text-sapp-blue/30" />
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="network" className="mt-0">
-                  <div className="flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/2">
-                      <h3 className="text-xl font-display font-bold text-sapp-dark mb-4">Network Infrastructure & Communication</h3>
-                      <p className="text-sapp-gray mb-4">
-                        Lay secure foundations for communication and control — whether on-site, distributed, or hybrid.
-                      </p>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Network and IT infrastructure installations — secure, scalable, and aligned with operational needs</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Custom system builds — software or sensor-based solutions for task automation and integration</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                          <span>Secure communication systems — for sensitive environments and critical operations</span>
-                        </li>
-                      </ul>
-                      <Button 
-                        className="mt-6 bg-sapp-blue/10 hover:bg-sapp-blue/20 text-sapp-blue"
-                        asChild
-                      >
-                        <Link to="/installations/network-infrastructure">
-                          Learn more about Network Solutions
-                        </Link>
-                      </Button>
-                    </div>
-                    <div className="md:w-1/2">
-                      <div className="rounded-lg overflow-hidden h-full bg-slate-100 flex items-center justify-center min-h-[200px]">
-                        <Users className="h-16 w-16 text-sapp-blue/30" />
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-              </div>
-            </Tabs>
+          <div className="container mx-auto px-6">
+            <div className="max-w-3xl mx-auto text-center mb-12">
+              <h2 className="text-3xl font-display font-bold text-sapp-dark mb-3">Our Installation Capabilities</h2>
+              <p className="text-sapp-gray">Expert installation services designed for complex and demanding environments</p>
+            </div>
 
-            <div className="flex justify-center mt-8">
-              <Button 
-                size="lg" 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 group relative overflow-hidden"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              {/* CCTV, Access & Visitor */}
+              <ServiceCard 
+                title="CCTV, Access & Visitor Systems"
+                description="Control visibility, movement, and presence — with systems that scale from single sites to global estates."
+                items={[
+                  "AI-powered cloud surveillance to localised deployments",
+                  "Encrypted, skimmer-resistant access control solutions",
+                  "Standalone or integrated visitor management systems"
+                ]}
+                delay={100}
+                href="/installations/cctv-access"
+                imagePath="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+              />
+              
+              {/* Speech Privacy & Sound Masking */}
+              <ServiceCard 
+                title="Speech Privacy & Sound Masking"
+                description="Protect conversations and reduce acoustic exposure in sensitive or shared environments."
+                items={[
+                  "Speech privacy and sound masking systems for confidential environments",
+                  "Smart privacy film for glass partitions and windows",
+                  "Microphone nullification technology for secure spaces"
+                ]}
+                delay={200}
+                href="/installations/speech-privacy"
+              />
+              
+              {/* Counter Surveillance & RF Monitoring */}
+              <ServiceCard 
+                title="Countering Surveillance & RF Monitoring"
+                description="Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors."
+                items={[
+                  "Acoustic, RF, and electromagnetic threat detection",
+                  "Technical surveillance countermeasures (TSCM)",
+                  "Continuous detection of unauthorised signals"
+                ]}
+                delay={300}
+                href="/installations/counter-surveillance"
+              />
+              
+              {/* Network Infrastructure & Communication */}
+              <ServiceCard 
+                title="Network Infrastructure & Communication"
+                description="Lay secure foundations for communication and control — whether on-site, distributed, or hybrid."
+                items={[
+                  "Secure, scalable network and IT infrastructure installations",
+                  "Custom system builds for task automation and integration",
+                  "Secure communication systems for sensitive environments"
+                ]}
+                delay={400}
+                href="/installations/network-infrastructure"
+              />
+            </div>
+
+            <div className="text-center">
+              <Button
+                size="lg"
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 hover:scale-105"
               >
-                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                  Talk to Our Installation Team
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                Talk to Our Installation Team
               </Button>
             </div>
           </div>

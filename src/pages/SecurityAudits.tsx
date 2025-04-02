@@ -22,7 +22,7 @@ const SecurityAudits = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Hero Section - Updated to match Events Security page */}
+        {/* Hero Section - Updated with new headline and subheading */}
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col items-center justify-center text-center">
@@ -33,8 +33,9 @@ const SecurityAudits = () => {
                 )}
                 ref={ref}
               >
-                Certified <span className="text-sapp-blue">ISO27001</span><br /> 
-                physical security <span className="text-sapp-blue">audits</span>
+                Certified, <span className="text-sapp-blue">targeted</span>, and<br /> 
+                <span className="text-sapp-blue">comprehensive</span> physical<br />
+                security <span className="text-sapp-blue">audits</span>
               </h1>
               <p 
                 className={cn(
@@ -42,7 +43,7 @@ const SecurityAudits = () => {
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                These external audits are on-site service visits to objectively evaluate the state of play of the physical and information security processes and technology at your organisation.
+                Helping you to comply with international best practices and improve your information security resilience
               </p>
               
               <div 

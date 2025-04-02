@@ -17,11 +17,11 @@ import EventMonitoring from "./pages/services/EventMonitoring";
 import SecureTechnology from "./pages/services/SecureTechnology";
 import CloseProtection from "./pages/services/CloseProtection";
 
-// Placeholder routes for installation subpages - these will be implemented later
-// import CCTVAccess from "./pages/installations/CCTVAccess";
-// import SpeechPrivacy from "./pages/installations/SpeechPrivacy";
-// import CounterSurveillance from "./pages/installations/CounterSurveillance";
-// import NetworkInfrastructure from "./pages/installations/NetworkInfrastructure";
+// Installation subpage imports
+import CCTVAccess from "./pages/installations/CCTVAccess";
+import SpeechPrivacy from "./pages/installations/SpeechPrivacy";
+import CounterSurveillance from "./pages/installations/CounterSurveillance";
+import NetworkInfrastructure from "./pages/installations/NetworkInfrastructure";
 
 const queryClient = new QueryClient();
 
@@ -46,11 +46,11 @@ const App = () => (
             <Route path="/services/secure-technology" element={<SecureTechnology />} />
             <Route path="/services/close-protection" element={<CloseProtection />} />
             
-            {/* Installation Subpages - To be implemented */}
-            {/* <Route path="/installations/cctv-access" element={<CCTVAccess />} />
+            {/* Installation Subpages */}
+            <Route path="/installations/cctv-access" element={<CCTVAccess />} />
             <Route path="/installations/speech-privacy" element={<SpeechPrivacy />} />
             <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
-            <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} /> */}
+            <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
