@@ -9,6 +9,7 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 const SecurityAudits = () => {
   const { t } = useLanguage();
@@ -52,15 +53,54 @@ const SecurityAudits = () => {
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                <Button 
-                  size="lg" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-                >
-                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                    <TranslatedText textKey="exploreServices" />
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button 
+                      size="lg" 
+                      className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                    >
+                      <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                        <TranslatedText textKey="exploreServices" />
+                      </span>
+                      <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="bg-white">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Contact Our Security Audit Team</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Fill out the form below to request information about our security audit services.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <div className="py-4">
+                      <form className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label htmlFor="name" className="text-sm font-medium">Full Name</label>
+                            <input id="name" className="w-full p-2 border border-gray-300 rounded-md" />
+                          </div>
+                          <div className="space-y-2">
+                            <label htmlFor="company" className="text-sm font-medium">Company</label>
+                            <input id="company" className="w-full p-2 border border-gray-300 rounded-md" />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label htmlFor="email" className="text-sm font-medium">Email</label>
+                          <input id="email" type="email" className="w-full p-2 border border-gray-300 rounded-md" />
+                        </div>
+                        <div className="space-y-2">
+                          <label htmlFor="message" className="text-sm font-medium">Message</label>
+                          <textarea id="message" rows={4} className="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
                 <Button 
                   variant="outline" 
                   size="lg" 
@@ -157,12 +197,50 @@ const SecurityAudits = () => {
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
               Our team of security audit experts is ready to help you identify vulnerabilities and enhance your overall security posture.
             </p>
-            <Button 
-              size="lg" 
-              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
-            >
-              <TranslatedText textKey="getInTouch" />
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  size="lg" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
+                >
+                  <TranslatedText textKey="getInTouch" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-white">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Contact Our Security Audit Team</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Fill out the form below to request information about our security audit services.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <div className="py-4">
+                  <form className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label htmlFor="name2" className="text-sm font-medium">Full Name</label>
+                        <input id="name2" className="w-full p-2 border border-gray-300 rounded-md" />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="company2" className="text-sm font-medium">Company</label>
+                        <input id="company2" className="w-full p-2 border border-gray-300 rounded-md" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="email2" className="text-sm font-medium">Email</label>
+                      <input id="email2" type="email" className="w-full p-2 border border-gray-300 rounded-md" />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="message2" className="text-sm font-medium">Message</label>
+                      <textarea id="message2" rows={4} className="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                    </div>
+                  </form>
+                </div>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </section>
       </main>
