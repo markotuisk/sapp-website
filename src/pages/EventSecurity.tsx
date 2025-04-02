@@ -126,7 +126,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                 ref={ref}
               >
                 Real-time <span className="text-sapp-blue">protection</span> for<br />
-                high-profile <span className="text-sapp-blue">confidential</span><br />
+                confidential <span className="text-sapp-blue">corporate</span><br />
                 meetings and events
               </h1>
               <p 
@@ -135,7 +135,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                Experienced Provider of executive Event Security, protecting leadership teams at board meetings, earnings rehearsals, and strategic offsites. We deliver discreet technical support to safeguard sensitive decisions and reputations.
+                Helping you to make security an integral part of your corporate event planning
               </p>
               
               <div 

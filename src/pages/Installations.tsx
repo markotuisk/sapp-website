@@ -1,5 +1,5 @@
 
-import { MonitorCheck } from 'lucide-react';
+import { MonitorCheck, Wifi, Users, FileText } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -33,8 +33,9 @@ const Installations = () => {
                 )}
                 ref={ref}
               >
-                Cutting-edge <span className="text-sapp-blue">security</span><br/>
-                <span className="text-sapp-blue">technology</span> installations
+                From <span className="text-sapp-blue">cloud</span> to <span className="text-sapp-blue">cable</span> - make<br/>
+                <span className="text-sapp-blue">security</span> an integral part<br/>
+                of your system <span className="text-sapp-blue">installation</span>
               </h1>
               <p 
                 className={cn(
@@ -42,7 +43,7 @@ const Installations = () => {
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                Our installation services cover a multitude of security systems ranging from CCTV, access control and visitor management systems, speech privacy and sound masking systems, mobile and network security systems.
+                We install surveillance, access control, and privacy systems that are easy to maintain, discreet in operation, and designed to meet real-world usage — from high-traffic areas to high-risk rooms.
               </p>
               
               <div 
@@ -84,7 +85,7 @@ const Installations = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
-                  Comprehensive Installation Services
+                  Specialist installations for complex security needs
                 </h2>
                 <p className="text-sapp-gray mb-6">
                   We provide end-to-end installation services for a wide range of security technologies. Our experienced team ensures that your security systems are properly installed, configured, and integrated with your existing infrastructure.
@@ -92,26 +93,26 @@ const Installations = () => {
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
                     <MonitorCheck className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>CCTV systems</span>
+                    <span>CCTV, Access & Visitor</span>
                   </li>
                   <li className="flex items-start">
-                    <MonitorCheck className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Access control systems</span>
+                    <Wifi className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
+                    <span>Speech Privacy & Sound Masking</span>
                   </li>
                   <li className="flex items-start">
-                    <MonitorCheck className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Speech privacy systems</span>
+                    <FileText className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
+                    <span>Countering Surveillance & RF Monitoring</span>
                   </li>
                   <li className="flex items-start">
-                    <MonitorCheck className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Network security systems</span>
+                    <Users className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
+                    <span>Network Infrastructure & Communication</span>
                   </li>
                 </ul>
                 <Button 
                   size="lg" 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
                 >
-                  <TranslatedText textKey="contactUs" />
+                  Request a Consultation
                 </Button>
               </div>
               <div className="relative">
@@ -126,52 +127,132 @@ const Installations = () => {
           </div>
         </section>
 
-        {/* Gallery Section */}
+        {/* Gallery Section - Expanded Installation Capabilities */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-8 text-center">
-              Our Installation Portfolio
+              Our Installation Capabilities
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="relative rounded-xl overflow-hidden shadow-lg h-64 group">
-                <img 
-                  src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
-                  alt="CCTV Installation" 
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/70 to-transparent flex items-end">
-                  <div className="p-6">
-                    <h3 className="text-xl font-display font-bold text-white">CCTV Systems</h3>
-                    <p className="text-white/80 text-sm">Advanced surveillance solutions</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              {/* CCTV, Access & Visitor Systems */}
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                <div className="flex items-center mb-4">
+                  <div className="bg-sapp-blue/10 p-3 rounded-lg">
+                    <MonitorCheck className="h-6 w-6 text-sapp-blue" />
                   </div>
+                  <h3 className="ml-4 text-xl font-display font-bold text-sapp-dark">CCTV, Access & Visitor Systems</h3>
                 </div>
+                <p className="text-sapp-gray mb-4">
+                  Control visibility, movement, and presence — with systems that scale from single sites to global estates.
+                </p>
+                <ul className="space-y-2 text-sm text-sapp-gray mb-6">
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>CCTV systems — from AI-powered cloud surveillance to modest, localised deployments</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Access control solutions — encrypted, skimmer-resistant, and deployable via cloud or local infrastructure</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Visitor management systems — standalone or integrated with physical access layers</span>
+                  </li>
+                </ul>
               </div>
-              <div className="relative rounded-xl overflow-hidden shadow-lg h-64 group">
-                <img 
-                  src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
-                  alt="Access Control" 
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/70 to-transparent flex items-end">
-                  <div className="p-6">
-                    <h3 className="text-xl font-display font-bold text-white">Access Control</h3>
-                    <p className="text-white/80 text-sm">Secure entry management systems</p>
+
+              {/* Speech Privacy & Sound Masking Systems */}
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                <div className="flex items-center mb-4">
+                  <div className="bg-sapp-blue/10 p-3 rounded-lg">
+                    <Wifi className="h-6 w-6 text-sapp-blue" />
                   </div>
+                  <h3 className="ml-4 text-xl font-display font-bold text-sapp-dark">Speech Privacy & Sound Masking</h3>
                 </div>
+                <p className="text-sapp-gray mb-4">
+                  Protect conversations and reduce acoustic exposure in sensitive or shared environments.
+                </p>
+                <ul className="space-y-2 text-sm text-sapp-gray mb-6">
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Speech privacy and sound masking systems — for confidential environments and operational discretion</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Smart privacy film — for glass partitions, windows, and high-sensitivity meeting spaces</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Microphone nullification technology — for rooms, venues, and secure vehicles</span>
+                  </li>
+                </ul>
               </div>
-              <div className="relative rounded-xl overflow-hidden shadow-lg h-64 group">
-                <img 
-                  src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
-                  alt="Network Security" 
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/70 to-transparent flex items-end">
-                  <div className="p-6">
-                    <h3 className="text-xl font-display font-bold text-white">Network Security</h3>
-                    <p className="text-white/80 text-sm">Comprehensive digital protection</p>
+
+              {/* Countering Surveillance & RF Monitoring Systems */}
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                <div className="flex items-center mb-4">
+                  <div className="bg-sapp-blue/10 p-3 rounded-lg">
+                    <FileText className="h-6 w-6 text-sapp-blue" />
                   </div>
+                  <h3 className="ml-4 text-xl font-display font-bold text-sapp-dark">Countering Surveillance & RF Monitoring</h3>
                 </div>
+                <p className="text-sapp-gray mb-4">
+                  Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors.
+                </p>
+                <ul className="space-y-2 text-sm text-sapp-gray mb-6">
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Espionage and surveillance countermeasures — acoustic, RF, and electromagnetic threat detection</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Technical surveillance countermeasures (TSCM) — regular or ad-hoc sweeps</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Protective monitoring systems — continuous detection of unauthorised signals</span>
+                  </li>
+                </ul>
               </div>
+
+              {/* Network Infrastructure & Communication Systems */}
+              <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                <div className="flex items-center mb-4">
+                  <div className="bg-sapp-blue/10 p-3 rounded-lg">
+                    <Users className="h-6 w-6 text-sapp-blue" />
+                  </div>
+                  <h3 className="ml-4 text-xl font-display font-bold text-sapp-dark">Network Infrastructure & Communication</h3>
+                </div>
+                <p className="text-sapp-gray mb-4">
+                  Lay secure foundations for communication and control — whether on-site, distributed, or hybrid.
+                </p>
+                <ul className="space-y-2 text-sm text-sapp-gray mb-6">
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Network and IT infrastructure installations — secure, scalable, and aligned with operational needs</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Custom system builds — software or sensor-based solutions for task automation and integration</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="h-1.5 w-1.5 bg-sapp-blue rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>Secure communication systems — for sensitive environments and critical operations</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex justify-center mt-8">
+              <Button 
+                size="lg" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 group relative overflow-hidden"
+              >
+                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                  Talk to Our Installation Team
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              </Button>
             </div>
           </div>
         </section>
@@ -181,13 +262,13 @@ const Installations = () => {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to upgrade your security infrastructure?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
-              Our team of installation experts is ready to help you implement the latest security technologies for your organization.
+              Our team of installation experts is ready to help you implement the latest security technologies for your organisation.
             </p>
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
             >
-              <TranslatedText textKey="getInTouch" />
+              Get a System Assessment
             </Button>
           </div>
         </section>
