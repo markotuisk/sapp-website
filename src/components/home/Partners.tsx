@@ -19,29 +19,29 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
-      logo: "/lovable-uploads/41de3450-d5aa-4a60-985b-1c3478dd5763.png",
+      logo: "/lovable-uploads/69dca9cd-0e56-44b6-b741-8faeebcb21e9.png",
       link: "https://www.verkada.com",
       bgColor: "bg-gradient-to-br from-gray-50 to-gray-100"
     },
     {
-      name: "Unifi",
+      name: "Ubiquiti",
       description: "Professional Network, Security and Communication systems.",
-      logo: "/lovable-uploads/88b40ea0-3d12-4b33-8bf2-ae619e1dcfe1.png",
+      logo: "/lovable-uploads/cfc046c6-eccb-4753-8308-0566d25909fc.png",
       link: "https://ui.com",
       bgColor: "bg-gradient-to-br from-blue-50 to-gray-100"
     },
     {
       name: "SOFT dB",
       description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
-      logo: "/lovable-uploads/7bf6f8ff-6cf1-4ab0-abba-6a916c49bfb8.png",
+      logo: "/lovable-uploads/6e585a39-33e8-4311-99f6-b7dd9d437e21.png",
       link: "https://www.softdb.com",
       bgColor: "bg-gradient-to-br from-blue-50 to-blue-100"
     },
     {
-      name: "Rapidwatch",
-      description: "detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
-      logo: "/lovable-uploads/a62c3377-92f5-4834-b6e1-e85d5424dd0d.png",
-      link: "https://mobilewatch.eu/rapidwatch",
+      name: "Inpixon",
+      description: "Detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
+      logo: "/lovable-uploads/53d3f50f-88a2-4e7c-8b65-5a3c79f001fa.png",
+      link: "https://www.inpixon.com",
       bgColor: "bg-gradient-to-br from-amber-50 to-amber-100"
     }
   ];
