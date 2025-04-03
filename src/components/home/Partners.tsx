@@ -19,30 +19,26 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
-      logo: "/lovable-uploads/69dca9cd-0e56-44b6-b741-8faeebcb21e9.png",
+      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
       link: "https://www.verkada.com",
-      bgColor: "bg-gradient-to-br from-gray-50 to-gray-100"
     },
     {
       name: "Ubiquiti",
       description: "Professional Network, Security and Communication systems.",
-      logo: "/lovable-uploads/cfc046c6-eccb-4753-8308-0566d25909fc.png",
+      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
       link: "https://ui.com",
-      bgColor: "bg-gradient-to-br from-blue-50 to-gray-100"
     },
     {
       name: "SOFT dB",
       description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
-      logo: "/lovable-uploads/6e585a39-33e8-4311-99f6-b7dd9d437e21.png",
+      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
       link: "https://www.softdb.com",
-      bgColor: "bg-gradient-to-br from-blue-50 to-blue-100"
     },
     {
       name: "Inpixon",
       description: "Detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
-      logo: "/lovable-uploads/53d3f50f-88a2-4e7c-8b65-5a3c79f001fa.png",
+      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
       link: "https://www.inpixon.com",
-      bgColor: "bg-gradient-to-br from-amber-50 to-amber-100"
     }
   ];
 
@@ -89,21 +85,17 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className={cn(
-                "relative h-64 flex items-center justify-center p-8", 
-                partner.bgColor
-              )}>
-                <div className="absolute inset-0 opacity-10">
+              <div className="relative bg-white h-56 flex items-center justify-center p-8 border-b">
+                <div className="absolute inset-0 opacity-5 bg-gray-50">
                   <div className="w-full h-full bg-grid"></div>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-[90%] max-h-[85%] object-contain relative z-10 drop-shadow-md"
+                  className="max-w-[75%] max-h-[75%] object-contain relative z-10"
                 />
               </div>
-              <CardContent className="p-6 flex flex-col h-[calc(100%-13rem)]">
+              <CardContent className="p-6 flex flex-col h-[calc(100%-14rem)]">
                 <div>
                   <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
                     {partner.name}
