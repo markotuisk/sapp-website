@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -20,13 +19,13 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
-      logo: "/lovable-uploads/8bfee868-105d-4df5-9dae-7da224fe25ec.png", // Updated logo path
+      logo: "/lovable-uploads/8bfee868-105d-4df5-9dae-7da224fe25ec.png",
       link: "https://www.verkada.com",
     },
     {
       name: "Ubiquiti",
       description: "Professional Network, Security and Communication systems.",
-      logo: "/lovable-uploads/8a5bc35f-ee0e-4cf9-bb62-6f30d769062c.png",
+      logo: "/lovable-uploads/20c3343a-b2d5-4507-8072-c47430f833ae.png",
       link: "https://ui.com",
     },
     {
