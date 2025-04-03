@@ -38,7 +38,7 @@ const Partners = () => {
     {
       name: "Inpixon",
       description: "Detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
-      logo: "/lovable-uploads/ea8614fb-011c-4b29-bc87-2b06d850d822.png",
+      logo: "/lovable-uploads/2c9bf332-fb77-4577-a92d-afad7565e5b8.png",
       link: "https://www.inpixon.com",
     }
   ];
