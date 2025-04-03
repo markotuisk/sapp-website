@@ -86,22 +86,24 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="relative h-40 bg-gradient-to-b from-gray-100 to-white flex items-center justify-center p-6">
+              <div className="relative h-48 bg-gradient-to-b from-gray-100 to-white flex items-center justify-center">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-h-full max-w-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
-                  {partner.name}
-                </h3>
-                <p className="text-sapp-gray text-sm mb-4 line-clamp-3">
-                  {partner.description}
-                </p>
+              <CardContent className="p-6 flex flex-col justify-between h-full">
+                <div>
+                  <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
+                    {partner.name}
+                  </h3>
+                  <p className="text-sapp-gray text-sm mb-4 line-clamp-3">
+                    {partner.description}
+                  </p>
+                </div>
                 {partner.link && (
-                  <div>
+                  <div className="mt-auto">
                     <a 
                       href={partner.link} 
                       target="_blank" 
