@@ -2,11 +2,10 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Link } from 'lucide-react';
+import { Sparkles, Link, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Card, CardContent } from '@/components/ui/card';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
 
 const Partners = () => {
   const [ref, inView] = useInView({
@@ -27,7 +26,7 @@ const Partners = () => {
       name: "Unifi",
       description: "Professional Network, Security and Communication systems.",
       logo: "/lovable-uploads/88b40ea0-3d12-4b33-8bf2-ae619e1dcfe1.png",
-      link: "https://www.ui.com"
+      link: "https://ui.com"
     },
     {
       name: "SOFT dB",
@@ -39,7 +38,7 @@ const Partners = () => {
       name: "Rapidwatch",
       description: "detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
       logo: "/lovable-uploads/a62c3377-92f5-4834-b6e1-e85d5424dd0d.png",
-      link: "https://mobilewatch.eu"
+      link: "https://mobilewatch.eu/rapidwatch"
     }
   ];
 
@@ -102,19 +101,24 @@ const Partners = () => {
                     {partner.description}
                   </p>
                 </div>
-                {partner.link && (
-                  <div className="mt-auto">
-                    <a 
-                      href={partner.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-sapp-blue text-sm font-medium hover:underline"
-                    >
-                      <TranslatedText textKey="visitWebsite" defaultText="Visit Website" />
-                      <Link className="h-3.5 w-3.5 ml-1" />
-                    </a>
-                  </div>
-                )}
+                <div className="mt-auto flex gap-2 flex-wrap">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="border-sapp-blue text-sapp-dark hover:bg-sapp-blue/10 transition-colors"
+                    onClick={() => window.open(`/partners/${partner.name.toLowerCase()}`, '_self')}
+                  >
+                    <TranslatedText textKey="readMore" defaultText="Read More" />
+                  </Button>
+                  <Button 
+                    size="sm"
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-colors"
+                    onClick={() => window.open(partner.link, '_blank')}
+                  >
+                    <TranslatedText textKey="visitWebsite" defaultText="Visit Website" />
+                    <ExternalLink className="ml-1 h-3.5 w-3.5" />
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}
