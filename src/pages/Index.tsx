@@ -5,6 +5,7 @@ import Hero from '@/components/home/Hero';
 import About from '@/components/home/About';
 import Services from '@/components/home/Services';
 import Partners from '@/components/home/Partners';
+import Story from '@/components/home/Story';
 import Contact from '@/components/home/Contact';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -43,6 +44,7 @@ const Index = () => {
         <About />
         <Services />
         <Partners />
+        <Story />
         <Contact />
         
         <div className="py-16 relative bg-sapp-dark overflow-hidden">
