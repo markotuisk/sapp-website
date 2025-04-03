@@ -20,7 +20,7 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
-      logo: "/lovable-uploads/a9adfe90-b914-4355-bb31-e8d1f7f71790.png",
+      logo: "/lovable-uploads/8bfee868-105d-4df5-9dae-7da224fe25ec.png", // Updated logo path
       link: "https://www.verkada.com",
     },
     {
