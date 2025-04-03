@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -85,11 +86,11 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="bg-gray-50 p-8 flex items-center justify-center h-64">
+              <div className="bg-white p-4 flex items-center justify-center h-64">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-[85%] max-h-[85%] object-contain"
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
               <Separator className="mx-auto w-[90%]" />
@@ -156,3 +157,4 @@ const Partners = () => {
 };
 
 export default Partners;
+
