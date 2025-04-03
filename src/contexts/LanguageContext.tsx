@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = {
@@ -39,6 +40,7 @@ type TranslationKey =
   | 'industryLeaders'
   | 'partnersDescription'
   | 'visitWebsite'
+  | 'readMore'
   | 'becomePartner'
   | 'becomePartnerDescription'
   | 'partnerWithUs';
@@ -74,6 +76,7 @@ export const translations: Translations = {
     brandTagline: 'Security and Privacy Partners',
     industryLeaders: 'industry leaders',
     partnersDescription: 'We collaborate with trusted partners to deliver comprehensive security solutions that protect your organization from both physical and cyber threats.',
+    readMore: 'Read More',
     visitWebsite: 'Visit Website',
     becomePartner: 'Become a SAPP Security Partner',
     becomePartnerDescription: 'Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide.',
@@ -103,6 +106,7 @@ export const translations: Translations = {
     brandTagline: 'Security and Privacy Partners',
     industryLeaders: 'Branchenführer',
     partnersDescription: 'Wir arbeiten mit vertrauenswürdigen Partnern zusammen, um umfassende Sicherheitslösungen zu liefern, die Ihre Organisation vor physischen und Cyber-Bedrohungen schützen.',
+    readMore: 'Mehr lesen',
     visitWebsite: 'Website besuchen',
     becomePartner: 'Werden Sie SAPP Sicherheitspartner',
     becomePartnerDescription: 'Schließen Sie sich unserem Netzwerk von Technologiepartnern und Sicherheitsexperten an, um weltweit hochmoderne Sicherheitslösungen für Organisationen anzubieten.',
@@ -132,6 +136,7 @@ export const translations: Translations = {
     brandTagline: 'Security and Privacy Partners',
     industryLeaders: 'marktleiders',
     partnersDescription: 'We werken samen met betrouwbare partners om uitgebreide beveiligingsoplossingen te leveren die uw organisatie beschermen tegen zowel fysieke als cyberbedreigingen.',
+    readMore: 'Meer lezen',
     visitWebsite: 'Website bezoeken',
     becomePartner: 'Word een SAPP Beveiligingspartner',
     becomePartnerDescription: 'Sluit u aan bij ons netwerk van technologiepartners en beveiligingsexperts om geavanceerde beveiligingsoplossingen te leveren aan organisaties wereldwijd.',
@@ -161,6 +166,7 @@ export const translations: Translations = {
     brandTagline: 'Security and Privacy Partners',
     industryLeaders: 'leaders de l\'industrie',
     partnersDescription: 'Nous collaborons avec des partenaires de confiance pour offrir des solutions de sécurité complètes qui protègent votre organisation contre les menaces physiques et cybernétiques.',
+    readMore: 'En savoir plus',
     visitWebsite: 'Visiter le site',
     becomePartner: 'Devenez partenaire de sécurité SAPP',
     becomePartnerDescription: 'Rejoignez notre réseau de partenaires technologiques et d\'experts en sécurité pour fournir des solutions de sécurité de pointe aux organisations du monde entier.',
