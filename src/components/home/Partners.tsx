@@ -1,9 +1,12 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Link } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
+import { Card, CardContent } from '@/components/ui/card';
+import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
 
 const Partners = () => {
   const [ref, inView] = useInView({
@@ -16,26 +19,26 @@ const Partners = () => {
   const partners = [
     {
       name: "Verkada",
-      description: "Cloud-based security systems",
-      logo: "/lovable-uploads/verkada-logo.svg",
+      description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
+      logo: "/lovable-uploads/41de3450-d5aa-4a60-985b-1c3478dd5763.png",
       link: "https://www.verkada.com"
     },
     {
-      name: "Ubiquiti",
-      description: "Network solutions & IoT devices",
-      logo: "/lovable-uploads/ubiquiti-logo.svg",
+      name: "Unifi",
+      description: "Professional Network, Security and Communication systems.",
+      logo: "/lovable-uploads/88b40ea0-3d12-4b33-8bf2-ae619e1dcfe1.png",
       link: "https://www.ui.com"
     },
     {
       name: "SOFT dB",
-      description: "Sound masking & acoustic solutions",
-      logo: "/lovable-uploads/softdb-logo.svg",
+      description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
+      logo: "/lovable-uploads/7bf6f8ff-6cf1-4ab0-abba-6a916c49bfb8.png",
       link: "https://www.softdb.com"
     },
     {
-      name: "MobileWatch",
-      description: "RF security monitoring similar to Bastille Networks, specialized in wireless threat detection",
-      logo: "/lovable-uploads/mobilewatch-logo.svg",
+      name: "Rapidwatch",
+      description: "detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
+      logo: "/lovable-uploads/a62c3377-92f5-4834-b6e1-e85d5424dd0d.png",
       link: "https://mobilewatch.eu"
     }
   ];
@@ -76,42 +79,42 @@ const Partners = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {partners.map((partner, index) => (
-            <div
+            <Card
               key={index}
               className={cn(
-                "bg-white rounded-xl p-6 shadow-md border border-gray-100 transition-all duration-700 hover:shadow-xl",
+                "overflow-hidden h-full transition-all duration-700 hover:shadow-xl border border-gray-100 group",
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-sapp-blue/10 rounded-lg flex items-center justify-center">
-                  <img 
-                    src={partner.logo} 
-                    alt={partner.name} 
-                    className="w-10 h-10 object-contain"
-                  />
-                </div>
+              <div className="relative h-40 bg-gradient-to-b from-gray-100 to-white flex items-center justify-center p-6">
+                <img 
+                  src={partner.logo} 
+                  alt={partner.name} 
+                  className="max-h-full max-w-full object-contain"
+                />
               </div>
-              <h3 className="text-lg font-display font-semibold text-center mb-2 text-sapp-dark">
-                {partner.name}
-              </h3>
-              <p className="text-sapp-gray text-sm text-center mb-4">
-                {partner.description}
-              </p>
-              {partner.link && (
-                <div className="text-center">
-                  <a 
-                    href={partner.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-sapp-blue text-sm font-medium hover:underline"
-                  >
-                    <TranslatedText textKey="visitWebsite" defaultText="Visit Website" />
-                    <Link className="h-3.5 w-3.5 ml-1" />
-                  </a>
-                </div>
-              )}
-            </div>
+              <CardContent className="p-6">
+                <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
+                  {partner.name}
+                </h3>
+                <p className="text-sapp-gray text-sm mb-4 line-clamp-3">
+                  {partner.description}
+                </p>
+                {partner.link && (
+                  <div>
+                    <a 
+                      href={partner.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sapp-blue text-sm font-medium hover:underline"
+                    >
+                      <TranslatedText textKey="visitWebsite" defaultText="Visit Website" />
+                      <Link className="h-3.5 w-3.5 ml-1" />
+                    </a>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           ))}
         </div>
 
