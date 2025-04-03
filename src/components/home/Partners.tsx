@@ -2,7 +2,7 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Link, ExternalLink } from 'lucide-react';
+import { Sparkles, ExternalLink } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Card, CardContent } from '@/components/ui/card';
@@ -85,11 +85,11 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="relative h-48 bg-gradient-to-b from-gray-100 to-white flex items-center justify-center">
+              <div className="relative h-48 bg-gradient-to-b from-gray-100 to-white flex items-center justify-center p-4">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="w-full h-full object-cover"
+                  className="max-w-[85%] max-h-[90%] object-contain"
                 />
               </div>
               <CardContent className="p-6 flex flex-col justify-between h-full">
@@ -108,14 +108,14 @@ const Partners = () => {
                     className="border-sapp-blue text-sapp-dark hover:bg-sapp-blue/10 transition-colors"
                     onClick={() => window.open(`/partners/${partner.name.toLowerCase()}`, '_self')}
                   >
-                    <TranslatedText textKey="readMore" defaultText="Read More" />
+                    <TranslatedText textKey="readMore" />
                   </Button>
                   <Button 
                     size="sm"
                     className="bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-colors"
                     onClick={() => window.open(partner.link, '_blank')}
                   >
-                    <TranslatedText textKey="visitWebsite" defaultText="Visit Website" />
+                    <TranslatedText textKey="visitWebsite" />
                     <ExternalLink className="ml-1 h-3.5 w-3.5" />
                   </Button>
                 </div>
@@ -137,19 +137,16 @@ const Partners = () => {
           
           <div className="relative z-10 md:max-w-xl">
             <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-              <TranslatedText textKey="becomePartner" defaultText="Become a SAPP Security Partner" />
+              <TranslatedText textKey="becomePartner" />
             </h3>
             <p className="text-gray-300 mb-6">
-              <TranslatedText 
-                textKey="becomePartnerDescription" 
-                defaultText="Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide."
-              />
+              <TranslatedText textKey="becomePartnerDescription" />
             </p>
             <Button 
               size="lg"
               className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
             >
-              <TranslatedText textKey="partnerWithUs" defaultText="Partner With Us" />
+              <TranslatedText textKey="partnerWithUs" />
             </Button>
           </div>
         </div>
