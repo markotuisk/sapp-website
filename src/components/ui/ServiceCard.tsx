@@ -18,7 +18,7 @@ import {
 interface ServiceCardProps {
   title: string;
   description: string;
-  items: string[];
+  items?: string[];
   delay?: number;
   href: string;
   imagePath?: string;
@@ -28,7 +28,7 @@ interface ServiceCardProps {
 const ServiceCard = ({ 
   title, 
   description, 
-  items, 
+  items = [], 
   delay = 0,
   href,
   imagePath,
@@ -43,23 +43,20 @@ const ServiceCard = ({
     <div
       ref={ref}
       className={cn(
-        "bg-white rounded-xl overflow-hidden group transition-all duration-700 shadow-md hover:shadow-xl border border-gray-100 h-full flex flex-col",
+        "bg-white rounded-xl overflow-hidden transition-all duration-700 shadow-md hover:shadow-xl border border-gray-100 h-full flex flex-col",
         inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       )}
       style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
-    >
-      {/* Remove large image header/icon block as requested */}
-      
-      <div className="p-5 flex-grow flex flex-col">
-        <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
-        <p className="text-sapp-gray text-sm mb-4">{description}</p>
+    >      
+      <div className="p-6 flex-grow flex flex-col">
+        <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">{title}</h3>
+        <p className="text-sapp-gray text-sm mb-4 flex-grow">{description}</p>
         
-        <div className="mt-auto space-y-2">
-          <Link to={href} className="block">
+        <div className="flex flex-row gap-2 mt-2">
+          <Link to={href}>
             <Button 
               variant="outline" 
-              className="text-sm py-1 px-2 border-sapp-blue text-sapp-dark rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md h-8 w-auto"
-              aria-label={`Read more about ${title}`}
+              className="text-sm border-sapp-blue text-sapp-dark rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
             >
               Read More
             </Button>
@@ -67,8 +64,7 @@ const ServiceCard = ({
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm py-1 px-2 rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md h-8 w-auto"
-                aria-label={`Get details about ${title}`}
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
               >
                 Get Details
               </Button>

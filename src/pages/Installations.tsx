@@ -186,22 +186,19 @@ const Installations = () => {
               <p className="text-sapp-gray">Expert installation services designed for complex and demanding environments</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-12">
               {/* CCTV, Access & Visitor */}
               <ServiceCard 
                 title="CCTV, Access & Visitor Systems"
                 description="Control visibility, movement, and presence — with systems that scale from single sites to global estates."
-                items={[]}
                 delay={100}
                 href="/installations/cctv-access"
-                imagePath="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
               />
               
               {/* Speech Privacy & Sound Masking */}
               <ServiceCard 
                 title="Speech Privacy & Sound Masking"
                 description="Protect conversations and reduce acoustic exposure in sensitive or shared environments."
-                items={[]}
                 delay={200}
                 href="/installations/speech-privacy"
               />
@@ -210,7 +207,6 @@ const Installations = () => {
               <ServiceCard 
                 title="Countering Surveillance & RF Monitoring"
                 description="Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors."
-                items={[]}
                 delay={300}
                 href="/installations/counter-surveillance"
               />
@@ -219,7 +215,6 @@ const Installations = () => {
               <ServiceCard 
                 title="Network Infrastructure & Communication"
                 description="Lay secure foundations for communication and control — whether on-site, distributed, or hybrid."
-                items={[]}
                 delay={400}
                 href="/installations/network-infrastructure"
               />
