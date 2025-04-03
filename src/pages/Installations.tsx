@@ -1,4 +1,3 @@
-
 import { MonitorCheck, Wifi, Users, FileText, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -36,7 +35,7 @@ const Installations = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Hero Section - Updated to match Events Security page */}
+        {/* Hero Section */}
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col items-center justify-center text-center">
@@ -192,11 +191,7 @@ const Installations = () => {
               <ServiceCard 
                 title="CCTV, Access & Visitor Systems"
                 description="Control visibility, movement, and presence — with systems that scale from single sites to global estates."
-                items={[
-                  "AI-powered cloud surveillance to localised deployments",
-                  "Encrypted, skimmer-resistant access control solutions",
-                  "Standalone or integrated visitor management systems"
-                ]}
+                items={[]}
                 delay={100}
                 href="/installations/cctv-access"
                 imagePath="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
@@ -206,11 +201,7 @@ const Installations = () => {
               <ServiceCard 
                 title="Speech Privacy & Sound Masking"
                 description="Protect conversations and reduce acoustic exposure in sensitive or shared environments."
-                items={[
-                  "Speech privacy and sound masking systems for confidential environments",
-                  "Smart privacy film for glass partitions and windows",
-                  "Microphone nullification technology for secure spaces"
-                ]}
+                items={[]}
                 delay={200}
                 href="/installations/speech-privacy"
               />
@@ -219,11 +210,7 @@ const Installations = () => {
               <ServiceCard 
                 title="Countering Surveillance & RF Monitoring"
                 description="Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors."
-                items={[
-                  "Acoustic, RF, and electromagnetic threat detection",
-                  "Technical surveillance countermeasures (TSCM)",
-                  "Continuous detection of unauthorised signals"
-                ]}
+                items={[]}
                 delay={300}
                 href="/installations/counter-surveillance"
               />
@@ -232,23 +219,57 @@ const Installations = () => {
               <ServiceCard 
                 title="Network Infrastructure & Communication"
                 description="Lay secure foundations for communication and control — whether on-site, distributed, or hybrid."
-                items={[
-                  "Secure, scalable network and IT infrastructure installations",
-                  "Custom system builds for task automation and integration",
-                  "Secure communication systems for sensitive environments"
-                ]}
+                items={[]}
                 delay={400}
                 href="/installations/network-infrastructure"
               />
             </div>
 
             <div className="text-center">
-              <Button
-                size="lg"
-                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 hover:scale-105"
-              >
-                Talk to Our Installation Team
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    size="lg"
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 hover:scale-105"
+                  >
+                    Talk to Our Installation Team
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-white">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Talk to Our Installation Team</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Fill out the form below to get in touch with our expert installation team.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <div className="py-4">
+                    <form className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label htmlFor="name3" className="text-sm font-medium">Full Name</label>
+                          <input id="name3" className="w-full p-2 border border-gray-300 rounded-md" />
+                        </div>
+                        <div className="space-y-2">
+                          <label htmlFor="company3" className="text-sm font-medium">Company</label>
+                          <input id="company3" className="w-full p-2 border border-gray-300 rounded-md" />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="email3" className="text-sm font-medium">Email</label>
+                        <input id="email3" type="email" className="w-full p-2 border border-gray-300 rounded-md" />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="message3" className="text-sm font-medium">Message</label>
+                        <textarea id="message3" rows={4} className="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                      </div>
+                    </form>
+                  </div>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </section>

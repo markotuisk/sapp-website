@@ -1,4 +1,3 @@
-
 import { AlertTriangle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -34,9 +33,8 @@ const SecurityAudits = () => {
                 )}
                 ref={ref}
               >
-                Certified, <span className="text-sapp-blue">targeted</span>, and<br /> 
-                <span className="text-sapp-blue">comprehensive</span> physical<br />
-                security <span className="text-sapp-blue">audits</span>
+                Certified <span className="text-sapp-blue">evidence-driven</span><br /> 
+                physical security <span className="text-sapp-blue">audits</span>
               </h1>
               <p 
                 className={cn(

@@ -16,6 +16,7 @@ import VenueSecurityAudits from "./pages/services/VenueSecurityAudits";
 import EventMonitoring from "./pages/services/EventMonitoring";
 import SecureTechnology from "./pages/services/SecureTechnology";
 import CloseProtection from "./pages/services/CloseProtection";
+import CookieConsent from "./components/ui/CookieConsent";
 
 // Installation subpage imports
 import CCTVAccess from "./pages/installations/CCTVAccess";
@@ -55,6 +56,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieConsent />
         </BrowserRouter>
       </LanguageProvider>
     </TooltipProvider>

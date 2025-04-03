@@ -53,21 +53,12 @@ const ServiceCard = ({
       <div className="p-5 flex-grow flex flex-col">
         <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-4">{description}</p>
-        {items.length > 0 && (
-          <ul className="space-y-2 mb-4">
-            {items.map((item, index) => (
-              <li key={index} className="flex items-start">
-                <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                <span className="text-sm text-sapp-gray">{item}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+        
         <div className="mt-auto space-y-2">
           <Link to={href} className="block">
             <Button 
               variant="outline" 
-              className="w-full text-sm py-1 px-2 border-sapp-blue text-sapp-dark rounded-md font-medium text-center justify-center transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md h-8"
+              className="text-sm py-1 px-2 border-sapp-blue text-sapp-dark rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md h-8 w-auto"
               aria-label={`Read more about ${title}`}
             >
               Read More
@@ -76,7 +67,7 @@ const ServiceCard = ({
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button 
-                className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm py-1 px-2 rounded-md font-medium text-center justify-center transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md h-8"
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm py-1 px-2 rounded-md font-medium text-left justify-start transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md h-8 w-auto"
                 aria-label={`Get details about ${title}`}
               >
                 Get Details

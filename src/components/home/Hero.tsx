@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
@@ -22,8 +21,8 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Confidential. <br />
-            Controlled. <span className="text-sapp-blue">Protected</span>.
+            Your trusted technical <br />
+            security and <span className="text-sapp-blue">privacy partner</span>.
           </h1>
           
           <p 
@@ -32,7 +31,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            From compliance to physical and cyber protection, we secure corporate environments with technical precision - flexible to your footprint and priorities.
+            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security.
           </p>
           
           <div 
@@ -64,7 +63,6 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Scroll indicator - Fixed to bottom of viewport */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
         <a href="#about" className="flex flex-col items-center text-sapp-gray hover:text-sapp-blue transition-colors duration-300 group">
           <span className="text-xs font-medium mb-2 group-hover:translate-y-1 transition-transform">
