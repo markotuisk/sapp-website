@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -20,25 +19,25 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
-      logo: "/lovable-uploads/verkada-logo.svg",
+      logo: "/lovable-uploads/a9adfe90-b914-4355-bb31-e8d1f7f71790.png",
       link: "https://www.verkada.com",
     },
     {
       name: "Ubiquiti",
       description: "Professional Network, Security and Communication systems.",
-      logo: "/lovable-uploads/ubiquiti-logo.svg",
+      logo: "/lovable-uploads/8a5bc35f-ee0e-4cf9-bb62-6f30d769062c.png",
       link: "https://ui.com",
     },
     {
       name: "SOFT dB",
       description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
-      logo: "/lovable-uploads/softdb-logo.svg",
+      logo: "/lovable-uploads/960be1a6-9fbc-4220-84d6-d0777dd009f0.png",
       link: "https://www.softdb.com",
     },
     {
       name: "Inpixon",
       description: "Detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
-      logo: "/lovable-uploads/mobilewatch-logo.svg",
+      logo: "/lovable-uploads/ea8614fb-011c-4b29-bc87-2b06d850d822.png",
       link: "https://www.inpixon.com",
     }
   ];
@@ -86,11 +85,11 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="bg-white p-8 flex items-center justify-center h-48">
+              <div className="bg-gray-50 p-8 flex items-center justify-center h-64">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-[70%] max-h-[70%] object-contain"
+                  className="max-w-[85%] max-h-[85%] object-contain"
                 />
               </div>
               <Separator className="mx-auto w-[90%]" />
@@ -98,7 +97,7 @@ const Partners = () => {
                 <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
                   {partner.name}
                 </h3>
-                <p className="text-sapp-gray text-sm mb-6">
+                <p className="text-sapp-gray text-sm mb-6 line-clamp-3">
                   {partner.description}
                 </p>
                 <div className="mt-auto flex gap-4 flex-wrap">
