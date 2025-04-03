@@ -90,7 +90,7 @@ const Partners = () => {
               )}
             >
               <div className={cn(
-                "relative h-52 flex items-center justify-center p-6", 
+                "relative h-64 flex items-center justify-center p-8", 
                 partner.bgColor
               )}>
                 <div className="absolute inset-0 opacity-10">
@@ -100,7 +100,7 @@ const Partners = () => {
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-[80%] max-h-[75%] object-contain relative z-10 drop-shadow-sm"
+                  className="max-w-[90%] max-h-[85%] object-contain relative z-10 drop-shadow-md"
                 />
               </div>
               <CardContent className="p-6 flex flex-col h-[calc(100%-13rem)]">
