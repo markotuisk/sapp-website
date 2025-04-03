@@ -94,7 +94,7 @@ const Partners = () => {
                 />
               </div>
               <Separator className="mx-auto w-[90%]" />
-              <CardContent className="p-6 flex flex-col">
+              <CardContent className="p-6 flex flex-col h-[280px]">
                 <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
                   {partner.name}
                 </h3>
@@ -157,4 +157,3 @@ const Partners = () => {
 };
 
 export default Partners;
-
