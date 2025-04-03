@@ -2,7 +2,7 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Sparkles, ExternalLink } from 'lucide-react';
+import { Sparkles, ExternalLink, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Card, CardContent } from '@/components/ui/card';
@@ -20,25 +20,29 @@ const Partners = () => {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
       logo: "/lovable-uploads/41de3450-d5aa-4a60-985b-1c3478dd5763.png",
-      link: "https://www.verkada.com"
+      link: "https://www.verkada.com",
+      bgColor: "bg-gradient-to-br from-gray-50 to-gray-100"
     },
     {
       name: "Unifi",
       description: "Professional Network, Security and Communication systems.",
       logo: "/lovable-uploads/88b40ea0-3d12-4b33-8bf2-ae619e1dcfe1.png",
-      link: "https://ui.com"
+      link: "https://ui.com",
+      bgColor: "bg-gradient-to-br from-blue-50 to-gray-100"
     },
     {
       name: "SOFT dB",
       description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
       logo: "/lovable-uploads/7bf6f8ff-6cf1-4ab0-abba-6a916c49bfb8.png",
-      link: "https://www.softdb.com"
+      link: "https://www.softdb.com",
+      bgColor: "bg-gradient-to-br from-blue-50 to-blue-100"
     },
     {
       name: "Rapidwatch",
       description: "detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
       logo: "/lovable-uploads/a62c3377-92f5-4834-b6e1-e85d5424dd0d.png",
-      link: "https://mobilewatch.eu/rapidwatch"
+      link: "https://mobilewatch.eu/rapidwatch",
+      bgColor: "bg-gradient-to-br from-amber-50 to-amber-100"
     }
   ];
 
@@ -85,19 +89,26 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="relative h-48 bg-gradient-to-b from-gray-100 to-white flex items-center justify-center p-4">
+              <div className={cn(
+                "relative h-52 flex items-center justify-center p-6", 
+                partner.bgColor
+              )}>
+                <div className="absolute inset-0 opacity-10">
+                  <div className="w-full h-full bg-grid"></div>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-[85%] max-h-[90%] object-contain"
+                  className="max-w-[80%] max-h-[75%] object-contain relative z-10 drop-shadow-sm"
                 />
               </div>
-              <CardContent className="p-6 flex flex-col justify-between h-full">
+              <CardContent className="p-6 flex flex-col h-[calc(100%-13rem)]">
                 <div>
                   <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
                     {partner.name}
                   </h3>
-                  <p className="text-sapp-gray text-sm mb-4 line-clamp-3">
+                  <p className="text-sapp-gray text-sm mb-6 line-clamp-3">
                     {partner.description}
                   </p>
                 </div>
@@ -109,6 +120,7 @@ const Partners = () => {
                     onClick={() => window.open(`/partners/${partner.name.toLowerCase()}`, '_self')}
                   >
                     <TranslatedText textKey="readMore" />
+                    <ArrowRight className="ml-1 h-3.5 w-3.5" />
                   </Button>
                   <Button 
                     size="sm"
