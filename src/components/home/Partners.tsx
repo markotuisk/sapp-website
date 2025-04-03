@@ -2,10 +2,11 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Sparkles, ExternalLink, ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 const Partners = () => {
   const [ref, inView] = useInView({
@@ -19,25 +20,25 @@ const Partners = () => {
     {
       name: "Verkada",
       description: "Cloud based & Software first AI-Powered Security Systems. Point and Click simplicity, to protect at scale.",
-      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
+      logo: "/lovable-uploads/verkada-logo.svg",
       link: "https://www.verkada.com",
     },
     {
       name: "Ubiquiti",
       description: "Professional Network, Security and Communication systems.",
-      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
+      logo: "/lovable-uploads/ubiquiti-logo.svg",
       link: "https://ui.com",
     },
     {
       name: "SOFT dB",
       description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
-      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
+      logo: "/lovable-uploads/softdb-logo.svg",
       link: "https://www.softdb.com",
     },
     {
       name: "Inpixon",
       description: "Detect mobile phones and IoT devices, ideal for a fast deployment in off-site meetings monitoring.",
-      logo: "/lovable-uploads/64d6fbe7-93be-4c48-ab16-19e4c390e86d.png",
+      logo: "/lovable-uploads/mobilewatch-logo.svg",
       link: "https://www.inpixon.com",
     }
   ];
@@ -81,34 +82,30 @@ const Partners = () => {
             <Card
               key={index}
               className={cn(
-                "overflow-hidden h-full transition-all duration-700 hover:shadow-xl border border-gray-100 group",
+                "overflow-hidden h-full transition-all duration-700 hover:shadow-lg border border-gray-100 group",
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="relative bg-white h-56 flex items-center justify-center p-8 border-b">
-                <div className="absolute inset-0 opacity-5 bg-gray-50">
-                  <div className="w-full h-full bg-grid"></div>
-                </div>
+              <div className="bg-white p-8 flex items-center justify-center h-48">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-[75%] max-h-[75%] object-contain relative z-10"
+                  className="max-w-[70%] max-h-[70%] object-contain"
                 />
               </div>
-              <CardContent className="p-6 flex flex-col h-[calc(100%-14rem)]">
-                <div>
-                  <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
-                    {partner.name}
-                  </h3>
-                  <p className="text-sapp-gray text-sm mb-6 line-clamp-3">
-                    {partner.description}
-                  </p>
-                </div>
-                <div className="mt-auto flex gap-2 flex-wrap">
+              <Separator className="mx-auto w-[90%]" />
+              <CardContent className="p-6 flex flex-col">
+                <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
+                  {partner.name}
+                </h3>
+                <p className="text-sapp-gray text-sm mb-6">
+                  {partner.description}
+                </p>
+                <div className="mt-auto flex gap-4 flex-wrap">
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="border-sapp-blue text-sapp-dark hover:bg-sapp-blue/10 transition-colors"
+                    className="border-gray-300 text-sapp-dark hover:bg-gray-50 transition-colors"
                     onClick={() => window.open(`/partners/${partner.name.toLowerCase()}`, '_self')}
                   >
                     <TranslatedText textKey="readMore" />
@@ -116,7 +113,7 @@ const Partners = () => {
                   </Button>
                   <Button 
                     size="sm"
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-colors"
+                    className="bg-accent-teal hover:bg-accent-teal/90 text-white transition-colors"
                     onClick={() => window.open(partner.link, '_blank')}
                   >
                     <TranslatedText textKey="visitWebsite" />
