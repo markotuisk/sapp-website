@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -31,7 +32,7 @@ const Partners = () => {
     {
       name: "SOFT dB",
       description: "Sound Masking, Acoustics & Vibration Experts. Systems that is Network Ready Software first solution.",
-      logo: "/lovable-uploads/960be1a6-9fbc-4220-84d6-d0777dd009f0.png",
+      logo: "/lovable-uploads/e1b5532f-5840-4688-b9df-ae2e2926945d.png",
       link: "https://www.softdb.com",
     },
     {
