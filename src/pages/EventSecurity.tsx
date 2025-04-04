@@ -174,36 +174,37 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="flex flex-col justify-center">
+              <div className="order-2 md:order-1">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
                   Why Event Security Matters
                 </h2>
                 <p className="text-sapp-gray mb-6">
                   Protect any meetings or events that are classified confidential, restricted or sensitive with real-time monitoring as live discussions are most vulnerable to potential espionage attacks. Information gatherers always target the weakest link in the organisation and sensitive strategic meetings are usually an easy choice.
                 </p>
-                <p className="text-sapp-gray mb-6">
-                  Public areas and hotels are often booked in advance advising the competition where organisation is vulnerable. Unauthorised surveillance devices can be planted days before business takes control of the rooms. Hotel staff can be easily persuaded to help gather sensitive information and the level of hotel security is usually low.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start">
-                    <Shield className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Board meetings security protocols</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Calendar className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Results rehearsals confidentiality</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FileText className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Strategy planning security</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Users className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Negotiations protection</span>
-                  </li>
-                </ul>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <Shield className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Board Meetings</h4>
+                    <p className="text-sm text-sapp-gray">Comprehensive security protocols for board meetings.</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <Calendar className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Results Rehearsals</h4>
+                    <p className="text-sm text-sapp-gray">Ensure confidentiality for sensitive presentations.</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <FileText className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Strategy Planning</h4>
+                    <p className="text-sm text-sapp-gray">Protect confidential strategic discussions.</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <Users className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Negotiations</h4>
+                    <p className="text-sm text-sapp-gray">Secure environment for sensitive negotiations.</p>
+                  </div>
+                </div>
               </div>
-              <div className="relative">
+              <div className="relative order-1 md:order-2">
                 <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
                 <img 
                   src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"

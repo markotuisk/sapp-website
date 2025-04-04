@@ -1,4 +1,5 @@
-import { MonitorCheck, Wifi, Users, FileText, ArrowRight } from 'lucide-react';
+
+import { MonitorCheck, Wifi, Users, FileText, ArrowRight, Lock, Database } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -92,35 +93,39 @@ const Installations = () => {
           </div>
         </section>
 
-        {/* Main Content */}
+        {/* Main Content - Updated to match Cyber Security layout */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div>
+              <div className="order-2 md:order-1">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
                   Specialist installations for complex security needs
                 </h2>
                 <p className="text-sapp-gray mb-6">
                   We provide end-to-end installation services for a wide range of security technologies. Our experienced team ensures that your security systems are properly installed, configured, and integrated with your existing infrastructure.
                 </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start">
-                    <MonitorCheck className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>CCTV, Access & Visitor</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Wifi className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Speech Privacy & Sound Masking</span>
-                  </li>
-                  <li className="flex items-start">
-                    <FileText className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Countering Surveillance & RF Monitoring</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Users className="h-5 w-5 text-sapp-blue mr-3 mt-0.5" />
-                    <span>Network Infrastructure & Communication</span>
-                  </li>
-                </ul>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <MonitorCheck className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">CCTV & Access</h4>
+                    <p className="text-sm text-sapp-gray">Comprehensive video surveillance and access control systems.</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <Wifi className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Speech Privacy</h4>
+                    <p className="text-sm text-sapp-gray">Advanced sound masking and speech protection solutions.</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <Lock className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Counter Surveillance</h4>
+                    <p className="text-sm text-sapp-gray">Protection against unauthorized surveillance activities.</p>
+                  </div>
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <Database className="h-6 w-6 text-sapp-blue mb-2" />
+                    <h4 className="font-semibold text-sapp-dark mb-1">Network Security</h4>
+                    <p className="text-sm text-sapp-gray">Secure network infrastructure and communications.</p>
+                  </div>
+                </div>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button 
@@ -166,7 +171,7 @@ const Installations = () => {
                   </AlertDialogContent>
                 </AlertDialog>
               </div>
-              <div className="relative">
+              <div className="relative order-1 md:order-2">
                 <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
                 <img 
                   src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
@@ -178,7 +183,7 @@ const Installations = () => {
           </div>
         </section>
 
-        {/* Installation Capabilities Section - Redesigned to match Event Security */}
+        {/* Installation Capabilities Section */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center mb-12">
