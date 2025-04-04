@@ -1,11 +1,8 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { Shield, Check, Info, Users, Lightbulb, Target, Heart, Compass } from 'lucide-react';
 import { Animated, AnimatedText } from '../ui/AnimatedElements';
 import { Separator } from '@/components/ui/separator';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import FeatureCard from '../ui/FeatureCard';
+import { Card, CardContent } from '@/components/ui/card';
 
 const About = () => {
   const [ref, inView] = useInView({
@@ -48,7 +45,6 @@ const About = () => {
 
   return (
     <section id="about" className="py-24 bg-white relative overflow-hidden">
-      {/* Subtle background elements */}
       <div className="absolute w-[800px] h-[800px] rounded-full bg-sapp-blue/5 -top-1/2 -right-1/4 blur-3xl"></div>
       <div className="absolute w-[600px] h-[600px] rounded-full bg-sapp-blue/3 bottom-0 -left-1/4 blur-3xl"></div>
       <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent z-10"></div>
@@ -83,7 +79,6 @@ const About = () => {
           </p>
         </div>
 
-        {/* The SAPP Story Section - Cleaner design */}
         <div 
           ref={storyRef} 
           className={cn(
@@ -159,12 +154,10 @@ const About = () => {
           </div>
         </div>
         
-        {/* Dynamic Grid of Cards - Cleaner design */}
         <div 
           ref={gridRef} 
           className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"
         >
-          {/* The Vision */}
           <Card 
             className={cn(
               "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
@@ -172,12 +165,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "100ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-sapp-blue">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Lightbulb className="w-16 h-16 text-white/20" strokeWidth={1.5} />
-              </div>
+            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
               <div className="absolute bottom-6 left-6">
-                <h3 className="text-2xl font-display font-bold text-white">The Vision</h3>
+                <h3 className="text-2xl font-display font-bold text-accent-dark-blue">The Vision</h3>
               </div>
             </div>
             <CardContent className="p-6">
@@ -187,7 +177,6 @@ const About = () => {
             </CardContent>
           </Card>
           
-          {/* What We Believe */}
           <Card 
             className={cn(
               "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
@@ -195,12 +184,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "200ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-sapp-blue">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Heart className="w-16 h-16 text-white/20" strokeWidth={1.5} />
-              </div>
+            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
               <div className="absolute bottom-6 left-6">
-                <h3 className="text-2xl font-display font-bold text-white">What We Believe</h3>
+                <h3 className="text-2xl font-display font-bold text-accent-dark-blue">What We Believe</h3>
               </div>
             </div>
             <CardContent className="p-6">
@@ -213,7 +199,6 @@ const About = () => {
             </CardContent>
           </Card>
           
-          {/* Our Values - Full width and special design */}
           <div 
             className={cn(
               "col-span-1 md:col-span-2 transition-all duration-700 border-none shadow-sm overflow-hidden rounded-2xl",
@@ -221,24 +206,21 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "300ms" : "0ms" }}
           >
-            <div className="bg-sapp-blue p-10 text-white">
+            <div className="bg-accent-teal/10 p-10 text-sapp-dark">
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="md:w-1/3">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Shield className="h-8 w-8 text-white/80" />
-                    <h3 className="text-2xl font-display font-bold">Our Values</h3>
-                  </div>
-                  <Separator className="bg-white/20 h-0.5 w-16 mb-6" />
-                  <p className="text-white/80 mb-4">
+                  <h3 className="text-2xl font-display font-bold mb-4 text-accent-dark-blue">Our Values</h3>
+                  <Separator className="bg-accent-teal h-0.5 w-16 mb-6" />
+                  <p className="text-sapp-gray mb-4">
                     SAPP is about trust, not tech alone.
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-sapp-gray">
                     We operate in environments where discretion matters, where silence protects strategy, and where good decisions depend on clear, honest advice.
                   </p>
                 </div>
                 
                 <div className="md:w-2/3">
-                  <p className="text-lg font-medium text-white mb-6">
+                  <p className="text-lg font-medium text-accent-dark-blue mb-6">
                     We're guided by four principles:
                   </p>
                   
@@ -246,23 +228,16 @@ const About = () => {
                     {values.map((value, index) => (
                       <div 
                         key={value.title}
-                        className="bg-white/10 backdrop-blur-sm rounded-xl p-6 transition-all duration-500 hover:bg-white/20"
+                        className="bg-white border border-gray-100 rounded-xl p-6 transition-all duration-500 hover:shadow-sm"
                         style={{ transitionDelay: gridInView ? `${(index * 100) + 400}ms` : '0ms' }}
                       >
-                        <div className="flex items-start space-x-4">
-                          <div className="bg-white/10 p-3 rounded-lg">
-                            {value.icon}
-                          </div>
-                          <div>
-                            <h4 className="text-lg font-semibold text-white mb-2">{value.title}</h4>
-                            <p className="text-white/80 text-sm">{value.description}</p>
-                          </div>
-                        </div>
+                        <h4 className="text-lg font-semibold text-accent-dark-blue mb-2">{value.title}</h4>
+                        <p className="text-sapp-gray text-sm">{value.description}</p>
                       </div>
                     ))}
                   </div>
                   
-                  <p className="text-white/80 mt-6">
+                  <p className="text-sapp-gray mt-6">
                     These aren't just ideals — they're how we work every day, and why clients trust us with their most sensitive spaces and moments.
                   </p>
                 </div>
@@ -270,7 +245,6 @@ const About = () => {
             </div>
           </div>
           
-          {/* Our Approach */}
           <Card 
             className={cn(
               "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
@@ -278,12 +252,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "400ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-sapp-blue">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Compass className="w-16 h-16 text-white/20" strokeWidth={1.5} />
-              </div>
+            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
               <div className="absolute bottom-6 left-6">
-                <h3 className="text-2xl font-display font-bold text-white">Our Approach</h3>
+                <h3 className="text-2xl font-display font-bold text-accent-dark-blue">Our Approach</h3>
               </div>
             </div>
             <CardContent className="p-6">
@@ -296,7 +267,6 @@ const About = () => {
             </CardContent>
           </Card>
           
-          {/* Our Mission */}
           <Card 
             className={cn(
               "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
@@ -304,12 +274,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "500ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-sapp-blue">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Target className="w-16 h-16 text-white/20" strokeWidth={1.5} />
-              </div>
+            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
               <div className="absolute bottom-6 left-6">
-                <h3 className="text-2xl font-display font-bold text-white">Our Mission</h3>
+                <h3 className="text-2xl font-display font-bold text-accent-dark-blue">Our Mission</h3>
               </div>
             </div>
             <CardContent className="p-6">
