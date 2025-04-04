@@ -1,8 +1,10 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Animated, AnimatedText } from '../ui/AnimatedElements';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
+import { Shield, Check, Info, Users } from 'lucide-react';
 
 const About = () => {
   const [ref, inView] = useInView({
