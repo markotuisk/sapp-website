@@ -86,15 +86,15 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="bg-white p-4 flex items-center justify-center h-64">
+              <div className="bg-white p-4 flex items-center justify-center h-40">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-full max-h-full object-contain"
+                  className="max-w-full max-h-full object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
                 />
               </div>
               <Separator className="mx-auto w-[90%]" />
-              <CardContent className="p-6 flex flex-col h-[280px]">
+              <CardContent className="p-6 flex flex-col h-[240px]">
                 <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
                   {partner.name}
                 </h3>
