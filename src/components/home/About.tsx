@@ -2,7 +2,8 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Shield, Check, Info, Users } from 'lucide-react';
-import { Animated } from '../ui/AnimatedElements';
+import { Animated, AnimatedText } from '../ui/AnimatedElements';
+import { Separator } from '@/components/ui/separator';
 
 const About = () => {
   const [ref, inView] = useInView({
@@ -16,6 +17,11 @@ const About = () => {
   });
 
   const [principlesRef, principlesInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const [storyRef, storyInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
@@ -45,73 +51,135 @@ const About = () => {
 
   return (
     <section id="about" className="py-24 bg-slate-50 relative overflow-hidden">
-      {/* Background gradient */}
+      {/* Background gradient and elements */}
       <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent"></div>
+      <div className="absolute w-96 h-96 rounded-full bg-sapp-blue/5 -top-48 -left-48 blur-3xl"></div>
+      <div className="absolute w-64 h-64 rounded-full bg-sapp-blue/5 bottom-24 right-24 blur-3xl"></div>
       
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-16">
-          <div className="lg:w-1/2 order-2 lg:order-1">
-            <div 
-              className={cn(
-                "relative rounded-xl overflow-hidden shadow-2xl transition-all duration-700",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}
-            >
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <span 
+            ref={ref}
+            className={cn(
+              "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+            )}
+          >
+            About Us
+          </span>
+          <h2 
+            className={cn(
+              "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            Security expertise built on <span className="text-sapp-blue">competence, integrity, and clarity</span>
+          </h2>
+          <p 
+            className={cn(
+              "text-sapp-gray text-lg transition-all duration-500 delay-200",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            SAPP Security is a natural evolution from a UK-based counter espionage company, 
+            now offering wider technical security expertise and automation of multiple security systems.
+          </p>
+        </div>
+
+        {/* The SAPP Story Section */}
+        <div 
+          ref={storyRef} 
+          className={cn(
+            "max-w-7xl mx-auto mb-20 transition-all duration-700",
+            storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          )}
+        >
+          <div className="bg-sapp-dark rounded-t-2xl overflow-hidden">
+            <div className="px-8 py-16 md:px-16 md:py-20">
+              <h2 className={cn(
+                "text-4xl md:text-5xl font-display font-bold text-white uppercase tracking-tight mb-6 transition-all duration-700",
+                storyInView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
+              )}>
+                THE SAPP STORY
+              </h2>
+              <p className={cn(
+                "text-white/80 text-lg md:text-xl max-w-3xl transition-all duration-700 delay-100",
+                storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}>
+                Founded in 2015 by security experts Raili Maripuu and Marko Tuisk, SAPP Security was born from the vision of reimagining how organizations approach physical and digital security. Today, our comprehensive protection solutions safeguard some of the world's most sensitive events and venues. Here's how it all began.
+              </p>
+            </div>
+            <div className="w-full aspect-[16/9] bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
               <img 
-                src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
-                alt="Security Operations Center" 
-                className="w-full h-auto"
+                src="/lovable-uploads/8d818889-c5eb-43f6-8a63-3b0310802bdd.png" 
+                alt="The SAPP Security founders" 
+                className="w-full h-full object-cover object-center opacity-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/50 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <h3 className="text-xl font-bold mb-1">Security Operations Center</h3>
-                <p className="text-sm text-white/80">State-of-the-art monitoring and response capabilities</p>
-              </div>
             </div>
           </div>
           
-          <div className="lg:w-1/2 order-1 lg:order-2">
-            <span 
-              ref={ref}
-              className={cn(
-                "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-              )}
-            >
-              About Us
-            </span>
-            <h2 
-              className={cn(
-                "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
-              Security expertise built on <span className="text-sapp-blue">competence, integrity, and clarity</span>
-            </h2>
-            <p 
-              className={cn(
-                "text-sapp-gray text-lg mb-6 transition-all duration-500 delay-200",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
-              SAPP Security is a natural evolution from a UK-based counter espionage company, 
-              now offering wider technical security expertise and automation of multiple security systems.
-            </p>
-            <p 
-              className={cn(
-                "text-sapp-gray mb-8 transition-all duration-500 delay-300",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
-              Our services range from staple physical and information security audits to complex installations of
-              technical security systems. We provide experienced technical security support to high profile corporate
-              meetings and other sensitive events.
-            </p>
+          <div className="bg-white rounded-b-2xl shadow-lg p-8 md:p-12 lg:p-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+              <div className={cn(
+                "transition-all duration-700 delay-200",
+                storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              )}>
+                <h3 className="text-3xl font-display font-bold text-sapp-dark mb-6">
+                  Like all great stories,<br />
+                  this one begins with a challenge.
+                </h3>
+                <p className="text-sapp-gray mb-4">
+                  They met while working on opposite sides of security: Raili specialized in developing secure systems as a cybersecurity expert, while Marko led physical security operations for high-profile diplomatic events. Both Estonian nationals, they frequently collaborated on projects requiring both physical and digital protection.
+                </p>
+                <p className="text-sapp-gray">
+                  Despite their different backgrounds, they shared a common frustration: existing security solutions were fragmented, with physical and digital protections treated as entirely separate domains. They knew there had to be a more integrated approach to security challenges.
+                </p>
+              </div>
+              
+              <div className={cn(
+                "transition-all duration-700 delay-300",
+                storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              )}>
+                <div className="mb-8">
+                  <Separator className="bg-sapp-blue/20 h-0.5 w-16 mb-6" />
+                  <AnimatedText 
+                    text="Our approach bridges the gap between physical and digital security, creating comprehensive protection that others simply can't match."
+                    tag="p"
+                    className="text-xl font-display font-medium text-sapp-blue"
+                  />
+                </div>
+                
+                <p className="text-sapp-gray mb-4">
+                  In 2015, after securing a high-risk diplomatic conference that faced both cyber and physical threats, Raili and Marko decided to combine their expertise officially. They founded SAPP Security with a clear mission: to pioneer integrated security solutions that address the complete threat landscape.
+                </p>
+                <p className="text-sapp-gray">
+                  Today, SAPP Security has grown from two founders with a vision to an international team of security specialists, trusted by organizations worldwide to protect their most valuable assets and operations. Our holistic approach to security continues to set the standard for the industry.
+                </p>
+              </div>
+            </div>
+            
+            <div className={cn(
+              "mt-12 pt-8 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-8 text-center transition-all duration-700 delay-400",
+              storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            )}>
+              <div>
+                <h4 className="text-4xl font-display font-bold text-sapp-dark mb-2">2015</h4>
+                <p className="text-sapp-gray">Year founded</p>
+              </div>
+              <div>
+                <h4 className="text-4xl font-display font-bold text-sapp-dark mb-2">27+</h4>
+                <p className="text-sapp-gray">Countries served</p>
+              </div>
+              <div>
+                <h4 className="text-4xl font-display font-bold text-sapp-dark mb-2">100%</h4>
+                <p className="text-sapp-gray">Integrated approach</p>
+              </div>
+            </div>
           </div>
         </div>
         
         {/* About SAPP Security Section */}
-        <div className="max-w-4xl mx-auto mt-16 mb-8">
+        <div className="max-w-4xl mx-auto mt-20">
           <Animated animation="fade-up" delay={100}>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12 text-sapp-dark">
               <span className="text-sapp-blue">About</span> SAPP Security

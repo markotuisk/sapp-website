@@ -5,11 +5,9 @@ import Hero from '@/components/home/Hero';
 import About from '@/components/home/About';
 import Services from '@/components/home/Services';
 import Partners from '@/components/home/Partners';
-import Story from '@/components/home/Story';
 import Contact from '@/components/home/Contact';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import TranslatedText from '@/components/ui/TranslatedText';
 import { useLocation } from 'react-router-dom';
 
 const Index = () => {
@@ -48,10 +46,9 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <About />
         <Services />
         <Partners />
-        <Story />
+        <About />
         <Contact />
       </main>
       <Footer />
