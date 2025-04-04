@@ -7,7 +7,6 @@ import Services from '@/components/home/Services';
 import Partners from '@/components/home/Partners';
 import Story from '@/components/home/Story';
 import Contact from '@/components/home/Contact';
-import AboutUs from '@/components/home/AboutUs';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
@@ -52,7 +51,6 @@ const Index = () => {
         <About />
         <Services />
         <Partners />
-        <AboutUs />
         <Story />
         <Contact />
       </main>
