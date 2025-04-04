@@ -27,28 +27,28 @@ const About = () => {
     {
       title: "Competence",
       description: "We bring depth of knowledge and technical accuracy to every task.",
-      icon: <Shield className="h-6 w-6 text-sapp-blue" />
+      icon: <Shield className="h-6 w-6 text-white" />
     },
     {
       title: "Integrity",
       description: "We act responsibly, consistently, and without pretence.",
-      icon: <Check className="h-6 w-6 text-sapp-blue" />
+      icon: <Check className="h-6 w-6 text-white" />
     },
     {
       title: "Clarity",
       description: "We communicate plainly and work without ambiguity.",
-      icon: <Info className="h-6 w-6 text-sapp-blue" />
+      icon: <Info className="h-6 w-6 text-white" />
     },
     {
       title: "Discretion",
       description: "We stay out of the spotlight, and always within reach.",
-      icon: <Users className="h-6 w-6 text-sapp-blue" />
+      icon: <Users className="h-6 w-6 text-white" />
     }
   ];
 
   return (
-    <section id="about" className="py-24 bg-gradient-to-b from-white to-slate-100 relative overflow-hidden">
-      {/* Background elements */}
+    <section id="about" className="py-24 bg-white relative overflow-hidden">
+      {/* Subtle background elements */}
       <div className="absolute w-[800px] h-[800px] rounded-full bg-sapp-blue/5 -top-1/2 -right-1/4 blur-3xl"></div>
       <div className="absolute w-[600px] h-[600px] rounded-full bg-sapp-blue/3 bottom-0 -left-1/4 blur-3xl"></div>
       <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent z-10"></div>
@@ -83,7 +83,7 @@ const About = () => {
           </p>
         </div>
 
-        {/* The SAPP Story Section - Updated design */}
+        {/* The SAPP Story Section - Cleaner design */}
         <div 
           ref={storyRef} 
           className={cn(
@@ -91,11 +91,11 @@ const About = () => {
             storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
         >
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
               <div className="order-2 lg:order-1 p-10 md:p-14 flex flex-col justify-center">
                 <h3 className={cn(
-                  "text-3xl font-display font-bold text-sapp-dark mb-6 transition-all duration-700",
+                  "text-3xl font-display font-bold text-sapp-blue mb-6 transition-all duration-700",
                   storyInView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
                 )}>
                   THE SAPP STORY
@@ -139,14 +139,14 @@ const About = () => {
               </div>
               
               <div className="relative h-[400px] lg:h-auto order-1 lg:order-2">
-                <div className="absolute inset-0 bg-gradient-to-tr from-sapp-dark/90 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-sapp-blue/90 to-transparent z-10"></div>
                 <img 
                   src="/lovable-uploads/8d818889-c5eb-43f6-8a63-3b0310802bdd.png" 
                   alt="The SAPP Security founders" 
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute bottom-10 left-10 right-10 z-20">
-                  <Separator className="bg-sapp-blue/30 h-0.5 w-16 mb-6" />
+                  <Separator className="bg-white/30 h-0.5 w-16 mb-6" />
                   <AnimatedText 
                     text="Our approach bridges the gap between physical and digital security, creating comprehensive protection that others simply can't match."
                     tag="p"
@@ -159,7 +159,7 @@ const About = () => {
           </div>
         </div>
         
-        {/* Dynamic Grid of Cards */}
+        {/* Dynamic Grid of Cards - Cleaner design */}
         <div 
           ref={gridRef} 
           className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"
@@ -167,16 +167,15 @@ const About = () => {
           {/* The Vision */}
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-lg bg-white overflow-hidden hover:shadow-xl",
+              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "100ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-40 bg-gradient-to-r from-sapp-blue/80 to-accent-dark-blue">
+            <div className="relative overflow-hidden h-32 bg-sapp-blue">
               <div className="absolute inset-0 flex items-center justify-center">
-                <Lightbulb className="w-20 h-20 text-white/20" strokeWidth={1.5} />
+                <Lightbulb className="w-16 h-16 text-white/20" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-accent-dark-blue/40"></div>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-white">The Vision</h3>
               </div>
@@ -191,16 +190,15 @@ const About = () => {
           {/* What We Believe */}
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-lg bg-white overflow-hidden hover:shadow-xl",
+              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "200ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-40 bg-gradient-to-r from-accent-dark-blue to-sapp-blue/80">
+            <div className="relative overflow-hidden h-32 bg-sapp-blue">
               <div className="absolute inset-0 flex items-center justify-center">
-                <Heart className="w-20 h-20 text-white/20" strokeWidth={1.5} />
+                <Heart className="w-16 h-16 text-white/20" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-accent-dark-blue/40"></div>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-white">What We Believe</h3>
               </div>
@@ -218,12 +216,12 @@ const About = () => {
           {/* Our Values - Full width and special design */}
           <div 
             className={cn(
-              "col-span-1 md:col-span-2 transition-all duration-700 border-none shadow-lg overflow-hidden rounded-2xl",
+              "col-span-1 md:col-span-2 transition-all duration-700 border-none shadow-sm overflow-hidden rounded-2xl",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "300ms" : "0ms" }}
           >
-            <div className="bg-gradient-to-r from-sapp-dark via-sapp-blue to-accent-dark-blue p-10 text-white">
+            <div className="bg-sapp-blue p-10 text-white">
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="md:w-1/3">
                   <div className="flex items-center gap-3 mb-4">
@@ -275,16 +273,15 @@ const About = () => {
           {/* Our Approach */}
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-lg bg-white overflow-hidden hover:shadow-xl",
+              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "400ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-40 bg-gradient-to-r from-sapp-blue/80 to-accent-dark-blue">
+            <div className="relative overflow-hidden h-32 bg-sapp-blue">
               <div className="absolute inset-0 flex items-center justify-center">
-                <Compass className="w-20 h-20 text-white/20" strokeWidth={1.5} />
+                <Compass className="w-16 h-16 text-white/20" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-accent-dark-blue/40"></div>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-white">Our Approach</h3>
               </div>
@@ -302,16 +299,15 @@ const About = () => {
           {/* Our Mission */}
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-lg bg-white overflow-hidden hover:shadow-xl",
+              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "500ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-40 bg-gradient-to-r from-accent-dark-blue to-sapp-blue/80">
+            <div className="relative overflow-hidden h-32 bg-sapp-blue">
               <div className="absolute inset-0 flex items-center justify-center">
-                <Target className="w-20 h-20 text-white/20" strokeWidth={1.5} />
+                <Target className="w-16 h-16 text-white/20" strokeWidth={1.5} />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-accent-dark-blue/40"></div>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-white">Our Mission</h3>
               </div>
