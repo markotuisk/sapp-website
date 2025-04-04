@@ -104,7 +104,7 @@ const About = () => {
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
             >
-              Security expertise driven by <span className="text-sapp-blue">innovation</span>
+              Security expertise built on <span className="text-sapp-blue">competence, integrity, and clarity</span>
             </h2>
             <p 
               className={cn(

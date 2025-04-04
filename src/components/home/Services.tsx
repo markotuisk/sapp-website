@@ -103,7 +103,7 @@ const Services = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Comprehensive <span className="text-sapp-blue"><TranslatedText textKey="securitySolutions" /></span> for your business
+            We secure <span className="text-sapp-blue">what's digital, what's physical, and everything in between</span>
           </h2>
           <p 
             className={cn(
@@ -118,9 +118,10 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <Link key={index} to={service.href} className="block">
-              <ServiceCard {...service} />
-            </Link>
+            <ServiceCard 
+              key={index}
+              {...service}
+            />
           ))}
         </div>
       </div>

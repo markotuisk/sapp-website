@@ -10,9 +10,16 @@ import Contact from '@/components/home/Contact';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
+import { useLocation } from 'react-router-dom';
 
 const Index = () => {
   const { t } = useLanguage();
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Scroll to top when navigating to this page
+    window.scrollTo(0, 0);
+  }, [location]);
   
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {

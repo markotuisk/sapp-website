@@ -39,6 +39,10 @@ const ServiceCard = ({
     threshold: 0.1,
   });
 
+  const handleNavigation = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div
       ref={ref}
@@ -53,7 +57,7 @@ const ServiceCard = ({
         <p className="text-sapp-gray text-sm mb-4 flex-grow">{description}</p>
         
         <div className="flex flex-row gap-2 mt-2">
-          <Link to={href}>
+          <Link to={href} onClick={handleNavigation}>
             <Button 
               variant="outline" 
               className="text-sm border-sapp-blue text-sapp-dark rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
