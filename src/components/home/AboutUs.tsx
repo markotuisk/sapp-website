@@ -49,7 +49,13 @@ const AboutUs = () => {
           </Animated>
 
           <div className="space-y-16">
-            <div ref={ref} className="space-y-4">
+            <div 
+              ref={ref} 
+              className={cn(
+                "space-y-4 p-4 rounded-lg transition-colors duration-200 ease-in-out hover:bg-sapp-blue/20",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              )}
+            >
               <h3 className={cn(
                 "text-2xl font-display font-semibold text-sapp-dark transition-all duration-700 delay-200",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -71,24 +77,30 @@ const AboutUs = () => {
             </div>
 
             <div className="space-y-6">
-              <h3 className={cn(
-                "text-2xl font-display font-semibold text-sapp-dark transition-all duration-700 delay-200",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}>
-                Our Values
-              </h3>
-              <p className={cn(
-                "text-lg text-sapp-gray leading-relaxed transition-all duration-700 delay-300",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}>
-                Consectetur adipiscing elit sed do eiusmod tempor.
-              </p>
-              <p className={cn(
-                "text-lg text-sapp-gray leading-relaxed transition-all duration-700 delay-400",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}>
-                Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
-              </p>
+              <div 
+                className={cn(
+                  "p-4 rounded-lg transition-colors duration-200 ease-in-out hover:bg-sapp-blue/20"
+                )}
+              >
+                <h3 className={cn(
+                  "text-2xl font-display font-semibold text-sapp-dark transition-all duration-700 delay-200",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}>
+                  Our Values
+                </h3>
+                <p className={cn(
+                  "text-lg text-sapp-gray leading-relaxed transition-all duration-700 delay-300",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}>
+                  Consectetur adipiscing elit sed do eiusmod tempor.
+                </p>
+                <p className={cn(
+                  "text-lg text-sapp-gray leading-relaxed transition-all duration-700 delay-400",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}>
+                  Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+                </p>
+              </div>
               
               <div className="mt-8">
                 <p className={cn(
@@ -106,7 +118,7 @@ const AboutUs = () => {
                     <div 
                       key={value.title}
                       className={cn(
-                        "flex items-start space-x-4 transition-all duration-700",
+                        "flex items-start space-x-4 p-4 rounded-lg transition-colors duration-200 ease-in-out hover:bg-sapp-blue/20 transition-all duration-700",
                         principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                       )}
                       style={{ transitionDelay: principlesInView ? `${(index * 150) + 200}ms` : '0ms' }}
@@ -131,7 +143,11 @@ const AboutUs = () => {
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div 
+              className={cn(
+                "space-y-4 p-4 rounded-lg transition-colors duration-200 ease-in-out hover:bg-sapp-blue/20"
+              )}
+            >
               <h3 className={cn(
                 "text-2xl font-display font-semibold text-sapp-dark transition-all duration-700 delay-200",
                 principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -152,9 +168,13 @@ const AboutUs = () => {
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div 
+              className={cn(
+                "space-y-4 p-4 rounded-lg transition-colors duration-200 ease-in-out hover:bg-accent-teal/20"
+              )}
+            >
               <h3 className={cn(
-                "text-2xl font-display font-semibold bg-accent-teal/10 text-accent-dark-blue p-3 rounded-md transition-all duration-300 hover:bg-accent-teal/20 transition-all duration-700 delay-200",
+                "text-2xl font-display font-semibold text-accent-dark-blue p-3 rounded-md transition-all duration-300",
                 principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
                 Our Mission
@@ -174,3 +194,4 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+
