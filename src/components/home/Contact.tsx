@@ -93,7 +93,9 @@ const Contact = () => {
           )}
         >
           <div className="p-6 md:p-8 lg:p-10">
-            <h3 className="text-2xl font-display font-semibold mb-6 text-sapp-dark">Send us a message</h3>
+            <div className="bg-sapp-blue/10 hover:bg-sapp-blue/20 transition-colors duration-200 ease-in-out p-4 mb-6">
+              <h3 className="text-2xl font-display font-semibold text-sapp-dark">Send us a message</h3>
+            </div>
             <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
