@@ -86,11 +86,11 @@ const Partners = () => {
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
-              <div className="bg-white p-4 flex items-center justify-center h-40">
+              <div className="bg-white p-4 flex items-center justify-center h-40 overflow-hidden">
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-w-full max-h-[48px] object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                  className="max-w-full max-h-[48px] object-contain opacity-70 grayscale transition-all duration-300 transform group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-150"
                 />
               </div>
               <Separator className="mx-auto w-[90%]" />
