@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Animated, AnimatedText } from '../ui/AnimatedElements';
@@ -87,7 +86,7 @@ const About = () => {
             storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
         >
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
               <div className="order-2 lg:order-1 p-10 md:p-14 flex flex-col justify-center">
                 <h3 className={cn(
@@ -161,7 +160,7 @@ const About = () => {
         >
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
+              "transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 bg-white rounded-xl overflow-hidden",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "100ms" : "0ms" }}
@@ -180,7 +179,7 @@ const About = () => {
           
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
+              "transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 bg-white rounded-xl overflow-hidden",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "200ms" : "0ms" }}
@@ -202,7 +201,7 @@ const About = () => {
           
           <div 
             className={cn(
-              "col-span-1 md:col-span-2 transition-all duration-700 border-none shadow-sm overflow-hidden rounded-2xl",
+              "col-span-1 md:col-span-2 transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 bg-white rounded-2xl overflow-hidden",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "300ms" : "0ms" }}
@@ -248,7 +247,7 @@ const About = () => {
           
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
+              "transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 bg-white rounded-xl overflow-hidden",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "400ms" : "0ms" }}
@@ -270,7 +269,7 @@ const About = () => {
           
           <Card 
             className={cn(
-              "transition-all duration-700 border-none shadow-sm bg-white overflow-hidden hover:shadow-md",
+              "transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 bg-white rounded-xl overflow-hidden",
               gridInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
             style={{ transitionDelay: gridInView ? "500ms" : "0ms" }}
