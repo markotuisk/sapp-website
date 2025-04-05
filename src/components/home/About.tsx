@@ -165,7 +165,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "100ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
+            <div className={cn(
+              "relative overflow-hidden h-32 bg-accent-teal/10 hover:bg-accent-teal/20 transition-colors duration-200 ease-in-out"
+            )}>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-accent-dark-blue">The Vision</h3>
               </div>
@@ -184,7 +186,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "200ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
+            <div className={cn(
+              "relative overflow-hidden h-32 bg-accent-teal/10 hover:bg-accent-teal/20 transition-colors duration-200 ease-in-out"
+            )}>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-accent-dark-blue">What We Believe</h3>
               </div>
@@ -206,7 +210,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "300ms" : "0ms" }}
           >
-            <div className="bg-accent-teal/10 p-10 text-sapp-dark">
+            <div className={cn(
+              "bg-accent-teal/10 hover:bg-accent-teal/20 transition-colors duration-200 ease-in-out p-10 text-sapp-dark"
+            )}>
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="md:w-1/3">
                   <h3 className="text-2xl font-display font-bold mb-4 text-accent-dark-blue">Our Values</h3>
@@ -252,7 +258,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "400ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
+            <div className={cn(
+              "relative overflow-hidden h-32 bg-accent-teal/10 hover:bg-accent-teal/20 transition-colors duration-200 ease-in-out"
+            )}>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-accent-dark-blue">Our Approach</h3>
               </div>
@@ -274,7 +282,9 @@ const About = () => {
             )}
             style={{ transitionDelay: gridInView ? "500ms" : "0ms" }}
           >
-            <div className="relative overflow-hidden h-32 bg-accent-teal/10">
+            <div className={cn(
+              "relative overflow-hidden h-32 bg-accent-teal/10 hover:bg-accent-teal/20 transition-colors duration-200 ease-in-out"
+            )}>
               <div className="absolute bottom-6 left-6">
                 <h3 className="text-2xl font-display font-bold text-accent-dark-blue">Our Mission</h3>
               </div>
