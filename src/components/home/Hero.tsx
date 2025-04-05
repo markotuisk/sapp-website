@@ -1,6 +1,6 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import TranslatedText from '@/components/ui/TranslatedText';
 
@@ -61,15 +61,6 @@ const Hero = () => {
             </Button>
           </div>
         </div>
-      </div>
-      
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
-        <a href="#about" className="flex flex-col items-center text-sapp-gray hover:text-sapp-blue transition-colors duration-300 group">
-          <span className="text-xs font-medium mb-2 group-hover:translate-y-1 transition-transform">
-            <TranslatedText textKey="discoverMore" />
-          </span>
-          <ChevronDown className="h-5 w-5 group-hover:scale-110 transition-transform" />
-        </a>
       </div>
     </section>
   );

@@ -95,7 +95,7 @@ const Partners = () => {
               </div>
               <Separator className="mx-auto w-[90%]" />
               <CardContent className="p-6 flex flex-col h-[240px]">
-                <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
+                <h3 className="text-xl font-display font-semibold mb-3 bg-accent-teal/10 text-accent-dark-blue p-3 rounded-md transition-all duration-300 hover:bg-accent-teal/20">
                   {partner.name}
                 </h3>
                 <p className="text-sapp-gray text-sm mb-6 line-clamp-3">
