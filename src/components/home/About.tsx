@@ -76,8 +76,7 @@ const About = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            SAPP Security is a natural evolution from a UK-based counter espionage company, 
-            now offering wider technical security expertise and automation of multiple security systems.
+            SAPP Security is a natural evolution from a UK-based counter espionage company, now offering wider technical security expertise and automation of multiple security systems
           </p>
         </div>
 
@@ -95,25 +94,25 @@ const About = () => {
                   "text-3xl font-display font-bold text-sapp-blue mb-6 transition-all duration-700",
                   storyInView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
                 )}>
-                  THE SAPP STORY
+                  The SAPP Story
                 </h3>
                 <p className={cn(
                   "text-sapp-gray leading-relaxed mb-6 transition-all duration-700 delay-100",
                   storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}>
-                  Founded in 2015 by security experts Raili Maripuu and Marko Tuisk, SAPP Security was born from the vision of reimagining how organizations approach physical and digital security.
+                  SAPP Security brings together versatile backgrounds and security expertise with a vision to converge physical and digital security.
                 </p>
                 <p className={cn(
                   "text-sapp-gray leading-relaxed mb-6 transition-all duration-700 delay-150",
                   storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}>
-                  They met while working on opposite sides of security: Raili specialized in developing secure systems as a cybersecurity expert, while Marko led physical security operations for high-profile diplomatic events. Both Estonian nationals, they frequently collaborated on projects requiring both physical and digital protection.
+                  Our two founders, Raili and Marko, are native Estonians with a combined 30-years expertise in a global technical security industry. They share a common professional frustration in corporations with physical and cyber security working in silos. As a result, security threats that need expertise from both fields, are left overlooked. Mobile devices in unlocked executive desk drawers, accessible control panels in unsecured boardrooms, incorrectly positioned security cameras and the list goes on.
                 </p>
                 <p className={cn(
                   "text-sapp-gray leading-relaxed mb-8 transition-all duration-700 delay-200",
                   storyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}>
-                  Despite their different backgrounds, they shared a common frustration: existing security solutions were fragmented, with physical and digital protections treated as entirely separate domains. They knew there had to be a more integrated approach to security challenges.
+                  Organisations need both physical and digital security. Companies need this equally, so both fields need to break their bubbles, embrace the collaboration and work together. The SAPP Vision is to lead by example by creating unique security offering to assist corporations to converge their physical and cyber security.
                 </p>
                 
                 <div className={cn(
@@ -173,8 +172,8 @@ const About = () => {
               </div>
             </div>
             <CardContent className="p-6">
-              <p className="text-sapp-gray">
-                Today, SAPP Security has grown from two founders with a vision to an international team of security specialists, trusted by organizations worldwide to protect their most valuable assets and operations. Our holistic approach to security continues to set the standard for the industry.
+              <p className="text-sapp-gray transition-all duration-300 hover:translate-y-[-5px]">
+                The SAPP Vision is for organisations to have a turnkey solution to converge their cyber, compliance and physical security functions.
               </p>
             </CardContent>
           </Card>
