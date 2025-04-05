@@ -53,7 +53,7 @@ const ServiceCard = ({
       style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
     >      
       <div className="p-6 flex-grow flex flex-col">
-        <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">{title}</h3>
+        <h3 className="text-xl font-display font-semibold mb-3 bg-sapp-blue text-white p-3 rounded-md transition-all duration-300 hover:bg-sapp-blue/90">{title}</h3>
         <p className="text-sapp-gray text-sm mb-4 flex-grow">{description}</p>
         
         <div className="flex flex-row gap-2 mt-2">
