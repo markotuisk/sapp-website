@@ -82,7 +82,7 @@ const Partners = () => {
             <Card
               key={index}
               className={cn(
-                "overflow-hidden h-full transition-all duration-700 hover:shadow-lg border border-gray-100 group",
+                "overflow-hidden h-full transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 group bg-white rounded-xl",
                 inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
               )}
             >
