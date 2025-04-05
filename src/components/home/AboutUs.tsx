@@ -53,7 +53,7 @@ const AboutUs = () => {
             <div 
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-in-out cursor-pointer"
             >
-              <h3 className="text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 hover:bg-sapp-blue/20 transition-colors duration-200 ease-in-out rounded-t-lg">
+              <h3 className="text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 transition-colors duration-200 ease-in-out rounded-t-lg hover:bg-sapp-blue/20">
                 The Vision
               </h3>
               <div className="p-4 bg-white rounded-b-lg">
@@ -72,7 +72,7 @@ const AboutUs = () => {
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-in-out cursor-pointer"
             >
               <h3 className={cn(
-                "text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 hover:bg-sapp-blue/20 transition-colors duration-200 ease-in-out rounded-t-lg",
+                "text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 transition-colors duration-200 ease-in-out rounded-t-lg hover:bg-sapp-blue/20",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
                 What We Believe
@@ -96,7 +96,7 @@ const AboutUs = () => {
             {/* Our Values card */}
             <div className="rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-in-out cursor-pointer">
               <h3 className={cn(
-                "text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 hover:bg-sapp-blue/20 transition-colors duration-200 ease-in-out rounded-t-lg",
+                "text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 transition-colors duration-200 ease-in-out rounded-t-lg hover:bg-sapp-blue/20",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
                 Our Values
@@ -158,7 +158,7 @@ const AboutUs = () => {
             {/* Our Approach card */}
             <div className="rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-in-out cursor-pointer">
               <h3 className={cn(
-                "text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 hover:bg-sapp-blue/20 transition-colors duration-200 ease-in-out rounded-t-lg",
+                "text-2xl font-display font-semibold text-sapp-dark p-3 bg-sapp-blue/10 transition-colors duration-200 ease-in-out rounded-t-lg hover:bg-sapp-blue/20",
                 principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
                 Our Approach
@@ -182,7 +182,7 @@ const AboutUs = () => {
             {/* Our Mission card */}
             <div className="rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-in-out cursor-pointer">
               <h3 className={cn(
-                "text-2xl font-display font-semibold text-accent-dark-blue p-3 bg-accent-teal/10 hover:bg-accent-teal/20 transition-colors duration-200 ease-in-out rounded-t-lg",
+                "text-2xl font-display font-semibold text-accent-dark-blue p-3 bg-accent-teal/10 transition-colors duration-200 ease-in-out rounded-t-lg hover:bg-accent-teal/20",
                 principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
                 Our Mission
