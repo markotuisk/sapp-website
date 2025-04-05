@@ -154,7 +154,7 @@ const AboutUs = () => {
 
             <div className="space-y-4">
               <h3 className={cn(
-                "text-2xl font-display font-semibold text-sapp-dark transition-all duration-700 delay-200",
+                "text-2xl font-display font-semibold bg-accent-teal/10 text-accent-dark-blue p-3 rounded-md transition-all duration-300 hover:bg-accent-teal/20 transition-all duration-700 delay-200",
                 principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
                 Our Mission
@@ -163,13 +163,7 @@ const AboutUs = () => {
                 "text-lg text-sapp-gray leading-relaxed transition-all duration-700 delay-300",
                 principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               )}>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit.
-              </p>
-              <p className={cn(
-                "text-lg text-sapp-gray leading-relaxed transition-all duration-700 delay-400",
-                principlesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}>
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+                The SAPP technical security services are for corporate clients to protect their sensitive meetings and high-value events, audit security processes at their workplace, install and maintain security systems, and provide innovative security for IoT devices.
               </p>
             </div>
           </div>
@@ -180,4 +174,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-
