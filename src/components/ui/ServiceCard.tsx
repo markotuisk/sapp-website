@@ -47,7 +47,7 @@ const ServiceCard = ({
     <div
       ref={ref}
       className={cn(
-        "bg-white rounded-xl overflow-hidden transition-all duration-200 ease-in-out shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 h-full flex flex-col",
+        "bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out h-full flex flex-col",
         inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       )}
       style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
