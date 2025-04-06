@@ -35,13 +35,13 @@ const AboutSAPP = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Image Column - Smaller and more focused */}
+          {/* Left Image Column */}
           <Animated 
             animation="fade-up" 
             delay={100} 
             className="lg:col-span-5"
           >
-            <div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+            <div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full">
               <AspectRatio ratio={4/3} className="bg-gray-100">
                 <img 
                   src="/lovable-uploads/8d818889-c5eb-43f6-8a63-3b0310802bdd.png" 
@@ -52,13 +52,13 @@ const AboutSAPP = () => {
             </div>
           </Animated>
           
-          {/* Right Content Column - Cleaner design without cards and icons */}
+          {/* Right Content Column */}
           <Animated 
             animation="fade-up" 
             delay={200}
             className="lg:col-span-7 space-y-6"
           >
-            <div className="space-y-6 p-2">
+            <div className="space-y-6 p-2 flex flex-col h-full">
               <div>
                 <h3 className="text-xl font-semibold text-sapp-dark mb-3">Our Expertise</h3>
                 <p className="text-sapp-gray leading-relaxed">
@@ -68,25 +68,23 @@ const AboutSAPP = () => {
               
               <Separator className="my-4" />
               
-              <div>
+              <div className="mt-auto">
                 <h3 className="text-xl font-semibold text-sapp-dark mb-3">Our Approach</h3>
                 <p className="text-sapp-gray leading-relaxed mb-6">
                   Organisations need both physical and digital security. Companies need this equally, so both fields must break their bubbles, embrace collaboration, and work together. The SAPP Vision is to lead by example by creating a unique security offering to assist corporations in converging their physical and cyber security.
                 </p>
                 
-                <div className="flex items-end">
-                  <Button 
-                    variant="default" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
-                    asChild
-                  >
-                    <Link to="/about" className="inline-flex items-center justify-center gap-2">
-                      <span className="relative z-10 transition-all duration-300 group-hover:translate-x-1">
-                        Read More About Us
-                      </span>
-                    </Link>
-                  </Button>
-                </div>
+                <Button 
+                  variant="default" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden mt-auto"
+                  asChild
+                >
+                  <Link to="/about" className="inline-flex items-center justify-center gap-2">
+                    <span className="relative z-10 transition-all duration-300 group-hover:translate-x-1">
+                      Read More About Us
+                    </span>
+                  </Link>
+                </Button>
               </div>
             </div>
           </Animated>
@@ -97,3 +95,4 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
+
