@@ -7,6 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Link } from 'react-router-dom';
 
 const Partners = () => {
   const [ref, inView] = useInView({
@@ -101,19 +102,10 @@ const Partners = () => {
                 <p className="text-sapp-gray text-sm mb-6 line-clamp-3">
                   {partner.description}
                 </p>
-                <div className="mt-auto flex gap-4 flex-wrap">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="border-gray-300 text-sapp-dark hover:bg-gray-50 transition-colors"
-                    onClick={() => window.open(`/partners/${partner.name.toLowerCase()}`, '_self')}
-                  >
-                    <TranslatedText textKey="readMore" />
-                    <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                  </Button>
+                <div className="mt-auto">
                   <Button 
                     size="sm"
-                    className="bg-accent-teal hover:bg-accent-teal/90 text-white transition-colors"
+                    className="bg-accent-teal hover:bg-accent-teal/90 text-white transition-colors w-full"
                     onClick={() => window.open(partner.link, '_blank')}
                   >
                     <TranslatedText textKey="visitWebsite" />
@@ -146,8 +138,11 @@ const Partners = () => {
             <Button 
               size="lg"
               className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
+              asChild
             >
-              <TranslatedText textKey="partnerWithUs" />
+              <Link to="/client-area">
+                <TranslatedText textKey="partnerWithUs" />
+              </Link>
             </Button>
           </div>
         </div>

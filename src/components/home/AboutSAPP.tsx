@@ -74,17 +74,19 @@ const AboutSAPP = () => {
                   Organisations need both physical and digital security. Companies need this equally, so both fields must break their bubbles, embrace collaboration, and work together. The SAPP Vision is to lead by example by creating a unique security offering to assist corporations in converging their physical and cyber security.
                 </p>
                 
-                <Button 
-                  variant="default" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
-                  asChild
-                >
-                  <Link to="/about" className="inline-flex items-center justify-center gap-2">
-                    <span className="relative z-10 transition-all duration-300 group-hover:translate-x-1">
-                      Read More About Us
-                    </span>
-                  </Link>
-                </Button>
+                <div className="flex items-end">
+                  <Button 
+                    variant="default" 
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden"
+                    asChild
+                  >
+                    <Link to="/about" className="inline-flex items-center justify-center gap-2">
+                      <span className="relative z-10 transition-all duration-300 group-hover:translate-x-1">
+                        Read More About Us
+                      </span>
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </Animated>
