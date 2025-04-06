@@ -27,7 +27,7 @@ const AboutSAPP = () => {
         <div className="text-center mb-12">
           <Animated animation="fade-up" delay={0}>
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue uppercase tracking-wider">Why us</h3>
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why us</h3>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">About SAPP Security Team</h2>
             <div className="w-16 h-1 bg-sapp-blue mx-auto rounded-full"></div>
