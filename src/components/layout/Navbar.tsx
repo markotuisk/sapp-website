@@ -44,8 +44,6 @@ const Navbar = () => {
     { key: 'installations' as const, href: '/installations' },
     { key: 'cyberSecurity' as const, href: '/cyber-security' },
     { key: 'about' as const, href: '/about' },
-    { key: 'partners' as const, href: '/#partners' },
-    { key: 'contact' as const, href: '/#contact' },
   ];
 
   const isActivePath = (path: string) => {
@@ -147,13 +145,16 @@ const Navbar = () => {
             <Button 
               variant="default" 
               className="bg-red-600 hover:bg-red-700 text-white rounded-md group relative overflow-hidden whitespace-nowrap shadow-lg shadow-red-600/20"
+              asChild
             >
-              <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0">
-                <TranslatedText textKey="getInTouch" />
-              </span>
-              <span className="absolute inset-0 flex items-center justify-center z-0 scale-50 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
-                <TranslatedText textKey="contactUs" />
-              </span>
+              <a href="/#contact" className="inline-flex items-center justify-center gap-2">
+                <span className="relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:opacity-0">
+                  <TranslatedText textKey="getInTouch" />
+                </span>
+                <span className="absolute inset-0 flex items-center justify-center z-0 scale-50 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+                  <TranslatedText textKey="contactUs" />
+                </span>
+              </a>
             </Button>
             
             <LanguageSelector />
@@ -179,7 +180,7 @@ const Navbar = () => {
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <nav className="container px-4 py-6 flex flex-col space-y-6">
+        <nav className="container px-4 py-6 flex flex-col space-y-4">
           <div className="flex justify-end mb-2">
             <LanguageSelector />
           </div>
@@ -234,11 +235,14 @@ const Navbar = () => {
           <Button 
             variant="default" 
             className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-4 group relative overflow-hidden"
+            asChild
           >
-            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2">
-              <TranslatedText textKey="getInTouch" />
-            </span>
-            <span className="absolute left-0 w-0 h-full bg-sapp-dark z-0 transition-all duration-300 group-hover:w-full"></span>
+            <a href="/#contact" onClick={() => setMobileMenuOpen(false)}>
+              <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-2">
+                <TranslatedText textKey="getInTouch" />
+              </span>
+              <span className="absolute left-0 w-0 h-full bg-sapp-dark z-0 transition-all duration-300 group-hover:w-full"></span>
+            </a>
           </Button>
         </nav>
       </div>
