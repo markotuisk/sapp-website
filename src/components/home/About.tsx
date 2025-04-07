@@ -1,13 +1,10 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Animated, AnimatedText } from '@/components/ui/AnimatedElements';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const AboutContent = () => {
-  const { t } = useLanguage();
   const [heroRef, heroInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -31,7 +28,7 @@ const AboutContent = () => {
                 <AnimatedText 
                   text="Security expertise built on competence, performance and trust"
                   tag="h1"
-                  className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6 text-sapp-dark"
+                  className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6 text-sapp-dark tracking-normal"
                   delay={200}
                   staggerDelay={30}
                 />
@@ -42,19 +39,6 @@ const AboutContent = () => {
                   className="text-sapp-gray text-lg mb-8"
                 >
                   <p>SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security</p>
-                </Animated>
-                
-                <Animated
-                  animation="fade-up"
-                  delay={600}
-                >
-                  <Button 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
-                  >
-                    <Link to="#our-story" className="flex items-center">
-                      Learn more about our journey
-                    </Link>
-                  </Button>
                 </Animated>
               </div>
             </div>
@@ -92,19 +76,19 @@ const AboutContent = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-sapp-dark">Our Story</h2>
-            <p className="text-sapp-gray">From Specialized Beginnings to The Beginning</p>
+            <p className="text-sapp-gray">From our origins in counter-espionage to becoming a comprehensive security partner</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <img 
-                src="/lovable-uploads/a7b9c2e5-5129-4b70-89e2-7617a4e5578a.png" 
+                src="/lovable-uploads/7505824c-c5d3-4ba5-b867-ae9d71c13965.png" 
                 alt="SAPP Security History" 
                 className="rounded-lg shadow-lg w-full"
               />
             </div>
             <div>
-              <h3 className="text-xl font-display font-semibold mb-4 text-accent-dark-blue">From Specialized Beginnings</h3>
+              <h3 className="text-xl font-display font-semibold mb-4 text-accent-dark-blue">The Beginning</h3>
               <p className="text-sapp-gray mb-4">
                 We bring together versatile backgrounds and security expertise with a vision to converge physical and digital security.
               </p>
