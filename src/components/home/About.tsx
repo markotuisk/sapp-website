@@ -28,15 +28,8 @@ const AboutContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="order-2 lg:order-1">
               <div className="max-w-2xl">
-                <div className={cn(
-                  "inline-block px-3 py-1 rounded-full text-sm font-medium bg-accent-teal/10 text-accent-dark-blue mb-4 transform transition-all duration-500",
-                  heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                )} style={{ transitionDelay: "100ms" }}>
-                  About us
-                </div>
-                
                 <AnimatedText 
-                  text="Security expertise built on competence, integrity, and clarity"
+                  text="Security expertise built on competence, performance and trust"
                   tag="h1"
                   className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6 text-sapp-dark"
                   delay={200}
@@ -48,7 +41,7 @@ const AboutContent = () => {
                   delay={400}
                   className="text-sapp-gray text-lg mb-8"
                 >
-                  <p>SAPP Security is a natural evolution from a UK-based counter espionage company, now offering wider technical security expertise and automation of multiple security systems</p>
+                  <p>SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security</p>
                 </Animated>
                 
                 <Animated
@@ -94,12 +87,12 @@ const AboutContent = () => {
         </div>
       </section>
       
-      {/* Additional Sections (unchanged) */}
+      {/* Our Story Section - Updated content */}
       <section id="our-story" className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-sapp-dark">Our Story</h2>
-            <p className="text-sapp-gray">From our origins in counter-espionage to becoming a comprehensive security partner</p>
+            <p className="text-sapp-gray">From Specialized Beginnings to The Beginning</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -113,19 +106,20 @@ const AboutContent = () => {
             <div>
               <h3 className="text-xl font-display font-semibold mb-4 text-accent-dark-blue">From Specialized Beginnings</h3>
               <p className="text-sapp-gray mb-4">
-                SAPP Security began as a specialized counter-espionage firm in the UK, focusing on technical surveillance countermeasures (TSCM) and executive protection for high-profile clients.
+                We bring together versatile backgrounds and security expertise with a vision to converge physical and digital security.
               </p>
               <p className="text-sapp-gray mb-4">
-                As threats evolved in both the physical and digital realms, we expanded our expertise to address the growing need for integrated security solutions that bridge traditional security with modern technology.
+                Our two founders, Raili and Marko, are native Estonians with a combined 30-years expertise in the global technical security industry. They share a common professional frustration in corporations where physical and cyber security operate in silos. As a result, security threats requiring both disciplines are left overlooked — mobile devices in unlocked executive desk drawers, accessible control panels in unsecured boardrooms, incorrectly positioned security cameras, and so on.
               </p>
               <p className="text-sapp-gray">
-                Today, we offer comprehensive security services that combine human expertise with cutting-edge technology, providing our clients with robust protection against evolving threats.
+                Organisations need both physical and digital security. Companies require this equally, so both fields must break their bubbles, embrace collaboration, and work together. The SAPP Vision is to lead by example — creating a unique security offering to assist corporations in converging their physical and cyber security.
               </p>
             </div>
           </div>
         </div>
       </section>
       
+      {/* Our Approach Section */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
@@ -182,6 +176,7 @@ const AboutContent = () => {
         </div>
       </section>
       
+      {/* Our Team Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
