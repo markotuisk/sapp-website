@@ -173,7 +173,7 @@ const Contact = () => {
     {
       icon: <MapPin className="h-5 w-5 text-sapp-blue" />,
       title: "Offices",
-      details: "United Kingdom (HQ)",
+      details: "United Kingdom (HQ) and Estonia (Engineering)",
     },
     {
       icon: <Mail className="h-5 w-5 text-sapp-blue" />,
@@ -186,7 +186,7 @@ const Contact = () => {
     {
       icon: <Phone className="h-5 w-5 text-sapp-blue" />,
       title: "Phone",
-      details: "+44 2 070 888 270",
+      details: "+44 (0) 2070 888 270",
       copyIcon: true,
       copy: () => copyToClipboard("+442070888270", "phone"),
       copied: copiedPhone,
@@ -199,6 +199,7 @@ const Contact = () => {
     "Installations",
     "Counter-Surveillance",
     "Executive Protection",
+    "Cyber Security",
     "General Enquiry"
   ];
 
@@ -428,6 +429,7 @@ const Contact = () => {
                     type="submit" 
                     size="lg" 
                     className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 group relative overflow-hidden"
+                    disabled={!form.formState.isValid}
                   >
                     <span className="relative z-10 transition-transform duration-300 group-hover:translate-y-0 group-hover:scale-110">Submit Message</span>
                     <span className="absolute inset-x-0 -bottom-1 h-1 bg-sapp-dark scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
