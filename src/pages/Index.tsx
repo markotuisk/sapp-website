@@ -6,6 +6,7 @@ import Services from '@/components/home/Services';
 import Partners from '@/components/home/Partners';
 import Contact from '@/components/home/Contact';
 import AboutSAPP from '@/components/home/AboutSAPP';
+import InsightQuote from '@/components/home/InsightQuote';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocation } from 'react-router-dom';
@@ -47,6 +48,7 @@ const Index = () => {
       <main>
         <Hero />
         <Services />
+        <InsightQuote />
         <AboutSAPP />
         <Partners />
         <Contact />
