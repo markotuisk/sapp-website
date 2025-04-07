@@ -72,6 +72,9 @@ const Contact = () => {
     browser: '',
     device: '',
   });
+  
+  // Character counter state
+  const [messageLength, setMessageLength] = useState(0);
 
   // Initialize form
   const form = useForm<FormValues>({
@@ -84,7 +87,18 @@ const Contact = () => {
       topic: "",
       message: "",
     },
+    mode: "onChange", // Enable validation on change for real-time feedback
   });
+
+  // Watch message field for character count
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (name === 'message' || !name) {
+        setMessageLength(value.message?.length || 0);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form.watch]);
 
   // Get user metadata on initial render
   useEffect(() => {
@@ -167,6 +181,7 @@ const Contact = () => {
     });
     setShowPreview(false);
     form.reset();
+    setMessageLength(0); // Reset character counter
   };
 
   const contactInfo = [
@@ -417,8 +432,18 @@ const Contact = () => {
                           placeholder="Tell us about your security needs" 
                           className="min-h-[120px] border-gray-200 focus-visible:ring-sapp-blue"
                           {...field}
+                          aria-describedby="message-counter"
                         />
                       </FormControl>
+                      <div 
+                        id="message-counter" 
+                        className={cn(
+                          "text-xs flex justify-end", 
+                          messageLength < 10 ? "text-destructive" : "text-sapp-gray"
+                        )}
+                      >
+                        {messageLength}/120 characters (minimum 10)
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -428,7 +453,7 @@ const Contact = () => {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 group relative overflow-hidden"
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 group relative overflow-hidden disabled:opacity-50 disabled:pointer-events-none"
                     disabled={!form.formState.isValid}
                   >
                     <span className="relative z-10 transition-transform duration-300 group-hover:translate-y-0 group-hover:scale-110">Submit Message</span>
