@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Animated, AnimatedText } from '@/components/ui/AnimatedElements';
@@ -12,7 +11,6 @@ const AboutContent = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section - Redesigned */}
       <section ref={heroRef} className="relative pt-32 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-b from-white to-gray-50">
         {/* Abstract Background Pattern */}
         <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none"></div>
@@ -71,7 +69,6 @@ const AboutContent = () => {
         </div>
       </section>
       
-      {/* Our Story Section - Updated content */}
       <section id="our-story" className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
@@ -103,7 +100,6 @@ const AboutContent = () => {
         </div>
       </section>
       
-      {/* Our Approach Section */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
@@ -160,7 +156,6 @@ const AboutContent = () => {
         </div>
       </section>
       
-      {/* Our Team Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
