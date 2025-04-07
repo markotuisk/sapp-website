@@ -344,7 +344,13 @@ const Contact = () => {
                           <FormControl>
                             <Input 
                               placeholder="Enter your full name" 
-                              className="border-gray-200 focus-visible:ring-sapp-blue"
+                              className={cn(
+                                "border-gray-200 focus-visible:ring-sapp-blue",
+                                {
+                                  "border-green-600": status.isTouched && status.isValid,
+                                  "border-destructive": status.hasError
+                                }
+                              )}
                               {...field}
                             />
                           </FormControl>
@@ -378,7 +384,7 @@ const Contact = () => {
                             }
                           )}>
                             Email Address
-                            <span className="text-xs text-muted-foreground ml-1">(Email or Phone required)</span>
+                            <span className="text-xs text-destructive ml-1">(Email or Phone required)</span>
                             {isEmailOrPhoneValid && (
                               <Check className="h-3 w-3 ml-1 text-green-600" aria-hidden="true" />
                             )}
@@ -387,7 +393,13 @@ const Contact = () => {
                             <Input 
                               type="email" 
                               placeholder="Enter your email address" 
-                              className="border-gray-200 focus-visible:ring-sapp-blue"
+                              className={cn(
+                                "border-gray-200 focus-visible:ring-sapp-blue",
+                                {
+                                  "border-green-600": isEmailOrPhoneValid && field.value,
+                                  "border-destructive": emailPhoneFieldState.error && !phoneValue
+                                }
+                              )}
                               {...field}
                             />
                           </FormControl>
@@ -418,7 +430,12 @@ const Contact = () => {
                           <FormControl>
                             <Input 
                               placeholder="Enter your company name" 
-                              className="border-gray-200 focus-visible:ring-sapp-blue"
+                              className={cn(
+                                "border-gray-200 focus-visible:ring-sapp-blue",
+                                {
+                                  "border-green-600": status.isTouched && status.isValid && field.value,
+                                }
+                              )}
                               {...field}
                             />
                           </FormControl>
@@ -450,7 +467,7 @@ const Contact = () => {
                             }
                           )}>
                             Phone Number
-                            <span className="text-xs text-muted-foreground ml-1">(Email or Phone required)</span>
+                            <span className="text-xs text-destructive ml-1">(Email or Phone required)</span>
                             {isEmailOrPhoneValid && (
                               <Check className="h-3 w-3 ml-1 text-green-600" aria-hidden="true" />
                             )}
@@ -458,7 +475,13 @@ const Contact = () => {
                           <FormControl>
                             <Input 
                               placeholder="Enter your phone number" 
-                              className="border-gray-200 focus-visible:ring-sapp-blue"
+                              className={cn(
+                                "border-gray-200 focus-visible:ring-sapp-blue",
+                                {
+                                  "border-green-600": isEmailOrPhoneValid && field.value,
+                                  "border-destructive": status.hasError && !emailValue
+                                }
+                              )}
                               {...field}
                             />
                           </FormControl>
@@ -491,7 +514,13 @@ const Contact = () => {
                         </FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="border-gray-200 focus-visible:ring-sapp-blue">
+                            <SelectTrigger className={cn(
+                              "border-gray-200 focus-visible:ring-sapp-blue",
+                              {
+                                "border-green-600": status.isTouched && status.isValid,
+                                "border-destructive": status.hasError
+                              }
+                            )}>
                               <SelectValue placeholder="Choose a topic for your enquiry" />
                             </SelectTrigger>
                           </FormControl>
@@ -532,7 +561,13 @@ const Contact = () => {
                         <FormControl>
                           <Textarea 
                             placeholder="Tell us about your security needs" 
-                            className="min-h-[120px] border-gray-200 focus-visible:ring-sapp-blue"
+                            className={cn(
+                              "min-h-[120px] border-gray-200 focus-visible:ring-sapp-blue",
+                              {
+                                "border-green-600": status.isTouched && status.isValid && messageLength >= 10,
+                                "border-destructive": status.hasError
+                              }
+                            )}
                             {...field}
                             aria-describedby="message-counter"
                           />
@@ -553,15 +588,28 @@ const Contact = () => {
                 />
 
                 <div className="flex items-center">
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 group relative overflow-hidden disabled:opacity-50 disabled:pointer-events-none"
-                    disabled={!form.formState.isValid}
-                  >
-                    <span className="relative z-10 transition-transform duration-300 group-hover:translate-y-0 group-hover:scale-110">Submit Message</span>
-                    <span className="absolute inset-x-0 -bottom-1 h-1 bg-sapp-dark scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="relative inline-block">
+                          <Button 
+                            type="submit" 
+                            size="lg" 
+                            className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 group relative overflow-hidden disabled:opacity-50 disabled:pointer-events-none"
+                            disabled={!form.formState.isValid}
+                          >
+                            <span className="relative z-10 transition-transform duration-300 group-hover:translate-y-0 group-hover:scale-110">Submit Message</span>
+                            <span className="absolute inset-x-0 -bottom-1 h-1 bg-sapp-dark scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+                          </Button>
+                        </div>
+                      </TooltipTrigger>
+                      {!form.formState.isValid && (
+                        <TooltipContent>
+                          <p>Please complete all required fields before submitting</p>
+                        </TooltipContent>
+                      )}
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </form>
             </Form>
