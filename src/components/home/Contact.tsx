@@ -4,29 +4,67 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { MapPin, Mail, Phone } from 'lucide-react';
+import { MapPin, Mail, Phone, Copy, Check } from 'lucide-react';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Contact = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const { toast } = useToast();
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
+
+  const copyToClipboard = (text: string, type: 'email' | 'phone') => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (type === 'email') {
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2000);
+      } else {
+        setCopiedPhone(true);
+        setTimeout(() => setCopiedPhone(false), 2000);
+      }
+      
+      toast({
+        title: "Copied!",
+        description: `${text} has been copied to clipboard`,
+        duration: 2000,
+      });
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  };
 
   const contactInfo = [
     {
       icon: <MapPin className="h-5 w-5 text-sapp-blue" />,
-      title: "Locations",
-      details: "United Kingdom and Estonia",
+      title: "Offices",
+      details: "United Kingdom (HQ) and Estonia (Engineering)",
     },
     {
       icon: <Mail className="h-5 w-5 text-sapp-blue" />,
       title: "Email",
-      details: "info@sappsecurity.com",
+      details: "contact@sappsecurity.com",
+      copyIcon: true,
+      copy: () => copyToClipboard("contact@sappsecurity.com", "email"),
+      copied: copiedEmail,
     },
     {
       icon: <Phone className="h-5 w-5 text-sapp-blue" />,
       title: "Phone",
-      details: "+44 123 456 789",
+      details: "+44 2 070 888 270",
+      copyIcon: true,
+      copy: () => copyToClipboard("+442070888270", "phone"),
+      copied: copiedPhone,
     },
   ];
 
@@ -78,9 +116,29 @@ const Contact = () => {
               <div className="bg-sapp-blue/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 mr-4">
                 {item.icon}
               </div>
-              <div>
+              <div className="flex-grow">
                 <h3 className="text-lg font-display font-semibold text-sapp-dark">{item.title}</h3>
-                <p className="text-sapp-gray">{item.details}</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sapp-gray">{item.details}</p>
+                  {item.copyIcon && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button 
+                            onClick={item.copy}
+                            className="ml-2 p-1 text-sapp-blue/70 hover:text-sapp-blue rounded-md hover:bg-sapp-blue/10 transition-colors"
+                            aria-label={`Copy ${item.title.toLowerCase()} to clipboard`}
+                          >
+                            {item.copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{item.copied ? "Copied!" : "Copy to clipboard"}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                </div>
               </div>
             </div>
           ))}
