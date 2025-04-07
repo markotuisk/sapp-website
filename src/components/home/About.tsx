@@ -23,13 +23,11 @@ const AboutContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="order-2 lg:order-1">
               <div className="max-w-2xl">
-                <AnimatedText 
-                  text="Security expertise built on competence, performance and trust"
-                  tag="h1"
-                  className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6 text-sapp-dark tracking-normal"
-                  delay={200}
-                  staggerDelay={30}
-                />
+                <Animated animation="fade-up" delay={200}>
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6 text-sapp-dark tracking-normal">
+                    Security expertise built on competence, performance and trust
+                  </h1>
+                </Animated>
                 
                 <Animated
                   animation="fade-up"
