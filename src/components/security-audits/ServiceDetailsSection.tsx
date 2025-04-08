@@ -1,3 +1,4 @@
+
 import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
@@ -23,23 +24,23 @@ const ServiceDetailsSection = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <div className="bg-slate-50 p-4 rounded-lg">
                 <Shield className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Physical Security</h4>
-                <p className="text-sm text-sapp-gray">Comprehensive assessment of physical security measures.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">Diplomatic Facilities</h4>
+                <p className="text-sm text-sapp-gray">Protection strategies for embassies, consulates, and treaty negotiation sites.</p>
               </div>
               <div className="bg-slate-50 p-4 rounded-lg">
                 <FileText className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Systems Testing</h4>
-                <p className="text-sm text-sapp-gray">Thorough evaluation of security systems effectiveness.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">Tech Labs</h4>
+                <p className="text-sm text-sapp-gray">Assessments for ultra-sensitive R&D environments handling next-gen computation.</p>
               </div>
               <div className="bg-slate-50 p-4 rounded-lg">
                 <FileCheck className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Compliance Audits</h4>
-                <p className="text-sm text-sapp-gray">Ensure adherence to industry standards and regulations.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">Esports Headquarters</h4>
+                <p className="text-sm text-sapp-gray">Security compliance and TSCM support for competitive gaming ecosystems.</p>
               </div>
               <div className="bg-slate-50 p-4 rounded-lg">
                 <Lock className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Penetration Tests</h4>
-                <p className="text-sm text-sapp-gray">Identify vulnerabilities before they can be exploited.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">Pharma & Biosecurity Sites</h4>
+                <p className="text-sm text-sapp-gray">Evaluation of biotech research and high-containment laboratory protocols.</p>
               </div>
             </div>
             <Button 
