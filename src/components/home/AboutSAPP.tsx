@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
@@ -42,8 +43,8 @@ const AboutSAPP = () => {
             <div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full">
               <AspectRatio ratio={4/3} className="bg-gray-100">
                 <img 
-                  src="/lovable-uploads/1265b91e-663d-4d71-b18a-93bc9fb337ce.png" 
-                  alt="SAPP Security Founders" 
+                  src="/lovable-uploads/a42f51ed-4188-4c54-a444-9294e06fd3eb.png" 
+                  alt="SAPP Security Founders Global Story" 
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
                 />
               </AspectRatio>
@@ -92,3 +93,4 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
+
