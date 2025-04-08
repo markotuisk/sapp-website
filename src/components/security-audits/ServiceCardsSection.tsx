@@ -4,26 +4,26 @@ import ServiceCard from '@/components/ui/ServiceCard';
 const ServiceCardsSection = () => {
   const auditServices = [
     {
-      title: "Diplomatic Facilities",
-      description: "Protection strategies for embassies, consulates, and treaty negotiation sites.",
+      title: "Physical Security Assessments",
+      description: "Impartial evaluation of existing and planned security measures to protect organisation's assets from threats and identify vulnerabilities to improve and strengthen organisational resilience. Can include penetration testing.",
       href: "/services/physical-security-assessments",
       delay: 100
     },
     {
-      title: "Tech Labs",
-      description: "Assessments for ultra-sensitive R&D environments handling next-gen computation.",
+      title: "TSCM Inspections",
+      description: "Commonly referred to as a bug sweep is a systematic technical and physical inspection that includes scanning and search for unauthorised listening devices to protect the organisation from corporate espionage.",
       href: "/services/tscm-inspections",
       delay: 200
     },
     {
-      title: "Esports Headquarters",
-      description: "Security compliance and TSCM support for competitive gaming ecosystems.",
+      title: "Compliance Audits",
+      description: "ISO27001 certified audit that measures the organisation's compliance with industry standards and international regulations.",
       href: "/services/compliance-audits",
       delay: 300
     },
     {
-      title: "Pharma & Biosecurity Sites",
-      description: "Evaluation of biotech research and high-containment laboratory protocols.",
+      title: "Technology and Systems Testing",
+      description: "Technical testing of organisation's existing security and communications technology to identify any gaps and protect against physical security and cyber attacks.",
       href: "/services/technology-systems-testing",
       delay: 400
     }
