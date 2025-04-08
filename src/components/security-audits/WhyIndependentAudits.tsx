@@ -25,8 +25,8 @@ const WhyIndependentAudits = () => {
                 <p className="text-lg">These external audits are on-site service visits to objectively evaluate the state of play of the physical and information security processes and technology at your organisation.</p>
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+            <div className="relative h-full flex items-center justify-center">
+              <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl"></div>
               <img 
                 src="/lovable-uploads/photo-1498050108023-c5249f4df085.png"
                 alt="Security Audit Process" 
