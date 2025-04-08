@@ -43,8 +43,8 @@ const AboutSAPP = () => {
             <div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full">
               <AspectRatio ratio={4/3} className="bg-gray-100">
                 <img 
-                  src="/lovable-uploads/a42f51ed-4188-4c54-a444-9294e06fd3eb.png" 
-                  alt="SAPP Security Founders Global Story" 
+                  src="/lovable-uploads/f889fc88-582e-4392-ad07-bf9cf800cd2c.png" 
+                  alt="SAPP Security Team Breaking Bubbles" 
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
                 />
               </AspectRatio>
@@ -93,4 +93,3 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
-
