@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AboutContent from '@/components/home/About';
+import FoundingTeam from '@/components/home/FoundingTeam';
 import { useLocation } from 'react-router-dom';
 
 const About = () => {
@@ -18,6 +19,7 @@ const About = () => {
       <Navbar />
       <main>
         <AboutContent />
+        <FoundingTeam />
       </main>
       <Footer />
     </div>
