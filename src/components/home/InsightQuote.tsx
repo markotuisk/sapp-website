@@ -29,7 +29,7 @@ const InsightQuote = () => {
             >
               <blockquote className="mb-6">
                 <p className="text-xl md:text-2xl font-display italic text-sapp-dark leading-relaxed">
-                  "We recognise that security is a cost item and a hard sell. Our commercial skills and expertise are embedded into our core service delivery supporting your internal security sell."
+                  "An external security audit provides credibility and confidence to management and shareholders that the organisation is compliant and best protected against any information security risks."
                 </p>
               </blockquote>
               <footer className="flex items-center">
