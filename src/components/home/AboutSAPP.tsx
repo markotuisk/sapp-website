@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -23,7 +23,6 @@ const AboutSAPP = () => {
       id="about-sapp"
     >
       <div className="container mx-auto px-4 md:px-6">
-        {/* Section Title */}
         <div className="text-center mb-12">
           <Animated animation="fade-up" delay={0}>
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -35,7 +34,6 @@ const AboutSAPP = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Image Column */}
           <Animated 
             animation="fade-up" 
             delay={100} 
@@ -44,15 +42,14 @@ const AboutSAPP = () => {
             <div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full">
               <AspectRatio ratio={4/3} className="bg-gray-100">
                 <img 
-                  src="/lovable-uploads/8d818889-c5eb-43f6-8a63-3b0310802bdd.png" 
-                  alt="SAPP Security Team" 
+                  src="/lovable-uploads/1265b91e-663d-4d71-b18a-93bc9fb337ce.png" 
+                  alt="SAPP Security Founders" 
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
                 />
               </AspectRatio>
             </div>
           </Animated>
           
-          {/* Right Content Column */}
           <Animated 
             animation="fade-up" 
             delay={200}
@@ -95,4 +92,3 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
-
