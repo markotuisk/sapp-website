@@ -1,4 +1,3 @@
-
 import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
@@ -50,12 +49,12 @@ const ServiceDetailsSection = () => {
               <TranslatedText textKey="contactUs" />
             </Button>
           </div>
-          <div className="relative order-1 md:order-2">
-            <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+          <div className="relative">
+            <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl opacity-0"></div>
             <img 
               src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
               alt="Security Audit Process" 
-              className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+              className="rounded-xl w-full h-auto object-cover max-w-[90%] mx-auto shadow-none"
             />
           </div>
         </div>
