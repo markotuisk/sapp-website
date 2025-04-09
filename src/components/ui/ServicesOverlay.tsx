@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Command, CommandInput, CommandList, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 
 interface ServicesOverlayProps {
@@ -141,7 +142,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
               </TabsList>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4">
+            <ScrollArea className="flex-1 p-4">
               <TabsContent value="services" className="m-0 p-0 h-full">
                 {searchQuery && filteredServices.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-gray-500 py-12">
@@ -217,7 +218,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
                   </div>
                 )}
               </TabsContent>
-            </div>
+            </ScrollArea>
           </Tabs>
         </div>
       </DialogContent>
