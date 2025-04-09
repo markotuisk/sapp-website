@@ -1,4 +1,3 @@
-
 import { MonitorCheck, Wifi, Users, FileText, ArrowRight, Lock, Database } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -108,7 +107,7 @@ const Installations = () => {
                   </div>
                   <div className="bg-slate-50 p-4 rounded-lg">
                     <Wifi className="h-6 w-6 text-sapp-blue mb-2" />
-                    <h4 className="font-semibold text-sapp-dark mb-1">Speech Privacy</h4>
+                    <h4 className="font-semibold text-sapp-dark mb-1">Speech & Sound Masking</h4>
                     <p className="text-sm text-sapp-gray">Advanced sound masking and speech protection solutions.</p>
                   </div>
                   <div className="bg-slate-50 p-4 rounded-lg">
@@ -206,7 +205,7 @@ const Installations = () => {
               
               {/* Speech Privacy & Sound Masking */}
               <ServiceCard 
-                title="Speech and Sound Masking"
+                title="Speech & Sound Masking"
                 description="Protect conversations and reduce acoustic exposure in sensitive or shared environments."
                 delay={200}
                 href="/installations/speech-privacy"
