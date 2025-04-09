@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import TranslatedText from '@/components/ui/TranslatedText';
 import ServicesOverlay from '@/components/ui/ServicesOverlay';
 
 const Hero = () => {
@@ -24,7 +23,7 @@ const Hero = () => {
             )}
           >
             Your trusted technical <br />
-            security and <span className="text-sapp-blue">privacy partner</span>.
+            security and <span className="text-sapp-blue">privacy partner</span>
           </h1>
           
           <p 
@@ -33,17 +32,17 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security.
+            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security
           </p>
           
-          {/* New section for busy professionals */}
           <p 
             className={cn(
-              "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-700 delay-300",
+              "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-700 delay-300 text-center",
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Cut through complexity. Find your security solution in 60 seconds.
+            Cut through complexity with our Rapid Navigator below,<br />
+            Find your security solution in 60 seconds.
           </p>
           
           <div 
