@@ -22,8 +22,8 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Your trusted technical <br />
-            security and <span className="text-sapp-blue">privacy partner</span>
+            Your <span className="text-[#8B5CF6]">competent technical</span> <br />
+            security and <span className="text-[#0FA0CE]">privacy partner</span>.
           </h1>
           
           <p 
