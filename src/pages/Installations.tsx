@@ -187,19 +187,19 @@ const Installations = () => {
           <div className="container mx-auto px-6">
             <div className="text-center mb-12">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Installation Expertise</h3>
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Security Expertise</h3>
               </div>
             </div>
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-sapp-dark mb-3">Our Installation Capabilities</h2>
-              <p className="text-sapp-gray">Expert installation services designed for complex and demanding environments</p>
+              <p className="text-sapp-gray">Our Technical team works with major system manufacturers requiring both physical and cyber security expertise.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-12">
-              {/* CCTV, Access & Visitor */}
+              {/* Physical Security Systems */}
               <ServiceCard 
-                title="CCTV, Access & Visitor Systems"
-                description="Control visibility, movement, and presence — with systems that scale from single sites to global estates."
+                title="Physical Security Systems"
+                description="Control visibility, movement, and presence with CCTV, access and visitor management systems."
                 delay={100}
                 href="/installations/cctv-access"
               />
@@ -212,18 +212,18 @@ const Installations = () => {
                 href="/installations/speech-privacy"
               />
               
-              {/* Counter Surveillance & RF Monitoring */}
+              {/* Counter Surveillance Systems */}
               <ServiceCard 
-                title="Countering Surveillance & RF Monitoring"
+                title="Counter Surveillance Systems"
                 description="Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors."
                 delay={300}
                 href="/installations/counter-surveillance"
               />
               
-              {/* Network Infrastructure & Communication */}
+              {/* IT Network Systems */}
               <ServiceCard 
-                title="Network Infrastructure & Communication"
-                description="Lay secure foundations for communication and control — whether on-site, distributed, or hybrid."
+                title="IT Network Systems"
+                description="Implement secure foundation for communication and control, whether is local or distributed cloud or hybrid solution."
                 delay={400}
                 href="/installations/network-infrastructure"
               />
