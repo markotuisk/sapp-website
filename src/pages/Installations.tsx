@@ -1,4 +1,3 @@
-
 import { MonitorCheck, Wifi, Users, FileText, ArrowRight, Lock, Database } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -8,21 +7,7 @@ import TranslatedText from '@/components/ui/TranslatedText';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
-import ServiceCard from '@/components/ui/ServiceCard';
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction
-} from '@/components/ui/alert-dialog';
+import { useNavigate } from 'react-router-dom';
 
 const Installations = () => {
   const { t } = useLanguage();
@@ -31,6 +16,11 @@ const Installations = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const navigate = useNavigate();
+
+  const handleRapidServiceNavigator = () => {
+    navigate('/#services');
+  };
 
   return (
     <div className="min-h-screen">
@@ -47,9 +37,8 @@ const Installations = () => {
                 )}
                 ref={ref}
               >
-                From <span className="text-sapp-blue">cloud</span> to <span className="text-sapp-blue">cable</span> - make<br/>
-                <span className="text-sapp-blue">security</span> an integral part<br/>
-                of your system <span className="text-sapp-blue">installation</span>
+                From <span className="text-sapp-blue">cloud</span> to <span className="text-sapp-blue">cable</span> deployments, make
+                <br/><span className="text-sapp-blue">security</span> an integral part of your system <span className="text-sapp-blue">installation</span>
               </h1>
               <p 
                 className={cn(
@@ -69,24 +58,12 @@ const Installations = () => {
                 <Button 
                   size="lg" 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                  onClick={handleRapidServiceNavigator}
                 >
                   <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                    <TranslatedText textKey="exploreServices" />
+                    Rapid Service Navigator
                   </span>
                   <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-                  asChild
-                >
-                  <Link to="/#contact">
-                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
-                      <TranslatedText textKey="contactUs" />
-                    </span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                  </Link>
                 </Button>
               </div>
             </div>
