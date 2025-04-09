@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { X, ChevronRight, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Command, CommandInput, CommandList, CommandGroup, CommandItem } from '@/components/ui/command';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Command, CommandInput } from '@/components/ui/command';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -105,6 +105,9 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[900px] p-0 gap-0 bg-white">
+        {/* Hidden DialogTitle for accessibility */}
+        <DialogTitle className="sr-only">Explore Our Services</DialogTitle>
+        
         <div className="flex flex-col h-[80vh] max-h-[800px]">
           <header className="flex items-center justify-between p-4 border-b">
             <h2 className="text-xl font-semibold text-sapp-dark">Explore Our Services</h2>
@@ -124,7 +127,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
             </Command>
           </div>
           
-          <Tabs defaultValue="services" className="flex-1 overflow-hidden">
+          <Tabs defaultValue="services" className="flex-1 flex flex-col overflow-hidden">
             <div className="px-4 pt-3">
               <TabsList className="w-full justify-start border-b rounded-none bg-transparent p-0 mb-1">
                 <TabsTrigger 
@@ -142,83 +145,85 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
               </TabsList>
             </div>
             
-            <ScrollArea className="flex-1 p-4">
-              <TabsContent value="services" className="m-0 p-0 h-full">
-                {searchQuery && filteredServices.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-500 py-12">
-                    <Search className="h-12 w-12 mb-4 opacity-20" />
-                    <p>No services match your search</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {filteredServices.map((category) => (
-                      <div key={category.category} className={cn(
-                        "bg-slate-50 rounded-lg overflow-hidden",
-                        category.items.length === 0 && "hidden"
-                      )}>
-                        <div className="bg-sapp-blue/10 px-4 py-2">
-                          <h3 className="font-medium text-sapp-blue">{category.category}</h3>
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <ScrollArea className="h-full p-4" type="always">
+                <TabsContent value="services" className="m-0 p-0 h-full data-[state=active]:block">
+                  {searchQuery && filteredServices.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full text-gray-500 py-12">
+                      <Search className="h-12 w-12 mb-4 opacity-20" />
+                      <p>No services match your search</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
+                      {filteredServices.map((category) => (
+                        <div key={category.category} className={cn(
+                          "bg-slate-50 rounded-lg overflow-hidden",
+                          category.items.length === 0 && "hidden"
+                        )}>
+                          <div className="bg-sapp-blue/10 px-4 py-2">
+                            <h3 className="font-medium text-sapp-blue">{category.category}</h3>
+                          </div>
+                          <div className="divide-y">
+                            {category.items.map((item) => (
+                              <Link 
+                                key={item.name} 
+                                to={item.link}
+                                onClick={() => onOpenChange(false)}
+                                className="flex items-center justify-between px-4 py-3 hover:bg-slate-100 transition-colors"
+                              >
+                                <div>
+                                  <h4 className="font-medium text-sapp-dark">{item.name}</h4>
+                                  <p className="text-sm text-sapp-gray">{item.description}</p>
+                                </div>
+                                <ChevronRight className="h-4 w-4 text-gray-400" />
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                        <div className="divide-y">
-                          {category.items.map((item) => (
-                            <Link 
-                              key={item.name} 
-                              to={item.link}
-                              onClick={() => onOpenChange(false)}
-                              className="flex items-center justify-between px-4 py-3 hover:bg-slate-100 transition-colors"
-                            >
-                              <div>
-                                <h4 className="font-medium text-sapp-dark">{item.name}</h4>
-                                <p className="text-sm text-sapp-gray">{item.description}</p>
-                              </div>
-                              <ChevronRight className="h-4 w-4 text-gray-400" />
-                            </Link>
-                          ))}
+                      ))}
+                    </div>
+                  )}
+                </TabsContent>
+                
+                <TabsContent value="resources" className="m-0 p-0 h-full data-[state=active]:block">
+                  {searchQuery && filteredResources.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full text-gray-500 py-12">
+                      <Search className="h-12 w-12 mb-4 opacity-20" />
+                      <p>No resources match your search</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
+                      {filteredResources.map((category) => (
+                        <div key={category.category} className={cn(
+                          "bg-slate-50 rounded-lg overflow-hidden",
+                          category.items.length === 0 && "hidden"
+                        )}>
+                          <div className="bg-sapp-blue/10 px-4 py-2">
+                            <h3 className="font-medium text-sapp-blue">{category.category}</h3>
+                          </div>
+                          <div className="divide-y">
+                            {category.items.map((item) => (
+                              <Link 
+                                key={item.name} 
+                                to={item.link}
+                                onClick={() => onOpenChange(false)}
+                                className="flex items-center justify-between px-4 py-3 hover:bg-slate-100 transition-colors"
+                              >
+                                <div>
+                                  <h4 className="font-medium text-sapp-dark">{item.name}</h4>
+                                  <p className="text-sm text-sapp-gray">{item.description}</p>
+                                </div>
+                                <ChevronRight className="h-4 w-4 text-gray-400" />
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-              
-              <TabsContent value="resources" className="m-0 p-0 h-full">
-                {searchQuery && filteredResources.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-500 py-12">
-                    <Search className="h-12 w-12 mb-4 opacity-20" />
-                    <p>No resources match your search</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {filteredResources.map((category) => (
-                      <div key={category.category} className={cn(
-                        "bg-slate-50 rounded-lg overflow-hidden",
-                        category.items.length === 0 && "hidden"
-                      )}>
-                        <div className="bg-sapp-blue/10 px-4 py-2">
-                          <h3 className="font-medium text-sapp-blue">{category.category}</h3>
-                        </div>
-                        <div className="divide-y">
-                          {category.items.map((item) => (
-                            <Link 
-                              key={item.name} 
-                              to={item.link}
-                              onClick={() => onOpenChange(false)}
-                              className="flex items-center justify-between px-4 py-3 hover:bg-slate-100 transition-colors"
-                            >
-                              <div>
-                                <h4 className="font-medium text-sapp-dark">{item.name}</h4>
-                                <p className="text-sm text-sapp-gray">{item.description}</p>
-                              </div>
-                              <ChevronRight className="h-4 w-4 text-gray-400" />
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-            </ScrollArea>
+                      ))}
+                    </div>
+                  )}
+                </TabsContent>
+              </ScrollArea>
+            </div>
           </Tabs>
         </div>
       </DialogContent>
