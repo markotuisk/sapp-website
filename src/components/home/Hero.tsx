@@ -36,6 +36,16 @@ const Hero = () => {
             Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security.
           </p>
           
+          {/* New section for busy professionals */}
+          <p 
+            className={cn(
+              "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-700 delay-300",
+              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            )}
+          >
+            Cut through complexity. Find your security solution in 60 seconds.
+          </p>
+          
           <div 
             className={cn(
               "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 delay-300",
@@ -48,7 +58,7 @@ const Hero = () => {
               onClick={() => setServicesOpen(true)}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                <TranslatedText textKey="exploreServices" />
+                Rapid Service Navigator
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
