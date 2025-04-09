@@ -1,16 +1,17 @@
 
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
-import { Link } from 'react-router-dom';
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import ServicesOverlay from '@/components/ui/ServicesOverlay';
 
 const HeroSection = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
@@ -35,76 +36,40 @@ const HeroSection = () => {
             Helping you to comply with international best practises and improve your information security resilience
           </p>
           
+          {/* New section for busy professionals */}
+          <p 
+            className={cn(
+              "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-500 delay-300",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            Cut through complexity. Find your security solution in 60 seconds.
+          </p>
+          
           <div 
             className={cn(
               "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button 
-                  size="lg" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-                >
-                  <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                    <TranslatedText textKey="exploreServices" />
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="bg-white">
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Contact Our Security Audit Team</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Fill out the form below to request information about our security audit services.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <div className="py-4">
-                  <form className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium">Full Name</label>
-                        <input id="name" className="w-full p-2 border border-gray-300 rounded-md" />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="company" className="text-sm font-medium">Company</label>
-                        <input id="company" className="w-full p-2 border border-gray-300 rounded-md" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium">Email</label>
-                      <input id="email" type="email" className="w-full p-2 border border-gray-300 rounded-md" />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="message" className="text-sm font-medium">Message</label>
-                      <textarea id="message" rows={4} className="w-full p-2 border border-gray-300 rounded-md"></textarea>
-                    </div>
-                  </form>
-                </div>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-
             <Button 
-              variant="outline" 
               size="lg" 
-              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-              asChild
+              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              onClick={() => setServicesOpen(true)}
             >
-              <Link to="/#contact">
-                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
-                  <TranslatedText textKey="contactUs" />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-              </Link>
+              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                Rapid Service Navigator
+              </span>
+              <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
           </div>
         </div>
       </div>
+
+      <ServicesOverlay 
+        open={servicesOpen}
+        onOpenChange={setServicesOpen}
+      />
     </section>
   );
 };

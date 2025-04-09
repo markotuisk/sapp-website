@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/security-audits/HeroSection';
@@ -11,7 +11,10 @@ import ImageBannerSection from '@/components/security-audits/ImageBannerSection'
 import CTASection from '@/components/security-audits/CTASection';
 
 const SecurityAudits = () => {
-  const [isLoaded, setIsLoaded] = useState(true);
+  useEffect(() => {
+    // Scroll to top when navigating to this page
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen">
