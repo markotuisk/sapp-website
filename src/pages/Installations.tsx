@@ -51,8 +51,7 @@ const Installations = () => {
                 )}
                 ref={ref}
               >
-                From <span className="text-sapp-blue">cloud</span> to <span className="text-sapp-blue">cable</span> deployments, make
-                <br/><span className="text-sapp-blue">security</span> an integral part of your system <span className="text-sapp-blue">installation</span>
+                Accredited installation of <span className="text-sapp-blue">AI-driven</span> complex corporate <span className="text-sapp-blue">security</span> systems and <span className="text-sapp-blue">technology</span>
               </h1>
               <p 
                 className={cn(
@@ -60,7 +59,7 @@ const Installations = () => {
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                We install surveillance, access control, and privacy systems that are easy to maintain, discreet in operation, and designed to meet real-world usage — from high-traffic areas to high-risk rooms.
+                From cloud to cable deployments, making security an integral part of your system installations in physical and network security, speech privacy and counter surveillance
               </p>
               
               <div 
@@ -90,16 +89,16 @@ const Installations = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Expert Installation Services</h3>
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why Choose Our Solutions</h3>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="order-2 md:order-1">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
-                  Specialist installations for complex security needs
+                  Next Generation AI Security Integration
                 </h2>
                 <p className="text-sapp-gray mb-6">
-                  We provide end-to-end installation services for a wide range of security technologies. Our experienced team ensures that your security systems are properly installed, configured, and integrated with your existing infrastructure.
+                  There is a notable shift towards AI-driven security systems with strengthened defence and improved user experience. Organisations are increasingly replacing their legacy access control, CCTV and other systems with data-driven scalable security systems to automate across various interfaces and improve their security posture whilst optimising costs and reduce manual work. New security systems provide a perfect interface for bringing together the physical and cyber security expertise in organisations.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                   <div className="bg-slate-50 p-4 rounded-lg">
