@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import ServiceCard from '@/components/ui/ServiceCard';
+import ServicesOverlay from '@/components/ui/ServicesOverlay';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
@@ -22,6 +23,7 @@ const EventSecurity = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   const [openDialog, setOpenDialog] = useState<string | null>(null);
   const [dialogStep, setDialogStep] = useState<'form' | 'preview'>('form');
@@ -138,6 +140,15 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                 Helping you to make security an integral part of your corporate event planning
               </p>
               
+              <p 
+                className={cn(
+                  "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-500 delay-300",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}
+              >
+                Cut through complexity. Find your security solution in 60 seconds.
+              </p>
+              
               <div 
                 className={cn(
                   "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
@@ -147,28 +158,21 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                 <Button 
                   size="lg" 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+                  onClick={() => setServicesOpen(true)}
                 >
                   <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                    Explore Services
+                    Rapid Service Navigator
                   </span>
                   <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-                  asChild
-                >
-                  <Link to="/#contact">
-                    <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
-                      Contact Us
-                    </span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                  </Link>
                 </Button>
               </div>
             </div>
           </div>
+          
+          <ServicesOverlay 
+            open={servicesOpen}
+            onOpenChange={setServicesOpen}
+          />
         </section>
 
         <section className="py-16 bg-white">
