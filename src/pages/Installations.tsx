@@ -21,6 +21,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction
 } from '@/components/ui/alert-dialog';
+import QuoteSection from '@/components/installations/QuoteSection';
 
 const Installations = () => {
   const { t } = useLanguage();
@@ -64,10 +65,11 @@ const Installations = () => {
               
               <div 
                 className={cn(
-                  "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
+                  "flex flex-col space-y-2 items-center justify-center transition-all duration-500 delay-300",
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
+                <p className="text-sapp-blue font-semibold text-lg mb-2">Cut through complexity</p>
                 <Button 
                   size="lg" 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
@@ -86,6 +88,11 @@ const Installations = () => {
         {/* Main Content - Updated to match Cyber Security layout */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Expert Installation Services</h3>
+              </div>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="order-2 md:order-1">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
@@ -173,9 +180,17 @@ const Installations = () => {
           </div>
         </section>
 
+        {/* Industry Leader Opinion Section */}
+        <QuoteSection />
+
         {/* Installation Capabilities Section */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-6">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Installation Expertise</h3>
+              </div>
+            </div>
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-sapp-dark mb-3">Our Installation Capabilities</h2>
               <p className="text-sapp-gray">Expert installation services designed for complex and demanding environments</p>
@@ -267,6 +282,11 @@ const Installations = () => {
         {/* CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
+            <div className="text-center mb-8">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Get Started</h3>
+              </div>
+            </div>
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to upgrade your security infrastructure?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
               Our team of installation experts is ready to help you implement the latest security technologies for your organisation.
