@@ -1,3 +1,4 @@
+
 import { MonitorCheck, Wifi, Users, FileText, ArrowRight, Lock, Database } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -8,6 +9,18 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ServiceCard from '@/components/ui/ServiceCard';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction
+} from '@/components/ui/alert-dialog';
 
 const Installations = () => {
   const { t } = useLanguage();
