@@ -35,13 +35,13 @@ const QuoteSection = () => {
             >
               <blockquote className="mb-6">
                 <p className="text-xl md:text-2xl font-display italic text-sapp-dark leading-relaxed">
-                  "The Internet of Things is about a lot more than just wearables and smartphones. There are things happening with respect to connected devices that could be utilized for more insidious purposes."
+                  "Security is always seen as too much until the day its not enough"
                 </p>
               </blockquote>
               <footer className="flex items-center">
                 <div>
-                  <p className="font-semibold text-sapp-dark">Christopher Wray</p>
-                  <p className="text-sm text-sapp-gray">FBI Director</p>
+                  <p className="font-semibold text-sapp-dark">William H. Webster</p>
+                  <p className="text-sm text-sapp-gray">Former FBI Director</p>
                 </div>
               </footer>
             </Animated>
