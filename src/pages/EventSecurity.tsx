@@ -1,3 +1,4 @@
+
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -180,6 +181,12 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
         {/* Why Event Security Matters */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Corporate Event Security</h3>
+              </div>
+            </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="order-2 md:order-1">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
@@ -229,6 +236,12 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
         {/* How We Secure Your Events */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Security Process</h3>
+              </div>
+            </div>
+            
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
                 How We Secure Your Events
@@ -303,15 +316,21 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Executive Events */}
+        {/* Our Event Security Services */}
         <section className="py-16 bg-slate-50" id="executive-events">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Security Solutions</h3>
+              </div>
+            </div>
+            
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
-                How We Secure Executive Events
+                Event Security Services We Offer
               </h2>
               <p className="text-sapp-gray">
-                Comprehensive protection of sensitive corporate meetings
+                Our comprehensive suite of event security services provides tailored protection for your confidential corporate meetings and executive gatherings
               </p>
             </div>
 
@@ -335,6 +354,12 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
         {/* CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
+            <div className="text-center mb-8">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Get Started</h3>
+              </div>
+            </div>
+            
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
               Our team of event security experts is ready to create a tailored security plan for your upcoming corporate events.
