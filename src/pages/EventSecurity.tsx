@@ -1,4 +1,3 @@
-
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -230,9 +229,6 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        {/* Quote Section */}
-        <QuoteSection />
-
         {/* How We Secure Your Events */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
@@ -350,6 +346,9 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
             </div>
           </div>
         </section>
+
+        {/* Quote Section */}
+        <QuoteSection />
 
         {/* CTA Section */}
         <section className="py-16 bg-white">
