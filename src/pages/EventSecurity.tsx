@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -178,7 +178,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           />
         </section>
 
-        {/* Why Event Security Matters */}
+        {/* Corporate Event Security */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-8">
@@ -220,11 +220,11 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
               </div>
               <div className="relative order-1 md:order-2">
                 <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                <img 
-                  src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
-                  alt="Event Security Services" 
-                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
-                />
+                <div 
+                  className="relative z-10 rounded-xl shadow-2xl w-full h-[400px] bg-gradient-to-br from-sapp-blue/20 to-sapp-blue/10 flex items-center justify-center"
+                >
+                  <span className="text-sapp-gray/50 text-xl font-display">Image Placeholder</span>
+                </div>
               </div>
             </div>
           </div>
