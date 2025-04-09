@@ -18,6 +18,20 @@ const Index = () => {
   useEffect(() => {
     // Scroll to top when navigating to this page
     window.scrollTo(0, 0);
+    
+    // Handle hash navigation if present
+    if (location.hash) {
+      setTimeout(() => {
+        const id = location.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }, 100);
+    }
   }, [location]);
   
   useEffect(() => {

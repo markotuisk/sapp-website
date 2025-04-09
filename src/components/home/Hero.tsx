@@ -3,9 +3,12 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import TranslatedText from '@/components/ui/TranslatedText';
+import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -43,6 +46,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              onClick={() => setServicesOpen(true)}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
                 <TranslatedText textKey="exploreServices" />
@@ -53,15 +57,23 @@ const Hero = () => {
               variant="outline" 
               size="lg" 
               className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              asChild
             >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
-                <TranslatedText textKey="contactUs" />
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              <Link to="/#contact">
+                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                  <TranslatedText textKey="contactUs" />
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              </Link>
             </Button>
           </div>
         </div>
       </div>
+
+      <ServicesOverlay 
+        open={servicesOpen}
+        onOpenChange={setServicesOpen}
+      />
     </section>
   );
 };
