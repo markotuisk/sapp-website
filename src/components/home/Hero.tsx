@@ -23,7 +23,7 @@ const Hero = () => {
             )}
           >
             Your <span className="text-[#8B5CF6]">competent technical</span> <br />
-            security and <span className="text-[#0FA0CE]">privacy partner</span>.
+            security and <span className="text-[#0FA0CE]">privacy partner</span>
           </h1>
           
           <p 
