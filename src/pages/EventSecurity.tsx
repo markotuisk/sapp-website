@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import ServiceCard from '@/components/ui/ServiceCard';
 import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import QuoteSection from '@/components/event-security/QuoteSection';
 
 const EventSecurity = () => {
   const { t } = useLanguage();
@@ -117,6 +118,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
     <div className="min-h-screen">
       <Navbar />
       <main>
+        {/* Hero Section */}
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col items-center justify-center text-center">
@@ -175,6 +177,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           />
         </section>
 
+        {/* Why Event Security Matters */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -220,48 +223,10 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
-        <section className="py-16 bg-slate-50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 animate-[fade-in_0.6s_ease-out]">
-                  <div className="relative">
-                    <div className="absolute -top-6 -left-6 text-gray-200 opacity-30">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M12 12a1 1 0 0 0 1-1V8.558c0-1.156-.616-1.867-1.823-2.470V5c0-1.105-.87-2-1.948-2H4.292c-1.077 0-1.948.895-1.948 2v6a1 1 0 0 0 1 1h1.5v3l2.948-3H12Z"/>
-                      </svg>
-                    </div>
-                    <blockquote className="text-xl font-display font-medium text-sapp-dark italic">
-                      "Security is always seen as too much until the day it's not enough."
-                    </blockquote>
-                    <div className="mt-4">
-                      <div className="text-sapp-blue font-semibold">William H. Webster</div>
-                      <div className="text-sapp-gray text-sm">Former FBI Director</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 animate-[fade-in_0.6s_ease-out_0.2s]">
-                  <div className="relative">
-                    <div className="absolute -top-6 -left-6 text-gray-200 opacity-30">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M12 12a1 1 0 0 0 1-1V8.558c0-1.156-.616-1.867-1.823-2.470V5c0-1.105-.87-2-1.948-2H4.292c-1.077 0-1.948.895-1.948 2v6a1 1 0 0 0 1 1h1.5v3l2.948-3H12Z"/>
-                      </svg>
-                    </div>
-                    <blockquote className="text-xl font-display font-medium text-sapp-dark italic">
-                      "It takes 20 years to build a reputation and a few minutes to ruin it."
-                    </blockquote>
-                    <div className="mt-4">
-                      <div className="text-sapp-blue font-semibold">Stephane Nappo</div>
-                      <div className="text-sapp-gray text-sm">Global Chief Information Security Officer</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Quote Section */}
+        <QuoteSection />
 
+        {/* How We Secure Your Events */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -338,6 +303,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
+        {/* Executive Events */}
         <section className="py-16 bg-slate-50" id="executive-events">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-12">
@@ -366,6 +332,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
+        {/* CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
@@ -383,6 +350,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
           </div>
         </section>
 
+        {/* Dialog */}
         <Dialog open={!!openDialog} onOpenChange={(open) => {
           if (!open) {
             setOpenDialog(null);
