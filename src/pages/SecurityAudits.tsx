@@ -23,10 +23,10 @@ const SecurityAudits = () => {
         {/* Hero Section */}
         <HeroSection />
 
-        {/* Independent Audits Matter */}
+        {/* Why Independent Audits Matter */}
         <WhyIndependentAudits />
 
-        {/* Quote Section - slightly reduced spacing */}
+        {/* Quote Section */}
         <QuoteSection />
 
         {/* Main Content - Comprehensive Services */}
@@ -35,7 +35,7 @@ const SecurityAudits = () => {
         {/* Security Audit Services Cards */}
         <ServiceCardsSection />
 
-        {/* Image Banner Section - adjusted spacing */}
+        {/* Image Banner Section */}
         <ImageBannerSection />
 
         {/* CTA Section */}
