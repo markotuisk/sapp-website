@@ -76,11 +76,10 @@ const WhyIndependentAudits = () => {
               </div>
             </div>
             <div className="relative h-full flex items-center justify-center">
-              <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl"></div>
               <img 
-                src="/lovable-uploads/2715aec1-4acb-498f-b139-9d7c81623255.png"
+                src="/lovable-uploads/c0b95e73-0761-417c-804e-16fe31ea0957.png"
                 alt="Security Compliance Diagram" 
-                className="relative z-10 rounded-xl w-full h-auto object-contain"
+                className="w-full h-full object-cover rounded-xl"
               />
             </div>
           </div>
