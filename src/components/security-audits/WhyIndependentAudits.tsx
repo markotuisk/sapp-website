@@ -12,19 +12,13 @@ const WhyIndependentAudits = () => {
   });
 
   return (
-    <section className="py-16 bg-white" ref={ref}>
+    <section className="py-20 bg-white" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="flex flex-col items-center mb-8">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4 text-center">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why Independent Audits Matter</h3>
-          </div>
-        </div>
-        
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-                Why Independent Audits Matter
+                Independent Audits Matter
               </h2>
               
               <div className="space-y-4 text-sapp-gray">
@@ -77,11 +71,14 @@ const WhyIndependentAudits = () => {
             </div>
             <div className="relative h-full flex items-center justify-center">
               <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl"></div>
-              <img 
-                src="/lovable-uploads/photo-1498050108023-c5249f4df085.png"
-                alt="Security Audit Process" 
-                className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
-              />
+              <div className="relative z-10 w-full h-auto overflow-hidden rounded-xl shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl group">
+                <img 
+                  src="/lovable-uploads/8651010d-f633-42b3-a6d6-523efa59fa6f.png"
+                  alt="Security Compliance" 
+                  className="w-full h-auto object-cover rounded-xl transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
             </div>
           </div>
         </div>
