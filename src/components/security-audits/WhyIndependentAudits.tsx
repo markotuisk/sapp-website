@@ -73,9 +73,9 @@ const WhyIndependentAudits = () => {
               <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl"></div>
               <div className="relative z-10 w-full h-auto overflow-hidden rounded-xl transform transition-all duration-300 hover:scale-105 group">
                 <img 
-                  src="/lovable-uploads/8651010d-f633-42b3-a6d6-523efa59fa6f.png"
+                  src="/lovable-uploads/bb450139-a135-45d1-b786-553e3aa2d124.png"
                   alt="Security Compliance" 
-                  className="w-full h-auto object-cover rounded-xl transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-auto object-contain rounded-xl transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>

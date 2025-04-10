@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
 
 interface ServicesOverlayProps {
   open: boolean;
@@ -23,8 +22,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
               className="h-auto p-2 text-sm font-medium hover:bg-gray-100"
               onClick={() => onOpenChange(false)}
             >
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
+              CLOSE
             </Button>
           </div>
           
