@@ -24,8 +24,8 @@ const HeroSection = () => {
             )}
             ref={ref}
           >
-            Certified <span className="text-sapp-blue">targeted</span> and <span className="text-sapp-blue">comprehensive</span><br /> 
-            physical security <span className="text-sapp-blue">audits</span>
+            <span className="text-sapp-blue">Certified</span> targeted and comprehensive<br /> 
+            physical <span className="text-sapp-blue">security audits</span>
           </h1>
           <p 
             className={cn(
@@ -36,14 +36,14 @@ const HeroSection = () => {
             Helping you to comply with international best practises and improve your information security resilience
           </p>
           
-          {/* New section for busy professionals */}
+          {/* New section for busy professionals - shortened as requested */}
           <p 
             className={cn(
               "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-500 delay-300",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Cut through complexity. Find your security solution in 60 seconds.
+            Cut through complexity
           </p>
           
           <div 

@@ -119,7 +119,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
           <div className="p-4 border-b">
             <Command className="rounded-lg border shadow-sm">
               <CommandInput 
-                placeholder="Search services..." 
+                placeholder="SAPP AI | Search Services, Media and Resources - feature under testing ..." 
                 value={searchQuery}
                 onValueChange={setSearchQuery}
                 className="h-11"
