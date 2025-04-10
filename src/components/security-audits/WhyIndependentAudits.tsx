@@ -16,7 +16,7 @@ const WhyIndependentAudits = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4 text-center">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why Independent Audits Matter</h3>
+            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Independent Audits Matter</h3>
           </div>
         </div>
         
@@ -24,7 +24,7 @@ const WhyIndependentAudits = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-                Why Independent Audits Matter
+                Independent Audits Matter
               </h2>
               
               <div className="space-y-4 text-sapp-gray">
@@ -78,9 +78,9 @@ const WhyIndependentAudits = () => {
             <div className="relative h-full flex items-center justify-center">
               <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl"></div>
               <img 
-                src="/lovable-uploads/photo-1498050108023-c5249f4df085.png"
-                alt="Security Audit Process" 
-                className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                src="/lovable-uploads/2715aec1-4acb-498f-b139-9d7c81623255.png"
+                alt="Security Compliance Diagram" 
+                className="relative z-10 rounded-xl w-full h-auto object-contain"
               />
             </div>
           </div>
