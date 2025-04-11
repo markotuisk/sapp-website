@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -22,7 +21,9 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Your <span className="text-[#20798C]">trusted</span> <span className="text-inherit">technical</span> <span className="text-[#20798C]">security</span> and <span className="text-inherit">privacy</span> <span className="text-[#20798C]">partner</span>
+            Your <span className="text-[#20798C]">trusted</span> technical <span className="text-[#20798C]">security</span>
+            <br />
+            and <span className="text-inherit">privacy</span> <span className="text-[#20798C]">partner</span>
           </h1>
           
           <p 
@@ -31,7 +32,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Helping corporate clients with technical <span className="text-[#20798C]">security</span> services to seamlessly align compliance, physical and cyber security
+            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security
           </p>
           
           <p 
