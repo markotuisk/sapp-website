@@ -27,7 +27,7 @@ const AboutSAPP = () => {
         <div className="text-center mb-12">
           <Animated animation="fade-up" delay={0}>
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why Us</h3>
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Founders on a Mission</h3>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">About SAPP Security Team</h2>
             <div className="w-16 h-1 bg-sapp-blue mx-auto rounded-full"></div>
@@ -79,7 +79,7 @@ const AboutSAPP = () => {
                 >
                   <Link to="/about" className="inline-flex items-center justify-center gap-2">
                     <span className="relative z-10 transition-all duration-300 group-hover:translate-x-1">
-                      Read More About Us
+                      More About The Team
                     </span>
                   </Link>
                 </Button>
@@ -93,4 +93,3 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
-

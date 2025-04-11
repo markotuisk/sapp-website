@@ -95,7 +95,7 @@ const Services = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            <TranslatedText textKey="services" />
+            Our Competence
           </span>
           <h2 
             className={cn(

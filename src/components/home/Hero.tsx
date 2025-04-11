@@ -23,7 +23,7 @@ const Hero = () => {
             )}
           >
             Your <span className="text-[#8B5CF6]">competent technical</span> <br />
-            security and <span className="text-[#0FA0CE]">privacy partner</span>
+            <span className="text-[#20798C]">security</span> and <span className="text-[#20798C]">partner</span>
           </h1>
           
           <p 
@@ -32,7 +32,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security
+            Helping corporate clients with technical <span className="text-[#20798C]">security</span> services to seamlessly align compliance, physical and cyber security
           </p>
           
           <p 
@@ -41,8 +41,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Cut through complexity with our Rapid Navigator below,<br />
-            Find your security solution in 60 seconds.
+            Cut through complexity
           </p>
           
           <div 
