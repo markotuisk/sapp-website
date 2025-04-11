@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -23,7 +22,7 @@ const Hero = () => {
             )}
           >
             Your <span className="text-[#8B5CF6]">competent technical</span> <br />
-            <span className="text-[#20798C]">security</span> and <span className="text-[#20798C]">partner</span>
+            <span className="text-[#20798C]">trusted</span> <span className="text-[#20798C]">security</span> and <span className="text-[#20798C]">partner</span>
           </h1>
           
           <p 

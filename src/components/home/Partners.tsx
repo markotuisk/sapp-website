@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -46,9 +45,6 @@ const Partners = () => {
 
   return (
     <section id="partners" className="py-24 bg-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute w-96 h-96 rounded-full bg-sapp-blue/5 -bottom-48 -right-48 blur-3xl"></div>
-      
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <span 
@@ -58,7 +54,7 @@ const Partners = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            <TranslatedText textKey="partners" />
+            Partners We Trust
           </span>
           <h2 
             className={cn(
