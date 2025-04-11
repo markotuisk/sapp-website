@@ -21,7 +21,7 @@ const Hero = () => {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             )}
           >
-            Your <span className="text-inherit">trusted</span> <span className="text-[#20798C]">technical</span> <br />
+            Your <span className="text-[#20798C]">trusted</span> <span className="text-inherit">technical</span> <br />
             <span className="text-[#20798C]">security</span> and <span className="text-[#20798C]">partner</span>
           </h1>
           
