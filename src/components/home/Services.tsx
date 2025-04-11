@@ -103,7 +103,7 @@ const Services = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            We secure <span className="text-sapp-blue">what's digital, what's physical, and everything in between</span>
+            We <span className="text-[#20798C]">secure</span> what's <span className="text-[#20798C]">digital</span>, what's <span className="text-[#20798C]">physical</span>, and everything <span className="text-[#20798C]">in between</span>
           </h2>
           <p 
             className={cn(
