@@ -29,7 +29,9 @@ const AboutSAPP = () => {
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
               <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Founders on a Mission</h3>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">About The Founders and Team</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">
+              About Founders and <span className="text-[#20798C]">The Team</span>
+            </h2>
             <div className="w-16 h-1 bg-sapp-blue mx-auto rounded-full"></div>
           </Animated>
         </div>
