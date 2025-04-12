@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 
 // Interface for auth log entries
@@ -7,7 +6,7 @@ export interface AuthLogEntry {
   email: string;
   action: 'sign_in_attempt' | 'otp_verification' | 'sign_in_success' | 'sign_out' | 'account_locked' | 'password_reset';
   success: boolean;
-  ip_address: string | null;
+  ip_address?: string | null;
   user_agent: string;
   error_message?: string;
   geolocation?: string;
@@ -68,80 +67,11 @@ const extractBrowserAndOS = (userAgent: string): { browser: string; os: string }
  * This is a mock implementation - in production, you would use a real geolocation API
  */
 const getGeolocation = async (ip: string | null): Promise<{ country: string; city: string; geolocation: string } | null> => {
-  if (!ip || ip === 'localhost' || ip.startsWith('127.0.0.') || ip.startsWith('::1')) {
-    return { country: 'Unknown', city: 'Unknown', geolocation: 'Unknown' };
-  }
-  
-  // In a real implementation, you would call a geolocation API here
-  // For example: const response = await fetch(`https://ipapi.co/${ip}/json/`);
-  
-  // Returning randomized mock data for better testing
-  const countries = [
-    { country: 'United Kingdom', city: 'London' },
-    { country: 'United States', city: 'New York' },
-    { country: 'Germany', city: 'Berlin' },
-    { country: 'France', city: 'Paris' },
-    { country: 'Japan', city: 'Tokyo' },
-    { country: 'Australia', city: 'Sydney' }
-  ];
-  
-  const selected = countries[Math.floor(Math.random() * countries.length)];
-  return {
-    country: selected.country,
-    city: selected.city,
-    geolocation: `${selected.country}, ${selected.city}`
+  return { 
+    country: 'Unknown', 
+    city: 'Unknown', 
+    geolocation: 'Unknown' 
   };
-};
-
-/**
- * Get client IP address
- * In a real implementation, this would extract from request headers
- */
-const getClientIP = (): string | null => {
-  // In a browser environment, we can't reliably get the client IP
-  // This would typically be handled by your backend
-  
-  // For testing purposes, generate a random mock IP
-  const generateRandomIP = () => {
-    return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
-  };
-  
-  // Return random IP for testing
-  return generateRandomIP();
-};
-
-/**
- * Get network connection information if available
- */
-const getConnectionInfo = (): { type: string, effectiveType?: string } => {
-  // @ts-ignore - navigator.connection is not in standard TypeScript definitions
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  
-  if (connection) {
-    return {
-      type: connection.type || 'unknown',
-      effectiveType: connection.effectiveType || 'unknown'
-    };
-  }
-  
-  return { type: 'unknown' };
-};
-
-/**
- * Get battery level if available
- */
-const getBatteryLevel = async (): Promise<number | undefined> => {
-  try {
-    // @ts-ignore - getBattery is not in standard TypeScript definitions
-    if (navigator.getBattery) {
-      // @ts-ignore
-      const battery = await navigator.getBattery();
-      return Math.round(battery.level * 100);
-    }
-  } catch (e) {
-    console.error('Error getting battery info:', e);
-  }
-  return undefined;
 };
 
 /**
@@ -159,14 +89,11 @@ export const logAuthEvent = async (logEntry: AuthLogEntry): Promise<{ error: any
       return { error: null }; // Don't treat being offline as an error
     }
     
-    // Get client IP if not provided
-    const ip = logEntry.ip_address || getClientIP();
-    
     // Extract browser and OS information
     const { browser, os } = extractBrowserAndOS(logEntry.user_agent);
     
     // Get geolocation data if IP is available
-    const geoData = await getGeolocation(ip);
+    const geoData = await getGeolocation(null);
     
     // Get connection information
     const connectionInfo = getConnectionInfo();
@@ -187,7 +114,6 @@ export const logAuthEvent = async (logEntry: AuthLogEntry): Promise<{ error: any
     // Add additional metadata
     const enhancedLogEntry = {
       ...logEntry,
-      ip_address: ip,
       device_fingerprint: logEntry.device_fingerprint || generateDeviceFingerprint(),
       timestamp: logEntry.timestamp || new Date().toISOString(),
       browser: browser,
@@ -439,4 +365,37 @@ const syncPendingLogs = async (): Promise<void> => {
   } catch (e) {
     console.error('Error syncing pending auth logs:', e);
   }
+};
+/**
+ * Get network connection information if available
+ */
+const getConnectionInfo = (): { type: string, effectiveType?: string } => {
+  // @ts-ignore - navigator.connection is not in standard TypeScript definitions
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  
+  if (connection) {
+    return {
+      type: connection.type || 'unknown',
+      effectiveType: connection.effectiveType || 'unknown'
+    };
+  }
+  
+  return { type: 'unknown' };
+};
+
+/**
+ * Get battery level if available
+ */
+const getBatteryLevel = async (): Promise<number | undefined> => {
+  try {
+    // @ts-ignore - getBattery is not in standard TypeScript definitions
+    if (navigator.getBattery) {
+      // @ts-ignore
+      const battery = await navigator.getBattery();
+      return Math.round(battery.level * 100);
+    }
+  } catch (e) {
+    console.error('Error getting battery info:', e);
+  }
+  return undefined;
 };
