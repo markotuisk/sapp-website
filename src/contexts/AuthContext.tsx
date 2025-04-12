@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Debug: Log that we're initializing Supabase auth
     console.log('Initializing Supabase authentication...');
     
     // Check for active session on component mount
