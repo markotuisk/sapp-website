@@ -60,34 +60,40 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log('Initializing Supabase authentication...');
     
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Session check complete:', session ? 'User logged in' : 'No active session');
-      setSession(session);
-      setUser(session?.user ?? null);
+    // First set up auth state change listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, newSession) => {
+        console.log('Auth state changed:', event, newSession ? 'Session exists' : 'No session');
+        setSession(newSession);
+        setUser(newSession?.user ?? null);
+        setIsLoading(false);
+        
+        if (event === 'SIGNED_IN') {
+          // Don't make direct Supabase calls in the auth state change callback
+          // Use setTimeout to move it to the next event loop cycle
+          setTimeout(() => {
+            logAuthEvent({
+              email: newSession?.user?.email || 'unknown',
+              action: 'sign_in_success',
+              success: true,
+              user_agent: navigator.userAgent,
+              timestamp: new Date().toISOString(),
+            });
+          }, 0);
+        }
+      }
+    );
+
+    // Then check for existing session
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      console.log('Session check complete:', currentSession ? 'User logged in' : 'No active session');
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
       setIsLoading(false);
     }).catch(error => {
       console.error('Error getting session:', error);
       setIsLoading(false);
     });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log('Auth state changed:', event, session ? 'Session exists' : 'No session');
-        setSession(session);
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-        
-        if (event === 'SIGNED_IN') {
-          logAuthEvent({
-            email: session?.user?.email || 'unknown',
-            action: 'sign_in_success',
-            success: true,
-            user_agent: navigator.userAgent,
-            timestamp: new Date().toISOString(),
-          });
-        }
-      }
-    );
 
     return () => {
       subscription.unsubscribe();
@@ -131,21 +137,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return { error: new Error("Account temporarily locked due to too many failed attempts") };
       }
       
+      // Log the attempt immediately
       await logAuthEvent({
         email,
         action: 'sign_in_attempt',
-        success: false,
+        success: false, // Will update to true if successful
         user_agent: navigator.userAgent,
         failed_attempts_count: count,
         timestamp: new Date().toISOString(),
       });
       
       try {
+        // Make sure to include the current site URL for the redirect
+        const siteUrl = window.location.origin;
+        console.log('Using site URL for redirect:', siteUrl);
+        
         const { error } = await supabase.auth.signInWithOtp({
           email,
           options: {
             shouldCreateUser: true,
-            emailRedirectTo: window.location.origin + '/client-area',
+            emailRedirectTo: `${siteUrl}/client-area`,
           }
         });
         
@@ -227,12 +238,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return { error: new Error("Cannot verify OTP while offline") };
       }
 
-      console.log('Attempting to verify OTP for email:', email);
+      console.log('Attempting to verify OTP for email:', email, 'token length:', token.length);
       
+      // Log the verification attempt
       await logAuthEvent({
         email,
         action: 'otp_verification',
-        success: false,
+        success: false, // Will update to true if successful
         user_agent: navigator.userAgent,
         timestamp: new Date().toISOString(),
       });
@@ -266,13 +278,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         console.log('OTP verification successful');
         
-        await logAuthEvent({
-          email,
-          action: 'otp_verification',
-          success: true,
-          user_agent: navigator.userAgent,
-          timestamp: new Date().toISOString(),
-        });
+        // Using setTimeout to avoid calling Supabase in the auth state change
+        setTimeout(async () => {
+          await logAuthEvent({
+            email,
+            action: 'otp_verification',
+            success: true,
+            user_agent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+          });
+        }, 0);
         
         toast({
           title: "Success!",

@@ -1,6 +1,6 @@
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,12 +16,43 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 const ClientArea = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, signIn, verifyOTP, signOut, isOnline } = useAuth();
   const [loginEmail, setLoginEmail] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showOTPDialog, setShowOTPDialog] = useState(false);
   const [otpValue, setOtpValue] = useState('');
+  
+  // Check for OTP in URL (for handling the magic link)
+  useEffect(() => {
+    const handleOtpFromURL = async () => {
+      const url = new URL(window.location.href);
+      const token = url.searchParams.get('token');
+      const email = url.searchParams.get('email');
+      
+      if (token && email) {
+        console.log('Found OTP token in URL, attempting verification');
+        
+        setIsSubmitting(true);
+        
+        const { error } = await verifyOTP(email, token);
+        
+        if (error) {
+          console.error('Error verifying OTP from URL:', error);
+          toast.error("Could not verify your login. Please try signing in again.");
+        } else {
+          toast.success("Successfully signed in!");
+          // Clean URL parameters after verification
+          navigate(location.pathname, { replace: true });
+        }
+        
+        setIsSubmitting(false);
+      }
+    };
+    
+    handleOtpFromURL();
+  }, [location, navigate, verifyOTP]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();

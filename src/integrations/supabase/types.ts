@@ -12,8 +12,10 @@ export type Database = {
       auth_logs: {
         Row: {
           action: string
+          battery_level: number | null
           browser: string | null
           city: string | null
+          connection_type: string | null
           country: string | null
           device_fingerprint: string | null
           email: string
@@ -22,16 +24,22 @@ export type Database = {
           geolocation: string | null
           id: number
           ip_address: string | null
+          is_mobile: boolean | null
+          language: string | null
           os: string | null
+          screen_resolution: string | null
           session_id: string | null
           success: boolean
           timestamp: string
+          timezone: string | null
           user_agent: string | null
         }
         Insert: {
           action: string
+          battery_level?: number | null
           browser?: string | null
           city?: string | null
+          connection_type?: string | null
           country?: string | null
           device_fingerprint?: string | null
           email: string
@@ -40,16 +48,22 @@ export type Database = {
           geolocation?: string | null
           id?: number
           ip_address?: string | null
+          is_mobile?: boolean | null
+          language?: string | null
           os?: string | null
+          screen_resolution?: string | null
           session_id?: string | null
           success?: boolean
           timestamp?: string
+          timezone?: string | null
           user_agent?: string | null
         }
         Update: {
           action?: string
+          battery_level?: number | null
           browser?: string | null
           city?: string | null
+          connection_type?: string | null
           country?: string | null
           device_fingerprint?: string | null
           email?: string
@@ -58,10 +72,14 @@ export type Database = {
           geolocation?: string | null
           id?: number
           ip_address?: string | null
+          is_mobile?: boolean | null
+          language?: string | null
           os?: string | null
+          screen_resolution?: string | null
           session_id?: string | null
           success?: boolean
           timestamp?: string
+          timezone?: string | null
           user_agent?: string | null
         }
         Relationships: []
