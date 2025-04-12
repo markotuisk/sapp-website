@@ -22,16 +22,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Debug: Log that we're initializing Supabase auth
+    console.log('Initializing Supabase authentication...');
+    
     // Check for active session on component mount
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Session check complete:', session ? 'User logged in' : 'No active session');
       setSession(session);
       setUser(session?.user ?? null);
+      setIsLoading(false);
+    }).catch(error => {
+      console.error('Error getting session:', error);
       setIsLoading(false);
     });
 
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      (event, session) => {
+        console.log('Auth state changed:', event, session ? 'Session exists' : 'No session');
         setSession(session);
         setUser(session?.user ?? null);
         setIsLoading(false);
@@ -45,6 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (email: string) => {
     try {
+      console.log('Attempting to sign in with email:', email);
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
@@ -54,6 +63,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
       
       if (error) {
+        console.error('Sign in error:', error);
         toast({
           title: "Authentication error",
           description: error.message,
@@ -62,6 +72,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return { error };
       }
       
+      console.log('OTP email sent successfully');
       toast({
         title: "Verification email sent",
         description: "Please check your email for the login code.",
@@ -69,6 +80,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       return { error: null };
     } catch (error: any) {
+      console.error('Unexpected sign in error:', error);
       toast({
         title: "Authentication error",
         description: error.message,
@@ -80,6 +92,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const verifyOTP = async (email: string, token: string) => {
     try {
+      console.log('Attempting to verify OTP for email:', email);
       const { error } = await supabase.auth.verifyOtp({
         email,
         token,
@@ -87,6 +100,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (error) {
+        console.error('OTP verification error:', error);
         toast({
           title: "Verification error",
           description: error.message,
@@ -95,6 +109,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return { error };
       }
       
+      console.log('OTP verification successful');
       toast({
         title: "Success!",
         description: "You've been successfully authenticated.",
@@ -102,6 +117,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       return { error: null };
     } catch (error: any) {
+      console.error('Unexpected OTP verification error:', error);
       toast({
         title: "Verification error",
         description: error.message,
@@ -112,6 +128,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
+    console.log('Signing out user');
     await supabase.auth.signOut();
     toast({
       title: "Signed out",

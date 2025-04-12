@@ -26,46 +26,58 @@ import SpeechPrivacy from "./pages/installations/SpeechPrivacy";
 import CounterSurveillance from "./pages/installations/CounterSurveillance";
 import NetworkInfrastructure from "./pages/installations/NetworkInfrastructure";
 
-const queryClient = new QueryClient();
+// Create a new React Query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <LanguageProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/client-area" element={<ClientArea />} />
-              <Route path="/event-security" element={<EventSecurity />} />
-              <Route path="/security-audits" element={<SecurityAudits />} />
-              <Route path="/installations" element={<Installations />} />
-              <Route path="/cyber-security" element={<CyberSecurity />} />
-              <Route path="/about" element={<About />} />
-              
-              {/* Service Detail Pages */}
-              <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
-              <Route path="/services/event-monitoring" element={<EventMonitoring />} />
-              <Route path="/services/secure-technology" element={<SecureTechnology />} />
-              <Route path="/services/close-protection" element={<CloseProtection />} />
-              
-              {/* Installation Subpages */}
-              <Route path="/installations/cctv-access" element={<CCTVAccess />} />
-              <Route path="/installations/speech-privacy" element={<SpeechPrivacy />} />
-              <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
-              <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <CookieConsent />
-          </BrowserRouter>
-        </AuthProvider>
-      </LanguageProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  console.log('App initializing with Supabase configuration');
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/client-area" element={<ClientArea />} />
+                <Route path="/event-security" element={<EventSecurity />} />
+                <Route path="/security-audits" element={<SecurityAudits />} />
+                <Route path="/installations" element={<Installations />} />
+                <Route path="/cyber-security" element={<CyberSecurity />} />
+                <Route path="/about" element={<About />} />
+                
+                {/* Service Detail Pages */}
+                <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
+                <Route path="/services/event-monitoring" element={<EventMonitoring />} />
+                <Route path="/services/secure-technology" element={<SecureTechnology />} />
+                <Route path="/services/close-protection" element={<CloseProtection />} />
+                
+                {/* Installation Subpages */}
+                <Route path="/installations/cctv-access" element={<CCTVAccess />} />
+                <Route path="/installations/speech-privacy" element={<SpeechPrivacy />} />
+                <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
+                <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <CookieConsent />
+            </BrowserRouter>
+          </AuthProvider>
+        </LanguageProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
