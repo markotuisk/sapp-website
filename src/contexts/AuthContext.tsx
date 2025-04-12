@@ -1,7 +1,6 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { logAuthEvent, checkFailedLoginAttempts, AuthLogEntry, initAuthLoggingSync } from '@/lib/auth-logging';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
@@ -26,7 +25,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const { toast } = useToast();
 
-  // Monitor online/offline status
   useEffect(() => {
     const handleOnline = () => {
       console.log('App is online');
@@ -50,7 +48,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    // Initialize auth logging sync system
     initAuthLoggingSync();
 
     return () => {
@@ -62,7 +59,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log('Initializing Supabase authentication...');
     
-    // Check for active session on component mount
     supabase.auth.getSession().then(({ data: { session } }) => {
       console.log('Session check complete:', session ? 'User logged in' : 'No active session');
       setSession(session);
@@ -73,7 +69,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     });
 
-    // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         console.log('Auth state changed:', event, session ? 'Session exists' : 'No session');
@@ -81,13 +76,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(session?.user ?? null);
         setIsLoading(false);
         
-        // Log successful authentication events
         if (event === 'SIGNED_IN') {
           logAuthEvent({
             email: session?.user?.email || 'unknown',
             action: 'sign_in_success',
             success: true,
-            ip_address: null, // Will be captured on server side
+            ip_address: null,
             user_agent: navigator.userAgent,
             timestamp: new Date().toISOString(),
           });
@@ -102,7 +96,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (email: string) => {
     try {
-      // Check if offline first
       if (!navigator.onLine) {
         console.error('Cannot sign in while offline');
         toast({
@@ -115,13 +108,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       console.log('Attempting to sign in with email:', email);
       
-      // Check for too many failed login attempts
       const { shouldLock, count } = await checkFailedLoginAttempts(email);
       
       if (shouldLock) {
         console.warn(`Account lockout triggered for ${email} after ${count} failed attempts`);
         
-        // Log the lockout event
         await logAuthEvent({
           email,
           action: 'account_locked',
@@ -141,11 +132,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return { error: new Error("Account temporarily locked due to too many failed attempts") };
       }
       
-      // Log the sign-in attempt
       await logAuthEvent({
         email,
         action: 'sign_in_attempt',
-        success: false, // Will update to true if successful
+        success: false,
         ip_address: null,
         user_agent: navigator.userAgent,
         failed_attempts_count: count,
@@ -164,7 +154,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (error) {
           console.error('Sign in error:', error);
           
-          // Log failed sign-in
           await logAuthEvent({
             email,
             action: 'sign_in_attempt',
@@ -185,7 +174,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         console.log('OTP email sent successfully');
         
-        // Log successful OTP email sending
         await logAuthEvent({
           email,
           action: 'sign_in_attempt',
@@ -213,7 +201,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.error('Unexpected sign in error:', error);
       
-      // Log unexpected error
       await logAuthEvent({
         email,
         action: 'sign_in_attempt',
@@ -235,7 +222,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const verifyOTP = async (email: string, token: string) => {
     try {
-      // Check if offline first
       if (!navigator.onLine) {
         console.error('Cannot verify OTP while offline');
         toast({
@@ -248,11 +234,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       console.log('Attempting to verify OTP for email:', email);
       
-      // Log the OTP verification attempt
       await logAuthEvent({
         email,
         action: 'otp_verification',
-        success: false, // Will update to true if successful
+        success: false,
         ip_address: null,
         user_agent: navigator.userAgent,
         timestamp: new Date().toISOString(),
@@ -268,7 +253,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (error) {
           console.error('OTP verification error:', error);
           
-          // Log failed OTP verification
           await logAuthEvent({
             email,
             action: 'otp_verification',
@@ -289,7 +273,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         console.log('OTP verification successful');
         
-        // Log successful OTP verification
         await logAuthEvent({
           email,
           action: 'otp_verification',
@@ -317,7 +300,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.error('Unexpected OTP verification error:', error);
       
-      // Log unexpected OTP verification error
       await logAuthEvent({
         email,
         action: 'otp_verification',
@@ -340,12 +322,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signOut = async () => {
     console.log('Signing out user');
     
-    // Get email before signing out
     const email = user?.email || 'unknown';
     
     await supabase.auth.signOut();
     
-    // Log sign out event
     await logAuthEvent({
       email,
       action: 'sign_out',
@@ -361,7 +341,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  // Render offline warning if applicable
   if (!isOnline) {
     console.log('Rendering offline warning');
   }
