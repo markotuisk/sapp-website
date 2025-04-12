@@ -5,8 +5,8 @@ import { logAuthEvent } from './auth/logging';
 import { checkFailedLoginAttempts, getLoginHistory } from './auth/account-security';
 import { initAuthLoggingSync } from './auth/sync';
 
-export {
-  AuthLogEntry,
+export type { AuthLogEntry };
+export { 
   logAuthEvent,
   checkFailedLoginAttempts,
   getLoginHistory,
