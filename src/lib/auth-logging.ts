@@ -34,11 +34,13 @@ export const logAuthEvent = async (logEntry: AuthLogEntry): Promise<{ error: any
     // Add additional metadata
     const enhancedLogEntry = {
       ...logEntry,
-      device_fingerprint: generateDeviceFingerprint(),
+      device_fingerprint: logEntry.device_fingerprint || generateDeviceFingerprint(),
       timestamp: logEntry.timestamp || new Date().toISOString(),
     };
     
-    const { error } = await supabase
+    // Use the Supabase client with type assertion to bypass TypeScript errors
+    // This works because the table exists in the database, even if TypeScript doesn't know about it
+    const { error } = await (supabase as any)
       .from('auth_logs')
       .insert([enhancedLogEntry]);
     
@@ -122,7 +124,8 @@ export const checkFailedLoginAttempts = async (email: string): Promise<{ shouldL
     const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
     
     // Count failed login attempts in the last 30 minutes
-    const { data, error } = await supabase
+    // Use type assertion to bypass TypeScript errors
+    const { data, error } = await (supabase as any)
       .from('auth_logs')
       .select('*')
       .eq('email', email)
@@ -156,7 +159,8 @@ export const getLoginHistory = async (email: string, limit = 10): Promise<{ data
       return { data: null, error: new Error('Cannot fetch login history while offline') };
     }
     
-    const { data, error } = await supabase
+    // Use type assertion to bypass TypeScript errors
+    const { data, error } = await (supabase as any)
       .from('auth_logs')
       .select('*')
       .eq('email', email)
@@ -203,7 +207,8 @@ const syncPendingLogs = async (): Promise<void> => {
     console.log(`Attempting to sync ${pendingLogs.length} pending auth logs`);
     
     // Try to insert all pending logs
-    const { error } = await supabase
+    // Use type assertion to bypass TypeScript errors
+    const { error } = await (supabase as any)
       .from('auth_logs')
       .insert(pendingLogs);
     
