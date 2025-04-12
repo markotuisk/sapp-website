@@ -1,3 +1,4 @@
+
 import { supabase } from '@/integrations/supabase/client';
 
 // Interface for auth log entries
@@ -18,6 +19,12 @@ export interface AuthLogEntry {
   browser?: string;
   os?: string;
   session_id?: string;
+  connection_type?: string;
+  screen_resolution?: string;
+  timezone?: string;
+  language?: string;
+  is_mobile?: boolean;
+  battery_level?: number;
 }
 
 /**
@@ -68,11 +75,21 @@ const getGeolocation = async (ip: string | null): Promise<{ country: string; cit
   // In a real implementation, you would call a geolocation API here
   // For example: const response = await fetch(`https://ipapi.co/${ip}/json/`);
   
-  // Returning mock data for now
+  // Returning randomized mock data for better testing
+  const countries = [
+    { country: 'United Kingdom', city: 'London' },
+    { country: 'United States', city: 'New York' },
+    { country: 'Germany', city: 'Berlin' },
+    { country: 'France', city: 'Paris' },
+    { country: 'Japan', city: 'Tokyo' },
+    { country: 'Australia', city: 'Sydney' }
+  ];
+  
+  const selected = countries[Math.floor(Math.random() * countries.length)];
   return {
-    country: 'United Kingdom',
-    city: 'London',
-    geolocation: 'United Kingdom, London'
+    country: selected.country,
+    city: selected.city,
+    geolocation: `${selected.country}, ${selected.city}`
   };
 };
 
@@ -83,7 +100,48 @@ const getGeolocation = async (ip: string | null): Promise<{ country: string; cit
 const getClientIP = (): string | null => {
   // In a browser environment, we can't reliably get the client IP
   // This would typically be handled by your backend
-  return null;
+  
+  // For testing purposes, generate a random mock IP
+  const generateRandomIP = () => {
+    return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+  };
+  
+  // Return random IP for testing
+  return generateRandomIP();
+};
+
+/**
+ * Get network connection information if available
+ */
+const getConnectionInfo = (): { type: string, effectiveType?: string } => {
+  // @ts-ignore - navigator.connection is not in standard TypeScript definitions
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  
+  if (connection) {
+    return {
+      type: connection.type || 'unknown',
+      effectiveType: connection.effectiveType || 'unknown'
+    };
+  }
+  
+  return { type: 'unknown' };
+};
+
+/**
+ * Get battery level if available
+ */
+const getBatteryLevel = async (): Promise<number | undefined> => {
+  try {
+    // @ts-ignore - getBattery is not in standard TypeScript definitions
+    if (navigator.getBattery) {
+      // @ts-ignore
+      const battery = await navigator.getBattery();
+      return Math.round(battery.level * 100);
+    }
+  } catch (e) {
+    console.error('Error getting battery info:', e);
+  }
+  return undefined;
 };
 
 /**
@@ -110,6 +168,22 @@ export const logAuthEvent = async (logEntry: AuthLogEntry): Promise<{ error: any
     // Get geolocation data if IP is available
     const geoData = await getGeolocation(ip);
     
+    // Get connection information
+    const connectionInfo = getConnectionInfo();
+    
+    // Get battery level
+    const batteryLevel = await getBatteryLevel();
+    
+    // Get screen resolution
+    const screenResolution = `${window.screen.width}x${window.screen.height}`;
+    
+    // Get timezone and language
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const language = navigator.language;
+    
+    // Detect if mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
     // Add additional metadata
     const enhancedLogEntry = {
       ...logEntry,
@@ -120,7 +194,14 @@ export const logAuthEvent = async (logEntry: AuthLogEntry): Promise<{ error: any
       os: os,
       country: geoData?.country || logEntry.country,
       city: geoData?.city || logEntry.city,
-      geolocation: geoData?.geolocation || logEntry.geolocation
+      geolocation: geoData?.geolocation || logEntry.geolocation,
+      connection_type: connectionInfo.type !== 'unknown' ? connectionInfo.type : undefined,
+      screen_resolution: screenResolution,
+      timezone: timezone,
+      language: language,
+      is_mobile: isMobile,
+      battery_level: batteryLevel,
+      session_id: logEntry.session_id || generateSessionId()
     };
     
     // Use the Supabase client with type assertion to bypass TypeScript errors
@@ -143,6 +224,19 @@ export const logAuthEvent = async (logEntry: AuthLogEntry): Promise<{ error: any
     storeLogForLaterSync(logEntry);
     return { error };
   }
+};
+
+/**
+ * Generate a unique session ID for this browsing session
+ */
+const generateSessionId = (): string => {
+  // Get or create a session ID from sessionStorage
+  let sessionId = sessionStorage.getItem('auth_session_id');
+  if (!sessionId) {
+    sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    sessionStorage.setItem('auth_session_id', sessionId);
+  }
+  return sessionId;
 };
 
 /**
@@ -178,11 +272,13 @@ const generateDeviceFingerprint = (): string => {
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const language = navigator.language;
   const platform = navigator.platform;
+  const plugins = Array.from(navigator.plugins || []).map(p => p.name).join(';');
+  const canvasFingerprint = getCanvasFingerprint();
   
-  // Create a simple hash of the combined data
-  let fingerprint = `${screenData}|${timeZone}|${language}|${platform}|${navigator.userAgent}`;
+  // Create a fingerprint combining multiple factors
+  let fingerprint = `${screenData}|${timeZone}|${language}|${platform}|${plugins}|${canvasFingerprint}|${navigator.userAgent}`;
   
-  // This is a simple hash function, not cryptographically secure
+  // Generate a hash from the fingerprint string
   let hash = 0;
   for (let i = 0; i < fingerprint.length; i++) {
     const char = fingerprint.charCodeAt(i);
@@ -191,6 +287,41 @@ const generateDeviceFingerprint = (): string => {
   }
   
   return hash.toString(16);
+};
+
+/**
+ * Get a canvas-based fingerprint component
+ * This adds to the uniqueness of device fingerprinting
+ */
+const getCanvasFingerprint = (): string => {
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return 'canvas-not-supported';
+    
+    // Draw some shapes and text
+    canvas.width = 200;
+    canvas.height = 50;
+    ctx.textBaseline = 'top';
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#f60';
+    ctx.fillRect(0, 0, 100, 25);
+    ctx.fillStyle = '#069';
+    ctx.fillText('Fingerprint', 2, 2);
+    
+    // Convert to data URL and extract a hash
+    const dataUrl = canvas.toDataURL();
+    let hash = 0;
+    for (let i = 0; i < dataUrl.length; i++) {
+      hash = ((hash << 5) - hash) + dataUrl.charCodeAt(i);
+      hash = hash & hash;
+    }
+    
+    return hash.toString(36);
+  } catch (e) {
+    console.error('Canvas fingerprinting failed:', e);
+    return 'canvas-error';
+  }
 };
 
 /**

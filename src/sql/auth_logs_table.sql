@@ -21,6 +21,12 @@ CREATE TABLE auth_logs (
   browser TEXT,
   os TEXT,
   session_id TEXT,
+  connection_type TEXT,
+  screen_resolution TEXT,
+  timezone TEXT,
+  language TEXT,
+  is_mobile BOOLEAN,
+  battery_level INTEGER,
   
   -- Create an index on email for faster lookups
   CONSTRAINT idx_auth_logs_email_timestamp INDEX (email, timestamp DESC)
