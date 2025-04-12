@@ -5,21 +5,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertCircle, X, Mail, Lock } from 'lucide-react';
+import { AlertCircle, X, Mail, Lock, WifiOff, Info } from 'lucide-react';
 import { toast } from 'sonner';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useAuth } from '@/contexts/AuthContext';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 const ClientArea = () => {
   const navigate = useNavigate();
-  const { user, signIn, verifyOTP, signOut } = useAuth();
+  const { user, signIn, verifyOTP, signOut, isOnline } = useAuth();
   const [loginEmail, setLoginEmail] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,6 +25,11 @@ const ClientArea = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!isOnline) {
+      toast.error("You're offline. Please check your internet connection and try again.");
+      return;
+    }
     
     if (!agreedToTerms) {
       toast.error("Please agree to the terms before submitting.");
@@ -51,6 +53,11 @@ const ClientArea = () => {
   };
 
   const handleVerifyOTP = async () => {
+    if (!isOnline) {
+      toast.error("You're offline. Please check your internet connection and try again.");
+      return;
+    }
+    
     if (otpValue.length !== 6) {
       toast.error("Please enter a valid 6-digit code.");
       return;
@@ -85,6 +92,17 @@ const ClientArea = () => {
       
       <main className="flex-grow pt-32 pb-20">
         <div className="container mx-auto px-6">
+          {!isOnline && (
+            <Alert variant="destructive" className="mb-6">
+              <WifiOff className="h-4 w-4" />
+              <AlertTitle>No Internet Connection</AlertTitle>
+              <AlertDescription>
+                You appear to be offline. Authentication services require an internet connection.
+                Please check your connection and try again.
+              </AlertDescription>
+            </Alert>
+          )}
+          
           <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
             {/* Header */}
             <div className="bg-gradient-to-r from-sapp-dark to-sapp-blue p-8 text-white">
@@ -170,6 +188,15 @@ const ClientArea = () => {
                         For enhanced security, we use two-factor authentication. Enter your email to receive a 6-digit code.
                       </p>
                     </div>
+                    
+                    {!isOnline && (
+                      <div className="flex items-start gap-3 mb-4 bg-red-50 p-4 rounded-md">
+                        <WifiOff className="h-6 w-6 text-red-500 flex-shrink-0 mt-0.5" />
+                        <p className="text-sm text-red-700">
+                          You appear to be offline. Authentication requires an internet connection. Please check your network and try again.
+                        </p>
+                      </div>
+                    )}
                   </div>
                   
                   <div className="md:w-1/2 w-full">
@@ -187,6 +214,7 @@ const ClientArea = () => {
                             onChange={(e) => setLoginEmail(e.target.value)}
                             required
                             className="focus-visible:ring-sapp-blue"
+                            disabled={!isOnline || isSubmitting}
                           />
                         </div>
                         
@@ -197,6 +225,7 @@ const ClientArea = () => {
                             onCheckedChange={(checked) => {
                               setAgreedToTerms(checked as boolean);
                             }}
+                            disabled={!isOnline || isSubmitting}
                           />
                           <Label 
                             htmlFor="terms" 
@@ -209,7 +238,7 @@ const ClientArea = () => {
                         
                         <Button 
                           type="submit" 
-                          disabled={isSubmitting}
+                          disabled={!isOnline || isSubmitting}
                           className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-2 group relative overflow-hidden"
                         >
                           <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
@@ -248,6 +277,17 @@ const ClientArea = () => {
               Enter the code below to verify your identity.
             </DialogDescription>
           </DialogHeader>
+          
+          {!isOnline && (
+            <Alert variant="destructive" className="my-2">
+              <WifiOff className="h-4 w-4" />
+              <AlertTitle>You're offline</AlertTitle>
+              <AlertDescription>
+                Code verification requires an internet connection. Please check your connection and try again.
+              </AlertDescription>
+            </Alert>
+          )}
+          
           <div className="flex flex-col items-center justify-center space-y-4 py-4">
             <div className="flex flex-col space-y-2 text-center">
               <div className="mx-auto">
@@ -255,6 +295,7 @@ const ClientArea = () => {
                   maxLength={6}
                   value={otpValue}
                   onChange={(value) => setOtpValue(value)}
+                  disabled={!isOnline || isSubmitting}
                   render={({ slots }) => (
                     <InputOTPGroup>
                       {slots.map((slot, index) => (
@@ -268,7 +309,7 @@ const ClientArea = () => {
             <Button
               onClick={handleVerifyOTP}
               className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white"
-              disabled={isSubmitting || otpValue.length !== 6}
+              disabled={!isOnline || isSubmitting || otpValue.length !== 6}
             >
               {isSubmitting ? 'Verifying...' : 'Verify Code'}
             </Button>
