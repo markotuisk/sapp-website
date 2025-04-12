@@ -9,13 +9,76 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      auth_logs: {
+        Row: {
+          action: string
+          browser: string | null
+          city: string | null
+          country: string | null
+          device_fingerprint: string | null
+          email: string
+          error_message: string | null
+          failed_attempts_count: number | null
+          geolocation: string | null
+          id: number
+          ip_address: string | null
+          os: string | null
+          session_id: string | null
+          success: boolean
+          timestamp: string
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_fingerprint?: string | null
+          email: string
+          error_message?: string | null
+          failed_attempts_count?: number | null
+          geolocation?: string | null
+          id?: number
+          ip_address?: string | null
+          os?: string | null
+          session_id?: string | null
+          success?: boolean
+          timestamp?: string
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_fingerprint?: string | null
+          email?: string
+          error_message?: string | null
+          failed_attempts_count?: number | null
+          geolocation?: string | null
+          id?: number
+          ip_address?: string | null
+          os?: string | null
+          session_id?: string | null
+          success?: boolean
+          timestamp?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_recent_failed_logins: {
+        Args: { user_email: string; minutes?: number }
+        Returns: {
+          count: number
+          first_attempt: string
+          last_attempt: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
