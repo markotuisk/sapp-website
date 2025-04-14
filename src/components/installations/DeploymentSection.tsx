@@ -2,6 +2,7 @@
 import React from 'react';
 import { FileText, Lock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Animated } from '@/components/ui/AnimatedElements';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -18,19 +19,23 @@ const DeploymentSection = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Deployment Process</h3>
+        <Animated animation="fade-up" delay={100}>
+          <div className="text-center mb-12">
+            <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Deployment Process</h3>
+            </div>
           </div>
-        </div>
-        <div className="max-w-3xl mx-auto text-center mb-10">
-          <h2 className="text-3xl font-display font-bold text-sapp-dark mb-3">How We Deliver Security Solutions</h2>
-          <p className="text-sapp-gray">Every installation is unique, requiring careful planning and coordination across departments and stakeholders.</p>
-        </div>
+        </Animated>
+        <Animated animation="fade-up" delay={200}>
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <h2 className="text-3xl font-display font-bold text-sapp-dark mb-3">How We Deliver Security Solutions</h2>
+            <p className="text-sapp-gray">Every installation is unique, requiring careful planning and coordination across departments and stakeholders.</p>
+          </div>
+        </Animated>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Assessment & Planning */}
-          <div className="bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-100 p-6 transition-all duration-200 ease-in-out">
+          <Animated animation="fade-up" delay={300} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <FileText className="h-6 w-6 text-sapp-blue" />
             </div>
@@ -38,10 +43,10 @@ const DeploymentSection = () => {
             <p className="text-sapp-gray text-sm">
               We begin with a comprehensive site assessment and requirements gathering, followed by detailed project planning and documentation. This phase includes risk assessment, stakeholder consultation, and technical feasibility studies.
             </p>
-          </div>
+          </Animated>
 
           {/* Implementation & Integration */}
-          <div className="bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-100 p-6 transition-all duration-200 ease-in-out">
+          <Animated animation="fade-up" delay={400} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-sapp-blue" />
             </div>
@@ -49,10 +54,10 @@ const DeploymentSection = () => {
             <p className="text-sapp-gray text-sm">
               Our technical teams handle the physical installation, system configuration, and integration with existing infrastructure. We coordinate with IT, facilities, and security departments to ensure minimal disruption during deployment.
             </p>
-          </div>
+          </Animated>
 
           {/* Testing & Handover */}
-          <div className="bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-100 p-6 transition-all duration-200 ease-in-out">
+          <Animated animation="fade-up" delay={500} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <Users className="h-6 w-6 text-sapp-blue" />
             </div>
@@ -60,10 +65,10 @@ const DeploymentSection = () => {
             <p className="text-sapp-gray text-sm">
               We conduct rigorous testing, user training, and system documentation before handover. Our comprehensive approach includes acceptance testing, user training sessions, and complete documentation for future reference and maintenance.
             </p>
-          </div>
+          </Animated>
         </div>
 
-        <div className="max-w-3xl mx-auto text-center">
+        <Animated animation="fade-up" delay={600} className="max-w-3xl mx-auto text-center">
           <p className="text-sapp-gray mb-6">
             Our project management methodology ensures clear communication, detailed documentation, and transparent processes throughout the deployment lifecycle, regardless of project complexity.
           </p>
@@ -111,7 +116,7 @@ const DeploymentSection = () => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-        </div>
+        </Animated>
       </div>
     </section>
   );

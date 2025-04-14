@@ -14,6 +14,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction
 } from './alert-dialog';
+import { Animated } from '@/components/ui/AnimatedElements';
 
 interface ServiceCardProps {
   title: string;
@@ -52,7 +53,7 @@ const ServiceCard = ({
       )}
       style={{ transitionDelay: inView ? `${delay}ms` : '0ms' }}
     >      
-      <div className="p-6 flex-grow flex flex-col">
+      <Animated animation="fade-up" delay={delay + 100} className="p-6 flex-grow flex flex-col">
         <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">{title}</h3>
         <p className="text-sapp-gray text-sm mb-4 flex-grow">{description}</p>
         
@@ -113,7 +114,7 @@ const ServiceCard = ({
             </AlertDialogContent>
           </AlertDialog>
         </div>
-      </div>
+      </Animated>
     </div>
   );
 };
