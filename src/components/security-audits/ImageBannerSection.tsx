@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const ImageBannerSection = () => {
@@ -28,8 +28,8 @@ const ImageBannerSection = () => {
               className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
               asChild
             >
-              <Link to="/contact">
-                Request Security Audit
+              <Link to="/">
+                <Home className="mr-2" /> Back to Home
               </Link>
             </Button>
           </div>

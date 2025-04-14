@@ -77,9 +77,9 @@ const WhyIndependentAudits = () => {
             </div>
             <div className="relative h-full flex items-center justify-center">
               <img 
-                src="/lovable-uploads/c0b95e73-0761-417c-804e-16fe31ea0957.png"
-                alt="Security Compliance Diagram" 
-                className="w-full h-full object-cover rounded-xl"
+                src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
+                alt="Compliance and Security Standards Diagram" 
+                className="w-full h-full object-cover rounded-xl shadow-md"
               />
             </div>
           </div>
