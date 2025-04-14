@@ -13,7 +13,7 @@ const QuoteSection = () => {
 
   return (
     <section className="py-16 bg-sapp-blue/5 relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto px-6">
         <div className="text-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Industry Leader Opinion</h3>
@@ -35,13 +35,13 @@ const QuoteSection = () => {
             >
               <blockquote className="mb-6">
                 <p className="text-xl md:text-2xl font-display italic text-sapp-dark leading-relaxed">
-                  "Security is always seen as too much until the day it's not enough."
+                  "In our increasingly connected world, cyber security isn't just an IT concern—it's a fundamental business imperative that impacts every aspect of modern operations."
                 </p>
               </blockquote>
               <footer className="flex items-center">
                 <div>
-                  <p className="font-semibold text-sapp-dark">William H. Webster</p>
-                  <p className="text-sm text-sapp-gray">Former FBI Director</p>
+                  <p className="font-semibold text-sapp-dark">Dr. Ian Levy</p>
+                  <p className="text-sm text-sapp-gray">Former Technical Director, NCSC</p>
                 </div>
               </footer>
             </Animated>

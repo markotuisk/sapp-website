@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer';
 const HeroSection = React.lazy(() => import('@/components/cyber-security/HeroSection'));
 const ServicesSection = React.lazy(() => import('@/components/cyber-security/ServicesSection'));
 const FeaturesSection = React.lazy(() => import('@/components/cyber-security/FeaturesSection'));
+const QuoteSection = React.lazy(() => import('@/components/cyber-security/QuoteSection'));
 const CTASection = React.lazy(() => import('@/components/cyber-security/CTASection'));
 
 const CyberSecurity = React.memo(() => {
@@ -38,6 +39,7 @@ const CyberSecurity = React.memo(() => {
           <HeroSection />
           <ServicesSection />
           <FeaturesSection />
+          <QuoteSection />
           <CTASection />
         </Suspense>
       </main>

@@ -4,7 +4,7 @@ import InsightQuote from '@/components/home/InsightQuote';
 
 const QuoteSection = () => {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-sapp-blue/5 relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="text-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
