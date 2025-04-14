@@ -1,14 +1,14 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Home } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Animated } from '@/components/ui/AnimatedElements';
 
 const ImageBannerSection = () => {
   return (
-    <section className="py-16">
+    <section className="py-8">
       <div className="container mx-auto px-4">
         <Animated animation="fade-up">
           <div 
@@ -39,7 +39,7 @@ const ImageBannerSection = () => {
                     asChild
                   >
                     <Link to="/">
-                      <Home className="mr-2" /> Back to Home
+                      Back to Home
                     </Link>
                   </Button>
                 </div>
@@ -53,3 +53,4 @@ const ImageBannerSection = () => {
 };
 
 export default ImageBannerSection;
+
