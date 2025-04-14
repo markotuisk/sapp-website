@@ -1,5 +1,4 @@
 
-import ServiceCard from '@/components/ui/ServiceCard';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 
