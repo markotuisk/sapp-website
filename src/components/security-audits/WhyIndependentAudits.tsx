@@ -4,6 +4,8 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Animated } from '@/components/ui/AnimatedElements';
 
 const WhyIndependentAudits = () => {
   const [ref, inView] = useInView({
@@ -76,12 +78,17 @@ const WhyIndependentAudits = () => {
               ))}
             </div>
           </div>
-          <div className="relative mt-8 md:mt-0">
-            <img 
-              src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
-              alt="Compliance and Security Standards Diagram" 
-              className="rounded-xl w-full h-auto object-cover shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.01]"
-            />
+          <div className="relative h-full flex items-center">
+            <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+            <div className="w-full h-full relative z-10 rounded-xl shadow-md overflow-hidden">
+              <AspectRatio ratio={4/3} className="w-full">
+                <img 
+                  src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
+                  alt="Compliance and Security Standards Diagram" 
+                  className="w-full h-full object-cover transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.01]"
+                />
+              </AspectRatio>
+            </div>
           </div>
         </div>
       </div>

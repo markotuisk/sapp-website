@@ -3,6 +3,7 @@ import { Wifi, Server, Database, Lock, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const ServicesSection = () => {
   return (
@@ -57,13 +58,17 @@ const ServicesSection = () => {
               </Button>
             </Animated>
           </div>
-          <Animated animation="fade-up" delay={200} className="relative">
+          <Animated animation="fade-up" delay={200} className="relative h-full flex items-center">
             <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-            <img 
-              src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
-              alt="Cyber Security Services" 
-              className="relative z-10 rounded-xl shadow-md w-full h-auto object-cover hover:scale-[1.02] transition-all duration-300"
-            />
+            <div className="w-full h-full relative z-10 rounded-xl shadow-md overflow-hidden">
+              <AspectRatio ratio={4/3} className="w-full">
+                <img 
+                  src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
+                  alt="Cyber Security Services" 
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-all duration-300"
+                />
+              </AspectRatio>
+            </div>
           </Animated>
         </div>
       </div>
