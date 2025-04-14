@@ -1,4 +1,3 @@
-
 import { Wifi, Server, Database, Lock } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -79,34 +78,42 @@ const CyberSecurity = () => {
           </div>
         </section>
 
-        {/* Main Content */}
+        {/* Main Content - Updated design to match Security Audits page */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Solutions</h3>
+              </div>
+              
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
+                Comprehensive Cyber Security Services
+              </h2>
+              
+              <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
+                Our cyber security services are designed to protect your digital assets from a wide range of threats. We focus on securing IoT devices, which are often the most vulnerable points in corporate networks, with 98% being unencrypted and invisible in company networks.
+              </p>
+            </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="order-2 md:order-1">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
-                  Comprehensive Cyber Security Services
-                </h2>
-                <p className="text-sapp-gray mb-6">
-                  Our cyber security services are designed to protect your digital assets from a wide range of threats. We focus on securing IoT devices, which are often the most vulnerable points in corporate networks, with 98% being unencrypted and invisible in company networks.
-                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4">
                     <Server className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">Network Security</h4>
                     <p className="text-sm text-sapp-gray">Comprehensive protection for your network infrastructure.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4">
                     <Lock className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">Data Protection</h4>
                     <p className="text-sm text-sapp-gray">Robust encryption and data security solutions.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4">
                     <Database className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">Cloud Security</h4>
                     <p className="text-sm text-sapp-gray">Secure cloud infrastructure and applications.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-4">
                     <Wifi className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">IoT Security</h4>
                     <p className="text-sm text-sapp-gray">Protection for Internet of Things devices.</p>
@@ -119,12 +126,12 @@ const CyberSecurity = () => {
                   <TranslatedText textKey="contactUs" />
                 </Button>
               </div>
-              <div className="relative order-1 md:order-2">
+              <div className="relative">
                 <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
                 <img 
                   src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
                   alt="Cyber Security Services" 
-                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                  className="relative z-10 rounded-xl shadow-md w-full h-auto object-cover"
                 />
               </div>
             </div>
