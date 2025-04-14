@@ -12,7 +12,7 @@ const QuoteSection = () => {
   });
 
   return (
-    <section className="py-16 bg-sapp-blue/5 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="text-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -23,7 +23,13 @@ const QuoteSection = () => {
           ref={ref}
           className="max-w-3xl mx-auto"
         >
-          <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100">
+          <div 
+            className={cn(
+              "bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out p-8",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+            style={{ transitionDelay: inView ? '100ms' : '0ms' }}
+          >
             <Quote className="h-12 w-12 text-sapp-blue/20 mb-4" />
             <Animated
               animation="fade-up"
