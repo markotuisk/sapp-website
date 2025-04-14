@@ -180,51 +180,59 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
 
         {/* Corporate Event Security */}
         <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center mb-8">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
                 <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Corporate Event Security</h3>
               </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
+                Why Event Security Matters
+              </h2>
+              <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
+                Protect any meetings or events that are classified confidential, restricted or sensitive with real-time monitoring as live discussions are most vulnerable to potential espionage attacks.
+              </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="order-2 md:order-1">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
-                  Why Event Security Matters
-                </h2>
-                <p className="text-sapp-gray mb-6">
-                  Protect any meetings or events that are classified confidential, restricted or sensitive with real-time monitoring as live discussions are most vulnerable to potential espionage attacks. Information gatherers always target the weakest link in the organisation and sensitive strategic meetings are usually an easy choice.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="bg-slate-50 p-4 rounded-lg">
-                    <Shield className="h-6 w-6 text-sapp-blue mb-2" />
-                    <h4 className="font-semibold text-sapp-dark mb-1">Board Meetings</h4>
-                    <p className="text-sm text-sapp-gray">Comprehensive security protocols for board meetings.</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out">
+                    <Shield className="h-6 w-6 text-sapp-blue mb-3" />
+                    <h4 className="font-semibold text-sapp-dark mb-2">Board Meetings</h4>
+                    <p className="text-sm text-sapp-gray">Comprehensive security protocols for board meetings and sensitive discussions.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
-                    <Calendar className="h-6 w-6 text-sapp-blue mb-2" />
-                    <h4 className="font-semibold text-sapp-dark mb-1">Results Rehearsals</h4>
-                    <p className="text-sm text-sapp-gray">Ensure confidentiality for sensitive presentations.</p>
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out">
+                    <Calendar className="h-6 w-6 text-sapp-blue mb-3" />
+                    <h4 className="font-semibold text-sapp-dark mb-2">Results Rehearsals</h4>
+                    <p className="text-sm text-sapp-gray">Ensure confidentiality for sensitive financial presentations and forecasts.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
-                    <FileText className="h-6 w-6 text-sapp-blue mb-2" />
-                    <h4 className="font-semibold text-sapp-dark mb-1">Strategy Planning</h4>
-                    <p className="text-sm text-sapp-gray">Protect confidential strategic discussions.</p>
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out">
+                    <FileText className="h-6 w-6 text-sapp-blue mb-3" />
+                    <h4 className="font-semibold text-sapp-dark mb-2">Strategy Planning</h4>
+                    <p className="text-sm text-sapp-gray">Protect confidential strategic discussions from competitors and threats.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
-                    <Users className="h-6 w-6 text-sapp-blue mb-2" />
-                    <h4 className="font-semibold text-sapp-dark mb-1">Negotiations</h4>
-                    <p className="text-sm text-sapp-gray">Secure environment for sensitive negotiations.</p>
+                  <div className="bg-white rounded-xl shadow-md border border-gray-100 p-5 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out">
+                    <Users className="h-6 w-6 text-sapp-blue mb-3" />
+                    <h4 className="font-semibold text-sapp-dark mb-2">Negotiations</h4>
+                    <p className="text-sm text-sapp-gray">Secure environment for sensitive negotiations and partnerships.</p>
                   </div>
+                </div>
+                <div className="text-center md:text-left">
+                  <Button 
+                    size="lg" 
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
+                    onClick={() => setServicesOpen(true)}
+                  >
+                    Explore Our Services
+                  </Button>
                 </div>
               </div>
               <div className="relative order-1 md:order-2">
-                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                <div 
-                  className="relative z-10 rounded-xl shadow-2xl w-full h-[400px] bg-gradient-to-br from-sapp-blue/20 to-sapp-blue/10 flex items-center justify-center"
-                >
-                  <span className="text-sapp-gray/50 text-xl font-display">Image Placeholder</span>
-                </div>
+                <img 
+                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
+                  alt="Corporate Event Security" 
+                  className="rounded-xl w-full h-auto object-cover shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.01]"
+                />
               </div>
             </div>
           </div>
