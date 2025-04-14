@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { HelmetProvider } from "react-helmet-async"; // Add import for HelmetProvider
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientArea from "./pages/VirtualOffice";
@@ -44,35 +45,37 @@ const App = () => {
       <TooltipProvider>
         <LanguageProvider>
           <AuthProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/client-area" element={<ClientArea />} />
-                <Route path="/event-security" element={<EventSecurity />} />
-                <Route path="/security-audits" element={<SecurityAudits />} />
-                <Route path="/installations" element={<Installations />} />
-                <Route path="/cyber-security" element={<CyberSecurity />} />
-                <Route path="/about" element={<About />} />
-                
-                {/* Service Detail Pages */}
-                <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
-                <Route path="/services/event-monitoring" element={<EventMonitoring />} />
-                <Route path="/services/secure-technology" element={<SecureTechnology />} />
-                <Route path="/services/close-protection" element={<CloseProtection />} />
-                
-                {/* Installation Subpages */}
-                <Route path="/installations/cctv-access" element={<CCTVAccess />} />
-                <Route path="/installations/speech-privacy" element={<SpeechPrivacy />} />
-                <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
-                <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} />
-                
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <CookieConsent />
-            </BrowserRouter>
+            <HelmetProvider> {/* Add HelmetProvider here */}
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/client-area" element={<ClientArea />} />
+                  <Route path="/event-security" element={<EventSecurity />} />
+                  <Route path="/security-audits" element={<SecurityAudits />} />
+                  <Route path="/installations" element={<Installations />} />
+                  <Route path="/cyber-security" element={<CyberSecurity />} />
+                  <Route path="/about" element={<About />} />
+                  
+                  {/* Service Detail Pages */}
+                  <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
+                  <Route path="/services/event-monitoring" element={<EventMonitoring />} />
+                  <Route path="/services/secure-technology" element={<SecureTechnology />} />
+                  <Route path="/services/close-protection" element={<CloseProtection />} />
+                  
+                  {/* Installation Subpages */}
+                  <Route path="/installations/cctv-access" element={<CCTVAccess />} />
+                  <Route path="/installations/speech-privacy" element={<SpeechPrivacy />} />
+                  <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
+                  <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} />
+                  
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <CookieConsent />
+              </BrowserRouter>
+            </HelmetProvider>
           </AuthProvider>
         </LanguageProvider>
       </TooltipProvider>
