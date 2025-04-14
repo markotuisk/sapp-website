@@ -41,7 +41,7 @@ const Installations = () => {
       <main>
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
-          <div className="container mx-auto px-6 relative z-10">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
             <div className="flex flex-col items-center justify-center text-center">
               <h1 
                 className={cn(
@@ -85,14 +85,22 @@ const Installations = () => {
 
         {/* Main Content - Updated to match Cyber Security layout */}
         <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center mb-12">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
                 <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why Choose Our Solutions</h3>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="order-2 md:order-1">
+              <div className="relative order-2 md:order-1">
+                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
+                <img 
+                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+                  alt="Security Installation Services" 
+                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
+                />
+              </div>
+              <div className="order-1 md:order-2">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
                   Next Generation AI Security Integration
                 </h2>
@@ -100,22 +108,22 @@ const Installations = () => {
                   There is a notable shift towards AI-driven security systems with strengthened defence and improved user experience. Organisations are increasingly replacing their legacy access control, CCTV and other systems with data-driven scalable security systems to automate across various interfaces and improve their security posture whilst optimising costs and reduce manual work. New security systems provide a perfect interface for bringing together the physical and cyber security expertise in organisations.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white p-4 rounded-lg shadow-md border border-gray-100">
                     <MonitorCheck className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">CCTV & Access</h4>
                     <p className="text-sm text-sapp-gray">Comprehensive video surveillance and access control systems.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white p-4 rounded-lg shadow-md border border-gray-100">
                     <Wifi className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">Speech & Sound Masking</h4>
                     <p className="text-sm text-sapp-gray">Advanced sound masking and speech protection solutions.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white p-4 rounded-lg shadow-md border border-gray-100">
                     <Lock className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">Counter Surveillance</h4>
                     <p className="text-sm text-sapp-gray">Protection against unauthorized surveillance activities.</p>
                   </div>
-                  <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="bg-white p-4 rounded-lg shadow-md border border-gray-100">
                     <Database className="h-6 w-6 text-sapp-blue mb-2" />
                     <h4 className="font-semibold text-sapp-dark mb-1">Network Security</h4>
                     <p className="text-sm text-sapp-gray">Secure network infrastructure and communications.</p>
@@ -166,14 +174,6 @@ const Installations = () => {
                   </AlertDialogContent>
                 </AlertDialog>
               </div>
-              <div className="relative order-1 md:order-2">
-                <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                <img 
-                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
-                  alt="Security Installation Services" 
-                  className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover"
-                />
-              </div>
             </div>
           </div>
         </section>
@@ -183,7 +183,7 @@ const Installations = () => {
 
         {/* Installation Capabilities Section */}
         <section className="py-16 bg-slate-50">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center mb-12">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
                 <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Security Expertise</h3>
@@ -195,7 +195,7 @@ const Installations = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-12">
-              {/* Physical Security */}
+              {/* Services cards */}
               <ServiceCard 
                 title="Physical Security"
                 description="Control visibility, movement, and presence with CCTV, access and visitor management systems."
@@ -277,9 +277,9 @@ const Installations = () => {
           </div>
         </section>
 
-        {/* How We Deploy Section - NEW */}
+        {/* How We Deploy Section */}
         <section className="py-16 bg-white">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="text-center mb-12">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
                 <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Deployment Process</h3>
@@ -369,7 +369,7 @@ const Installations = () => {
                   </div>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Request Consultation</AlertDialogAction>
+                    <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>

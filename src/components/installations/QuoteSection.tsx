@@ -13,7 +13,7 @@ const QuoteSection = () => {
 
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Industry Leader Opinion</h3>
@@ -35,7 +35,7 @@ const QuoteSection = () => {
             >
               <blockquote className="mb-6">
                 <p className="text-xl md:text-2xl font-display italic text-sapp-dark leading-relaxed">
-                  "Security is always seen as too much until the day its not enough"
+                  "Security is always seen as too much until the day it's not enough."
                 </p>
               </blockquote>
               <footer className="flex items-center">
