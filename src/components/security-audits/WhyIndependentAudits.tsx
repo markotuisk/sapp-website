@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import FeatureCard from '@/components/ui/FeatureCard';
+import { Shield } from 'lucide-react';
 
 const WhyIndependentAudits = () => {
   const [ref, inView] = useInView({
@@ -16,7 +17,7 @@ const WhyIndependentAudits = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4 text-center">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Independent Audits Matter</h3>
+            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Improve Your Security Resilience</h3>
           </div>
         </div>
         
@@ -75,11 +76,12 @@ const WhyIndependentAudits = () => {
                 </Card>
               </div>
             </div>
-            <div className="relative h-full flex items-center justify-center">
+            <div className="relative">
+              <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl"></div>
               <img 
                 src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
                 alt="Compliance and Security Standards Diagram" 
-                className="w-full h-full object-cover rounded-xl shadow-md"
+                className="rounded-xl w-full h-auto object-cover max-w-[90%] mx-auto shadow-md"
               />
             </div>
           </div>
