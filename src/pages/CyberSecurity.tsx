@@ -1,4 +1,4 @@
-import { Wifi, Server, Database, Lock } from 'lucide-react';
+import { Wifi, Server, Database, Lock, ShieldCheck } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ const CyberSecurity = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Hero Section - Updated to match Events Security page */}
+        {/* Hero Section */}
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col items-center justify-center text-center">
@@ -78,7 +78,7 @@ const CyberSecurity = () => {
           </div>
         </section>
 
-        {/* Main Content - Updated design to match Security Audits page */}
+        {/* Comprehensive Cyber Security Services Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -141,9 +141,20 @@ const CyberSecurity = () => {
         {/* Features with Images Section */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-12 text-center">
-              Comprehensive Digital Protection
-            </h2>
+            <div className="text-center mb-12">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Approach</h3>
+              </div>
+              
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
+                Comprehensive Digital Protection
+              </h2>
+              
+              <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
+                Our multi-layered approach to cyber security ensures comprehensive protection for your digital infrastructure.
+              </p>
+            </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-xl shadow-md overflow-hidden group">
                 <div className="h-48 overflow-hidden">
@@ -197,10 +208,18 @@ const CyberSecurity = () => {
         {/* CTA Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to enhance your cyber security?</h2>
+            <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Get Started</h3>
+            </div>
+            
+            <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
+              Ready to enhance your cyber security?
+            </h2>
+            
             <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
               Our team of cyber security experts is ready to help you protect your digital assets from evolving threats.
             </p>
+            
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
