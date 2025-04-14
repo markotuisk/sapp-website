@@ -1,7 +1,14 @@
 
 import ServiceCard from '@/components/ui/ServiceCard';
+import { useInView } from 'react-intersection-observer';
+import { cn } from '@/lib/utils';
 
 const ServiceCardsSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+  
   const auditServices = [
     {
       title: "Physical Security Assessments",
@@ -30,7 +37,7 @@ const ServiceCardsSection = () => {
   ];
 
   return (
-    <section id="security-audit-services" className="py-16 bg-slate-50">
+    <section id="security-audit-services" className="py-16 bg-slate-50" ref={ref}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -46,13 +53,34 @@ const ServiceCardsSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {auditServices.map((service, index) => (
-            <ServiceCard 
+            <div
               key={index}
-              title={service.title}
-              description={service.description}
-              href={service.href}
-              delay={service.delay}
-            />
+              className={cn(
+                "bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out h-full flex flex-col",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              )}
+              style={{ transitionDelay: inView ? `${service.delay}ms` : '0ms' }}
+            >      
+              <div className="p-6 flex-grow flex flex-col">
+                <h3 className="text-xl font-display font-semibold mb-3 bg-accent-teal/10 text-accent-dark-blue p-3 rounded-md transition-all duration-300 hover:bg-accent-teal/20">{service.title}</h3>
+                <p className="text-sapp-gray text-sm mb-4 flex-grow">{service.description}</p>
+                
+                <div className="flex flex-row gap-2 mt-2">
+                  <a href={service.href} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <button 
+                      className="text-sm border border-sapp-blue text-sapp-dark px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md hover:bg-slate-50"
+                    >
+                      Read More
+                    </button>
+                  </a>
+                  <button 
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+                  >
+                    Get Details
+                  </button>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
