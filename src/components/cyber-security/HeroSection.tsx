@@ -1,0 +1,73 @@
+
+import { useInView } from 'react-intersection-observer';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import TranslatedText from '@/components/ui/TranslatedText';
+import { Link } from 'react-router-dom';
+
+const HeroSection = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h1 
+            className={cn(
+              "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+            ref={ref}
+          >
+            Enterprise-grade <span className="text-sapp-blue">protection</span><br />
+            for your digital <span className="text-sapp-blue">assets</span><br />
+            against cyber <span className="text-sapp-blue">threats</span>
+          </h1>
+          <p 
+            className={cn(
+              "text-sapp-gray text-lg md:text-xl mb-8 transition-all duration-500 delay-200 max-w-3xl mx-auto",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            We provide comprehensive cyber security services that protect your organization's digital infrastructure from evolving threats. Our approach focuses on securing IoT devices, which are often the most vulnerable points in corporate networks.
+          </p>
+          
+          <div 
+            className={cn(
+              "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            <Button 
+              size="lg" 
+              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+            >
+              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                <TranslatedText textKey="exploreServices" />
+              </span>
+              <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              asChild
+            >
+              <Link to="/#contact">
+                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
+                  <TranslatedText textKey="contactUs" />
+                </span>
+                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
