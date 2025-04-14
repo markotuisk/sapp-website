@@ -1,6 +1,9 @@
 
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const ServiceCardsSection = () => {
   const [ref, inView] = useInView({
@@ -81,6 +84,20 @@ const ServiceCardsSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* CTA button below the cards, similar to Event Security page */}
+        <div className="mt-12 text-center">
+          <Button 
+            size="lg" 
+            className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-md hover:shadow-lg transition-all duration-300 group"
+            asChild
+          >
+            <Link to="/services">
+              Explore Our Services
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
