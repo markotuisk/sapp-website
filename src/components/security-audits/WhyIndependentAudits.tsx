@@ -2,10 +2,11 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
+import { Shield, FileText, Lock, FileCheck, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { Link } from 'react-router-dom';
 
 const WhyIndependentAudits = () => {
   const [ref, inView] = useInView({
@@ -55,6 +56,17 @@ const WhyIndependentAudits = () => {
           <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
             Comply with international best practises and objectively evaluate the state of play of the physical and information security processes and technology at your organisation.
           </p>
+          
+          <Button 
+            size="lg" 
+            className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-md hover:shadow-lg transition-all duration-300 group"
+            asChild
+          >
+            <Link to="#security-audit-services">
+              Learn About Our Audit Services
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
+          </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">

@@ -61,8 +61,8 @@ const ServiceCardsSection = () => {
               style={{ transitionDelay: inView ? `${service.delay}ms` : '0ms' }}
             >      
               <div className="p-6 flex-grow flex flex-col">
-                <h3 className="text-xl font-display font-semibold mb-3 bg-accent-teal/10 text-accent-dark-blue p-3 rounded-md transition-all duration-300 hover:bg-accent-teal/20">{service.title}</h3>
-                <p className="text-sapp-gray text-sm mb-4 flex-grow">{service.description}</p>
+                <h3 className="text-xl font-display font-semibold mb-3 text-accent-dark-blue">{service.title}</h3>
+                <p className="text-sapp-gray text-sm mb-4 flex-grow flex items-start">{service.description}</p>
                 
                 <div className="flex flex-row gap-2 mt-2">
                   <a href={service.href} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
