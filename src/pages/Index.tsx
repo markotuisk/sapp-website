@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import Services from '@/components/home/Services';
 import Partners from '@/components/home/Partners';
-import Contact from '@/components/home/Contact';
+import Contact from '@/components/home/contact/Contact';
 import AboutSAPP from '@/components/home/AboutSAPP';
 import QuoteSection from '@/components/home/QuoteSection';
 import { useEffect } from 'react';
