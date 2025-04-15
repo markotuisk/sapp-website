@@ -31,7 +31,7 @@ const ServiceCardsSection = () => {
       delay: 300
     },
     {
-      title: "Technology and Systems Testing",
+      title: "Technology & Systems Testing",
       description: "Technical testing of organisation's existing security and communications technology to identify any gaps and protect against physical security and cyber attacks.",
       href: "/services/technology-systems-testing",
       delay: 400
