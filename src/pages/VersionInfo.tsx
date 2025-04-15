@@ -4,11 +4,14 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Calendar, Code, RefreshCw, Clock } from 'lucide-react';
+import { ArrowLeft, Calendar, Code, RefreshCw, Clock, Layers, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { useAllVersions, useBuildInfo } from '@/hooks/useVersions';
+import { formatVersionDate } from '@/lib/versionTracker';
 
 // Get current date and time formatted nicely
 const getCurrentDateTime = () => {
@@ -30,15 +33,14 @@ const getCurrentDateTime = () => {
 
 const VersionInfo = () => {
   const currentDateTime = getCurrentDateTime();
+  const { data: versions, isLoading: versionsLoading } = useAllVersions();
+  const { buildInfo, isLoading: buildInfoLoading } = useBuildInfo();
   
-  // Real build information
-  const buildInfo = {
-    currentBuild: "1.0.0", // Initial version
-    buildDate: "2025-04-15T14:30:00", // Today with time
-    lastUpdated: currentDateTime.iso,
-    frameworkVersion: "React 18.3.1", // Real from package.json
-    tailwindVersion: "2.5.2" // Real from package.json
-  };
+  const isLoading = versionsLoading || buildInfoLoading;
+  
+  // Format dates for display
+  const buildDate = buildInfo.buildDate ? formatVersionDate(buildInfo.buildDate) : currentDateTime;
+  const lastUpdate = buildInfo.lastUpdated ? formatVersionDate(buildInfo.lastUpdated) : currentDateTime;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -66,120 +68,224 @@ const VersionInfo = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg text-sapp-dark">Current Build</CardTitle>
-              <CardDescription>Overall site version</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center mb-2">
-                <Code className="h-5 w-5 text-sapp-blue mr-2" />
-                <span className="text-2xl font-semibold">{buildInfo.currentBuild}</span>
-              </div>
-              <p className="text-sm text-sapp-gray">
-                Built on {new Date(buildInfo.buildDate).toLocaleDateString('en-GB', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })} at {new Date(buildInfo.buildDate).toLocaleTimeString('en-GB', { 
-                  hour: '2-digit', 
-                  minute: '2-digit',
-                  hour12: false 
-                })}
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card className="shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg text-sapp-dark">Technology</CardTitle>
-              <CardDescription>Framework information</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-1">
-                <div className="flex justify-between">
-                  <span className="text-sm text-sapp-gray">React:</span>
-                  <span className="font-medium">{buildInfo.frameworkVersion}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-sapp-gray">Tailwind:</span>
-                  <span className="font-medium">{buildInfo.tailwindVersion}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card className="shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg text-sapp-dark">Implementation Note</CardTitle>
-              <CardDescription>Version tracking</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm text-sapp-gray">
-                <p>This page currently shows static version information. <a href="#automation" className="text-sapp-blue hover:underline">See below</a> for automation recommendations.</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        <Card className="shadow-sm mb-8" id="automation">
-          <CardHeader>
-            <CardTitle className="text-lg text-sapp-dark">Version Tracking Automation</CardTitle>
-            <CardDescription>Recommendations for implementing automated version tracking</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <h3 className="font-semibold">Recommended Approach:</h3>
-            <ol className="list-decimal list-inside space-y-2 ml-4">
-              <li>
-                <span className="font-medium">Create a version tracking module</span>
-                <p className="text-sm text-sapp-gray ml-6 mt-1">
-                  Implement a dedicated file (e.g., <code>versionTracker.ts</code>) to store and manage version information.
-                </p>
-              </li>
-              <li>
-                <span className="font-medium">Implement a version API endpoint</span>
-                <p className="text-sm text-sapp-gray ml-6 mt-1">
-                  Add a Supabase function that returns the latest version data from your database.
-                </p>
-              </li>
-              <li>
-                <span className="font-medium">Set up a database table structure</span>
-                <p className="text-sm text-sapp-gray ml-6 mt-1">
-                  Create a <code>page_versions</code> table with fields for component ID, version, dates, and change logs.
-                </p>
-              </li>
-              <li>
-                <span className="font-medium">Integrate with your deployment process</span>
-                <p className="text-sm text-sapp-gray ml-6 mt-1">
-                  Update version numbers automatically during the CI/CD pipeline when files are changed.
-                </p>
-              </li>
-              <li>
-                <span className="font-medium">Implement version hooks</span>
-                <p className="text-sm text-sapp-gray ml-6 mt-1">
-                  Create a React hook (e.g., <code>usePageVersions</code>) to fetch version data for components.
-                </p>
-              </li>
-            </ol>
-            
-            <div className="bg-gray-50 p-4 rounded-md border border-gray-100 mt-4">
-              <h4 className="font-semibold mb-2">Suggested Database Schema:</h4>
-              <pre className="text-xs bg-gray-100 p-3 rounded overflow-x-auto">
-{`CREATE TABLE page_versions (
-  id SERIAL PRIMARY KEY,
-  component_id TEXT NOT NULL,
-  component_name TEXT NOT NULL,
-  version TEXT NOT NULL,
-  initial_date TIMESTAMP WITH TIME ZONE NOT NULL,
-  last_update TIMESTAMP WITH TIME ZONE NOT NULL,
-  update_count INTEGER NOT NULL DEFAULT 1,
-  change_log JSONB
-);`}
-              </pre>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <RefreshCw className="h-8 w-8 animate-spin text-sapp-blue" />
+            <span className="ml-3 text-lg">Loading version information...</span>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <Card className="shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-sapp-dark">Current Build</CardTitle>
+                  <CardDescription>Overall site version</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center mb-2">
+                    <Code className="h-5 w-5 text-sapp-blue mr-2" />
+                    <span className="text-2xl font-semibold">{buildInfo.currentBuild}</span>
+                  </div>
+                  <p className="text-sm text-sapp-gray">
+                    Built on {buildDate.date} at {buildDate.time}
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-sapp-dark">Technology</CardTitle>
+                  <CardDescription>Framework information</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-sapp-gray">React:</span>
+                      <span className="font-medium">{buildInfo.frameworkVersion}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-sapp-gray">Tailwind:</span>
+                      <span className="font-medium">{buildInfo.tailwindVersion}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-sapp-gray">Last Updated:</span>
+                      <span className="font-medium">{lastUpdate.date} at {lastUpdate.time}</span>
+                    </div>
+                    <div className="flex justify-between mt-2 pt-2 border-t border-gray-100">
+                      <span className="text-sm text-sapp-gray">Components:</span>
+                      <div className="flex items-center">
+                        <Layers className="h-4 w-4 mr-1 text-sapp-blue" />
+                        <span className="font-medium">{buildInfo.componentCount}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-sapp-gray">Updates:</span>
+                      <div className="flex items-center">
+                        <Activity className="h-4 w-4 mr-1 text-sapp-blue" />
+                        <span className="font-medium">{buildInfo.totalUpdates}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-sapp-dark">Version Tracking</CardTitle>
+                  <CardDescription>Implementation status</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-sm text-sapp-gray">
+                    <p className="mb-2">Automated version tracking is now active through the Supabase database.</p>
+                    <div className="flex items-center mt-2">
+                      <Badge className="bg-green-500">Active</Badge>
+                      <span className="ml-2">Database tracking enabled</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
+            
+            <Tabs defaultValue="components" className="mb-8">
+              <TabsList className="grid w-full md:w-auto grid-cols-2 md:inline-flex">
+                <TabsTrigger value="components">Components</TabsTrigger>
+                <TabsTrigger value="history">Update History</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="components" className="mt-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Component Versions</CardTitle>
+                    <CardDescription>All tracked components and their current versions</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ScrollArea className="h-[400px]">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Component</TableHead>
+                            <TableHead>Version</TableHead>
+                            <TableHead>Last Updated</TableHead>
+                            <TableHead className="text-right">Updates</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {versions && versions.map((component) => {
+                            const lastUpdate = formatVersionDate(component.last_update);
+                            return (
+                              <TableRow key={component.component_id}>
+                                <TableCell className="font-medium">{component.component_name}</TableCell>
+                                <TableCell>{component.version}</TableCell>
+                                <TableCell>{lastUpdate.date} at {lastUpdate.time}</TableCell>
+                                <TableCell className="text-right">{component.update_count}</TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </TableBody>
+                      </Table>
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="history" className="mt-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Update History</CardTitle>
+                    <CardDescription>Chronological history of all component updates</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ScrollArea className="h-[400px]">
+                      <div className="space-y-6">
+                        {versions && versions.map((component) => {
+                          const changeLog = Array.isArray(component.change_log) ? component.change_log : [];
+                          
+                          return changeLog.length > 0 ? (
+                            <div key={component.component_id} className="border-b border-gray-100 pb-5 last:border-0">
+                              <h3 className="text-lg font-semibold mb-2 flex items-center">
+                                {component.component_name}
+                                <Badge className="ml-2 bg-sapp-blue">{component.version}</Badge>
+                              </h3>
+                              
+                              <div className="space-y-3 pl-4 border-l-2 border-gray-100">
+                                {changeLog.map((entry, idx) => {
+                                  const entryDate = formatVersionDate(entry.timestamp);
+                                  return (
+                                    <div key={idx} className="relative">
+                                      <div className="absolute -left-[17px] top-2 w-3 h-3 rounded-full bg-sapp-blue"></div>
+                                      <p className="text-xs text-gray-500 mb-1">
+                                        {entryDate.date} at {entryDate.time} - Version {entry.version}
+                                      </p>
+                                      <p className="text-sm">{entry.description}</p>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ) : null;
+                        })}
+                      </div>
+                    </ScrollArea>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+            
+            <Card className="shadow-sm mb-8" id="integration">
+              <CardHeader>
+                <CardTitle className="text-lg text-sapp-dark">Integration Guide</CardTitle>
+                <CardDescription>How to track components in the SAPP Security codebase</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm">
+                  To track versions of new components or update existing ones, use the version tracking utility:
+                </p>
+                
+                <div className="bg-gray-50 p-4 rounded-md border border-gray-100 mt-4">
+                  <h4 className="font-semibold mb-2">Example Usage:</h4>
+                  <pre className="text-xs bg-gray-100 p-3 rounded overflow-x-auto">
+{`import { updateComponentVersion } from '@/lib/versionTracker';
+
+// After making changes to a component:
+updateComponentVersion(
+  'component-id',        // Unique ID for the component
+  'Component Name',      // Display name
+  '1.0.1',               // New version number
+  'Added new feature X'  // Description of changes
+);`}
+                  </pre>
+                </div>
+                
+                <h3 className="font-semibold mt-4">Implementation Steps:</h3>
+                <ol className="list-decimal list-inside space-y-2 ml-4">
+                  <li>
+                    <span className="font-medium">Import the version tracker</span>
+                    <p className="text-sm text-sapp-gray ml-6 mt-1">
+                      Add the import to your component file.
+                    </p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Call the update function when appropriate</span>
+                    <p className="text-sm text-sapp-gray ml-6 mt-1">
+                      Ideally, during your deployment process or after significant changes.
+                    </p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Use semantic versioning</span>
+                    <p className="text-sm text-sapp-gray ml-6 mt-1">
+                      Follow the pattern MAJOR.MINOR.PATCH for version numbers.
+                    </p>
+                  </li>
+                </ol>
+              </CardContent>
+              <CardFooter className="border-t pt-4">
+                <p className="text-sm text-sapp-gray">
+                  The version information is stored in a Supabase database table and accessed using secure RPC functions.
+                </p>
+              </CardFooter>
+            </Card>
+          </>
+        )}
       </main>
       
       <Footer />

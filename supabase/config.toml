@@ -1,1 +1,5 @@
+
 project_id = "zxgsqsdhnwbldytzvwsq"
+
+[functions.update-component-version]
+verify_jwt = false

@@ -84,11 +84,70 @@ export type Database = {
         }
         Relationships: []
       }
+      page_versions: {
+        Row: {
+          change_log: Json | null
+          component_id: string
+          component_name: string
+          id: number
+          initial_date: string
+          last_update: string
+          update_count: number
+          version: string
+        }
+        Insert: {
+          change_log?: Json | null
+          component_id: string
+          component_name: string
+          id?: number
+          initial_date?: string
+          last_update?: string
+          update_count?: number
+          version: string
+        }
+        Update: {
+          change_log?: Json | null
+          component_id?: string
+          component_name?: string
+          id?: number
+          initial_date?: string
+          last_update?: string
+          update_count?: number
+          version?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_all_page_versions: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          change_log: Json | null
+          component_id: string
+          component_name: string
+          id: number
+          initial_date: string
+          last_update: string
+          update_count: number
+          version: string
+        }[]
+      }
+      get_page_version: {
+        Args: { _component_id: string }
+        Returns: {
+          change_log: Json | null
+          component_id: string
+          component_name: string
+          id: number
+          initial_date: string
+          last_update: string
+          update_count: number
+          version: string
+        }[]
+      }
       get_recent_failed_logins: {
         Args: { user_email: string; minutes?: number }
         Returns: {
@@ -96,6 +155,15 @@ export type Database = {
           first_attempt: string
           last_attempt: string
         }[]
+      }
+      update_page_version: {
+        Args: {
+          _component_id: string
+          _component_name: string
+          _version: string
+          _change_description: string
+        }
+        Returns: Json
       }
     }
     Enums: {
