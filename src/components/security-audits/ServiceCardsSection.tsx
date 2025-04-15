@@ -1,14 +1,19 @@
+
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import ContactFormDialog from '@/components/ui/ContactFormDialog';
 
 const ServiceCardsSection = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState('');
   
   const auditServices = [
     {
@@ -36,6 +41,11 @@ const ServiceCardsSection = () => {
       delay: 400
     }
   ];
+
+  const handleGetDetails = (serviceName: string) => {
+    setSelectedService(serviceName);
+    setContactDialogOpen(true);
+  };
 
   return (
     <section id="security-audit-services" className="py-16 bg-slate-50" ref={ref}>
@@ -76,6 +86,7 @@ const ServiceCardsSection = () => {
                   </a>
                   <button 
                     className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+                    onClick={() => handleGetDetails(service.title)}
                   >
                     Get Details
                   </button>
@@ -85,6 +96,13 @@ const ServiceCardsSection = () => {
           ))}
         </div>
       </div>
+      
+      <ContactFormDialog 
+        open={contactDialogOpen} 
+        onOpenChange={setContactDialogOpen}
+        defaultMessage={`I'm interested in more information about your ${selectedService} service.`}
+        serviceName={selectedService}
+      />
     </section>
   );
 };

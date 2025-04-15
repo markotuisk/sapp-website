@@ -84,6 +84,36 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          organization: string | null
+          pages_visited: Json | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          organization?: string | null
+          pages_visited?: Json | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          organization?: string | null
+          pages_visited?: Json | null
+        }
+        Relationships: []
+      }
       page_versions: {
         Row: {
           change_log: Json | null
@@ -155,6 +185,16 @@ export type Database = {
           first_attempt: string
           last_attempt: string
         }[]
+      }
+      submit_contact_form: {
+        Args: {
+          name_input: string
+          email_input: string
+          organization_input: string
+          message_input: string
+          pages_visited_input: Json
+        }
+        Returns: string
       }
       update_page_version: {
         Args: {
