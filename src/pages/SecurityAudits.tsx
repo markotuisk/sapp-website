@@ -29,11 +29,11 @@ const SecurityAudits = () => {
         {/* Quote Section */}
         <QuoteSection />
 
-        {/* Main Content - Comprehensive Services */}
-        <ServiceDetailsSection />
-
-        {/* Security Audit Services Cards */}
+        {/* Security Audit Services Cards (What We Deliver) */}
         <ServiceCardsSection />
+
+        {/* Main Content - Comprehensive Services (Our Services) */}
+        <ServiceDetailsSection />
 
         {/* Image Banner Section */}
         <ImageBannerSection />
