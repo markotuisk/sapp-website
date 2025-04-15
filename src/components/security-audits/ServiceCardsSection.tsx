@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
+import { FileText, ExternalLink } from 'lucide-react';
 
 const ServiceCardsSection = () => {
   const [ref, inView] = useInView({
@@ -77,18 +78,24 @@ const ServiceCardsSection = () => {
                 <p className="text-sapp-gray text-sm mb-4 flex-grow flex items-start">{service.description}</p>
                 
                 <div className="flex flex-row gap-2 mt-2">
-                  <a href={service.href} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                  <Link 
+                    to={service.href} 
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="flex-1"
+                  >
                     <button 
-                      className="text-sm border border-sapp-blue text-sapp-dark px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md hover:bg-slate-50"
+                      className="text-sm w-full border border-slate-200 text-sapp-dark px-4 py-2 rounded-m d font-medium transition-all duration-200 ease-in-out hover:bg-slate-50 hover:border-slate-300 flex items-center justify-center gap-1"
                     >
-                      Read More
+                      <FileText className="h-3.5 w-3.5" />
+                      <span>Read More</span>
                     </button>
-                  </a>
+                  </Link>
                   <button 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+                    className="flex-1 bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:shadow-md flex items-center justify-center gap-1.5"
                     onClick={() => handleGetDetails(service.title)}
                   >
-                    Get Details
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    <span>Get Details</span>
                   </button>
                 </div>
               </div>

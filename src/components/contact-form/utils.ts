@@ -2,13 +2,13 @@
 import { ContactFormValues } from './types';
 
 export const formatEmailPreview = (values: ContactFormValues, serviceName?: string) => {
-  return `
-From: ${values.name} <${values.email}>
-Organization: ${values.organization || 'Not provided'}
-Message:
-${values.message}
-
-Sent from: Security Audits page
-${serviceName ? `Regarding: ${serviceName}` : ''}
-  `.trim();
+  const parts = [
+    `From: ${values.name} <${values.email}>`,
+    values.organization ? `Organization: ${values.organization}` : 'Organization: Not provided',
+    `Message:\n${values.message}`,
+    `\nSent from: Security Audits page`,
+    serviceName ? `Regarding: ${serviceName}` : ''
+  ];
+  
+  return parts.filter(Boolean).join('\n');
 };
