@@ -7,13 +7,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAllVersions, useBuildInfo } from '@/hooks/useVersions';
 import { formatVersionDate } from '@/lib/versionTracker';
 
-// Import refactored components
+// Import components
 import { getCurrentDateTime } from '@/components/version-info/VersionInfoUtils';
 import LoadingState from '@/components/version-info/LoadingState';
 import VersionInfoHeader from '@/components/version-info/VersionInfoHeader';
 import SummaryCards from '@/components/version-info/SummaryCards';
 import ComponentsTab from '@/components/version-info/ComponentsTab';
 import HistoryTab from '@/components/version-info/HistoryTab';
+import CodebaseMetrics from '@/components/version-info/CodebaseMetrics';
 
 const VersionInfo = () => {
   const currentDateTime = getCurrentDateTime();
@@ -48,6 +49,9 @@ const VersionInfo = () => {
               buildDate={buildDate} 
               lastUpdate={lastUpdate} 
             />
+            
+            {/* Add the new codebase metrics component */}
+            <CodebaseMetrics versions={versions} />
             
             <Tabs defaultValue="components" className="mb-8">
               <TabsList className="grid w-full md:w-auto grid-cols-2 md:inline-flex">
