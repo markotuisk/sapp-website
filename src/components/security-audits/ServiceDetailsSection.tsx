@@ -11,15 +11,15 @@ const ServiceDetailsSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Services</h3>
+            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Traditional and New Industries</h3>
           </div>
           
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-            Comprehensive Security Audit Services
+            Who should commission a security audit?
           </h2>
           
           <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
-            The objective of our security audit is to detect and identify any potential gaps and oversights providing detailed risk-based recommendations for improvement. We use a methodical approach to ensure all aspects of your security are thoroughly evaluated.
+            Our security audits are used by traditional corporations such as financial organisations, law firms, pharmaceuticals, energy companies, data centres, retailers, diplomatic facilities and so on. In addition to this, SAPP Security is uniquely positioned to deliver external audits to emerging industries.
           </p>
         </div>
         
@@ -28,23 +28,23 @@ const ServiceDetailsSection = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <Animated animation="fade-up" delay={150} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
                 <Shield className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Diplomatic Facilities</h4>
-                <p className="text-sm text-sapp-gray">Protection strategies for embassies, consulates, and treaty negotiation sites.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">International Sports</h4>
+                <p className="text-sm text-sapp-gray">TSCM and information security support to premier league sports teams.</p>
               </Animated>
               <Animated animation="fade-up" delay={200} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
                 <FileText className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Tech Labs</h4>
-                <p className="text-sm text-sapp-gray">Assessments for ultra-sensitive R&D environments handling next-gen computation.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">Technology Labs</h4>
+                <p className="text-sm text-sapp-gray">Security Assessments for ultra-sensitive R&D environments handling next-gen computations.</p>
               </Animated>
               <Animated animation="fade-up" delay={250} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
                 <FileCheck className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Esports Headquarters</h4>
-                <p className="text-sm text-sapp-gray">Security compliance and TSCM support for competitive gaming ecosystems.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">Vehicle Audits</h4>
+                <p className="text-sm text-sapp-gray">Certified security and TSCM inspections for cars, planes, yachts and other vehicles.</p>
               </Animated>
               <Animated animation="fade-up" delay={300} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
                 <Lock className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Pharma & Biosecurity Sites</h4>
-                <p className="text-sm text-sapp-gray">Evaluation of biotech research and high-containment laboratory protocols.</p>
+                <h4 className="font-semibold text-sapp-dark mb-1">International Gaming</h4>
+                <p className="text-sm text-sapp-gray">Security compliance and robust TSCM measures for competitive gaming ecosystems.</p>
               </Animated>
             </div>
             <Button 
