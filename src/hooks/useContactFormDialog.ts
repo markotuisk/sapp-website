@@ -5,12 +5,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ContactFormValues, contactFormSchema } from '@/components/contact-form/types';
+import { ContactFormValues, contactFormSchema } from '@/components/home/contact/types';
 import { formatEmailPreview } from '@/components/contact-form/utils';
 
 export function useContactFormDialog(
   defaultMessage: string = '',
-  serviceName?: string,
+  serviceName: string = '',
   onOpenChange: (open: boolean) => void
 ) {
   const [step, setStep] = useState(1); // 1: form, 2: preview, 3: success
