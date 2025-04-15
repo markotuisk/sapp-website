@@ -19,13 +19,27 @@ import { Toaster } from 'sonner';
 
 const VersionInfo = () => {
   const currentDateTime = getCurrentDateTime();
-  const { data: versions = [], isLoading: versionsLoading, refetch } = useAllVersions();
-  const { buildInfo, isLoading: buildInfoLoading } = useBuildInfo();
+  const { 
+    data: versions = [], 
+    isLoading: versionsLoading, 
+    refetch: refetchVersions 
+  } = useAllVersions();
+  
+  const { 
+    buildInfo, 
+    isLoading: buildInfoLoading,
+    refetch: refetchBuildInfo
+  } = useBuildInfo();
   
   const isLoading = versionsLoading || buildInfoLoading;
   
   const buildDate = buildInfo.buildDate ? formatVersionDate(buildInfo.buildDate) : currentDateTime;
   const lastUpdate = buildInfo.lastUpdated ? formatVersionDate(buildInfo.lastUpdated) : currentDateTime;
+
+  const handleRefresh = async () => {
+    await refetchVersions();
+    await refetchBuildInfo();
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">

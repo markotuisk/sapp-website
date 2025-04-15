@@ -35,7 +35,7 @@ export const groupComponents = (versions: VersionInfo[]) => {
     'Other': []
   };
 
-  if (!versions) return groups;
+  if (!versions || versions.length === 0) return groups;
 
   versions.forEach(component => {
     const id = component.component_id.toLowerCase();
@@ -85,6 +85,7 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
     };
   }
 
+  // Calculate directly from the database data
   const totalComponents = versions.length;
   const totalUpdates = versions.reduce((total, component) => total + component.update_count, 0);
   
@@ -104,15 +105,20 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
     }
   });
   
-  // Determine trend (in a real app, you'd compare to previous weeks)
-  const averageUpdatesPerWeek = totalUpdates / Math.max(1, totalComponents);
-  const trend = lastWeekUpdates > averageUpdatesPerWeek ? 'increasing' : 
-               lastWeekUpdates < averageUpdatesPerWeek ? 'decreasing' : 'stable';
+  // Determine trend
+  let trend: 'increasing' | 'decreasing' | 'stable' = 'stable';
+  
+  // Only calculate trend if we have components to analyze
+  if (totalComponents > 0) {
+    const averageUpdatesPerWeek = totalUpdates / totalComponents;
+    trend = lastWeekUpdates > averageUpdatesPerWeek ? 'increasing' : 
+           lastWeekUpdates < averageUpdatesPerWeek ? 'decreasing' : 'stable';
+  }
   
   return {
     totalComponents,
     totalUpdates,
-    changeRate: +(totalUpdates / Math.max(1, totalComponents)).toFixed(1),
+    changeRate: totalComponents > 0 ? +(totalUpdates / totalComponents).toFixed(1) : 0,
     lastWeekUpdates,
     trend
   };

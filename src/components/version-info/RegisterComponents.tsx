@@ -13,9 +13,16 @@ export const RegisterComponents = () => {
     setIsRegistering(true);
     try {
       const result = await registerAllComponents();
-      toast.success(`Components registered successfully: ${result.length} components`);
-      // Invalidate the versions query to refresh data
+      const successCount = result.filter(item => item.status === 'success').length;
+      toast.success(`Components registered successfully: ${successCount} components`);
+      
+      // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ['versions'] });
+      
+      // Add a small delay to ensure the database has time to update
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['versions'] });
+      }, 1000);
     } catch (error) {
       console.error('Failed to register components:', error);
       toast.error('Failed to register components');
