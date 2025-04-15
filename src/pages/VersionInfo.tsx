@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -7,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAllVersions, useBuildInfo } from '@/hooks/useVersions';
 import { formatVersionDate } from '@/lib/versionTracker';
 
-// Import components
 import { getCurrentDateTime } from '@/components/version-info/VersionInfoUtils';
 import LoadingState from '@/components/version-info/LoadingState';
 import VersionInfoHeader from '@/components/version-info/VersionInfoHeader';
@@ -15,6 +13,7 @@ import SummaryCards from '@/components/version-info/SummaryCards';
 import ComponentsTab from '@/components/version-info/ComponentsTab';
 import HistoryTab from '@/components/version-info/HistoryTab';
 import CodebaseMetrics from '@/components/version-info/CodebaseMetrics';
+import { RegisterComponents } from '@/components/version-info/RegisterComponents';
 
 const VersionInfo = () => {
   const currentDateTime = getCurrentDateTime();
@@ -23,7 +22,6 @@ const VersionInfo = () => {
   
   const isLoading = versionsLoading || buildInfoLoading;
   
-  // Format dates for display
   const buildDate = buildInfo.buildDate ? formatVersionDate(buildInfo.buildDate) : currentDateTime;
   const lastUpdate = buildInfo.lastUpdated ? formatVersionDate(buildInfo.lastUpdated) : currentDateTime;
 
@@ -36,7 +34,6 @@ const VersionInfo = () => {
       
       <Navbar />
       
-      {/* Added proper top padding to fix navigation overlap */}
       <main className="container mx-auto px-4 pt-32 pb-8">
         <VersionInfoHeader currentDateTime={currentDateTime} />
         
@@ -44,13 +41,14 @@ const VersionInfo = () => {
           <LoadingState />
         ) : (
           <>
+            <RegisterComponents />
+            
             <SummaryCards 
               buildInfo={buildInfo} 
               buildDate={buildDate} 
               lastUpdate={lastUpdate} 
             />
             
-            {/* Add the new codebase metrics component */}
             <CodebaseMetrics versions={versions} />
             
             <Tabs defaultValue="components" className="mb-8">
