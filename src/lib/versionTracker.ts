@@ -1,6 +1,12 @@
 
 import { supabase } from "@/integrations/supabase/client";
 
+export type ChangeLogEntry = {
+  timestamp: string;
+  version: string;
+  description: string;
+};
+
 export type VersionInfo = {
   id: number;
   component_id: string;
@@ -10,12 +16,6 @@ export type VersionInfo = {
   last_update: string;
   update_count: number;
   change_log: ChangeLogEntry[];
-};
-
-export type ChangeLogEntry = {
-  timestamp: string;
-  version: string;
-  description: string;
 };
 
 /**
@@ -40,7 +40,7 @@ export const updateComponentVersion = async (
       return null;
     }
 
-    return data as unknown as VersionInfo;
+    return data as VersionInfo;
   } catch (error) {
     console.error('Exception updating version:', error);
     return null;
