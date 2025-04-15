@@ -73,8 +73,19 @@ export default function ContactFormDialog({
   const handleFinalSubmit = async () => {
     const values = form.getValues();
     setIsSubmitting(true);
+    
     try {
-      const { data, error } = await supabase.rpc('submit_contact_form', {
+      // Log the submission attempt with sanitized data
+      console.log('Submitting contact form', {
+        name: values.name,
+        email: values.email,
+        hasOrganization: !!values.organization,
+        messageLength: values.message.length,
+        route: location.pathname
+      });
+
+      // First, submit the contact form to the database
+      const { data: submissionData, error: submissionError } = await supabase.rpc('submit_contact_form', {
         name_input: values.name,
         email_input: values.email,
         organization_input: values.organization || null,
@@ -82,30 +93,40 @@ export default function ContactFormDialog({
         pages_visited_input: visitedPages
       });
 
-      if (error) throw error;
+      if (submissionError) {
+        console.error('Database submission error:', submissionError);
+        throw submissionError;
+      }
 
+      // If database submission is successful, send emails via edge function
       const emailResponse = await supabase.functions.invoke('send-contact-confirmation', {
         body: JSON.stringify({
           name: values.name,
           email: values.email,
           organization: values.organization,
           message: values.message,
-          leadId: data[0].lead_id
+          leadId: submissionData[0].lead_id,
+          route: location.pathname
         })
       });
 
+      if (emailResponse.error) {
+        console.error('Email sending error:', emailResponse.error);
+        throw new Error('Failed to send confirmation emails');
+      }
+
       toast({
         title: "Message sent successfully",
-        description: `Your inquiry has been received. Reference number: ${data[0].lead_id}`,
+        description: `Your inquiry has been received. Reference number: ${submissionData[0].lead_id}`,
       });
       
       onOpenChange(false);
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Comprehensive contact form submission error:', error);
       toast({
         variant: "destructive",
         title: "Failed to send message",
-        description: "Please try again later.",
+        description: "Please try again later or contact support if the issue persists.",
       });
     } finally {
       setIsSubmitting(false);
