@@ -1,9 +1,7 @@
-
 import { Mail, Phone, MapPin, Linkedin, Twitter, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-// Custom TikTok icon since it's not available in lucide-react
 const TikTokIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +19,6 @@ const TikTokIcon = () => (
   </svg>
 );
 
-// Custom SAPP Security logo component
 const SAPPLogo = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +45,6 @@ const Footer = () => {
     <footer className="bg-sapp-dark text-white pt-16 pb-8">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Company info - Updated with new logo */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <SAPPLogo />
@@ -72,7 +68,6 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Services links */}
           <div>
             <h3 className="font-display text-lg font-semibold mb-6">Services</h3>
             <ul className="space-y-4">
@@ -99,7 +94,6 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Company links */}
           <div>
             <h3 className="font-display text-lg font-semibold mb-6">Company</h3>
             <ul className="space-y-4">
@@ -126,7 +120,6 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Contact */}
           <div>
             <h3 className="font-display text-lg font-semibold mb-6">Contact</h3>
             <ul className="space-y-4">
@@ -157,13 +150,12 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-gray-800 text-center md:flex md:justify-between md:items-center">
           <p className="text-gray-500 text-sm">
             © {currentYear} SAPP Security. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
-            <ul className="flex justify-center md:justify-end space-x-6">
+            <ul className="flex justify-center md:justify-end space-x-6 items-center">
               <li>
                 <a href="#" className="text-gray-500 hover:text-sapp-blue transition-colors text-sm">
                   Terms
@@ -179,7 +171,7 @@ const Footer = () => {
                   Cookies
                 </a>
               </li>
-              <li>
+              <li className="flex items-center">
                 <Link to="/version-info" className="text-gray-500 hover:text-sapp-blue transition-colors text-sm flex items-center">
                   <Info className="h-3 w-3 mr-1" />
                   Version
