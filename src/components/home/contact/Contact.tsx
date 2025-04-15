@@ -40,7 +40,7 @@ const Contact = () => {
     defaultValues: {
       name: "",
       email: "",
-      company: "",
+      organization: "",
       phone: "",
       topic: "",
       message: "",

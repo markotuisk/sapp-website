@@ -9,9 +9,9 @@ import { ContactFormValues, contactFormSchema } from '@/components/home/contact/
 import { formatEmailPreview } from '@/components/contact-form/utils';
 
 export function useContactFormDialog(
+  onOpenChange: (open: boolean) => void,
   defaultMessage: string = '',
-  serviceName: string = '',
-  onOpenChange: (open: boolean) => void
+  serviceName: string = ''
 ) {
   const [step, setStep] = useState(1); // 1: form, 2: preview, 3: success
   const [isSubmitting, setIsSubmitting] = useState(false);

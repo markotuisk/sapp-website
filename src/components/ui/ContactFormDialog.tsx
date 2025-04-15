@@ -29,7 +29,7 @@ export default function ContactFormDialog({
     handleDialogClose,
     handleBackToEdit,
     handleSuccessClose
-  } = useContactFormDialog(defaultMessage, serviceName, onOpenChange);
+  } = useContactFormDialog(onOpenChange, defaultMessage, serviceName);
 
   // Determine dialog content classes based on step
   const getDialogContentClass = () => {

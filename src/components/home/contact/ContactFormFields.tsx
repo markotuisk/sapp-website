@@ -1,4 +1,3 @@
-
 import { UseFormReturn } from "react-hook-form";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -121,9 +120,9 @@ export default function ContactFormFields({ form, messageLength, topics }: Conta
 
         <FormField
           control={form.control}
-          name="company"
+          name="organization"
           render={({ field }) => {
-            const status = getFieldValidationStatus("company");
+            const status = getFieldValidationStatus("organization");
             return (
               <FormItem className="space-y-2">
                 <FormLabel className={cn(

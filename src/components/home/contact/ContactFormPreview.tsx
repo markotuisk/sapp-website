@@ -56,10 +56,10 @@ export default function ContactFormPreview({
                 </div>
               )}
 
-              {submissionData.company && (
+              {submissionData.organization && (
                 <div className="space-y-2">
                   <h4 className="font-semibold text-sm text-muted-foreground">Company</h4>
-                  <p className="text-sapp-dark">{submissionData.company}</p>
+                  <p className="text-sapp-dark">{submissionData.organization}</p>
                 </div>
               )}
             </div>
