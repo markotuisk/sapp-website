@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -14,10 +15,11 @@ import ComponentsTab from '@/components/version-info/ComponentsTab';
 import HistoryTab from '@/components/version-info/HistoryTab';
 import CodebaseMetrics from '@/components/version-info/CodebaseMetrics';
 import { RegisterComponents } from '@/components/version-info/RegisterComponents';
+import { Toaster } from 'sonner';
 
 const VersionInfo = () => {
   const currentDateTime = getCurrentDateTime();
-  const { data: versions, isLoading: versionsLoading } = useAllVersions();
+  const { data: versions = [], isLoading: versionsLoading, refetch } = useAllVersions();
   const { buildInfo, isLoading: buildInfoLoading } = useBuildInfo();
   
   const isLoading = versionsLoading || buildInfoLoading;
@@ -70,6 +72,7 @@ const VersionInfo = () => {
       </main>
       
       <Footer />
+      <Toaster position="top-right" />
     </div>
   );
 };
