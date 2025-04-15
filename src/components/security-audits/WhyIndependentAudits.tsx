@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -15,25 +14,25 @@ const WhyIndependentAudits = () => {
   const features = [
     {
       title: "Professional Competence",
-      description: "Our audit teams are competent and experienced security professionals.",
+      description: "Engage with competent and experienced security professionals.",
       icon: Shield,
       delay: 100
     },
     {
       title: "Objective Assessment",
-      description: "External teams deliver an objective evaluation of your information security status.",
+      description: "Commission an objective evaluation of your information security status.",
       icon: FileText,
       delay: 200
     },
     {
       title: "Best Industry Practises",
-      description: "Independent security audits deliver compliance with international best practises.",
+      description: "Commission an objective evaluation of your information security status.",
       icon: FileCheck,
       delay: 300
     },
     {
       title: "Security Resilience",
-      description: "Security audits objectively identify any gaps and improve your security posture.",
+      description: "Deliver compliance with international best practises.",
       icon: Lock,
       delay: 400
     }
@@ -96,4 +95,3 @@ const WhyIndependentAudits = () => {
 };
 
 export default WhyIndependentAudits;
-

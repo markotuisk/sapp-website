@@ -12,9 +12,9 @@ const QuoteSection = () => {
           </div>
         </div>
         <QuoteCard
-          quote="Security isn't something you buy, it's something you do, and it takes trained professionals to do it effectively."
-          author="Bruce Schneier"
-          position="Security Technologist"
+          quote="An external security audit provides credibility and confidence to management and shareholders that organisation is compliant and best protected against any information security risks."
+          author="SAPP Customer"
+          position="Global Head of Security, International Technology Firm"
         />
       </div>
     </section>
