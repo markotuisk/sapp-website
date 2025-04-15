@@ -7,9 +7,9 @@ const InsightQuote = () => {
   return (
     <Animated animation="fade-up" delay={100}>
       <QuoteCard
-        quote="The best security assessment approach is to think like an attacker."
-        author="Bruce Schneier"
-        position="Security Technologist"
+        quote="We recognise that security is a cost item and a hard sell. Our commercial skills and expertise help and support your internal security sell."
+        author="Raili Maripuu"
+        position="SAPP Founder and Commercial Director"
       />
     </Animated>
   );
