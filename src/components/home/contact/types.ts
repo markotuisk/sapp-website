@@ -21,4 +21,7 @@ export interface UserMetadata {
   timezone: string;
   browser: string;
   device: string;
+  os?: string;
+  referrer?: string;
+  screenSize?: string;
 }

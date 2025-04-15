@@ -2,6 +2,7 @@
 import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { forwardRef } from 'react';
 
 interface ContactInfoCardProps {
   icon: React.ReactNode;
@@ -14,7 +15,7 @@ interface ContactInfoCardProps {
   inView: boolean;
 }
 
-export default function ContactInfoCard({
+const ContactInfoCard = forwardRef<HTMLDivElement, ContactInfoCardProps>(({
   icon,
   title,
   details,
@@ -23,13 +24,15 @@ export default function ContactInfoCard({
   copied,
   index,
   inView
-}: ContactInfoCardProps) {
+}, ref) => {
   return (
     <div 
+      ref={ref}
       className={cn(
         "bg-white rounded-xl p-6 shadow-md border border-gray-100 flex items-center transition-all duration-700 hover:shadow-xl hover:scale-[1.02]",
-        inView ? `opacity-100 translate-y-0 delay-[${index * 100}ms]` : "opacity-0 translate-y-10"
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       )}
+      style={{ transitionDelay: `${index * 100}ms` }}
     >
       <div className="bg-sapp-blue/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 mr-4">
         {icon}
@@ -60,4 +63,8 @@ export default function ContactInfoCard({
       </div>
     </div>
   );
-}
+});
+
+ContactInfoCard.displayName = "ContactInfoCard";
+
+export default ContactInfoCard;
