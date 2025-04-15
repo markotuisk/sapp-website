@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Mail, User, Building2, Send, Check, AlertTriangle } from 'lucide-react';
@@ -42,7 +41,6 @@ export default function ContactFormDialog({
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Initialize form with react-hook-form
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -53,7 +51,6 @@ export default function ContactFormDialog({
     },
   });
 
-  // Track page visits
   useEffect(() => {
     setVisitedPages(prev => {
       const newPages = { ...prev };
@@ -63,7 +60,6 @@ export default function ContactFormDialog({
     });
   }, [location.pathname]);
 
-  // Reset form and step when dialog opens
   useEffect(() => {
     if (open) {
       setStep(1);
@@ -76,7 +72,6 @@ export default function ContactFormDialog({
     }
   }, [open, form, defaultMessage]);
 
-  // Format the email preview
   const formatEmailPreview = (values: ContactFormValues) => {
     return `
 From: ${values.name} <${values.email}>
@@ -89,10 +84,8 @@ ${serviceName ? `Regarding: ${serviceName}` : ''}
     `.trim();
   };
 
-  // Handle form submission
   const onSubmit = async (values: ContactFormValues) => {
     if (step === 1) {
-      // Format the email for preview
       setFormattedEmail(formatEmailPreview(values));
       setStep(2);
       return;
@@ -100,7 +93,6 @@ ${serviceName ? `Regarding: ${serviceName}` : ''}
 
     setIsSubmitting(true);
     try {
-      // Submit to Supabase
       const { data, error } = await supabase.rpc('submit_contact_form', {
         name_input: values.name,
         email_input: values.email,
@@ -111,13 +103,21 @@ ${serviceName ? `Regarding: ${serviceName}` : ''}
 
       if (error) throw error;
 
-      // Show success message
+      const emailResponse = await supabase.functions.invoke('send-contact-confirmation', {
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          organization: values.organization,
+          message: values.message,
+          leadId: data[0].lead_id
+        })
+      });
+
       toast({
         title: "Message sent successfully",
-        description: "We'll get back to you soon!",
+        description: `Your inquiry has been received. Reference number: ${data[0].lead_id}`,
       });
       
-      // Close dialog
       onOpenChange(false);
     } catch (error) {
       console.error('Error sending message:', error);
@@ -131,7 +131,6 @@ ${serviceName ? `Regarding: ${serviceName}` : ''}
     }
   };
 
-  // Handle back button in preview
   const handleBackToEdit = () => {
     setStep(1);
   };

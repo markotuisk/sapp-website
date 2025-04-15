@@ -89,6 +89,7 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          lead_id: string | null
           message: string
           name: string
           organization: string | null
@@ -98,6 +99,7 @@ export type Database = {
           created_at?: string
           email: string
           id?: string
+          lead_id?: string | null
           message: string
           name: string
           organization?: string | null
@@ -107,6 +109,7 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+          lead_id?: string | null
           message?: string
           name?: string
           organization?: string | null
@@ -165,6 +168,19 @@ export type Database = {
           version: string
         }[]
       }
+      get_contact_submission: {
+        Args: { submission_id: string }
+        Returns: {
+          id: string
+          lead_id: string
+          name: string
+          email: string
+          organization: string
+          message: string
+          pages_visited: Json
+          created_at: string
+        }[]
+      }
       get_page_version: {
         Args: { _component_id: string }
         Returns: {
@@ -194,7 +210,10 @@ export type Database = {
           message_input: string
           pages_visited_input: Json
         }
-        Returns: string
+        Returns: {
+          id: string
+          lead_id: string
+        }[]
       }
       update_page_version: {
         Args: {
