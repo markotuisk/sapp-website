@@ -1,25 +1,15 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Mail, User, Building2, Send, Check, AlertTriangle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-const contactFormSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
-  email: z.string().email({ message: 'Please enter a valid email address' }),
-  organization: z.string().optional(),
-  message: z.string().min(5, { message: 'Message must be at least 5 characters' }),
-});
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+import ContactFormStep from '@/components/contact-form/ContactFormStep';
+import ContactFormReview from '@/components/contact-form/ContactFormReview';
+import { ContactFormValues, contactFormSchema } from '@/components/contact-form/types';
+import { formatEmailPreview } from '@/components/contact-form/utils';
 
 interface ContactFormDialogProps {
   open: boolean;
@@ -72,25 +62,16 @@ export default function ContactFormDialog({
     }
   }, [open, form, defaultMessage]);
 
-  const formatEmailPreview = (values: ContactFormValues) => {
-    return `
-From: ${values.name} <${values.email}>
-Organization: ${values.organization || 'Not provided'}
-Message:
-${values.message}
-
-Sent from: Security Audits page
-${serviceName ? `Regarding: ${serviceName}` : ''}
-    `.trim();
-  };
-
-  const onSubmit = async (values: ContactFormValues) => {
+  const handleFormSubmit = (values: ContactFormValues) => {
     if (step === 1) {
-      setFormattedEmail(formatEmailPreview(values));
+      setFormattedEmail(formatEmailPreview(values, serviceName));
       setStep(2);
       return;
     }
+  };
 
+  const handleFinalSubmit = async () => {
+    const values = form.getValues();
     setIsSubmitting(true);
     try {
       const { data, error } = await supabase.rpc('submit_contact_form', {
@@ -148,116 +129,17 @@ ${serviceName ? `Regarding: ${serviceName}` : ''}
         </DialogHeader>
 
         {step === 1 ? (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <div className="flex border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-                        <div className="flex items-center p-2 bg-gray-50 border-r rounded-l-md">
-                          <User className="h-4 w-4 text-gray-500" />
-                        </div>
-                        <Input className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0" placeholder="Your name" {...field} />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <div className="flex border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-                        <div className="flex items-center p-2 bg-gray-50 border-r rounded-l-md">
-                          <Mail className="h-4 w-4 text-gray-500" />
-                        </div>
-                        <Input className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0" placeholder="your.email@company.com" type="email" {...field} />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="organization"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Organization (Optional)</FormLabel>
-                    <FormControl>
-                      <div className="flex border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-                        <div className="flex items-center p-2 bg-gray-50 border-r rounded-l-md">
-                          <Building2 className="h-4 w-4 text-gray-500" />
-                        </div>
-                        <Input className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0" placeholder="Your organization" {...field} />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Message</FormLabel>
-                    <FormControl>
-                      <Textarea 
-                        placeholder="Please tell us about your needs..." 
-                        className="min-h-[120px]" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <DialogFooter>
-                <Button type="submit">
-                  Continue
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
+          <ContactFormStep 
+            form={form} 
+            onSubmit={handleFormSubmit} 
+          />
         ) : (
-          <div className="space-y-4">
-            <div className="border rounded-md p-4 bg-slate-50 font-mono text-sm whitespace-pre-wrap">
-              {formattedEmail}
-            </div>
-            
-            <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-between">
-              <Button variant="outline" onClick={handleBackToEdit} disabled={isSubmitting}>
-                Back to Edit
-              </Button>
-              <Button 
-                onClick={form.handleSubmit(onSubmit)} 
-                disabled={isSubmitting}
-                className="gap-2"
-              >
-                {isSubmitting ? (
-                  <>Sending...</>
-                ) : (
-                  <>
-                    Send Message
-                    <Send className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </DialogFooter>
-          </div>
+          <ContactFormReview 
+            formattedEmail={formattedEmail}
+            onBackToEdit={handleBackToEdit}
+            onSubmit={handleFinalSubmit}
+            isSubmitting={isSubmitting}
+          />
         )}
       </DialogContent>
     </Dialog>
