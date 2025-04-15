@@ -98,6 +98,8 @@ export default function ContactFormDialog({
         throw submissionError;
       }
 
+      console.log('Form successfully submitted to database. Lead ID:', submissionData[0].lead_id);
+
       // If database submission is successful, send emails via edge function
       const emailResponse = await supabase.functions.invoke('send-contact-confirmation', {
         body: JSON.stringify({
@@ -110,15 +112,25 @@ export default function ContactFormDialog({
         })
       });
 
-      if (emailResponse.error) {
-        console.error('Email sending error:', emailResponse.error);
-        throw new Error('Failed to send confirmation emails');
-      }
+      // Log the email response for debugging
+      console.log('Email service response:', emailResponse);
 
-      toast({
-        title: "Message sent successfully",
-        description: `Your inquiry has been received. Reference number: ${submissionData[0].lead_id}`,
-      });
+      // Check if there's an error with sending emails
+      if (emailResponse.error) {
+        console.warn('Email sending error:', emailResponse.error);
+        // We don't throw here because we've already stored the submission in the database
+        // Instead, we show a partial success message
+        toast({
+          title: "Message received",
+          description: `Your inquiry has been logged (Reference: ${submissionData[0].lead_id}), but there was an issue sending confirmation emails. Our team will contact you soon.`,
+        });
+      } else {
+        // Complete success
+        toast({
+          title: "Message sent successfully",
+          description: `Your inquiry has been received. Reference number: ${submissionData[0].lead_id}`,
+        });
+      }
       
       onOpenChange(false);
     } catch (error) {

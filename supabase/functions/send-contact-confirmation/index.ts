@@ -22,7 +22,12 @@ interface ContactSubmission {
   organization?: string;
   message: string;
   leadId: string;
+  route?: string;
 }
+
+// Flag to determine if we should use a verified domain
+// Set to false if the custom domain is not yet verified
+const isCustomDomainVerified = false;
 
 serve(async (req) => {
   console.log(`Request received: ${req.method} ${new URL(req.url).pathname}`);
@@ -42,6 +47,7 @@ serve(async (req) => {
         name: submissionData.name,
         email: submissionData.email,
         leadId: submissionData.leadId,
+        route: submissionData.route || 'Not specified',
         // Not logging full message for privacy reasons
         messageLength: submissionData.message?.length || 0
       });
@@ -112,8 +118,13 @@ serve(async (req) => {
  */
 async function sendCustomerEmail(data: ContactSubmission) {
   try {
+    // Use either custom domain or fallback to Resend's default domain
+    const from = isCustomDomainVerified 
+      ? "SAPP Security <contact@sappsecurity.com>"
+      : "SAPP Security <onboarding@resend.dev>";
+    
     const response = await resend.emails.send({
-      from: "SAPP Security <contact@sappsecurity.com>",
+      from,
       to: [data.email],
       subject: "We've Received Your Inquiry",
       html: `
@@ -124,6 +135,9 @@ async function sendCustomerEmail(data: ContactSubmission) {
         <br>
         <p>Best regards,<br>SAPP Security Team</p>
       `,
+      // Optional: Track opens and clicks
+      track_opens: true,
+      track_clicks: true,
     });
     
     return response;
@@ -138,9 +152,17 @@ async function sendCustomerEmail(data: ContactSubmission) {
  */
 async function sendInternalEmail(data: ContactSubmission) {
   try {
+    // Use either custom domain or fallback to Resend's default domain
+    const from = isCustomDomainVerified 
+      ? "SAPP Security Contact Form <contact@sappsecurity.com>"
+      : "SAPP Security Contact Form <onboarding@resend.dev>";
+    
+    // Use either the verified domain email or another email that can receive notifications
+    const to = ["your-verified-email@example.com"]; // Replace with your actual email
+
     const response = await resend.emails.send({
-      from: "SAPP Security Contact Form <contact@sappsecurity.com>",
-      to: ["contact@sappsecurity.com"],
+      from,
+      to,
       subject: `New Contact Submission from ${data.name}`,
       html: `
         <h1>New Contact Form Submission</h1>
@@ -148,9 +170,13 @@ async function sendInternalEmail(data: ContactSubmission) {
         <p><strong>Email:</strong> ${data.email}</p>
         ${data.organization ? `<p><strong>Organization:</strong> ${data.organization}</p>` : ''}
         <p><strong>Lead ID:</strong> ${data.leadId}</p>
+        <p><strong>Submitted from:</strong> ${data.route || 'Not specified'}</p>
         <h2>Message:</h2>
         <p>${data.message}</p>
       `,
+      // Optional: Track opens and clicks  
+      track_opens: true,
+      track_clicks: true,
     });
     
     return response;
