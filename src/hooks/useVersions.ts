@@ -30,7 +30,7 @@ export const useComponentVersion = (componentId: string) => {
  * Custom hook to get build information from all version data
  */
 export const useBuildInfo = () => {
-  const { data: versions, isLoading, error } = useAllVersions();
+  const { data: versions, isLoading, error, refetch } = useAllVersions();
   const [buildInfo, setBuildInfo] = useState({
     currentBuild: '',
     buildDate: '',
@@ -64,6 +64,7 @@ export const useBuildInfo = () => {
   return {
     buildInfo,
     isLoading,
-    error
+    error,
+    refetch // Return the refetch function from useAllVersions
   };
 };
