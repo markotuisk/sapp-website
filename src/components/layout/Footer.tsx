@@ -1,5 +1,5 @@
 
-import { Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -178,6 +178,12 @@ const Footer = () => {
                 <a href="#" className="text-gray-500 hover:text-sapp-blue transition-colors text-sm">
                   Cookies
                 </a>
+              </li>
+              <li>
+                <Link to="/version-info" className="text-gray-500 hover:text-sapp-blue transition-colors text-sm flex items-center">
+                  <Info className="h-3 w-3 mr-1" />
+                  Version
+                </Link>
               </li>
             </ul>
           </div>

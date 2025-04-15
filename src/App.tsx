@@ -20,6 +20,7 @@ import EventMonitoring from "./pages/services/EventMonitoring";
 import SecureTechnology from "./pages/services/SecureTechnology";
 import CloseProtection from "./pages/services/CloseProtection";
 import CookieConsent from "./components/ui/CookieConsent";
+import VersionInfo from "./pages/VersionInfo"; // Add import for new page
 
 // Installation subpage imports
 import CCTVAccess from "./pages/installations/CCTVAccess";
@@ -57,6 +58,7 @@ const App = () => {
                   <Route path="/installations" element={<Installations />} />
                   <Route path="/cyber-security" element={<CyberSecurity />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/version-info" element={<VersionInfo />} /> {/* Add new route */}
                   
                   {/* Service Detail Pages */}
                   <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
