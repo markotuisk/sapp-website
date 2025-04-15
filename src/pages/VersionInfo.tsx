@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -230,60 +229,6 @@ const VersionInfo = () => {
                 </Card>
               </TabsContent>
             </Tabs>
-            
-            <Card className="shadow-sm mb-8" id="integration">
-              <CardHeader>
-                <CardTitle className="text-lg text-sapp-dark">Integration Guide</CardTitle>
-                <CardDescription>How to track components in the SAPP Security codebase</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm">
-                  To track versions of new components or update existing ones, use the version tracking utility:
-                </p>
-                
-                <div className="bg-gray-50 p-4 rounded-md border border-gray-100 mt-4">
-                  <h4 className="font-semibold mb-2">Example Usage:</h4>
-                  <pre className="text-xs bg-gray-100 p-3 rounded overflow-x-auto">
-{`import { updateComponentVersion } from '@/lib/versionTracker';
-
-// After making changes to a component:
-updateComponentVersion(
-  'component-id',        // Unique ID for the component
-  'Component Name',      // Display name
-  '1.0.1',               // New version number
-  'Added new feature X'  // Description of changes
-);`}
-                  </pre>
-                </div>
-                
-                <h3 className="font-semibold mt-4">Implementation Steps:</h3>
-                <ol className="list-decimal list-inside space-y-2 ml-4">
-                  <li>
-                    <span className="font-medium">Import the version tracker</span>
-                    <p className="text-sm text-sapp-gray ml-6 mt-1">
-                      Add the import to your component file.
-                    </p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Call the update function when appropriate</span>
-                    <p className="text-sm text-sapp-gray ml-6 mt-1">
-                      Ideally, during your deployment process or after significant changes.
-                    </p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Use semantic versioning</span>
-                    <p className="text-sm text-sapp-gray ml-6 mt-1">
-                      Follow the pattern MAJOR.MINOR.PATCH for version numbers.
-                    </p>
-                  </li>
-                </ol>
-              </CardContent>
-              <CardFooter className="border-t pt-4">
-                <p className="text-sm text-sapp-gray">
-                  The version information is stored in a Supabase database table and accessed using secure RPC functions.
-                </p>
-              </CardFooter>
-            </Card>
           </>
         )}
       </main>
