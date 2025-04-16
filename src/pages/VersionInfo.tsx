@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAllVersions, useBuildInfo } from '@/hooks/useVersions';
 import { formatVersionDate } from '@/lib/versionTracker';
 
-import { getCurrentDateTime } from '@/components/version-info/VersionInfoUtils';
+import { getCurrentDateTime } from '@/components/version-info/utils';
 import LoadingState from '@/components/version-info/LoadingState';
 import VersionInfoHeader from '@/components/version-info/VersionInfoHeader';
 import SummaryCards from '@/components/version-info/SummaryCards';

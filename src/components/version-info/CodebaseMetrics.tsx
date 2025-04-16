@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Layers, FileCode, Server, Globe } from 'lucide-react';
 import { VersionInfo } from '@/lib/versionTracker';
-import { calculateCodebaseMetrics, groupComponents, analyzeComponentUsage, ComponentUsage } from './VersionInfoUtils';
+import { calculateCodebaseMetrics, groupComponents, analyzeComponentUsage, ComponentUsage } from './utils';
 import MetricsDetailsDialog from './MetricsDetailsDialog';
 
 interface CodebaseMetricsProps {

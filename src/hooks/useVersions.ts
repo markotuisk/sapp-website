@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { getAllVersions, getComponentVersion, VersionInfo } from '@/lib/versionTracker';
 import { useQuery } from '@tanstack/react-query';
-import { getActualPages } from '@/components/version-info/VersionInfoUtils';
+import { getActualPages } from '@/components/version-info/utils';
 
 /**
  * Custom hook to fetch all component versions

@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VersionInfo, formatVersionDate } from '@/lib/versionTracker';
-import { groupComponents } from './VersionInfoUtils';
+import { groupComponents } from './utils';
 
 interface ComponentsTabProps {
   versions: VersionInfo[];
