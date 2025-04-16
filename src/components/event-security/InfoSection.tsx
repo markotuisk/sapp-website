@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Shield, Calendar, FileText, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -72,8 +71,8 @@ const InfoSection: React.FC<InfoSectionProps> = ({ setServicesOpen }) => {
           <div className="relative order-1 md:order-2 flex items-center">
             <AspectRatio ratio={16/9} className="w-full">
               <img 
-                src="/lovable-uploads/1e36ee94-eaf5-4ef3-9bbb-61a8c35778e9.png" 
-                alt="Corporate Investor Meeting Security" 
+                src="/lovable-uploads/b4eb5728-fc18-4139-aac1-a88d01053ca3.png" 
+                alt="Corporate Event Security Meeting" 
                 className="rounded-xl w-full h-full object-cover shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.01]"
               />
             </AspectRatio>
@@ -85,4 +84,3 @@ const InfoSection: React.FC<InfoSectionProps> = ({ setServicesOpen }) => {
 };
 
 export default InfoSection;
-
