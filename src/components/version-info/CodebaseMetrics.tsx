@@ -1,33 +1,32 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Layers, FileCode, Server, Globe } from 'lucide-react';
 import { VersionInfo } from '@/lib/versionTracker';
 import { calculateCodebaseMetrics, groupComponents } from './VersionInfoUtils';
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import MetricsDetailsDialog from './MetricsDetailsDialog';
 
 interface CodebaseMetricsProps {
   versions: VersionInfo[];
 }
 
+type DialogContentType = {
+  title: string;
+  description: string;
+  items: string[];
+  icon: JSX.Element;
+  showFlags?: boolean;
+};
+
 const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
   const metrics = calculateCodebaseMetrics(versions);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState<{
-    title: string;
-    description: string;
-    items: string[];
-    icon: JSX.Element;
-  }>({
+  const [dialogContent, setDialogContent] = useState<DialogContentType>({
     title: '',
     description: '',
     items: [],
     icon: <></>,
+    showFlags: false
   });
   
   const openDetailsDialog = (type: 'components' | 'pages' | 'services' | 'languages') => {
@@ -74,7 +73,8 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           title: 'Supported Languages',
           description: 'Languages supported in the application',
           items: ['English (UK)', 'German', 'Dutch', 'French'],
-          icon: <Globe className="h-6 w-6 text-sapp-blue" />
+          icon: <Globe className="h-6 w-6 text-sapp-blue" />,
+          showFlags: true
         });
         break;
     }
@@ -132,41 +132,15 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           </div>
         </div>
 
-        <Dialog open={showDetailsDialog} onOpenChange={setShowDetailsDialog}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                {dialogContent.icon}
-                {dialogContent.title}
-              </DialogTitle>
-              <DialogDescription>
-                {dialogContent.description}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="max-h-[50vh] overflow-y-auto mt-4">
-              {dialogContent.items.length > 0 ? (
-                <ul className="space-y-2">
-                  {dialogContent.items.map((item, index) => (
-                    <li key={index} className="p-2 bg-gray-50 rounded-md">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-center text-gray-500">No items found</p>
-              )}
-              
-              {dialogContent.title === 'Supported Languages' && (
-                <div className="flex justify-center gap-4 mt-4">
-                  <span title="English" className="text-2xl">🇬🇧</span>
-                  <span title="German" className="text-2xl">🇩🇪</span>
-                  <span title="Dutch" className="text-2xl">🇳🇱</span>
-                  <span title="French" className="text-2xl">🇫🇷</span>
-                </div>
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
+        <MetricsDetailsDialog
+          open={showDetailsDialog}
+          onOpenChange={setShowDetailsDialog}
+          title={dialogContent.title}
+          description={dialogContent.description}
+          items={dialogContent.items}
+          icon={dialogContent.icon}
+          showFlags={dialogContent.showFlags}
+        />
       </CardContent>
     </Card>
   );
