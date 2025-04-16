@@ -70,8 +70,8 @@ const AboutContent = () => {
       <section id="our-story" className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-sapp-dark">Our Story</h2>
-            <p className="text-sapp-gray">From our origins in counter-espionage to becoming a comprehensive security partner</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-sapp-dark">Founders Story</h2>
+            <p className="text-sapp-gray">We brings together versatile backgrounds and security expertise with a vision to converge physical and digital security</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -83,14 +83,11 @@ const AboutContent = () => {
               />
             </div>
             <div>
-              <h3 className="text-xl font-display font-semibold mb-4 text-accent-dark-blue">The Beginning</h3>
-              <p className="text-sapp-gray mb-4">
-                We bring together versatile backgrounds and security expertise with a vision to converge physical and digital security.
-              </p>
+              <h3 className="text-xl font-display font-semibold mb-4 text-accent-dark-blue">The SAPP Story</h3>
               <p className="text-sapp-gray mb-4">
                 Our two founders, Raili and Marko, are native Estonians with a combined 30-years expertise in the global technical security industry. They share a common professional frustration in corporations where physical and cyber security operate in silos. As a result, security threats requiring both disciplines are left overlooked — mobile devices in unlocked executive desk drawers, accessible control panels in unsecured boardrooms, incorrectly positioned security cameras, and so on.
               </p>
-              <p className="text-sapp-gray">
+              <p className="text-sapp-gray mb-4">
                 Organisations need both physical and digital security. Companies require this equally, so both fields must break their bubbles, embrace collaboration, and work together. The SAPP Vision is to lead by example — creating a unique security offering to assist corporations in converging their physical and cyber security.
               </p>
             </div>
