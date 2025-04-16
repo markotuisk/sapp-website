@@ -1,81 +1,145 @@
 
 import { Animated } from '@/components/ui/AnimatedElements';
-import { useInView } from 'react-intersection-observer';
-import { cn } from '@/lib/utils';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import ContactFormDialog from '@/components/ui/ContactFormDialog';
+import { Link } from 'react-router-dom';
 
 const FeaturesSection = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState('');
+
+  const handleGetDetails = (serviceName: string) => {
+    setSelectedService(serviceName);
+    setContactDialogOpen(true);
+  };
 
   return (
-    <section ref={ref} className="py-16 bg-slate-50">
+    <section className="py-16 bg-slate-50">
       <div className="container mx-auto px-4">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-12">
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our Approach</h3>
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our IoT Security Expertise</h3>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-              Comprehensive Digital Protection
+              Our IoT Security Capabilities
             </h2>
             
             <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
-              Our multi-layered approach to cyber security ensures comprehensive protection for your digital infrastructure.
+              IoT device security starts with the automated device inventory, network segmentation and security policy implementation, followed by real-time monitoring during highly sensitive meetings and events.
             </p>
           </div>
         </Animated>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Animated animation="fade-up" delay={200} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] overflow-hidden group transition-all duration-200 ease-in-out">
-            <div className="h-48 overflow-hidden">
-              <img 
-                src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
-                alt="Threat Detection" 
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-display font-bold text-sapp-dark mb-3">Threat Detection & Response</h3>
-              <p className="text-sapp-gray text-sm">
-                Our advanced threat detection systems identify and neutralize cyber threats before they can impact your business.
-              </p>
-            </div>
-          </Animated>
-          <Animated animation="fade-up" delay={300} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] overflow-hidden group transition-all duration-200 ease-in-out">
-            <div className="h-48 overflow-hidden">
-              <img 
-                src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
-                alt="Data Encryption" 
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-display font-bold text-sapp-dark mb-3">Data Encryption & Protection</h3>
-              <p className="text-sapp-gray text-sm">
-                We implement robust encryption protocols to ensure your sensitive data remains secure at all times.
-              </p>
-            </div>
-          </Animated>
-          <Animated animation="fade-up" delay={400} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] overflow-hidden group transition-all duration-200 ease-in-out">
-            <div className="h-48 overflow-hidden">
-              <img 
-                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
-                alt="Security Training" 
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-display font-bold text-sapp-dark mb-3">Security Awareness Training</h3>
-              <p className="text-sapp-gray text-sm">
-                We provide comprehensive security training to help your team recognize and avoid potential security threats.
-              </p>
-            </div>
-          </Animated>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-xl text-sapp-dark">IoT Device Security</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                IoT device security starts with the automated device inventory, network segmentation and security policy implementation.
+              </CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/iot-device-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+                  Read More <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
+              <Button 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
+                onClick={() => handleGetDetails('IoT Device Security')}
+              >
+                Get Details
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <Card className="border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-xl text-sapp-dark">WiFi Network Security</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                [MT PROVIDE TEXT]
+              </CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/wifi-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+                  Read More <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
+              <Button 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
+                onClick={() => handleGetDetails('WiFi Network Security')}
+              >
+                Get Details
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <Card className="border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-xl text-sapp-dark">Bluetooth Security</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                [MT PROVIDE TEXT]
+              </CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/bluetooth-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+                  Read More <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
+              <Button 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
+                onClick={() => handleGetDetails('Bluetooth Security')}
+              >
+                Get Details
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <Card className="border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-xl text-sapp-dark">Cellular Network Security</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                [MT PROVIDE TEXT]
+              </CardDescription>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/cellular-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+                  Read More <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
+              <Button 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
+                onClick={() => handleGetDetails('Cellular Network Security')}
+              >
+                Get Details
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
+
+      <ContactFormDialog 
+        open={contactDialogOpen}
+        onOpenChange={setContactDialogOpen}
+        defaultMessage={`I'm interested in learning more about your ${selectedService} services.`}
+        serviceName={selectedService}
+      />
     </section>
   );
 };
