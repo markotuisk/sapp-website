@@ -2,8 +2,6 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import TranslatedText from '@/components/ui/TranslatedText';
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import ServicesOverlay from '@/components/ui/ServicesOverlay';
 
@@ -31,7 +29,7 @@ const HeroSection = () => {
             )}
             ref={ref}
           >
-            Customised IoT device <span className="text-sapp-blue">security</span> solutions
+            Security expertise built on <span className="text-sapp-blue">competence</span>, <span className="text-sapp-blue">integrity</span> and <span className="text-sapp-blue">experience</span>
           </h1>
           <p 
             className={cn(
@@ -39,7 +37,7 @@ const HeroSection = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            We focus on cyber physical convergence in IoT technology, as well as network security across cellular, wireless and Bluetooth networks.
+            SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security.
           </p>
           
           <p 
@@ -48,7 +46,16 @@ const HeroSection = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Cut through complexity
+            Trusted Professionals
+          </p>
+          
+          <p 
+            className={cn(
+              "text-sapp-gray text-md mb-8 transition-all duration-500 delay-200 max-w-2xl mx-auto",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            Our team combines industry expertise with innovative approach and personalised service to ensure your security needs are met with excellence.
           </p>
           
           <div 
@@ -80,3 +87,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
