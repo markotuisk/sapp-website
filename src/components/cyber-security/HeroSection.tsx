@@ -4,12 +4,21 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import ServicesOverlay from '@/components/ui/ServicesOverlay';
 
 const HeroSection = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
@@ -22,9 +31,7 @@ const HeroSection = () => {
             )}
             ref={ref}
           >
-            Enterprise-grade <span className="text-sapp-blue">protection</span><br />
-            for your digital <span className="text-sapp-blue">assets</span><br />
-            against cyber <span className="text-sapp-blue">threats</span>
+            Customised IoT device <span className="text-sapp-blue">security</span> solutions
           </h1>
           <p 
             className={cn(
@@ -32,7 +39,16 @@ const HeroSection = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            We provide comprehensive cyber security services that protect your organization's digital infrastructure from evolving threats. Our approach focuses on securing IoT devices, which are often the most vulnerable points in corporate networks.
+            We focus on cyber physical convergence in IoT technology, as well as network security across cellular, wireless and Bluetooth networks.
+          </p>
+          
+          <p 
+            className={cn(
+              "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-500 delay-300 text-center",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            Cut through complexity
           </p>
           
           <div 
@@ -44,28 +60,21 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              onClick={() => setServicesOpen(true)}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                <TranslatedText textKey="exploreServices" />
+                Rapid Service Navigator
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-sapp-dark text-sapp-dark hover:bg-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-              asChild
-            >
-              <Link to="/#contact">
-                <span className="relative z-10 transition-transform duration-300 group-hover:scale-110 group-hover:text-white">
-                  <TranslatedText textKey="contactUs" />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-              </Link>
             </Button>
           </div>
         </div>
       </div>
+      
+      <ServicesOverlay 
+        open={servicesOpen}
+        onOpenChange={setServicesOpen}
+      />
     </section>
   );
 };
