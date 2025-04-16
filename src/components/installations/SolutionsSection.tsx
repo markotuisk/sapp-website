@@ -36,10 +36,10 @@ const SolutionsSection = () => {
           <div className="order-1 md:order-2">
             <Animated animation="fade-up" delay={150}>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
-                Next Generation AI Security Integration
+                Competent Next Gen Installations
               </h2>
               <p className="text-sapp-gray mb-6">
-                There is a notable shift towards AI-driven security systems with strengthened defence and improved user experience. Organisations are increasingly replacing their legacy access control, CCTV and other systems with data-driven scalable security systems to automate across various interfaces and improve their security posture whilst optimising costs and reduce manual work. New security systems provide a perfect interface for bringing together the physical and cyber security expertise in organisations.
+                There is an increasing demand for sophisticated, intelligent security installations that leverage advanced technologies. Our approach integrates cutting-edge AI and data-driven solutions to transform traditional security infrastructure into smart, adaptive systems that provide enhanced protection, operational efficiency, and scalable performance.
               </p>
             </Animated>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
