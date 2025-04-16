@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ClipboardEdit, Building2, Presentation, Handshake } from 'lucide-react';
+import { ClipboardEdit, Building2, Presentation, Handshake, WalletCards } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@/components/ui/button';
@@ -39,11 +39,18 @@ const SecurityProcessSection: React.FC = () => {
       delay: 300
     },
     {
-      title: "Negotiations and Deal Rooms",
-      description: "Secure environment for deal preparations and sensitive negotiations.",
+      title: "Negotiations",
+      description: "Secure environment for sensitive negotiations and contract discussions.",
       icon: <Handshake className="h-8 w-8 text-white" />,
       color: "from-sapp-blue/70 to-sapp-blue/50",
       delay: 400
+    },
+    {
+      title: "Investors Meetings",
+      description: "Protect confidential fundraising discussions and partner meetings.",
+      icon: <WalletCards className="h-8 w-8 text-white" />,
+      color: "from-sapp-blue/60 to-sapp-blue/40",
+      delay: 500
     }
   ];
 
@@ -65,7 +72,7 @@ const SecurityProcessSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto mb-12">
           {meetingTypes.map((meetingType, index) => (
             <Card 
               key={index} 
