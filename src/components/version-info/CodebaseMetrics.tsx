@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Layers, FileCode, Server, Globe } from 'lucide-react';
 import { VersionInfo } from '@/lib/versionTracker';
-import { calculateCodebaseMetrics, groupComponents } from './VersionInfoUtils';
+import { calculateCodebaseMetrics, groupComponents, analyzeComponentUsage, ComponentUsage } from './VersionInfoUtils';
 import MetricsDetailsDialog from './MetricsDetailsDialog';
 
 interface CodebaseMetricsProps {
@@ -13,9 +13,10 @@ interface CodebaseMetricsProps {
 type DialogContentType = {
   title: string;
   description: string;
-  items: string[];
+  items: string[] | ComponentUsage[];
   icon: JSX.Element;
   showFlags?: boolean;
+  isComponentList?: boolean;
 };
 
 const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
@@ -26,19 +27,22 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
     description: '',
     items: [],
     icon: <></>,
-    showFlags: false
+    showFlags: false,
+    isComponentList: false
   });
   
   const openDetailsDialog = (type: 'components' | 'pages' | 'services' | 'languages') => {
     const groups = groupComponents(versions);
+    const componentUsage = analyzeComponentUsage(versions);
     
     switch(type) {
       case 'components':
         setDialogContent({
           title: 'All Components',
           description: `${metrics.totalComponents} total components in the codebase`,
-          items: versions.map(v => v.component_name || v.component_id),
-          icon: <Layers className="h-6 w-6 text-sapp-blue" />
+          items: componentUsage,
+          icon: <Layers className="h-6 w-6 text-sapp-blue" />,
+          isComponentList: true
         });
         break;
       case 'pages':
@@ -129,6 +133,7 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           items={dialogContent.items}
           icon={dialogContent.icon}
           showFlags={dialogContent.showFlags}
+          isComponentList={dialogContent.isComponentList}
         />
       </CardContent>
     </Card>
