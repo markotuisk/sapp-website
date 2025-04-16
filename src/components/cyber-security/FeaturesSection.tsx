@@ -1,4 +1,3 @@
-
 import { Animated } from '@/components/ui/AnimatedElements';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
@@ -45,14 +44,14 @@ const FeaturesSection = () => {
                 IoT device security starts with the automated device inventory, network segmentation and security policy implementation.
               </CardDescription>
             </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Link to="/cyber-security/iot-device-security" className="flex-grow mr-2">
-                <Button variant="outline" className="w-full text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/iot-device-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
                   Read More <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
               <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 flex-grow" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
                 onClick={() => handleGetDetails('IoT Device Security')}
               >
                 Get Details
@@ -69,14 +68,14 @@ const FeaturesSection = () => {
                 Our WiFi security solutions protect your wireless networks from unauthorised access, rogue access points, and man-in-the-middle attacks through continuous monitoring.
               </CardDescription>
             </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Link to="/cyber-security/wifi-security" className="flex-grow mr-2">
-                <Button variant="outline" className="w-full text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/wifi-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
                   Read More <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
               <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 flex-grow" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
                 onClick={() => handleGetDetails('WiFi Network Security')}
               >
                 Get Details
@@ -93,14 +92,14 @@ const FeaturesSection = () => {
                 We safeguard your Bluetooth-enabled devices against eavesdropping, BlueBorne attacks, and other vulnerabilities through advanced detection and mitigation solutions.
               </CardDescription>
             </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Link to="/cyber-security/bluetooth-security" className="flex-grow mr-2">
-                <Button variant="outline" className="w-full text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/bluetooth-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
                   Read More <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
               <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 flex-grow" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
                 onClick={() => handleGetDetails('Bluetooth Security')}
               >
                 Get Details
@@ -117,14 +116,14 @@ const FeaturesSection = () => {
                 Our cellular security expertise protects against IMSI catchers, SS7 vulnerabilities, and other mobile network threats through advanced detection and prevention technologies.
               </CardDescription>
             </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Link to="/cyber-security/cellular-security" className="flex-grow mr-2">
-                <Button variant="outline" className="w-full text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+            <CardFooter className="flex justify-between">
+              <Link to="/cyber-security/cellular-security">
+                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
                   Read More <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
               <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 flex-grow" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90" 
                 onClick={() => handleGetDetails('Cellular Network Security')}
               >
                 Get Details
