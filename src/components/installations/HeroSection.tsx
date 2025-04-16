@@ -27,7 +27,7 @@ const HeroSection = () => {
             )}
             ref={ref}
           >
-            Accredited installation of <span className="text-sapp-blue">AI-driven</span> complex corporate <span className="text-sapp-blue">security</span> systems and <span className="text-sapp-blue">technology</span>
+            <span className="text-sapp-blue">Accredited</span> installation of corporate <span className="text-sapp-blue">security systems</span> and technology
           </h1>
           <p 
             className={cn(
@@ -35,7 +35,7 @@ const HeroSection = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            From cloud to cable deployments, making security an integral part of your system installations in physical and network security, speech privacy and counter surveillance
+            From cloud to cable system installations in physical and network security, speech privacy and counter surveillance
           </p>
           
           <div 
