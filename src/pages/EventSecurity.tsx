@@ -66,19 +66,19 @@ const EventSecurity = () => {
         {/* Corporate Event Security */}
         <InfoSection setServicesOpen={setServicesOpen} />
 
-        {/* Quote Section - Moved up */}
+        {/* Quote Section - Industry Leader Opinion */}
         <QuoteSection />
-
-        {/* How We Secure Your Events */}
-        <SecurityProcessSection />
-
-        {/* Our Event Security Services - Moved down */}
+        
+        {/* Security Solutions */}
         <ServicesSection 
           serviceDetails={serviceDetails} 
           onLearnMore={handleServiceLearnMore} 
         />
 
-        {/* CTA Section */}
+        {/* Security Process */}
+        <SecurityProcessSection />
+
+        {/* Get Started - CTA Section */}
         <CTASection />
 
         {/* Services Overlay */}
