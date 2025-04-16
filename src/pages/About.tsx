@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import AboutContent from '@/components/home/About';
 import FoundingTeam from '@/components/home/FoundingTeam';
 import VisionMission from '@/components/home/VisionMission';
+import Contact from '@/components/home/contact/Contact';
 import { useLocation } from 'react-router-dom';
 
 const About = () => {
@@ -22,6 +23,7 @@ const About = () => {
         <AboutContent />
         <FoundingTeam />
         <VisionMission />
+        <Contact />
       </main>
       <Footer />
     </div>
