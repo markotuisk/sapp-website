@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 // Lazy load sections to improve initial page load performance
 const HeroSection = React.lazy(() => import('@/components/cyber-security/HeroSection'));
 const ServicesSection = React.lazy(() => import('@/components/cyber-security/ServicesSection'));
+const StorySection = React.lazy(() => import('@/components/cyber-security/StorySection'));
 const FeaturesSection = React.lazy(() => import('@/components/cyber-security/FeaturesSection'));
 const QuoteSection = React.lazy(() => import('@/components/cyber-security/QuoteSection'));
 const CTASection = React.lazy(() => import('@/components/cyber-security/CTASection'));
@@ -38,6 +39,7 @@ const CyberSecurity = React.memo(() => {
         <Suspense fallback={<div>Loading...</div>}>
           <HeroSection />
           <ServicesSection />
+          <StorySection />
           <QuoteSection />
           <FeaturesSection />
           <CTASection />
