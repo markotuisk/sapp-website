@@ -29,7 +29,7 @@ const HeroSection = () => {
             )}
             ref={ref}
           >
-            Security expertise built on <span className="text-sapp-blue">competence</span>, <span className="text-sapp-blue">integrity</span> and <span className="text-sapp-blue">experience</span>
+            Customised IoT device security solutions
           </h1>
           <p 
             className={cn(
@@ -37,7 +37,7 @@ const HeroSection = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security.
+            We focus on cyber physical convergence in IoT technology, as well as network security across cellular, wireless and Bluetooth networks.
           </p>
           
           <p 
@@ -46,16 +46,7 @@ const HeroSection = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Trusted Professionals
-          </p>
-          
-          <p 
-            className={cn(
-              "text-sapp-gray text-md mb-8 transition-all duration-500 delay-200 max-w-2xl mx-auto",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            Our team combines industry expertise with innovative approach and personalised service to ensure your security needs are met with excellence.
+            Cut through complexity
           </p>
           
           <div 
@@ -87,4 +78,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
