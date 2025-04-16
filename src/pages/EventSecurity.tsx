@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Shield, Calendar, FileText, Users, CalendarCheck, ShieldCheck, MonitorCheck, FileSearch, FileLock, ArrowLeft, ArrowRight, AlertCircle } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useState as useStateHook } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -132,7 +132,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
               >
                 Real-time <span className="text-sapp-blue">protection</span> for<br />
                 confidential <span className="text-sapp-blue">corporate</span><br />
-                events and meetings
+                <span className="text-sapp-blue">events</span> and meetings
               </h1>
               <p 
                 className={cn(
@@ -149,7 +149,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
                   inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 )}
               >
-                Cut through complexity. Find your security solution in 60 seconds.
+                Cut through complexity
               </p>
               
               <div 
