@@ -38,8 +38,8 @@ const CyberSecurity = React.memo(() => {
         <Suspense fallback={<div>Loading...</div>}>
           <HeroSection />
           <ServicesSection />
-          <FeaturesSection />
           <QuoteSection />
+          <FeaturesSection />
           <CTASection />
         </Suspense>
       </main>
