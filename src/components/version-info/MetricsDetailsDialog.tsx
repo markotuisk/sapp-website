@@ -40,7 +40,7 @@ const MetricsDetailsDialog = ({
             {description}
           </DialogDescription>
         </DialogHeader>
-        <div className="max-h-[50vh] overflow-y-auto mt-4">
+        <div className="max-h-[60vh] overflow-y-auto mt-4">
           {items.length > 0 ? (
             <ul className="space-y-2">
               {items.map((item, index) => (

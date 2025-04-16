@@ -1,3 +1,4 @@
+
 import { formatVersionDate } from '@/lib/versionTracker';
 import { VersionInfo } from '@/lib/versionTracker';
 
@@ -138,15 +139,23 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
   // Calculate total components
   const totalComponents = versions.length;
   
+  // Comprehensive list of all technical services used by the application
   const technicalServices = [
     { name: 'Supabase Authentication', description: 'User authentication and management' },
     { name: 'Supabase Storage', description: 'File and asset storage' },
+    { name: 'Supabase Database', description: 'PostgreSQL database for data storage' },
+    { name: 'Supabase Edge Functions', description: 'Serverless functions for backend logic' },
     { name: 'React Query', description: 'Data fetching and state management' },
     { name: 'Language Context', description: 'Internationalization and translation' },
     { name: 'Auth Context', description: 'User authentication state management' },
     { name: 'Toaster Notifications', description: 'System-wide toast notifications' },
     { name: 'Error Logging', description: 'Application error tracking and logging' },
-    { name: 'Device Detection', description: 'Responsive design and mobile detection' }
+    { name: 'Device Detection', description: 'Responsive design and mobile detection' },
+    { name: 'Version Tracking', description: 'Component version tracking and history' },
+    { name: 'React Router', description: 'Application routing and navigation' },
+    { name: 'Tailwind CSS', description: 'Utility-first CSS framework' },
+    { name: 'Shadcn UI', description: 'Component library for user interface' },
+    { name: 'React Hook Form', description: 'Form validation and management' }
   ];
 
   return {
