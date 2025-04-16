@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,11 +16,6 @@ const CTASection = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 text-center">
-        <div className="text-center mb-8">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Get Started</h3>
-          </div>
-        </div>
         <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to upgrade your security infrastructure?</h2>
         <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
           Our team of installation experts is ready to help you implement the latest security technologies for your organisation.
