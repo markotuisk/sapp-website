@@ -132,7 +132,7 @@ ${formData.notes ? `\nAdditional Notes:\n${formData.notes}` : ''}
               >
                 Real-time <span className="text-sapp-blue">protection</span> for<br />
                 confidential <span className="text-sapp-blue">corporate</span><br />
-                meetings and events
+                events and meetings
               </h1>
               <p 
                 className={cn(
