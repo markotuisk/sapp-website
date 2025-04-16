@@ -8,17 +8,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { ComponentUsage } from './VersionInfoUtils';
+import { ComponentUsage } from './utils/ComponentUsage';
+import { CodeStructure } from './utils/CodebaseMetrics';
+import { Progress } from "@/components/ui/progress";
 
 interface MetricsDetailsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   description: string;
-  items: string[] | ComponentUsage[];
+  items: string[] | ComponentUsage[] | CodeStructure[];
   icon: React.ReactElement;
   showFlags?: boolean;
   isComponentList?: boolean;
+  isCodeStructureList?: boolean;
 }
 
 const MetricsDetailsDialog = ({
@@ -29,7 +32,8 @@ const MetricsDetailsDialog = ({
   items,
   icon,
   showFlags = false,
-  isComponentList = false
+  isComponentList = false,
+  isCodeStructureList = false
 }: MetricsDetailsDialogProps) => {
   const [expandedComponents, setExpandedComponents] = useState<Record<string, boolean>>({});
 
@@ -54,7 +58,19 @@ const MetricsDetailsDialog = ({
         </DialogHeader>
         <div className="flex-1 overflow-y-auto pr-2 mt-4">
           {items.length > 0 ? (
-            isComponentList ? (
+            isCodeStructureList ? (
+              <ul className="space-y-4">
+                {(items as CodeStructure[]).map((item, index) => (
+                  <li key={index} className="bg-gray-50 rounded-md p-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-medium">{item.name}</span>
+                      <span className="text-sm font-semibold">{item.lines.toLocaleString()} lines ({item.percentage}%)</span>
+                    </div>
+                    <Progress value={item.percentage} className="h-2 w-full bg-gray-200" />
+                  </li>
+                ))}
+              </ul>
+            ) : isComponentList ? (
               <ul className="space-y-3">
                 {(items as ComponentUsage[]).map((component) => (
                   <li key={component.id} className="bg-gray-50 rounded-md overflow-hidden">

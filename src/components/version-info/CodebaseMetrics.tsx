@@ -1,9 +1,13 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Layers, FileCode, Server, Globe } from 'lucide-react';
+import { BarChart, Layers, FileCode, Server, Globe, Code } from 'lucide-react';
 import { VersionInfo } from '@/lib/versionTracker';
-import { calculateCodebaseMetrics, groupComponents, analyzeComponentUsage, ComponentUsage } from './utils';
+import { calculateCodebaseMetrics } from './utils/CodebaseMetrics';
+import { groupComponents } from './utils/ComponentGrouping';
+import { analyzeComponentUsage } from './utils/ComponentUsage';
+import { ComponentUsage } from './utils/ComponentUsage';
+import { CodeStructure } from './utils/CodebaseMetrics';
 import MetricsDetailsDialog from './MetricsDetailsDialog';
 
 interface CodebaseMetricsProps {
@@ -13,10 +17,11 @@ interface CodebaseMetricsProps {
 type DialogContentType = {
   title: string;
   description: string;
-  items: string[] | ComponentUsage[];
+  items: string[] | ComponentUsage[] | CodeStructure[];
   icon: JSX.Element;
   showFlags?: boolean;
   isComponentList?: boolean;
+  isCodeStructureList?: boolean;
 };
 
 const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
@@ -28,10 +33,11 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
     items: [],
     icon: <></>,
     showFlags: false,
-    isComponentList: false
+    isComponentList: false,
+    isCodeStructureList: false
   });
   
-  const openDetailsDialog = (type: 'components' | 'pages' | 'services' | 'languages') => {
+  const openDetailsDialog = (type: 'components' | 'pages' | 'services' | 'languages' | 'code') => {
     const groups = groupComponents(versions);
     const componentUsage = analyzeComponentUsage(versions);
     
@@ -70,6 +76,15 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           showFlags: true
         });
         break;
+      case 'code':
+        setDialogContent({
+          title: 'Codebase Structure',
+          description: `${metrics.totalLinesOfCode.toLocaleString()} total lines of code`,
+          items: metrics.codeStructure,
+          icon: <Code className="h-6 w-6 text-sapp-blue" />,
+          isCodeStructureList: true
+        });
+        break;
     }
     
     setShowDetailsDialog(true);
@@ -87,7 +102,7 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div 
             className="bg-gray-50 p-4 rounded-lg text-center cursor-pointer hover:bg-gray-100 transition-colors"
             onClick={() => openDetailsDialog('components')}
@@ -123,6 +138,15 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
             <p className="text-2xl font-bold">{metrics.supportedLanguages}</p>
             <p className="text-sm text-gray-500">Supported Languages</p>
           </div>
+          
+          <div 
+            className="bg-gray-50 p-4 rounded-lg text-center cursor-pointer hover:bg-gray-100 transition-colors"
+            onClick={() => openDetailsDialog('code')}
+          >
+            <Code className="h-8 w-8 mx-auto mb-2 text-sapp-blue" />
+            <p className="text-2xl font-bold">{Math.round(metrics.totalLinesOfCode / 1000)}K</p>
+            <p className="text-sm text-gray-500">Total Code</p>
+          </div>
         </div>
 
         <MetricsDetailsDialog
@@ -134,6 +158,7 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           icon={dialogContent.icon}
           showFlags={dialogContent.showFlags}
           isComponentList={dialogContent.isComponentList}
+          isCodeStructureList={dialogContent.isCodeStructureList}
         />
       </CardContent>
     </Card>

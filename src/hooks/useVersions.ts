@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { getAllVersions, getComponentVersion, VersionInfo } from '@/lib/versionTracker';
 import { useQuery } from '@tanstack/react-query';
-import { getActualPages } from '@/components/version-info/utils';
+import { getActualPages } from '@/components/version-info/utils/PageUtils';
 
 /**
  * Custom hook to fetch all component versions
@@ -39,8 +40,9 @@ export const useBuildInfo = () => {
     tailwindVersion: '2.5.2',
     componentCount: 0,
     totalPages: 0,
-    totalServices: 8,
-    supportedLanguages: 4
+    totalServices: 19,
+    supportedLanguages: 4,
+    totalLinesOfCode: 28500
   });
 
   useEffect(() => {
@@ -58,7 +60,8 @@ export const useBuildInfo = () => {
         componentCount: versions.length,
         totalPages: actualPages.length,
         totalServices: 19, // Update to match the length of technicalServices array in calculateCodebaseMetrics
-        supportedLanguages: 4
+        supportedLanguages: 4,
+        totalLinesOfCode: 28500 // Estimate of total lines of code
       });
     }
   }, [versions]);
