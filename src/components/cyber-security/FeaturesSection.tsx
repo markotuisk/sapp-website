@@ -66,7 +66,7 @@ const FeaturesSection = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                [MT PROVIDE TEXT]
+                Our WiFi security solutions protect your wireless networks from unauthorised access, rogue access points, and man-in-the-middle attacks through continuous monitoring.
               </CardDescription>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -90,7 +90,7 @@ const FeaturesSection = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                [MT PROVIDE TEXT]
+                We safeguard your Bluetooth-enabled devices against eavesdropping, BlueBorne attacks, and other vulnerabilities through advanced detection and mitigation solutions.
               </CardDescription>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -114,7 +114,7 @@ const FeaturesSection = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                [MT PROVIDE TEXT]
+                Our cellular security expertise protects against IMSI catchers, SS7 vulnerabilities, and other mobile network threats through advanced detection and prevention technologies.
               </CardDescription>
             </CardContent>
             <CardFooter className="flex justify-between">

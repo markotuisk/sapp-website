@@ -28,6 +28,12 @@ import SpeechPrivacy from "./pages/installations/SpeechPrivacy";
 import CounterSurveillance from "./pages/installations/CounterSurveillance";
 import NetworkInfrastructure from "./pages/installations/NetworkInfrastructure";
 
+// Cyber Security subpage imports
+import IoTDeviceSecurity from "./pages/cyber-security/IoTDeviceSecurity";
+import WiFiSecurity from "./pages/cyber-security/WiFiSecurity";
+import BluetoothSecurity from "./pages/cyber-security/BluetoothSecurity";
+import CellularSecurity from "./pages/cyber-security/CellularSecurity";
+
 // Create a new React Query client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,6 +77,12 @@ const App = () => {
                   <Route path="/installations/speech-privacy" element={<SpeechPrivacy />} />
                   <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
                   <Route path="/installations/network-infrastructure" element={<NetworkInfrastructure />} />
+                  
+                  {/* Cyber Security Subpages */}
+                  <Route path="/cyber-security/iot-device-security" element={<IoTDeviceSecurity />} />
+                  <Route path="/cyber-security/wifi-security" element={<WiFiSecurity />} />
+                  <Route path="/cyber-security/bluetooth-security" element={<BluetoothSecurity />} />
+                  <Route path="/cyber-security/cellular-security" element={<CellularSecurity />} />
                   
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
