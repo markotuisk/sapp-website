@@ -29,7 +29,7 @@ const HeroSection = () => {
             )}
             ref={ref}
           >
-            Customised IoT device security solutions
+            Customised <span className="text-sapp-blue">IoT device security</span> solutions
           </h1>
           <p 
             className={cn(
@@ -78,3 +78,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
