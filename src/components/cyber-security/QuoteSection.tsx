@@ -15,9 +15,9 @@ const QuoteSection = () => {
           </div>
         </Animated>
         <QuoteCard
-          quote="In our increasingly connected world, cyber security isn't just an IT concern—it's a fundamental business imperative that impacts every aspect of modern operations."
-          author="Dr. Ian Levy"
-          position="Former Technical Director, NCSC"
+          quote="Your defenses aren't the only things that can leave you exposed; your vendors' IoT systems and even your own people can contribute to the risk. The real danger often lies in your environment: nearby devices, RF signals, and third-party connections. In the realm of corporate security, trust and convenience are the easiest doors for an attacker to open."
+          author="Marko Tuisk"
+          position="SAPP Founder and Technical Director"
         />
       </div>
     </section>
