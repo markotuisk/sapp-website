@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
-import { FileText, ExternalLink } from 'lucide-react';
 
 const ServiceCardsSection = () => {
   const [ref, inView] = useInView({
@@ -84,17 +83,15 @@ const ServiceCardsSection = () => {
                     className="flex-1"
                   >
                     <button 
-                      className="text-sm w-full border border-slate-200 text-sapp-dark px-4 py-2 rounded-m d font-medium transition-all duration-200 ease-in-out hover:bg-slate-50 hover:border-slate-300 flex items-center justify-center gap-1"
+                      className="text-sm w-full border border-slate-200 text-sapp-dark px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:bg-slate-50 hover:border-slate-300 flex items-center justify-center"
                     >
-                      <FileText className="h-3.5 w-3.5" />
                       <span>Read More</span>
                     </button>
                   </Link>
                   <button 
-                    className="flex-1 bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:shadow-md flex items-center justify-center gap-1.5"
+                    className="flex-1 bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm px-4 py-2 rounded-md font-medium transition-all duration-200 ease-in-out hover:shadow-md flex items-center justify-center"
                     onClick={() => handleGetDetails(service.title)}
                   >
-                    <ExternalLink className="h-3.5 w-3.5" />
                     <span>Get Details</span>
                   </button>
                 </div>
