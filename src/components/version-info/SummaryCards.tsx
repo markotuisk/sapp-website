@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Code, Layers, Activity, Calendar } from 'lucide-react';
+import { Code, Layers, Activity, Calendar, FileCode, Server, Globe } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -12,6 +12,9 @@ interface SummaryCardsProps {
     frameworkVersion: string;
     tailwindVersion: string;
     componentCount: number;
+    totalPages: number;
+    totalServices: number;
+    totalAPIs: number;
     totalUpdates: number;
   };
   buildDate: {
@@ -69,6 +72,27 @@ const SummaryCards = ({ buildInfo, buildDate, lastUpdate }: SummaryCardsProps) =
               <div className="flex items-center">
                 <Layers className="h-4 w-4 mr-1 text-sapp-blue" />
                 <span className="font-medium">{buildInfo.componentCount}</span>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-sapp-gray">Pages:</span>
+              <div className="flex items-center">
+                <FileCode className="h-4 w-4 mr-1 text-sapp-blue" />
+                <span className="font-medium">{buildInfo.totalPages}</span>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-sapp-gray">Services:</span>
+              <div className="flex items-center">
+                <Server className="h-4 w-4 mr-1 text-sapp-blue" />
+                <span className="font-medium">{buildInfo.totalServices}</span>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-sapp-gray">APIs:</span>
+              <div className="flex items-center">
+                <Globe className="h-4 w-4 mr-1 text-sapp-blue" />
+                <span className="font-medium">{buildInfo.totalAPIs}</span>
               </div>
             </div>
             <div className="flex justify-between">

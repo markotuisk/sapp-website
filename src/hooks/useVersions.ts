@@ -38,6 +38,9 @@ export const useBuildInfo = () => {
     frameworkVersion: 'React 18.3.1',
     tailwindVersion: '2.5.2',
     componentCount: 0,
+    totalPages: 0,
+    totalServices: 0,
+    totalAPIs: 0,
     totalUpdates: 0
   });
 
@@ -49,6 +52,40 @@ export const useBuildInfo = () => {
       // Calculate total updates
       const totalUpdates = versions.reduce((total, component) => total + component.update_count, 0);
       
+      // Count different types of components
+      let totalPages = 0;
+      let totalServices = 0;
+      let totalAPIs = 0;
+      
+      versions.forEach(component => {
+        const id = component.component_id.toLowerCase();
+        
+        if (id.includes('page') || 
+            id.includes('index') || 
+            id.endsWith('-hero') || 
+            id.includes('audit-') ||
+            id.includes('cyber-') || 
+            id.includes('event-') || 
+            id.includes('install-')) {
+          totalPages++;
+        }
+        
+        if (id.includes('service') || 
+            id.includes('feature') || 
+            id.includes('capabilities') ||
+            id.includes('solution')) {
+          totalServices++;
+        }
+        
+        if (id.includes('api') || 
+            id.includes('supabase') || 
+            id.includes('client') ||
+            id.includes('integration') || 
+            id.includes('contact-form')) {
+          totalAPIs++;
+        }
+      });
+      
       setBuildInfo({
         currentBuild: coreComponent.version,
         buildDate: coreComponent.initial_date,
@@ -56,7 +93,10 @@ export const useBuildInfo = () => {
         frameworkVersion: 'React 18.3.1', // These could be stored in DB too if needed
         tailwindVersion: '2.5.2',
         componentCount: versions.length,
-        totalUpdates: totalUpdates
+        totalPages,
+        totalServices,
+        totalAPIs,
+        totalUpdates
       });
     }
   }, [versions]);
