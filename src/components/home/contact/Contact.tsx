@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -34,21 +34,19 @@ const Contact = () => {
     copyToClipboard
   } = useContactForm();
 
-  // Initialize form
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: "",
       email: "",
-      organization: "", // Changed from company to organization
+      organization: "",
       phone: "",
       topic: "",
       message: "",
     },
-    mode: "onChange", // Enable validation on change for real-time feedback
+    mode: "onChange",
   });
 
-  // Watch message field for character count
   useEffect(() => {
     const subscription = form.watch((value, { name }) => {
       if (name === 'message' || !name) {
@@ -64,7 +62,6 @@ const Contact = () => {
   };
 
   const handleConfirmSubmission = () => {
-    // Here you would typically send the data to an API
     toast({
       title: "Message sent!",
       description: "Thank you for contacting us. We'll be in touch shortly.",
@@ -72,7 +69,7 @@ const Contact = () => {
     });
     setShowPreview(false);
     form.reset();
-    setMessageLength(0); // Reset character counter
+    setMessageLength(0);
   };
 
   const contactInfo = [
@@ -111,7 +108,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24 bg-slate-50 relative overflow-hidden">
-      {/* Background elements */}
       <div className="absolute w-96 h-96 rounded-full bg-sapp-blue/5 -top-48 -left-48 blur-3xl"></div>
       <div className="absolute w-64 h-64 rounded-full bg-sapp-lightBlue/5 bottom-0 right-0 blur-3xl"></div>
       
@@ -132,7 +128,7 @@ const Contact = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Get in touch with our <span className="text-sapp-blue">security experts</span>
+            Get in touch with <span className="text-sapp-blue">Team</span>
           </h2>
           <p 
             className={cn(
@@ -206,7 +202,6 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Preview Dialog */}
       <ContactFormPreview 
         showPreview={showPreview}
         setShowPreview={setShowPreview}
