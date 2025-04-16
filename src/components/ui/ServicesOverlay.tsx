@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { X, ChevronRight, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -17,7 +16,6 @@ interface ServicesOverlayProps {
 const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Reset search when dialog opens
   useEffect(() => {
     if (open) {
       setSearchQuery('');
@@ -63,7 +61,6 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
     }
   ];
 
-  // Future resources section (placeholder for now)
   const resources = [
     {
       category: 'Knowledge Base',
@@ -81,7 +78,6 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
     }
   ];
 
-  // Filter items based on search query
   const filteredServices = searchQuery ? 
     services.map(category => ({
       ...category,
@@ -104,8 +100,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[900px] p-0 gap-0 bg-white">
-        {/* Hidden DialogTitle for accessibility */}
+      <DialogContent className="sm:max-w-[1200px] p-0 gap-0 bg-white">
         <DialogTitle className="sr-only">Explore Our Services</DialogTitle>
         
         <div className="flex flex-col h-[80vh] max-h-[800px]">
@@ -154,12 +149,15 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
                       <p>No services match your search</p>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-4">
                       {filteredServices.map((category) => (
-                        <div key={category.category} className={cn(
-                          "bg-slate-50 rounded-lg overflow-hidden",
-                          category.items.length === 0 && "hidden"
-                        )}>
+                        <div 
+                          key={category.category} 
+                          className={cn(
+                            "bg-slate-50 rounded-lg overflow-hidden",
+                            category.items.length === 0 && "hidden"
+                          )}
+                        >
                           <div className="bg-sapp-blue/10 px-4 py-2">
                             <h3 className="font-medium text-sapp-blue">{category.category}</h3>
                           </div>
@@ -171,11 +169,11 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
                                 onClick={() => onOpenChange(false)}
                                 className="flex items-center justify-between px-4 py-3 hover:bg-slate-100 transition-colors"
                               >
-                                <div>
+                                <div className="pr-2">
                                   <h4 className="font-medium text-sapp-dark">{item.name}</h4>
-                                  <p className="text-sm text-sapp-gray">{item.description}</p>
+                                  <p className="text-sm text-sapp-gray line-clamp-2">{item.description}</p>
                                 </div>
-                                <ChevronRight className="h-4 w-4 text-gray-400" />
+                                <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0" />
                               </Link>
                             ))}
                           </div>
