@@ -2,6 +2,7 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
+import TranslatedText from '@/components/ui/TranslatedText';
 import { Separator } from '@/components/ui/separator';
 import { AnimatedText } from '@/components/ui/AnimatedElements';
 
@@ -34,9 +35,7 @@ const Story = () => {
                 "text-white/80 text-lg md:text-xl max-w-3xl transition-all duration-700 delay-100",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}>
-                SAPP Security brings together versatile backgrounds and security expertise with a vision to converge physical and digital security.
-
-                Our two founders, Raili and Marko, are native Estonians with a combined 30-years expertise in a global technical security industry based in the UK. With their practical evidence-led and no-nonsense engagement, they bring fresh perspective to the corporate security function that is often inundated with covert wizardly tales from storytellers.
+                Founded in 2015 by security experts Raili Maripuu and Marko Tuisk, SAPP Security was born from the vision of reimagining how organizations approach physical and digital security. Today, our comprehensive protection solutions safeguard some of the world's most sensitive events and venues. Here's how it all began.
               </p>
             </div>
             <div className="w-full aspect-[16/9] bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
@@ -56,10 +55,14 @@ const Story = () => {
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               )}>
                 <h3 className="text-3xl font-display font-bold text-sapp-dark mb-6">
-                  The Challenge of Siloed Security
+                  Like all great stories,<br />
+                  this one begins with a challenge.
                 </h3>
                 <p className="text-sapp-gray mb-4">
-                  The SAPP Founders share a common professional frustration with physical and cyber security in corporations working in silos. As a result, security threats that need expertise from both fields are left overlooked. Mobile devices in unlocked executive desk drawers, accessible control panels in unsecured boardrooms, incorrectly positioned security cameras - the list goes on.
+                  They met while working on opposite sides of security: Raili specialized in developing secure systems as a cybersecurity expert, while Marko led physical security operations for high-profile diplomatic events. Both Estonian nationals, they frequently collaborated on projects requiring both physical and digital protection.
+                </p>
+                <p className="text-sapp-gray">
+                  Despite their different backgrounds, they shared a common frustration: existing security solutions were fragmented, with physical and digital protections treated as entirely separate domains. They knew there had to be a more integrated approach to security challenges.
                 </p>
               </div>
               
@@ -70,14 +73,17 @@ const Story = () => {
                 <div className="mb-8">
                   <Separator className="bg-sapp-blue/20 h-0.5 w-16 mb-6" />
                   <AnimatedText 
-                    text="Organisations need both physical and digital security. Companies need this equally, so both fields need to break their bubbles, embrace their collaboration and work together."
+                    text="Our approach bridges the gap between physical and digital security, creating comprehensive protection that others simply can't match."
                     tag="p"
                     className="text-xl font-display font-medium text-sapp-blue"
                   />
                 </div>
                 
                 <p className="text-sapp-gray mb-4">
-                  The SAPP Vision is to lead by example by creating a unique security offering to assist corporations in converging their physical and cyber security.
+                  In 2015, after securing a high-risk diplomatic conference that faced both cyber and physical threats, Raili and Marko decided to combine their expertise officially. They founded SAPP Security with a clear mission: to pioneer integrated security solutions that address the complete threat landscape.
+                </p>
+                <p className="text-sapp-gray">
+                  Today, SAPP Security has grown from two founders with a vision to an international team of security specialists, trusted by organizations worldwide to protect their most valuable assets and operations. Our holistic approach to security continues to set the standard for the industry.
                 </p>
               </div>
             </div>
@@ -107,4 +113,3 @@ const Story = () => {
 };
 
 export default Story;
-
