@@ -4,7 +4,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AboutContent from '@/components/home/About';
 import FoundingTeam from '@/components/home/FoundingTeam';
-import InsightQuote from '@/components/home/InsightQuote';
 import { useLocation } from 'react-router-dom';
 
 const About = () => {
@@ -20,7 +19,6 @@ const About = () => {
       <Navbar />
       <main>
         <AboutContent />
-        <InsightQuote />
         <FoundingTeam />
       </main>
       <Footer />
