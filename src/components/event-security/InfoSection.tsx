@@ -4,6 +4,7 @@ import { Shield, Calendar, FileText, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import TranslatedText from '@/components/ui/TranslatedText';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface InfoSectionProps {
   setServicesOpen: (open: boolean) => void;
@@ -57,7 +58,7 @@ const InfoSection: React.FC<InfoSectionProps> = ({ setServicesOpen }) => {
                 className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
                 onClick={() => setContactDialogOpen(true)}
               >
-                Request Consultation
+                <TranslatedText textKey="getInTouch" defaultText="Request Consultation" />
               </Button>
 
               <ContactFormDialog 
@@ -68,12 +69,14 @@ const InfoSection: React.FC<InfoSectionProps> = ({ setServicesOpen }) => {
               />
             </div>
           </div>
-          <div className="relative order-1 md:order-2">
-            <img 
-              src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
-              alt="Corporate Event Security" 
-              className="rounded-xl w-full h-auto object-cover shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.01]"
-            />
+          <div className="relative order-1 md:order-2 flex items-center">
+            <AspectRatio ratio={16/9} className="w-full">
+              <img 
+                src="/lovable-uploads/1e36ee94-eaf5-4ef3-9bbb-61a8c35778e9.png" 
+                alt="Corporate Investor Meeting Security" 
+                className="rounded-xl w-full h-full object-cover shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.01]"
+              />
+            </AspectRatio>
           </div>
         </div>
       </div>
@@ -82,3 +85,4 @@ const InfoSection: React.FC<InfoSectionProps> = ({ setServicesOpen }) => {
 };
 
 export default InfoSection;
+
