@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FileText, Lock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -111,8 +112,8 @@ const DeploymentSection = () => {
                 <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
-          </AlertDialog>
-        </Animated>
+          </Animated>
+        </AlertDialog>
       </div>
     </section>
   );
