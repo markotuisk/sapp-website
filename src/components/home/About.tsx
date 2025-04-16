@@ -25,7 +25,7 @@ const AboutContent = () => {
               <div className="max-w-2xl">
                 <Animated animation="fade-up" delay={200}>
                   <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6 text-sapp-dark tracking-normal">
-                    Security expertise built on competence, performance and trust
+                    Security expertise built on competence, integrity and experience
                   </h1>
                 </Animated>
                 
@@ -34,7 +34,7 @@ const AboutContent = () => {
                   delay={400}
                   className="text-sapp-gray text-lg mb-8"
                 >
-                  <p>SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security</p>
+                  <p>SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security.</p>
                 </Animated>
               </div>
             </div>
@@ -57,7 +57,7 @@ const AboutContent = () => {
                     </div>
                     <div className="p-6 bg-white">
                       <h3 className="font-display font-semibold text-xl mb-2 text-accent-dark-blue">Trusted Professionals</h3>
-                      <p className="text-sapp-gray text-sm">Our team combines industry-leading expertise with personalized service to ensure your security needs are met with excellence.</p>
+                      <p className="text-sapp-gray text-sm">Our team combines industry expertise with innovative approach and personalized service to ensure your security needs are met with excellence.</p>
                     </div>
                   </CardContent>
                 </Card>
