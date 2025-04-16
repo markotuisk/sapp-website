@@ -1,19 +1,14 @@
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { useState, useEffect } from 'react';
-import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { MapPin, Mail, Phone } from 'lucide-react';
-import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { ContactFormValues, contactFormSchema } from './types';
 import { useContactForm } from './useContactForm';
-import ContactInfoCard from './ContactInfoCard';
-import ContactFormFields from './ContactFormFields';
+import ContactHeader from './ContactHeader';
+import ContactInfoSection from './ContactInfoSection';
+import ContactFormSection from './ContactFormSection';
 import ContactFormPreview from './ContactFormPreview';
+import { ContactFormValues } from './types';
+import { useState } from 'react';
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -21,7 +16,6 @@ const Contact = () => {
     threshold: 0.1,
   });
   
-  const { toast } = useToast();
   const [showPreview, setShowPreview] = useState(false);
   const [submissionData, setSubmissionData] = useState<ContactFormValues | null>(null);
   
@@ -34,52 +28,23 @@ const Contact = () => {
     copyToClipboard
   } = useContactForm();
 
-  const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      organization: "",
-      phone: "",
-      topic: "",
-      message: "",
-    },
-    mode: "onChange",
-  });
-
-  useEffect(() => {
-    const subscription = form.watch((value, { name }) => {
-      if (name === 'message' || !name) {
-        setMessageLength(value.message?.length || 0);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [form.watch, setMessageLength]);
-
   const onSubmit = (data: ContactFormValues) => {
     setSubmissionData(data);
     setShowPreview(true);
   };
 
   const handleConfirmSubmission = () => {
-    toast({
-      title: "Message sent!",
-      description: "Thank you for contacting us. We'll be in touch shortly.",
-      duration: 3000,
-    });
-    setShowPreview(false);
-    form.reset();
-    setMessageLength(0);
+    // This functionality is handled by ContactFormSection
   };
 
   const contactInfo = [
     {
-      icon: <MapPin className="h-5 w-5 text-sapp-blue" />,
+      icon: "mapPin",
       title: "Offices",
       details: "United Kingdom (HQ) and Estonia (Engineering)",
     },
     {
-      icon: <Mail className="h-5 w-5 text-sapp-blue" />,
+      icon: "mail",
       title: "Email",
       details: "contact@sappsecurity.com",
       copyIcon: true,
@@ -87,7 +52,7 @@ const Contact = () => {
       copied: copiedEmail,
     },
     {
-      icon: <Phone className="h-5 w-5 text-sapp-blue" />,
+      icon: "phone",
       title: "Phone",
       details: "+44 (0) 2070 888 270",
       copyIcon: true,
@@ -112,49 +77,13 @@ const Contact = () => {
       <div className="absolute w-64 h-64 rounded-full bg-sapp-lightBlue/5 bottom-0 right-0 blur-3xl"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span 
-            ref={ref}
-            className={cn(
-              "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-            )}
-          >
-            Contact Us
-          </span>
-          <h2 
-            className={cn(
-              "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            Get in touch with <span className="text-sapp-blue">Team</span>
-          </h2>
-          <p 
-            className={cn(
-              "text-sapp-gray text-lg transition-all duration-500 delay-200",
-              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            Have a question about our services or want to discuss your organization's security needs?
-            Our team is ready to help you find the right solution.
-          </p>
-        </div>
+        <ContactHeader inView={inView} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          {contactInfo.map((item, index) => (
-            <ContactInfoCard
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              details={item.details}
-              copyIcon={item.copyIcon}
-              copy={item.copy}
-              copied={item.copied}
-              index={index}
-              inView={inView}
-            />
-          ))}
+          <ContactInfoSection 
+            contactInfo={contactInfo}
+            inView={inView}
+          />
         </div>
 
         <div 
@@ -163,42 +92,12 @@ const Contact = () => {
             inView ? "opacity-100 translate-y-0 delay-300" : "opacity-0 translate-y-10"
           )}
         >
-          <div className="p-6 md:p-8 lg:p-10">
-            <div className="bg-sapp-blue/10 hover:bg-sapp-blue/20 transition-colors duration-200 ease-in-out p-4 mb-6">
-              <h3 className="text-2xl font-display font-semibold text-sapp-dark">Send us a message</h3>
-            </div>
-
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <ContactFormFields form={form} messageLength={messageLength} topics={topics} />
-
-                <div className="flex items-center">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="relative inline-block">
-                          <Button 
-                            type="submit" 
-                            size="lg" 
-                            className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 group relative overflow-hidden disabled:opacity-50 disabled:pointer-events-none"
-                            disabled={!form.formState.isValid}
-                          >
-                            <span className="relative z-10 transition-transform duration-300 group-hover:translate-y-0 group-hover:scale-110">Submit Message</span>
-                            <span className="absolute inset-x-0 -bottom-1 h-1 bg-sapp-dark scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
-                          </Button>
-                        </div>
-                      </TooltipTrigger>
-                      {!form.formState.isValid && (
-                        <TooltipContent>
-                          <p>Please complete all required fields before submitting</p>
-                        </TooltipContent>
-                      )}
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-              </form>
-            </Form>
-          </div>
+          <ContactFormSection 
+            onSubmit={onSubmit}
+            topics={topics}
+            messageLength={messageLength}
+            setMessageLength={setMessageLength}
+          />
         </div>
       </div>
 
