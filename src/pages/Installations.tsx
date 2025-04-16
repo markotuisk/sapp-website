@@ -8,6 +8,7 @@ import HeroSection from '@/components/installations/HeroSection';
 import SolutionsSection from '@/components/installations/SolutionsSection';
 import CapabilitiesSection from '@/components/installations/CapabilitiesSection';
 import DeploymentSection from '@/components/installations/DeploymentSection';
+import DeploymentConsultationSection from '@/components/installations/DeploymentConsultationSection';
 import CTASection from '@/components/installations/CTASection';
 
 const Installations = () => {
@@ -32,6 +33,9 @@ const Installations = () => {
 
         {/* How We Deploy Section */}
         <DeploymentSection />
+
+        {/* Deployment Consultation Section */}
+        <DeploymentConsultationSection />
 
         {/* CTA Section */}
         <CTASection />
