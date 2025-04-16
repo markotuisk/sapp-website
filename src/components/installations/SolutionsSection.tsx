@@ -1,21 +1,13 @@
 
-import React from 'react';
-import { MonitorCheck, Wifi, Lock, Database } from 'lucide-react';
+import React, { useState } from 'react';
+import { Cpu, Scale, Wrench, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Animated } from '@/components/ui/AnimatedElements';
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction
-} from '@/components/ui/alert-dialog';
+import ContactFormDialog from '@/components/ui/ContactFormDialog';
 
 const SolutionsSection = () => {
+  const [contactOpen, setContactOpen] = useState(false);
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -44,71 +36,41 @@ const SolutionsSection = () => {
             </Animated>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <Animated animation="fade-up" delay={200} className="bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <MonitorCheck className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">CCTV & Access</h4>
-                <p className="text-sm text-sapp-gray">Comprehensive video surveillance and access control systems.</p>
+                <Cpu className="h-6 w-6 text-sapp-blue mb-2" />
+                <h4 className="font-semibold text-sapp-dark mb-1">Cyber & Physical</h4>
+                <p className="text-sm text-sapp-gray">Converge cyber and physical security in new AI-driven systems.</p>
               </Animated>
               <Animated animation="fade-up" delay={250} className="bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <Wifi className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Speech & Sound Masking</h4>
-                <p className="text-sm text-sapp-gray">Advanced sound masking and speech protection solutions.</p>
+                <Scale className="h-6 w-6 text-sapp-blue mb-2" />
+                <h4 className="font-semibold text-sapp-dark mb-1">Legacy Systems</h4>
+                <p className="text-sm text-sapp-gray">Replace legacy systems with scalable technology.</p>
               </Animated>
               <Animated animation="fade-up" delay={300} className="bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <Lock className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Counter Surveillance</h4>
-                <p className="text-sm text-sapp-gray">Protection against unauthorized surveillance activities.</p>
+                <Wrench className="h-6 w-6 text-sapp-blue mb-2" />
+                <h4 className="font-semibold text-sapp-dark mb-1">Agile Installations</h4>
+                <p className="text-sm text-sapp-gray">No installation is too complex or small for SAPP team.</p>
               </Animated>
               <Animated animation="fade-up" delay={350} className="bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <Database className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Network Security</h4>
-                <p className="text-sm text-sapp-gray">Secure network infrastructure and communications.</p>
+                <Award className="h-6 w-6 text-sapp-blue mb-2" />
+                <h4 className="font-semibold text-sapp-dark mb-1">Accredited & Documented</h4>
+                <p className="text-sm text-sapp-gray">Each installation is fully documented and includes manufacturer certificates.</p>
               </Animated>
             </div>
             <Animated animation="fade-up" delay={400}>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button 
-                    size="lg" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-                  >
-                    Request a Consultation
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="bg-white">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Request a Security Consultation</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Fill out the form below to schedule a consultation with our installation experts.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <div className="py-4">
-                    <form className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <label htmlFor="name" className="text-sm font-medium">Full Name</label>
-                          <input id="name" className="w-full p-2 border border-gray-300 rounded-md" />
-                        </div>
-                        <div className="space-y-2">
-                          <label htmlFor="company" className="text-sm font-medium">Company</label>
-                          <input id="company" className="w-full p-2 border border-gray-300 rounded-md" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="email" className="text-sm font-medium">Email</label>
-                        <input id="email" type="email" className="w-full p-2 border border-gray-300 rounded-md" />
-                      </div>
-                      <div className="space-y-2">
-                        <label htmlFor="message" className="text-sm font-medium">Message</label>
-                        <textarea id="message" rows={4} className="w-full p-2 border border-gray-300 rounded-md"></textarea>
-                      </div>
-                    </form>
-                  </div>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction className="bg-sapp-blue hover:bg-sapp-blue/90 text-white">Send Request</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <Button 
+                size="lg" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
+                onClick={() => setContactOpen(true)}
+              >
+                Request a Consultation
+              </Button>
+              
+              <ContactFormDialog 
+                open={contactOpen}
+                onOpenChange={setContactOpen}
+                defaultMessage="I'm interested in discussing installation services for my organization."
+                serviceName="Installation Services"
+              />
             </Animated>
           </div>
         </div>
