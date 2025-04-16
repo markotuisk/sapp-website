@@ -1,10 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import TranslatedText from '@/components/ui/TranslatedText';
+import ContactFormDialog from '@/components/ui/ContactFormDialog';
 
 const CTASection: React.FC = () => {
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 text-center">
@@ -18,14 +20,20 @@ const CTASection: React.FC = () => {
         <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
           Our team of event security experts is ready to create a tailored security plan for your upcoming corporate events.
         </p>
-        <Link to="/#contact">
-          <Button 
-            size="lg" 
-            className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
-          >
-            <TranslatedText textKey="getInTouch" />
-          </Button>
-        </Link>
+        <Button 
+          size="lg" 
+          className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
+          onClick={() => setContactDialogOpen(true)}
+        >
+          <TranslatedText textKey="getInTouch" />
+        </Button>
+        
+        <ContactFormDialog 
+          open={contactDialogOpen}
+          onOpenChange={setContactDialogOpen}
+          defaultMessage="I'm interested in securing my upcoming event."
+          serviceName="Event Security"
+        />
       </div>
     </section>
   );
