@@ -1,4 +1,3 @@
-
 import { formatVersionDate } from '@/lib/versionTracker';
 import { VersionInfo } from '@/lib/versionTracker';
 
@@ -155,7 +154,8 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
     { name: 'React Router', description: 'Application routing and navigation' },
     { name: 'Tailwind CSS', description: 'Utility-first CSS framework' },
     { name: 'Shadcn UI', description: 'Component library for user interface' },
-    { name: 'React Hook Form', description: 'Form validation and management' }
+    { name: 'React Hook Form', description: 'Form validation and management' },
+    { name: 'Resend', description: 'Email sending and management service' }
   ];
 
   return {
