@@ -1,4 +1,3 @@
-
 import { formatVersionDate } from '@/lib/versionTracker';
 import { VersionInfo } from '@/lib/versionTracker';
 
@@ -81,7 +80,7 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
       totalPages: 0,
       totalServices: 0,
       supportedLanguages: 0,
-      componentBreakdown: {}
+      technicalServices: []
     };
   }
 
@@ -139,11 +138,22 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
   // Calculate total components
   const totalComponents = versions.length;
   
+  const technicalServices = [
+    { name: 'Supabase Authentication', description: 'User authentication and management' },
+    { name: 'Supabase Storage', description: 'File and asset storage' },
+    { name: 'React Query', description: 'Data fetching and state management' },
+    { name: 'Language Context', description: 'Internationalization and translation' },
+    { name: 'Auth Context', description: 'User authentication state management' },
+    { name: 'Toaster Notifications', description: 'System-wide toast notifications' },
+    { name: 'Error Logging', description: 'Application error tracking and logging' },
+    { name: 'Device Detection', description: 'Responsive design and mobile detection' }
+  ];
+
   return {
     totalComponents,
     totalPages,
-    totalServices,
+    totalServices: technicalServices.length,
     supportedLanguages,
-    componentBreakdown
+    technicalServices
   };
 };

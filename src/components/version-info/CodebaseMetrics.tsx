@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Layers, FileCode, Server, Globe } from 'lucide-react';
@@ -64,17 +63,9 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
         break;
       case 'services':
         setDialogContent({
-          title: 'Services',
-          description: `${metrics.totalServices} total services offered`,
-          items: versions
-            .filter(component => {
-              const id = component.component_id.toLowerCase();
-              return id.includes('service') || 
-                id.includes('feature') || 
-                id.includes('capabilities') ||
-                id.includes('solution');
-            })
-            .map(v => v.component_name || v.component_id),
+          title: 'Technical Services',
+          description: `${metrics.totalServices} technical services powering the application`,
+          items: metrics.technicalServices.map(service => `${service.name} - ${service.description}`),
           icon: <Server className="h-6 w-6 text-sapp-blue" />
         });
         break;
@@ -128,7 +119,7 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           >
             <Server className="h-8 w-8 mx-auto mb-2 text-sapp-blue" />
             <p className="text-2xl font-bold">{metrics.totalServices}</p>
-            <p className="text-sm text-gray-500">Total Services</p>
+            <p className="text-sm text-gray-500">Technical Services</p>
           </div>
           
           <div 

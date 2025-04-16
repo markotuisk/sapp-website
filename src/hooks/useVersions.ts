@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { getAllVersions, getComponentVersion, VersionInfo } from '@/lib/versionTracker';
 import { useQuery } from '@tanstack/react-query';
@@ -39,8 +38,8 @@ export const useBuildInfo = () => {
     tailwindVersion: '2.5.2',
     componentCount: 0,
     totalPages: 0,
-    totalServices: 0,
-    supportedLanguages: 0
+    totalServices: 8,
+    supportedLanguages: 4
   });
 
   useEffect(() => {
@@ -78,7 +77,7 @@ export const useBuildInfo = () => {
         currentBuild: coreComponent.version,
         buildDate: coreComponent.initial_date,
         lastUpdated: coreComponent.last_update,
-        frameworkVersion: 'React 18.3.1', // These could be stored in DB too if needed
+        frameworkVersion: 'React 18.3.1',
         tailwindVersion: '2.5.2',
         componentCount: versions.length,
         totalPages,
@@ -88,10 +87,5 @@ export const useBuildInfo = () => {
     }
   }, [versions]);
 
-  return {
-    buildInfo,
-    isLoading,
-    error,
-    refetch // Return the refetch function from useAllVersions
-  };
+  return { buildInfo, isLoading, error, refetch };
 };
