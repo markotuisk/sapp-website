@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FileText, Lock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -68,11 +67,8 @@ const DeploymentSection = () => {
           </Animated>
         </div>
 
-        <Animated animation="fade-up" delay={600} className="max-w-3xl mx-auto text-center">
-          <p className="text-sapp-gray mb-6">
-            Our project management methodology ensures clear communication, detailed documentation, and transparent processes throughout the deployment lifecycle, regardless of project complexity.
-          </p>
-          <AlertDialog>
+        <AlertDialog>
+          <Animated animation="fade-up" delay={600} className="max-w-3xl mx-auto text-center">
             <AlertDialogTrigger asChild>
               <Button 
                 size="lg" 
