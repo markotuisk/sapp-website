@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { getAllVersions, getComponentVersion, VersionInfo } from '@/lib/versionTracker';
 import { useQuery } from '@tanstack/react-query';
+import { getActualPages } from '@/components/version-info/VersionInfoUtils';
 
 /**
  * Custom hook to fetch all component versions
@@ -46,32 +48,7 @@ export const useBuildInfo = () => {
     if (versions && versions.length > 0) {
       // Find the core app component or use the first component
       const coreComponent = versions.find(v => v.component_id === 'app-core') || versions[0];
-      
-      // Count different types of components
-      let totalPages = 0;
-      let totalServices = 0;
-      let supportedLanguages = 4; // English, German, Dutch, French
-      
-      versions.forEach(component => {
-        const id = component.component_id.toLowerCase();
-        
-        if (id.includes('page') || 
-            id.includes('index') || 
-            id.endsWith('-hero') || 
-            id.includes('audit-') ||
-            id.includes('cyber-') || 
-            id.includes('event-') || 
-            id.includes('install-')) {
-          totalPages++;
-        }
-        
-        if (id.includes('service') || 
-            id.includes('feature') || 
-            id.includes('capabilities') ||
-            id.includes('solution')) {
-          totalServices++;
-        }
-      });
+      const actualPages = getActualPages();
       
       setBuildInfo({
         currentBuild: coreComponent.version,
@@ -80,9 +57,9 @@ export const useBuildInfo = () => {
         frameworkVersion: 'React 18.3.1',
         tailwindVersion: '2.5.2',
         componentCount: versions.length,
-        totalPages,
-        totalServices,
-        supportedLanguages
+        totalPages: actualPages.length,
+        totalServices: 19, // Update to match the length of technicalServices array in calculateCodebaseMetrics
+        supportedLanguages: 4
       });
     }
   }, [versions]);

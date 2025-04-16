@@ -44,19 +44,8 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
       case 'pages':
         setDialogContent({
           title: 'Site Pages',
-          description: `${metrics.totalPages} total pages in the application`,
-          items: versions
-            .filter(component => {
-              const id = component.component_id.toLowerCase();
-              return id.includes('page') || 
-                id.includes('index') || 
-                id.endsWith('-hero') || 
-                id.includes('audit-') ||
-                id.includes('cyber-') || 
-                id.includes('event-') || 
-                id.includes('install-');
-            })
-            .map(v => v.component_name || v.component_id),
+          description: `${metrics.totalPages} navigable pages in the application`,
+          items: metrics.actualPages ? metrics.actualPages.map(page => `${page.name} (${page.path})`) : [],
           icon: <FileCode className="h-6 w-6 text-sapp-blue" />
         });
         break;
@@ -110,7 +99,7 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           >
             <FileCode className="h-8 w-8 mx-auto mb-2 text-sapp-blue" />
             <p className="text-2xl font-bold">{metrics.totalPages}</p>
-            <p className="text-sm text-gray-500">Total Pages</p>
+            <p className="text-sm text-gray-500">Navigable Pages</p>
           </div>
           
           <div 
