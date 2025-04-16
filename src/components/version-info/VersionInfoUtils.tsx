@@ -80,11 +80,7 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
       totalComponents: 0,
       totalPages: 0,
       totalServices: 0,
-      totalAPIs: 0,
-      totalUpdates: 0,
-      changeRate: 0,
-      lastWeekUpdates: 0,
-      trend: 'stable' as 'increasing' | 'decreasing' | 'stable',
+      supportedLanguages: 0,
       componentBreakdown: {}
     };
   }
@@ -92,7 +88,7 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
   // Count different types of components
   let totalPages = 0;
   let totalServices = 0;
-  let totalAPIs = 0;
+  const supportedLanguages = 4; // English, German, Dutch, French
   const componentBreakdown: Record<string, number> = {};
 
   versions.forEach(component => {
@@ -114,14 +110,6 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
         id.includes('capabilities') ||
         id.includes('solution')) {
       totalServices++;
-    }
-    
-    if (id.includes('api') || 
-        id.includes('supabase') || 
-        id.includes('client') ||
-        id.includes('integration') || 
-        id.includes('contact-form')) {
-      totalAPIs++;
     }
     
     // Count by category for breakdown
@@ -148,45 +136,14 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
     }
   });
 
-  // Calculate total components and updates
+  // Calculate total components
   const totalComponents = versions.length;
-  const totalUpdates = versions.reduce((total, component) => total + component.update_count, 0);
-  
-  // Calculate updates in the last week
-  const now = new Date();
-  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  
-  let lastWeekUpdates = 0;
-  versions.forEach(component => {
-    if (component.change_log) {
-      component.change_log.forEach(entry => {
-        const entryDate = new Date(entry.timestamp);
-        if (entryDate >= oneWeekAgo) {
-          lastWeekUpdates++;
-        }
-      });
-    }
-  });
-  
-  // Determine trend
-  let trend: 'increasing' | 'decreasing' | 'stable' = 'stable';
-  
-  // Only calculate trend if we have components to analyze
-  if (totalComponents > 0) {
-    const averageUpdatesPerWeek = totalUpdates / totalComponents;
-    trend = lastWeekUpdates > averageUpdatesPerWeek ? 'increasing' : 
-           lastWeekUpdates < averageUpdatesPerWeek ? 'decreasing' : 'stable';
-  }
   
   return {
     totalComponents,
     totalPages,
     totalServices,
-    totalAPIs,
-    totalUpdates,
-    changeRate: totalComponents > 0 ? +(totalUpdates / totalComponents).toFixed(1) : 0,
-    lastWeekUpdates,
-    trend,
+    supportedLanguages,
     componentBreakdown
   };
 };

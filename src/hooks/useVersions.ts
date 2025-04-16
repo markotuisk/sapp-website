@@ -40,8 +40,7 @@ export const useBuildInfo = () => {
     componentCount: 0,
     totalPages: 0,
     totalServices: 0,
-    totalAPIs: 0,
-    totalUpdates: 0
+    supportedLanguages: 0
   });
 
   useEffect(() => {
@@ -49,13 +48,10 @@ export const useBuildInfo = () => {
       // Find the core app component or use the first component
       const coreComponent = versions.find(v => v.component_id === 'app-core') || versions[0];
       
-      // Calculate total updates
-      const totalUpdates = versions.reduce((total, component) => total + component.update_count, 0);
-      
       // Count different types of components
       let totalPages = 0;
       let totalServices = 0;
-      let totalAPIs = 0;
+      let supportedLanguages = 4; // English, German, Dutch, French
       
       versions.forEach(component => {
         const id = component.component_id.toLowerCase();
@@ -76,14 +72,6 @@ export const useBuildInfo = () => {
             id.includes('solution')) {
           totalServices++;
         }
-        
-        if (id.includes('api') || 
-            id.includes('supabase') || 
-            id.includes('client') ||
-            id.includes('integration') || 
-            id.includes('contact-form')) {
-          totalAPIs++;
-        }
       });
       
       setBuildInfo({
@@ -95,8 +83,7 @@ export const useBuildInfo = () => {
         componentCount: versions.length,
         totalPages,
         totalServices,
-        totalAPIs,
-        totalUpdates
+        supportedLanguages
       });
     }
   }, [versions]);

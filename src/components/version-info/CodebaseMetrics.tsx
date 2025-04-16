@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, AreaChart, Layers, TrendingUp, TrendingDown, Minus, FileCode, Server, Globe } from 'lucide-react';
+import { BarChart, Layers, FileCode, Server, Globe } from 'lucide-react';
 import { VersionInfo } from '@/lib/versionTracker';
 import { calculateCodebaseMetrics } from './VersionInfoUtils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,17 +15,6 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
   const metrics = calculateCodebaseMetrics(versions);
   const [activeTab, setActiveTab] = useState('overview');
   
-  const getTrendIcon = () => {
-    switch (metrics.trend) {
-      case 'increasing':
-        return <TrendingUp className="text-green-500" />;
-      case 'decreasing':
-        return <TrendingDown className="text-amber-500" />;
-      default:
-        return <Minus className="text-sapp-blue" />;
-    }
-  };
-  
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -34,7 +23,7 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
           Codebase Metrics
         </CardTitle>
         <CardDescription>
-          Statistics about the codebase size and change frequency
+          Statistics about the codebase composition
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -66,49 +55,66 @@ const CodebaseMetrics = ({ versions }: CodebaseMetricsProps) => {
               
               <div className="bg-gray-50 p-4 rounded-lg text-center">
                 <Globe className="h-8 w-8 mx-auto mb-2 text-sapp-blue" />
-                <p className="text-2xl font-bold">{metrics.totalAPIs}</p>
-                <p className="text-sm text-gray-500">Total APIs</p>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <AreaChart className="h-8 w-8 mx-auto mb-2 text-sapp-blue" />
-                <p className="text-2xl font-bold">{metrics.totalUpdates}</p>
-                <p className="text-sm text-gray-500">Total Updates</p>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <div className="flex justify-center mb-2">
-                  {getTrendIcon()}
-                </div>
-                <p className="text-2xl font-bold">{metrics.lastWeekUpdates}</p>
-                <p className="text-sm text-gray-500">Updates Last Week</p>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg text-center">
-                <TrendingUp className="h-8 w-8 mx-auto mb-2 text-sapp-blue" />
-                <p className="text-2xl font-bold">{metrics.changeRate}</p>
-                <p className="text-sm text-gray-500">Updates Per Component</p>
+                <p className="text-2xl font-bold">{metrics.supportedLanguages}</p>
+                <p className="text-sm text-gray-500">Supported Languages</p>
               </div>
             </div>
           </TabsContent>
           
           <TabsContent value="breakdown" className="pt-4">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Category</TableHead>
-                  <TableHead className="text-right">Component Count</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {Object.entries(metrics.componentBreakdown || {}).map(([category, count]) => (
-                  <TableRow key={category}>
-                    <TableCell className="font-medium">{category}</TableCell>
-                    <TableCell className="text-right">{count}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <h3 className="text-lg font-medium mb-3 text-center">Components</h3>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Category</TableHead>
+                      <TableHead className="text-right">Count</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {Object.entries(metrics.componentBreakdown || {}).map(([category, count]) => (
+                      <TableRow key={category}>
+                        <TableCell className="font-medium">{category}</TableCell>
+                        <TableCell className="text-right">{count}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-medium mb-3 text-center">Pages</h3>
+                <div className="bg-gray-50 p-6 rounded-lg text-center">
+                  <FileCode className="h-10 w-10 mx-auto mb-3 text-sapp-blue" />
+                  <div className="text-3xl font-bold mb-1">{metrics.totalPages}</div>
+                  <p className="text-sm text-gray-500">Total site pages</p>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-medium mb-3 text-center">Services</h3>
+                <div className="bg-gray-50 p-6 rounded-lg text-center">
+                  <Server className="h-10 w-10 mx-auto mb-3 text-sapp-blue" />
+                  <div className="text-3xl font-bold mb-1">{metrics.totalServices}</div>
+                  <p className="text-sm text-gray-500">Total services</p>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-medium mb-3 text-center">Languages</h3>
+                <div className="bg-gray-50 p-6 rounded-lg text-center">
+                  <Globe className="h-10 w-10 mx-auto mb-3 text-sapp-blue" />
+                  <div className="text-3xl font-bold mb-1">{metrics.supportedLanguages}</div>
+                  <div className="flex justify-center gap-2 mt-3">
+                    <span title="English">🇬🇧</span>
+                    <span title="German">🇩🇪</span>
+                    <span title="Dutch">🇳🇱</span>
+                    <span title="French">🇫🇷</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </CardContent>

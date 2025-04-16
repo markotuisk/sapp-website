@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Code, Layers, Activity, Calendar, FileCode, Server, Globe } from 'lucide-react';
+import { Code, Layers, Calendar, FileCode, Server, Globe } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -14,8 +14,7 @@ interface SummaryCardsProps {
     componentCount: number;
     totalPages: number;
     totalServices: number;
-    totalAPIs: number;
-    totalUpdates: number;
+    supportedLanguages: number;
   };
   buildDate: {
     date: string;
@@ -89,17 +88,10 @@ const SummaryCards = ({ buildInfo, buildDate, lastUpdate }: SummaryCardsProps) =
               </div>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-sapp-gray">APIs:</span>
+              <span className="text-sm text-sapp-gray">Languages:</span>
               <div className="flex items-center">
                 <Globe className="h-4 w-4 mr-1 text-sapp-blue" />
-                <span className="font-medium">{buildInfo.totalAPIs}</span>
-              </div>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-sapp-gray">Updates:</span>
-              <div className="flex items-center">
-                <Activity className="h-4 w-4 mr-1 text-sapp-blue" />
-                <span className="font-medium">{buildInfo.totalUpdates}</span>
+                <span className="font-medium">{buildInfo.supportedLanguages}</span>
               </div>
             </div>
           </div>
