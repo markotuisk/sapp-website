@@ -155,7 +155,10 @@ export const calculateCodebaseMetrics = (versions: VersionInfo[]) => {
     { name: 'Tailwind CSS', description: 'Utility-first CSS framework' },
     { name: 'Shadcn UI', description: 'Component library for user interface' },
     { name: 'React Hook Form', description: 'Form validation and management' },
-    { name: 'Resend', description: 'Email sending and management service' }
+    { name: 'Resend', description: 'Email sending and management service' },
+    { name: 'React Helmet', description: 'SEO and metadata management' },
+    { name: 'Radix UI', description: 'Accessible UI component primitives' },
+    { name: 'Lucide React', description: 'High-quality icon library' }
   ];
 
   return {
