@@ -24,10 +24,10 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ serviceDetails, onLea
         
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">
-            Event Security Services We Offer
+            How We Secure Executive Events
           </h2>
           <p className="text-sapp-gray">
-            Our comprehensive suite of event security services provides tailored protection for your confidential corporate meetings and executive gatherings
+            We are specialised executive-level Event Security and technical vendor providing comprehensive protection for corporate board and management meetings.
           </p>
         </div>
 

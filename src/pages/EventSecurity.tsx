@@ -33,19 +33,19 @@ const EventSecurity = () => {
     },
     {
       title: "Event Monitoring",
-      description: "Real-time technical and physical monitoring for confidential meetings, with incident management to handle potential security breaches swiftly and professionally.",
+      description: "Live sensitive meetings are usually insufficiently protected against corporate espionage and other information gatherers. Real-time technical and physical monitoring should be a standard business process at any confidential, restricted or sensitive meeting. Event monitoring also includes the incident management service ensuring swift and professional handling of a potentially embarrassing situation avoiding a potential crisis and reputational damage.",
       href: "/services/event-monitoring",
       imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
     },
     {
       title: "Secure Technology",
-      description: "Comprehensive audit of all technology used at sensitive meetings with recommendations for more secure alternatives to protect against cyber and espionage attacks.",
+      description: "Companies typically use a range of communications technology at most of their sensitive events. From security perspective, this leaves them vulnerable to an array of cyber and espionage attacks. Our Event Security service includes the detailed audit of all technology that is used at a sensitive meeting with recommendations for more secure alternatives.",
       href: "/services/secure-technology",
       imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
       title: "Close Protection",
-      description: "Professional close protection services for larger restricted events like AGMs and high-profile executives, especially at venues without on-site security.",
+      description: "For larger restricted events such as AGMs and for high-profile executives as well as at venues where there is no on-site security, we work with trusted partners to provide professional close protection services.",
       href: "/services/close-protection",
       imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
     }
