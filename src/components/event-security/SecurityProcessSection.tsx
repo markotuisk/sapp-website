@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ClipboardEdit, Building2, PresentationChart, Handshake } from 'lucide-react';
+import { ClipboardEdit, Building2, Presentation, Handshake } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ const SecurityProcessSection: React.FC = () => {
     {
       title: "Results Rehearsals",
       description: "Ensure confidentiality for sensitive presentations.",
-      icon: <PresentationChart className="h-8 w-8 text-white" />,
+      icon: <Presentation className="h-8 w-8 text-white" />,
       color: "from-sapp-blue/90 to-sapp-blue/70",
       delay: 200
     },
@@ -101,7 +101,7 @@ const SecurityProcessSection: React.FC = () => {
             className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-transform duration-300 hover:scale-105"
             onClick={() => setContactDialogOpen(true)}
           >
-            <TranslatedText textKey="requestConsultation" />
+            <TranslatedText textKey="getInTouch" defaultText="Request Consultation" />
           </Button>
           
           <ContactFormDialog 
