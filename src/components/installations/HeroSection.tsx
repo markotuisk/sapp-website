@@ -4,17 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
+import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import { useState } from 'react';
 
 const HeroSection = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
-  const navigate = useNavigate();
-
-  const handleRapidServiceNavigator = () => {
-    navigate('/#services');
-  };
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
@@ -38,17 +36,25 @@ const HeroSection = () => {
             From cloud to cable system installations in physical and network security, speech privacy and counter surveillance
           </p>
           
-          <div 
+          <p 
             className={cn(
-              "flex flex-col space-y-2 items-center justify-center transition-all duration-500 delay-300",
+              "text-md text-sapp-blue italic mb-4 max-w-xl mx-auto opacity-70 transition-all duration-500 delay-300",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            <p className="text-sapp-blue font-semibold text-lg mb-2">Cut through complexity</p>
+            Cut through complexity
+          </p>
+          
+          <div 
+            className={cn(
+              "flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 delay-300",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-              onClick={handleRapidServiceNavigator}
+              onClick={() => setServicesOpen(true)}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
                 Rapid Service Navigator
@@ -58,8 +64,14 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      <ServicesOverlay 
+        open={servicesOpen}
+        onOpenChange={setServicesOpen}
+      />
     </section>
   );
 };
 
 export default HeroSection;
+
