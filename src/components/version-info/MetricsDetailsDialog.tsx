@@ -30,21 +30,21 @@ const MetricsDetailsDialog = ({
 }: MetricsDetailsDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-xl">
             {icon}
             {title}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-base">
             {description}
           </DialogDescription>
         </DialogHeader>
-        <div className="max-h-[60vh] overflow-y-auto mt-4">
+        <div className="flex-1 overflow-y-auto pr-2 mt-4">
           {items.length > 0 ? (
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {items.map((item, index) => (
-                <li key={index} className="p-2 bg-gray-50 rounded-md">
+                <li key={index} className="p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors">
                   {item}
                 </li>
               ))}
@@ -54,7 +54,7 @@ const MetricsDetailsDialog = ({
           )}
           
           {showFlags && (
-            <div className="flex justify-center gap-4 mt-4">
+            <div className="flex justify-center gap-4 mt-6 pb-2">
               <span title="English" className="text-2xl">🇬🇧</span>
               <span title="German" className="text-2xl">🇩🇪</span>
               <span title="Dutch" className="text-2xl">🇳🇱</span>
