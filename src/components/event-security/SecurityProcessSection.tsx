@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ClipboardEdit, Building2, Presentation, Handshake, WalletCards } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -46,7 +45,7 @@ const SecurityProcessSection: React.FC = () => {
       delay: 400
     },
     {
-      title: "Investors Meetings",
+      title: "Investor Meeting",
       description: "Protect confidential fundraising discussions and partner meetings.",
       icon: <WalletCards className="h-8 w-8 text-white" />,
       color: "from-sapp-blue/60 to-sapp-blue/40",
