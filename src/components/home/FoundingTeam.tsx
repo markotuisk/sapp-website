@@ -14,14 +14,14 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: 'Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP\'s integrated offering across markets.',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
+      image: '/lovable-uploads/bc901c6a-2dc2-4d76-8c1f-6fc400986598.png',
       hoverImage: '/lovable-uploads/bc901c6a-2dc2-4d76-8c1f-6fc400986598.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952',
+      image: '/lovable-uploads/c1e65442-ee2d-4805-902e-00744cb3d481.png',
       hoverImage: '/lovable-uploads/c1e65442-ee2d-4805-902e-00744cb3d481.png',
     },
   ];
@@ -63,7 +63,7 @@ const FoundingTeam = () => {
                   />
                   {/* Hover Image */}
                   <div 
-                    className="absolute inset-0 bg-cover bg-left-center opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100"
+                    className="absolute inset-0 bg-cover bg-center opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100"
                     style={{ backgroundImage: `url(${founder.hoverImage})` }}
                   />
                 </div>
