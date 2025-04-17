@@ -2,10 +2,11 @@
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
-import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
+import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import TranslatedText from '@/components/ui/TranslatedText';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Services = () => {
   const [ref, inView] = useInView({
@@ -17,69 +18,31 @@ const Services = () => {
 
   const services = [
     {
-      icon: <Shield className="h-6 w-6" />,
+      icon: <Shield className="h-6 w-6 text-sapp-blue" />,
       title: t('eventSecurity'),
       description: "Real-time protection for high-profile confidential meetings and events. We coordinate with third-party specialists where required.",
-      items: [
-        "Venue Security Audits",
-        "Event Monitoring",
-        "Secure Technology",
-        "Close Protection",
-        "Incident Management",
-        "Third-Party Event Security Integration"
-      ],
       href: "/event-security",
-      delay: 100,
       imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
     },
     {
-      icon: <AlertTriangle className="h-6 w-6" />,
+      icon: <AlertTriangle className="h-6 w-6 text-sapp-blue" />,
       title: t('securityAudits'),
       description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations. Coordinated with compliance partners.",
-      items: [
-        "Physical Security Assessments",
-        "Security Systems Testing",
-        "Penetration Tests",
-        "Compliance Audits",
-        "TSCM Inspections",
-        "Third-Party Certification Support"
-      ],
       href: "/security-audits",
-      delay: 200,
       imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     },
     {
-      icon: <MonitorCheck className="h-6 w-6" />,
+      icon: <MonitorCheck className="h-6 w-6 text-sapp-blue" />,
       title: t('installations'),
       description: "Implementation of cutting-edge security systems covering CCTV, access control, speech privacy, and more. Seamless integration with existing enterprise systems.",
-      items: [
-        "CCTV Systems",
-        "Access Control Systems",
-        "Visitor Management Systems",
-        "Speech Privacy Systems",
-        "Sound Masking Systems",
-        "Mobile Security Systems",
-        "Network Security Systems",
-        "Enterprise System Integration"
-      ],
       href: "/installations",
-      delay: 300,
       imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
     },
     {
-      icon: <Wifi className="h-6 w-6" />,
+      icon: <Wifi className="h-6 w-6 text-sapp-blue" />,
       title: t('cyberSecurity'),
       description: "Enterprise-grade cyber security services protecting digital assets and IoT infrastructure from emerging threats. Partnerships with leading cybersecurity providers.",
-      items: [
-        "Threat Detection & Response",
-        "Network Security",
-        "IoT Device Protection",
-        "Data Protection",
-        "Security Awareness Training",
-        "Third-Party Security Integrations"
-      ],
       href: "/cyber-security",
-      delay: 400,
       imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
     }
   ];
@@ -118,10 +81,29 @@ const Services = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <ServiceCard 
-              key={index}
-              {...service}
-            />
+            <Card key={index} className="border-gray-100 flex flex-col">
+              <CardHeader>
+                {service.icon}
+                <CardTitle className="text-xl text-sapp-dark mt-3">{service.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                  {service.description}
+                </CardDescription>
+              </CardContent>
+              <CardFooter className="mt-auto flex justify-between">
+                <Link to={service.href}>
+                  <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
+                    Read More <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </Link>
+                <Link to={service.href}>
+                  <Button className="bg-sapp-blue hover:bg-sapp-blue/90">
+                    Learn More
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
           ))}
         </div>
       </div>
@@ -130,3 +112,4 @@ const Services = () => {
 };
 
 export default Services;
+
