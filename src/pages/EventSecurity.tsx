@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ServicesOverlay from '@/components/ui/ServicesOverlay';
@@ -16,6 +17,13 @@ const EventSecurity = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState<string | null>(null);
   const [dialogStep, setDialogStep] = useState<'form' | 'preview'>('form');
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Scroll to the top when component mounts or location changes
+    window.scrollTo(0, 0);
+  }, [location]);
+  
   const [formData, setFormData] = useState({
     name: '',
     organisation: '',
@@ -51,11 +59,6 @@ const EventSecurity = () => {
     }
   ];
 
-  const handleServiceLearnMore = (serviceTitle: string) => {
-    setOpenDialog(serviceTitle);
-    setDialogStep('form');
-  };
-
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -70,10 +73,7 @@ const EventSecurity = () => {
         <QuoteSection />
         
         {/* Security Solutions */}
-        <ServicesSection 
-          serviceDetails={serviceDetails} 
-          onLearnMore={handleServiceLearnMore} 
-        />
+        <ServicesSection serviceDetails={serviceDetails} />
 
         {/* Security Process */}
         <SecurityProcessSection />
