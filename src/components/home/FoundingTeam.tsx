@@ -55,16 +55,18 @@ const FoundingTeam = () => {
             >
               <div className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
                 {/* Profile Card Container */}
-                <div className="relative h-[379px] w-[300px] mx-auto overflow-hidden rounded-xl transition-all duration-800">
+                <div className="relative h-[400px] overflow-hidden rounded-t-xl">
                   {/* Default Image */}
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center transition-all duration-500 ease-in-out group-hover:opacity-0"
-                    style={{ backgroundImage: `url(${founder.image})` }}
+                  <img 
+                    src={founder.image}
+                    alt={`${founder.name} profile`}
+                    className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ease-in-out group-hover:opacity-0"
                   />
                   {/* Hover Image */}
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100"
-                    style={{ backgroundImage: `url(${founder.hoverImage})` }}
+                  <img 
+                    src={founder.hoverImage}
+                    alt={`${founder.name} profile hover`}
+                    className="absolute inset-0 w-full h-full object-cover object-top opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
                   />
                 </div>
                 
