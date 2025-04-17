@@ -116,12 +116,15 @@ async function sendCustomerEmail(data: ContactSubmission) {
     const response = await resend.emails.send({
       from: "SAPP Security <contact@sappsecurity.com>",
       to: [data.email],
-      subject: "We've Received Your Inquiry",
+      subject: "We've Received Your Inquiry (Ref: " + data.leadId + ")",
       html: `
         <h1>Thank You for Contacting SAPP Security</h1>
         <p>Dear ${data.name},</p>
         <p>We have received your inquiry and will get back to you as soon as possible.</p>
-        <p>Reference Number: ${data.leadId}</p>
+        <p><strong>Reference Number:</strong> ${data.leadId}</p>
+        <hr style="border: 1px solid #f1f1f1; margin: 20px 0;">
+        <p><strong>Can't find this email?</strong> Please check your spam/junk folder and add <strong>contact@sappsecurity.com</strong> to your safe senders list to ensure you receive our future communications.</p>
+        <p><a href="mailto:contact@sappsecurity.com" style="color: #0066cc; text-decoration: underline;">Reply to this email</a> if you have any questions.</p>
         <br>
         <p>Best regards,<br>SAPP Security Team</p>
       `,

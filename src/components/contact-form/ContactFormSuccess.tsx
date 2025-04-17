@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
-import { CheckCircle2, Mail, Copy, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Mail, Copy, AlertCircle, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 interface ContactFormSuccessProps {
@@ -19,6 +19,10 @@ export default function ContactFormSuccess({
     navigator.clipboard.writeText(leadId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+  
+  const openEmailClient = () => {
+    window.location.href = 'mailto:';
   };
   
   return (
@@ -61,13 +65,21 @@ export default function ContactFormSuccess({
           <div>
             <h4 className="text-sm font-medium text-sapp-dark">Check Your Inbox</h4>
             <p className="text-xs text-sapp-gray mt-1">
-              We've sent a confirmation email to your address. If you don't see it within a few minutes, please check your spam folder.
+              We've sent a confirmation email to your address. If you don't see it within a few minutes, please check your spam folder or add <span className="font-medium">contact@sappsecurity.com</span> to your contacts.
             </p>
           </div>
         </div>
       </div>
       
-      <DialogFooter>
+      <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:space-x-2">
+        <Button 
+          onClick={openEmailClient}
+          variant="outline"
+          className="text-sapp-blue border-sapp-blue hover:bg-sapp-blue/10 flex items-center gap-2 w-full sm:w-auto"
+        >
+          <Mail className="h-4 w-4" />
+          Open Email App
+        </Button>
         <Button 
           onClick={onClose} 
           className="bg-sapp-blue hover:bg-sapp-blue/90 text-white w-full sm:w-auto"
