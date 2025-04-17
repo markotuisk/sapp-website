@@ -72,7 +72,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 bg-slate-50 relative overflow-hidden">
+    <section ref={ref} className="py-24 bg-slate-50 relative overflow-hidden">
       <div className="absolute w-96 h-96 rounded-full bg-sapp-blue/5 -top-48 -left-48 blur-3xl"></div>
       <div className="absolute w-64 h-64 rounded-full bg-sapp-lightBlue/5 bottom-0 right-0 blur-3xl"></div>
       

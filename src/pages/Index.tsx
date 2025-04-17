@@ -65,7 +65,9 @@ const Index = () => {
         <QuoteSection />
         <AboutSAPP />
         <Partners />
-        <Contact />
+        <div id="contact">
+          <Contact />
+        </div>
       </main>
       <Footer />
     </div>

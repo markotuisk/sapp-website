@@ -31,7 +31,9 @@ const About = () => {
         <TeamAdvisors />
         <VisionMission />
         <JoinTeam />
-        <Contact />
+        <div id="contact">
+          <Contact />
+        </div>
       </main>
       <Footer />
     </div>
