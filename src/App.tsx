@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import { HelmetProvider } from "react-helmet-async"; // Add import for HelmetProvider
+import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientArea from "./pages/VirtualOffice";
@@ -19,8 +19,12 @@ import VenueSecurityAudits from "./pages/services/VenueSecurityAudits";
 import EventMonitoring from "./pages/services/EventMonitoring";
 import SecureTechnology from "./pages/services/SecureTechnology";
 import CloseProtection from "./pages/services/CloseProtection";
+import PhysicalSecurityAssessments from "./pages/services/PhysicalSecurityAssessments";
+import TSCMInspections from "./pages/services/TSCMInspections";
+import ComplianceAudits from "./pages/services/ComplianceAudits";
+import TechnologySystemsTesting from "./pages/services/TechnologySystemsTesting";
 import CookieConsent from "./components/ui/CookieConsent";
-import VersionInfo from "./pages/VersionInfo"; // Add import for new page
+import VersionInfo from "./pages/VersionInfo";
 
 // Installation subpage imports
 import CCTVAccess from "./pages/installations/CCTVAccess";
@@ -52,7 +56,7 @@ const App = () => {
       <TooltipProvider>
         <LanguageProvider>
           <AuthProvider>
-            <HelmetProvider> {/* Add HelmetProvider here */}
+            <HelmetProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -64,13 +68,19 @@ const App = () => {
                   <Route path="/installations" element={<Installations />} />
                   <Route path="/cyber-security" element={<CyberSecurity />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/version-info" element={<VersionInfo />} /> {/* Add new route */}
+                  <Route path="/version-info" element={<VersionInfo />} />
                   
                   {/* Service Detail Pages */}
                   <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
                   <Route path="/services/event-monitoring" element={<EventMonitoring />} />
                   <Route path="/services/secure-technology" element={<SecureTechnology />} />
                   <Route path="/services/close-protection" element={<CloseProtection />} />
+                  
+                  {/* Security Audit Subpages */}
+                  <Route path="/services/physical-security-assessments" element={<PhysicalSecurityAssessments />} />
+                  <Route path="/services/tscm-inspections" element={<TSCMInspections />} />
+                  <Route path="/services/compliance-audits" element={<ComplianceAudits />} />
+                  <Route path="/services/technology-systems-testing" element={<TechnologySystemsTesting />} />
                   
                   {/* Installation Subpages */}
                   <Route path="/installations/cctv-access" element={<CCTVAccess />} />
