@@ -32,8 +32,31 @@ export default function ContactFormReview({
           <p className="text-xs text-sapp-gray mb-2">This is how your message will appear to our team:</p>
         </div>
         
-        <div className="font-mono text-sm whitespace-pre-wrap pt-3 text-sapp-dark overflow-auto max-h-[240px]">
-          {formattedEmail}
+        <div className="pt-4 text-sapp-dark overflow-auto max-h-[240px] space-y-3">
+          {formattedEmail.split('\n').map((line, index) => {
+            // Check if line is a header (From, Organization, etc.)
+            if (line.includes(':') && !line.startsWith('Message:')) {
+              const [label, value] = line.split(':', 2);
+              return (
+                <div key={index} className="flex flex-col sm:flex-row sm:items-baseline gap-1">
+                  <span className="font-medium text-sm text-sapp-blue">{label}:</span>
+                  <span className="text-sm ml-0 sm:ml-2">{value.trim()}</span>
+                </div>
+              );
+            } 
+            // Handle message content
+            else if (line.startsWith('Message:')) {
+              return <div key={index} className="font-medium text-sm text-sapp-blue">Message:</div>;
+            }
+            // Handle the actual message content or other lines
+            else {
+              return (
+                <div key={index} className="text-sm pl-0 sm:pl-2 font-normal">
+                  {line}
+                </div>
+              );
+            }
+          })}
         </div>
       </div>
       
