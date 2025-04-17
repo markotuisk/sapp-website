@@ -1,12 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Wifi } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Wifi, Volume2, ShieldOff, Headphones } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Animated } from '@/components/ui/AnimatedElements';
 
 const SpeechPrivacy = () => {
+  useEffect(() => {
+    // Scroll to the top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -46,6 +53,31 @@ const SpeechPrivacy = () => {
               </div>
             </div>
           </div>
+          
+          {/* Feature Cards */}
+          <Animated animation="fade-up" delay={100}>
+            <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Volume2 className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Sound Masking Technology</h3>
+                <p className="text-sapp-gray text-sm">Advanced sound masking that makes speech unintelligible beyond designated perimeters.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <ShieldOff className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Anti-Eavesdropping Protection</h3>
+                <p className="text-sapp-gray text-sm">Protection against both human and electronic eavesdropping in sensitive environments.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Headphones className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Improved Acoustics</h3>
+                <p className="text-sapp-gray text-sm">Enhanced acoustic quality that improves workplace concentration and productivity.</p>
+              </Card>
+            </div>
+          </Animated>
           
           {/* Content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

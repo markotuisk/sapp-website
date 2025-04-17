@@ -1,12 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Users } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Users, Server, Network, Database } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Animated } from '@/components/ui/AnimatedElements';
 
 const NetworkInfrastructure = () => {
+  useEffect(() => {
+    // Scroll to the top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -46,6 +53,31 @@ const NetworkInfrastructure = () => {
               </div>
             </div>
           </div>
+          
+          {/* Feature Cards */}
+          <Animated animation="fade-up" delay={100}>
+            <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Server className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Secure Network Infrastructure</h3>
+                <p className="text-sapp-gray text-sm">Hardened networks designed to withstand both digital and physical threats.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Network className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">System Integration</h3>
+                <p className="text-sapp-gray text-sm">Seamless integration between your different security systems for cohesive protection.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Database className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Redundant Backup Systems</h3>
+                <p className="text-sapp-gray text-sm">Ensure continuous operation of critical security infrastructure even during disruptions.</p>
+              </Card>
+            </div>
+          </Animated>
           
           {/* Content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

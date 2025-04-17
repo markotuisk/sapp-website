@@ -1,12 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, MonitorCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MonitorCheck, Shield, Lock, BarChart } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Animated } from '@/components/ui/AnimatedElements';
 
 const CCTVAccess = () => {
+  useEffect(() => {
+    // Scroll to the top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -46,6 +53,31 @@ const CCTVAccess = () => {
               </div>
             </div>
           </div>
+          
+          {/* Feature Cards */}
+          <Animated animation="fade-up" delay={100}>
+            <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Shield className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Enterprise-Grade Security</h3>
+                <p className="text-sapp-gray text-sm">Advanced security systems with simplified management interfaces suitable for organisations of all sizes.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Lock className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Encrypted Access Control</h3>
+                <p className="text-sapp-gray text-sm">Skimmer-resistant technology deployable via cloud or local infrastructure, tailored to your security policies.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <BarChart className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Analytics & Reporting</h3>
+                <p className="text-sapp-gray text-sm">AI-powered analytics that capture critical events while minimising false positives and providing actionable insights.</p>
+              </Card>
+            </div>
+          </Animated>
           
           {/* Content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

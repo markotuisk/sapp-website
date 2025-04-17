@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -14,6 +14,11 @@ import CTASection from '@/components/installations/CTASection';
 const Installations = () => {
   const { t } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(true);
+  
+  useEffect(() => {
+    // Scroll to the top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen">

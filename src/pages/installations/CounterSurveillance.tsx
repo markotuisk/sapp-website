@@ -1,12 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, FileText } from 'lucide-react';
+import { ArrowLeft, ArrowRight, FileText, Radio, Shield, Scan } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Animated } from '@/components/ui/AnimatedElements';
 
 const CounterSurveillance = () => {
+  useEffect(() => {
+    // Scroll to the top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -46,6 +53,31 @@ const CounterSurveillance = () => {
               </div>
             </div>
           </div>
+          
+          {/* Feature Cards */}
+          <Animated animation="fade-up" delay={100}>
+            <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Radio className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">RF Spectrum Monitoring</h3>
+                <p className="text-sapp-gray text-sm">Continuous monitoring for suspicious wireless transmissions with real-time alerts.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Shield className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Protective Monitoring</h3>
+                <p className="text-sapp-gray text-sm">Permanent infrastructure that provides continuous detection of unauthorised signals.</p>
+              </Card>
+              
+              <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <Scan className="h-10 w-10 text-sapp-blue mb-4" />
+                <h3 className="text-lg font-semibold mb-2">EM Detection</h3>
+                <p className="text-sapp-gray text-sm">Detection of both active and passive electromagnetic surveillance technologies.</p>
+              </Card>
+            </div>
+          </Animated>
           
           {/* Content */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
