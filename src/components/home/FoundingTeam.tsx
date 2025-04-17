@@ -1,11 +1,6 @@
 
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import {
-  Card,
-  CardContent
-} from '@/components/ui/card';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Animated } from '@/components/ui/AnimatedElements';
 
 const FoundingTeam = () => {
@@ -19,15 +14,15 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: 'Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP\'s integrated offering across markets.',
-      image: '/lovable-uploads/bc901c6a-2dc2-4d76-8c1f-6fc400986598.png',
-      initials: 'RM',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
+      hoverImage: '/lovable-uploads/bc901c6a-2dc2-4d76-8c1f-6fc400986598.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: '/lovable-uploads/c1e65442-ee2d-4805-902e-00744cb3d481.png',
-      initials: 'MT',
+      image: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952',
+      hoverImage: '/lovable-uploads/c1e65442-ee2d-4805-902e-00744cb3d481.png',
     },
   ];
 
@@ -58,27 +53,28 @@ const FoundingTeam = () => {
               animation="fade-up" 
               delay={100 + (index * 100)}
             >
-              <Card className="flex flex-col items-center text-center overflow-hidden hover:shadow-lg transition-all duration-300">
-                <div className="p-6 pb-2">
-                  <div className="relative mb-4">
-                    <div className="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white shadow-md">
-                      <Avatar className="w-full h-full">
-                        <AvatarImage 
-                          src={founder.image} 
-                          alt={founder.name} 
-                          className="object-cover w-full h-full"
-                        />
-                        <AvatarFallback className="text-2xl">{founder.initials}</AvatarFallback>
-                      </Avatar>
-                    </div>
-                  </div>
+              <div className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                {/* Profile Card Container */}
+                <div className="relative h-[379px] w-[300px] mx-auto overflow-hidden rounded-xl transition-all duration-800">
+                  {/* Default Image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transition-all duration-500 ease-in-out group-hover:opacity-0"
+                    style={{ backgroundImage: `url(${founder.image})` }}
+                  />
+                  {/* Hover Image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-left-center opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100"
+                    style={{ backgroundImage: `url(${founder.hoverImage})` }}
+                  />
                 </div>
-                <CardContent className="px-6 pt-0 pb-6">
+                
+                {/* Content */}
+                <div className="p-6 text-center">
                   <h3 className="text-xl font-bold text-sapp-dark mb-1">{founder.name}</h3>
                   <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
-                  <p className="text-sapp-gray">{founder.bio}</p>
-                </CardContent>
-              </Card>
+                  <p className="text-sapp-gray text-sm">{founder.bio}</p>
+                </div>
+              </div>
             </Animated>
           ))}
         </div>
