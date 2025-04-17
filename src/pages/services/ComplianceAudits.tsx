@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -10,11 +9,17 @@ import QuoteCard from '@/components/ui/QuoteCard';
 import { useState } from 'react';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const ComplianceAudits = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Scroll to the top when component mounts or location changes
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <div className="min-h-screen">
