@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
 
@@ -7,6 +8,26 @@ const FoundingTeam = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  // Add state to track image loading for debugging
+  const [imageLoadState, setImageLoadState] = useState({
+    railiDefault: false,
+    railiHover: false,
+    markoDefault: false,
+    markoHover: false
+  });
+
+  const handleImageLoad = (imageType) => {
+    setImageLoadState(prev => ({
+      ...prev,
+      [imageType]: true
+    }));
+    console.log(`Image loaded: ${imageType}`);
+  };
+
+  const handleImageError = (imageType, error) => {
+    console.error(`Failed to load image (${imageType}):`, error);
+  };
 
   const founders = [
     {
@@ -60,12 +81,16 @@ const FoundingTeam = () => {
                     src={founder.image}
                     alt={`${founder.name} profile`}
                     className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ease-in-out group-hover:opacity-0"
+                    onLoad={() => handleImageLoad(index === 0 ? 'railiDefault' : 'markoDefault')}
+                    onError={(e) => handleImageError(index === 0 ? 'railiDefault' : 'markoDefault', e)}
                   />
                   {/* Hover Image */}
                   <img 
                     src={founder.hoverImage}
                     alt={`${founder.name} profile hover`}
                     className="absolute inset-0 w-full h-full object-cover object-top opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                    onLoad={() => handleImageLoad(index === 0 ? 'railiHover' : 'markoHover')}
+                    onError={(e) => handleImageError(index === 0 ? 'railiHover' : 'markoHover', e)}
                   />
                 </div>
                 
@@ -75,10 +100,34 @@ const FoundingTeam = () => {
                   <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
                   <p className="text-sapp-gray text-sm">{founder.bio}</p>
                 </div>
+
+                {/* Debug Information - Only visible during development */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="absolute top-0 left-0 bg-red-500 text-white text-xs p-1">
+                    {index === 0 ? 
+                      `R: ${imageLoadState.railiDefault}/${imageLoadState.railiHover}` : 
+                      `M: ${imageLoadState.markoDefault}/${imageLoadState.markoHover}`
+                    }
+                  </div>
+                )}
               </div>
             </Animated>
           ))}
         </div>
+
+        {/* Debug information */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mt-4 p-2 bg-gray-100 text-xs">
+            <p>Image load states: {JSON.stringify(imageLoadState)}</p>
+            <p>Image paths:</p>
+            <ul>
+              <li>Raili default: {founders[0].image}</li>
+              <li>Raili hover: {founders[0].hoverImage}</li>
+              <li>Marko default: {founders[1].image}</li>
+              <li>Marko hover: {founders[1].hoverImage}</li>
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );
