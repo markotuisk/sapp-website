@@ -23,10 +23,10 @@ const ImageBannerSection = () => {
             
             <div className="relative z-10 md:max-w-xl">
               <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                Identify Security Vulnerabilities
+                Secure Your Venue from Hidden Risks
               </h3>
               <p className="text-gray-300 mb-6">
-                Our comprehensive audits help you identify and address security gaps before they can be exploited.
+                Our comprehensive venue security assessments help you identify and mitigate potential security threats before they compromise your event.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
@@ -54,8 +54,8 @@ const ImageBannerSection = () => {
       <ContactFormDialog 
         open={contactDialogOpen} 
         onOpenChange={setContactDialogOpen}
-        defaultMessage="I'm interested in a security audit to identify vulnerabilities in our systems."
-        serviceName="Security Vulnerability Assessment"
+        defaultMessage="I'm interested in a venue security audit to identify potential risks."
+        serviceName="Venue Security Assessment"
       />
     </section>
   );
