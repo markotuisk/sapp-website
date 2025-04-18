@@ -1,5 +1,5 @@
-
-import { useLanguage, languages } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/hooks/useLanguage';
+import { languages } from '@/data/translations';
 import { 
   Select,
   SelectContent,

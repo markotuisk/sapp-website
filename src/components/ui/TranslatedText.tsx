@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/hooks/useLanguage';
+import { TranslationKey } from '@/types/language';
 
 type TranslatedTextProps = {
-  textKey: Parameters<ReturnType<typeof useLanguage>['t']>[0];
+  textKey: TranslationKey;
   defaultText?: string;
   className?: string;
 };
