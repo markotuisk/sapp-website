@@ -1,72 +1,44 @@
 
-import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
+import React from 'react';
+import { Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import TranslatedText from '@/components/ui/TranslatedText';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Animated } from '@/components/ui/AnimatedElements';
 
-const ServiceDetailsSection = () => {
+interface ServiceDetailsSectionProps {
+  onRequestAssessment?: () => void;
+}
+
+const ServiceDetailsSection: React.FC<ServiceDetailsSectionProps> = ({ onRequestAssessment }) => {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Traditional and New Industries</h3>
-          </div>
-          
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-            Who should commission a security audit?
-          </h2>
-          
-          <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
-            Our security audits are used by traditional corporations such as financial organisations, law firms, pharmaceuticals, energy companies, data centres, retailers, diplomatic facilities and so on. In addition to this, SAPP Security is uniquely positioned to deliver external audits to emerging industries.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="order-2 md:order-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              <Animated animation="fade-up" delay={150} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <Shield className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">International Sports</h4>
-                <p className="text-sm text-sapp-gray">TSCM and information security support to premier league sports teams.</p>
-              </Animated>
-              <Animated animation="fade-up" delay={200} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <FileText className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Technology Labs</h4>
-                <p className="text-sm text-sapp-gray">Security Assessments for ultra-sensitive R&D environments handling next-gen computations.</p>
-              </Animated>
-              <Animated animation="fade-up" delay={250} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <FileCheck className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Vehicle Audits</h4>
-                <p className="text-sm text-sapp-gray">Certified security and TSCM inspections for cars, planes, yachts and other vehicles.</p>
-              </Animated>
-              <Animated animation="fade-up" delay={300} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">
-                <Lock className="h-6 w-6 text-sapp-blue mb-2" />
-                <h4 className="font-semibold text-sapp-dark mb-1">International Gaming</h4>
-                <p className="text-sm text-sapp-gray">Security compliance and robust TSCM measures for competitive gaming ecosystems.</p>
-              </Animated>
+    <section className="py-8">
+      <div className="container mx-auto px-4">
+        <Animated animation="fade-up">
+          <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+            <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+              <Shield className="h-64 w-64 text-sapp-blue/10" />
             </div>
-            <Button 
-              size="lg" 
-              className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-            >
-              <TranslatedText textKey="contactUs" />
-            </Button>
-          </div>
-          <Animated animation="fade-up" delay={200} className="relative h-full flex items-center">
-            <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-            <div className="w-full h-full relative z-10 rounded-xl shadow-md overflow-hidden">
-              <AspectRatio ratio={4/3} className="w-full">
-                <img 
-                  src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
-                  alt="Security Audit Process" 
-                  className="w-full h-full object-cover hover:scale-[1.02] transition-all duration-300"
-                />
-              </AspectRatio>
+            
+            <div className="relative z-10 md:max-w-xl">
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                Protect Your Executives and Events
+              </h3>
+              <p className="text-gray-300 mb-6">
+                Our comprehensive security assessments help identify vulnerabilities before they can impact your executive team or corporate events.
+              </p>
+              {onRequestAssessment && (
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button 
+                    className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
+                    onClick={onRequestAssessment}
+                  >
+                    Request Assessment
+                  </Button>
+                </div>
+              )}
             </div>
-          </Animated>
-        </div>
+          </div>
+        </Animated>
       </div>
     </section>
   );
