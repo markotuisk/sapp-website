@@ -10,7 +10,7 @@ import HeroSection from '@/components/services/event-monitoring/HeroSection';
 import ApproachSection from '@/components/services/event-monitoring/ApproachSection';
 import FeaturesSection from '@/components/services/event-monitoring/FeaturesSection';
 import { NavigationButtons } from '@/components/services/event-monitoring/NavigationButtons';
-import SecurityVulnerabilitiesCTA from '@/components/services/shared/SecurityVulnerabilitiesCTA';
+import CTASection from '@/components/services/event-monitoring/CTASection';
 
 const EventMonitoring = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
@@ -40,7 +40,7 @@ const EventMonitoring = () => {
           <FeaturesSection onContactClick={() => setContactDialogOpen(true)} />
         </div>
         
-        <SecurityVulnerabilitiesCTA onRequestAssessment={() => setContactDialogOpen(true)} />
+        <CTASection onRequestMonitoring={() => setContactDialogOpen(true)} />
         
         <div className="container mx-auto px-4">
           <div className="py-8 border-t border-gray-100">
@@ -62,3 +62,4 @@ const EventMonitoring = () => {
 };
 
 export default EventMonitoring;
+
