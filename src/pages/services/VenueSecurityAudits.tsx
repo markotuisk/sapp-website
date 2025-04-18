@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
@@ -191,7 +190,7 @@ const VenueSecurityAudits = () => {
         </section>
         
         {/* CTA Section */}
-        <CTASection onRequestAssessment={() => setContactDialogOpen(true)} />
+        <CTASection onRequestAudit={() => setContactDialogOpen(true)} />
         
         {/* Bottom navigation */}
         <div className="container mx-auto px-4">
