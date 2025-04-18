@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
 
 const LanguageSelector = () => {
@@ -26,17 +26,18 @@ const LanguageSelector = () => {
       });
       
       setLanguage(language);
-      toast(`Language changed to ${language.name}`, {
+      toast({
+        title: `Language changed to ${language.name}`,
         description: "The website language has been updated.",
         duration: 3000,
       });
       
       if (process.env.NODE_ENV === 'development') {
         const translationCount = Object.keys(currentLanguage?.translations || {}).length;
-        toast(`Debug: Language Resources Loaded`, {
+        toast({
+          title: `Debug: Language Resources Loaded`,
           description: `${translationCount} translation keys available`,
           duration: 5000,
-          icon: "🐞",
           className: "bg-purple-100 text-purple-900",
         });
       }
