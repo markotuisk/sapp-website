@@ -1,9 +1,29 @@
-
 import React from 'react';
 import { Shield, Lock, Search, FileCheck } from 'lucide-react';
 import FeatureCard from '@/components/ui/FeatureCard';
 
-const ApproachSection = () => {
+interface FeatureBoxProps {
+  /** Icon component to display */
+  icon: React.ReactNode;
+  /** Title of the feature */
+  title: string;
+  /** Description of the feature */
+  description: string;
+}
+
+const FeatureBox: React.FC<FeatureBoxProps> = ({ icon, title, description }) => (
+  <div className="flex flex-col">
+    <div className="bg-white rounded-xl shadow-md p-6 flex items-start gap-4 h-full">
+      {icon}
+      <div>
+        <h3 className="font-semibold text-sapp-dark mb-2">{title}</h3>
+        <p className="text-sm text-sapp-gray">{description}</p>
+      </div>
+    </div>
+  </div>
+);
+
+const ApproachSection: React.FC = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -65,23 +85,5 @@ const ApproachSection = () => {
     </section>
   );
 };
-
-interface FeatureBoxProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-const FeatureBox = ({ icon, title, description }: FeatureBoxProps) => (
-  <div className="flex flex-col">
-    <div className="bg-white rounded-xl shadow-md p-6 flex items-start gap-4 h-full">
-      {icon}
-      <div>
-        <h3 className="font-semibold text-sapp-dark mb-2">{title}</h3>
-        <p className="text-sm text-sapp-gray">{description}</p>
-      </div>
-    </div>
-  </div>
-);
 
 export default ApproachSection;

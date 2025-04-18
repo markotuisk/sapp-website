@@ -1,13 +1,13 @@
-
 import React from 'react';
 import { Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface CTASectionProps {
+  /** Callback function triggered when user requests an assessment */
   onRequestAssessment: () => void;
 }
 
-const CTASection = ({ onRequestAssessment }: CTASectionProps) => {
+const CTASection: React.FC<CTASectionProps> = ({ onRequestAssessment }) => {
   return (
     <section className="py-8">
       <div className="container mx-auto px-4">

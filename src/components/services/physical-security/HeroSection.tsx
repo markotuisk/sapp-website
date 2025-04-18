@@ -1,14 +1,14 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface HeroSectionProps {
+  /** Callback function triggered when user requests an assessment */
   onRequestAssessment: () => void;
 }
 
-const HeroSection = ({ onRequestAssessment }: HeroSectionProps) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ onRequestAssessment }) => {
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative">
       <div className="container mx-auto px-4">

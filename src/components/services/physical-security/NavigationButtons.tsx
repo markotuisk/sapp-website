@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-const NavigationButtons = () => {
+const NavigationButtons: React.FC = () => {
   return (
     <div className="container mx-auto px-4">
       <div className="flex justify-between items-center py-8 border-t border-gray-100">

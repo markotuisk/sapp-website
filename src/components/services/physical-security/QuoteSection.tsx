@@ -1,8 +1,7 @@
-
 import React from 'react';
 import QuoteCard from '@/components/ui/QuoteCard';
 
-const QuoteSection = () => {
+const QuoteSection: React.FC = () => {
   return (
     <section className="py-16 bg-slate-50">
       <div className="container mx-auto px-6">
