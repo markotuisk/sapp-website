@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Animated } from '@/components/ui/AnimatedElements';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onRequestMonitoring }) => {
           <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-accent-dark-blue to-transparent opacity-80"></div>
             <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
-              <Sparkles className="h-64 w-64 text-sapp-blue/10" />
+              <Eye className="h-64 w-64 text-sapp-blue/10" />
             </div>
             
             <div className="relative z-10 md:max-w-xl">
@@ -54,4 +54,3 @@ const CTASection: React.FC<CTASectionProps> = ({ onRequestMonitoring }) => {
 };
 
 export default CTASection;
-
