@@ -1,3 +1,4 @@
+
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -9,12 +10,13 @@ import QuoteSection from '@/components/home/QuoteSection';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocation } from 'react-router-dom';
-import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
+import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
 const Index = () => {
   const { t } = useLanguage();
   const location = useLocation();
   const { logEvent } = useComponentLogger('IndexPage');
+  const { isDebugMode } = useDebugContext();
   
   useEffect(() => {
     logEvent('PageMount', { path: location.pathname });
@@ -64,39 +66,49 @@ const Index = () => {
     return () => document.removeEventListener('click', handleAnchorClick);
   }, []);
 
-  return (
-    <DebugInfo 
-      componentName="IndexPage"
-      data={{
-        currentPath: location.pathname,
-        hash: location.hash,
-        sections: [
-          'Hero',
-          'Services',
-          'QuoteSection',
-          'AboutSAPP',
-          'Partners',
-          'Contact'
-        ],
-        language: t('currentLanguage')
-      }}
-    >
-      <div className="min-h-screen">
-        <Navbar />
-        <main>
-          <Hero />
-          <Services />
-          <QuoteSection />
-          <AboutSAPP />
-          <Partners />
-          <div id="contact">
-            <Contact />
-          </div>
-        </main>
-        <Footer />
-      </div>
-    </DebugInfo>
+  const content = (
+    <div className="min-h-screen">
+      <Navbar />
+      <main>
+        <Hero />
+        <Services />
+        <QuoteSection />
+        <AboutSAPP />
+        <Partners />
+        <div id="contact">
+          <Contact />
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
+
+  // Always render the component structure the same way
+  // but conditionally wrap with DebugInfo
+  if (isDebugMode && process.env.NODE_ENV === 'development') {
+    return (
+      <DebugInfo 
+        componentName="IndexPage"
+        data={{
+          currentPath: location.pathname,
+          hash: location.hash,
+          sections: [
+            'Hero',
+            'Services',
+            'QuoteSection',
+            'AboutSAPP',
+            'Partners',
+            'Contact'
+          ],
+          language: t('currentLanguage')
+        }}
+      >
+        {content}
+      </DebugInfo>
+    );
+  }
+
+  return content;
 };
 
 export default Index;

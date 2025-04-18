@@ -11,11 +11,12 @@ import JoinTeam from '@/components/home/about/JoinTeam';
 import FoundingTeam from '@/components/home/FoundingTeam';
 import VisionMission from '@/components/home/VisionMission';
 import Contact from '@/components/home/contact/Contact';
-import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
+import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
 const About = () => {
   const location = useLocation();
   const { logEvent } = useComponentLogger('AboutPage');
+  const { isDebugMode } = useDebugContext();
   
   useEffect(() => {
     logEvent('PageMount', { path: location.pathname });
@@ -26,41 +27,51 @@ const About = () => {
     };
   }, [location, logEvent]);
 
-  return (
-    <DebugInfo 
-      componentName="AboutPage" 
-      data={{
-        path: location.pathname,
-        sections: [
-          'AboutHero',
-          'OurStory',
-          'FoundingTeam',
-          'OurApproach',
-          'TeamAdvisors',
-          'VisionMission',
-          'JoinTeam',
-          'Contact'
-        ]
-      }}
-    >
-      <div className="min-h-screen">
-        <Navbar />
-        <main>
-          <AboutHero />
-          <OurStory />
-          <FoundingTeam />
-          <OurApproach />
-          <TeamAdvisors />
-          <VisionMission />
-          <JoinTeam />
-          <div id="contact">
-            <Contact />
-          </div>
-        </main>
-        <Footer />
-      </div>
-    </DebugInfo>
+  const content = (
+    <div className="min-h-screen">
+      <Navbar />
+      <main>
+        <AboutHero />
+        <OurStory />
+        <FoundingTeam />
+        <OurApproach />
+        <TeamAdvisors />
+        <VisionMission />
+        <JoinTeam />
+        <div id="contact">
+          <Contact />
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
+
+  // Always render the component structure the same way
+  // but conditionally wrap with DebugInfo
+  if (isDebugMode && process.env.NODE_ENV === 'development') {
+    return (
+      <DebugInfo 
+        componentName="AboutPage" 
+        data={{
+          path: location.pathname,
+          sections: [
+            'AboutHero',
+            'OurStory',
+            'FoundingTeam',
+            'OurApproach',
+            'TeamAdvisors',
+            'VisionMission',
+            'JoinTeam',
+            'Contact'
+          ]
+        }}
+      >
+        {content}
+      </DebugInfo>
+    );
+  }
+
+  return content;
 };
 
 export default About;
