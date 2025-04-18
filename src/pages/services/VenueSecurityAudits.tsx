@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { useState } from 'react';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { DebugInfo } from '@/components/debug/DebugInfo';
+import CTASection from '@/components/services/venue-security-audits/CTASection';
 
 const VenueSecurityAudits = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
@@ -91,114 +93,105 @@ const VenueSecurityAudits = () => {
             </Animated>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-              <Card className="border-gray-100">
-                <CardHeader>
-                  <CardTitle className="text-xl text-sapp-dark">Pre-Assessment Planning</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm text-sapp-gray">
-                    We develop a tailored assessment plan based on your event's sensitivity, attendee profiles, and specific security concerns.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+              <DebugInfo componentName="SecurityCard-PreAssessment" data={{ cardType: "approach", section: "features" }}>
+                <Card className="border-gray-100">
+                  <CardHeader>
+                    <CardTitle className="text-xl text-sapp-dark">Pre-Assessment Planning</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm text-sapp-gray">
+                      We develop a tailored assessment plan based on your event's sensitivity, attendee profiles, and specific security concerns.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </DebugInfo>
               
-              <Card className="border-gray-100">
-                <CardHeader>
-                  <CardTitle className="text-xl text-sapp-dark">Physical Security Evaluation</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm text-sapp-gray">
-                    Our experts perform a thorough inspection of the venue's access points, surveillance capabilities, and potential vulnerabilities.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+              <DebugInfo componentName="SecurityCard-PhysicalEvaluation" data={{ cardType: "approach", section: "features" }}>
+                <Card className="border-gray-100">
+                  <CardHeader>
+                    <CardTitle className="text-xl text-sapp-dark">Physical Security Evaluation</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm text-sapp-gray">
+                      Our experts perform a thorough inspection of the venue's access points, surveillance capabilities, and potential vulnerabilities.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </DebugInfo>
               
-              <Card className="border-gray-100">
-                <CardHeader>
-                  <CardTitle className="text-xl text-sapp-dark">Technical Security Sweep</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm text-sapp-gray">
-                    Using specialized equipment, we detect unauthorized surveillance devices and verify the integrity of meeting spaces.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+              <DebugInfo componentName="SecurityCard-TechnicalSweep" data={{ cardType: "approach", section: "features" }}>
+                <Card className="border-gray-100">
+                  <CardHeader>
+                    <CardTitle className="text-xl text-sapp-dark">Technical Security Sweep</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm text-sapp-gray">
+                      Using specialized equipment, we detect unauthorized surveillance devices and verify the integrity of meeting spaces.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </DebugInfo>
               
-              <Card className="border-gray-100">
-                <CardHeader>
-                  <CardTitle className="text-xl text-sapp-dark">Staff Security Assessment</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm text-sapp-gray">
-                    We evaluate venue staff protocols, identify potential insider risks, and establish security-enhancing procedures.
-                  </CardDescription>
-                </CardContent>
-              </Card>
+              <DebugInfo componentName="SecurityCard-StaffAssessment" data={{ cardType: "approach", section: "features" }}>
+                <Card className="border-gray-100">
+                  <CardHeader>
+                    <CardTitle className="text-xl text-sapp-dark">Staff Security Assessment</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm text-sapp-gray">
+                      We evaluate venue staff protocols, identify potential insider risks, and establish security-enhancing procedures.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </DebugInfo>
             </div>
             
             <div className="mt-12">
-              <Card className="border-gray-100">
-                <CardHeader>
-                  <CardTitle className="text-xl text-sapp-dark">Why Choose Our Venue Security Audits</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                      <span className="text-sm text-sapp-gray">20+ years of experience securing high-profile events</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                      <span className="text-sm text-sapp-gray">Advanced technical surveillance countermeasures</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                      <span className="text-sm text-sapp-gray">Discreet professionals with corporate experience</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                      <span className="text-sm text-sapp-gray">Customized security plans for each venue</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                      <span className="text-sm text-sapp-gray">Comprehensive reporting with actionable insights</span>
-                    </li>
-                  </ul>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white"
-                    onClick={() => setContactDialogOpen(true)}
-                  >
-                    Request a Security Audit
-                  </Button>
-                </CardFooter>
-              </Card>
+              <DebugInfo componentName="SecurityCard-WhyChooseUs" data={{ cardType: "benefits", section: "features" }}>
+                <Card className="border-gray-100">
+                  <CardHeader>
+                    <CardTitle className="text-xl text-sapp-dark">Why Choose Our Venue Security Audits</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
+                        <span className="text-sm text-sapp-gray">20+ years of experience securing high-profile events</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
+                        <span className="text-sm text-sapp-gray">Advanced technical surveillance countermeasures</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
+                        <span className="text-sm text-sapp-gray">Discreet professionals with corporate experience</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
+                        <span className="text-sm text-sapp-gray">Customized security plans for each venue</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
+                        <span className="text-sm text-sapp-gray">Comprehensive reporting with actionable insights</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                  <CardFooter className="flex justify-end">
+                    <Button 
+                      className="bg-sapp-blue hover:bg-sapp-blue/90 text-white"
+                      onClick={() => setContactDialogOpen(true)}
+                    >
+                      Request a Security Audit
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </DebugInfo>
             </div>
           </div>
         </section>
         
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-sapp-blue to-blue-600 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <Animated animation="fade-up" delay={100}>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Protect Your Executive Events
-              </h2>
-              <p className="max-w-2xl mx-auto mb-8 text-white/90">
-                Contact our team to schedule a comprehensive venue security audit for your next corporate event.
-              </p>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="bg-white text-sapp-blue hover:bg-white/90 border-0 shadow-lg hover:scale-105 transition-all duration-200"
-                onClick={() => setContactDialogOpen(true)}
-              >
-                Get Started Today
-              </Button>
-            </Animated>
-          </div>
-        </section>
+        <CTASection onRequestAssessment={() => setContactDialogOpen(true)} />
         
         {/* Bottom navigation */}
         <div className="container mx-auto px-4">
