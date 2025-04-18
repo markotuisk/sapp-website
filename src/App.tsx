@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
-import { DebugProvider, DebugToggle } from "./utils/debugTools";
+import { DebugProvider } from "./utils/debugTools";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientArea from "./pages/VirtualOffice";
@@ -104,7 +104,6 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <CookieConsent />
-                  {process.env.NODE_ENV === 'development' && <DebugToggle />}
                 </BrowserRouter>
               </DebugProvider>
             </HelmetProvider>

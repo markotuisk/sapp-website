@@ -11,11 +11,12 @@ import {
 import { Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
-import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
+import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
 const LanguageSelector = () => {
   const { currentLanguage, setLanguage } = useLanguage();
   const { logEvent } = useComponentLogger('LanguageSelector');
+  const { isDebugMode } = useDebugContext();
 
   const handleLanguageChange = (value: string) => {
     const language = languages.find(lang => lang.code === value);
@@ -32,7 +33,7 @@ const LanguageSelector = () => {
         duration: 3000,
       });
       
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development' && isDebugMode) {
         const translationCount = Object.keys(currentLanguage?.translations || {}).length;
         toast({
           title: `Debug: Language Resources Loaded`,

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
+import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
 const FoundingTeam = () => {
   const [sectionRef, inView] = useInView({
@@ -11,6 +11,7 @@ const FoundingTeam = () => {
   });
 
   const { logEvent } = useComponentLogger('FoundingTeam');
+  const { isDebugMode } = useDebugContext();
 
   // Add state to track image loading for debugging
   const [imageLoadState, setImageLoadState] = useState({
@@ -119,8 +120,8 @@ const FoundingTeam = () => {
           ))}
         </div>
 
-        {/* Debug Information - Only visible during development */}
-        {process.env.NODE_ENV === 'development' && (
+        {/* Debug Information - Only visible during development and when debug mode is on */}
+        {process.env.NODE_ENV === 'development' && isDebugMode && (
           <DebugInfo
             componentName="FoundingTeamDebug"
             data={{

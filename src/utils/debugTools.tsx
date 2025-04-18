@@ -1,5 +1,18 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
+
+/**
+ * Debug context to manage global debug state
+ */
+export const DebugContext = React.createContext({
+  isDebugMode: false,
+  componentBoundaries: false,
+  logPerformance: false,
+  verboseLogging: false,
+  toggleDebugMode: () => {},
+});
+
+export const useDebugContext = () => useContext(DebugContext);
 
 /**
  * Debug wrapper component that provides debugging information in development mode
@@ -12,9 +25,10 @@ export const DebugInfo: React.FC<{
 }> = ({ componentName, children, data, showOutline = true }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const renderCountRef = useRef(0);
+  const { isDebugMode } = useDebugContext();
   
-  // Skip entirely in production
-  if (process.env.NODE_ENV !== 'development') {
+  // Skip entirely in production or if debug mode is off
+  if (process.env.NODE_ENV !== 'development' || !isDebugMode) {
     return <>{children}</>;
   }
   
@@ -62,18 +76,20 @@ export const DebugInfo: React.FC<{
  * Hook to log lifecycle events of a component
  */
 export const useComponentLogger = (componentName: string) => {
+  const { isDebugMode, verboseLogging } = useDebugContext();
+  
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && isDebugMode && verboseLogging) {
       console.log(`[${componentName}] Mounted`);
       
       return () => {
         console.log(`[${componentName}] Unmounted`);
       };
     }
-  }, [componentName]);
+  }, [componentName, isDebugMode, verboseLogging]);
   
   const logEvent = (eventName: string, data?: any) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && isDebugMode) {
       console.log(`[${componentName}] ${eventName}`, data || '');
     }
   };
@@ -82,9 +98,16 @@ export const useComponentLogger = (componentName: string) => {
 };
 
 /**
- * Global debugging toggle
+ * Debug provider for app-wide debugging configuration
  */
-export const useDebugMode = () => {
+export const DebugProvider: React.FC<{
+  children: React.ReactNode;
+  options?: {
+    componentBoundaries?: boolean;
+    logPerformance?: boolean;
+    verboseLogging?: boolean;
+  };
+}> = ({ children, options = {} }) => {
   const [isDebugMode, setIsDebugMode] = useState(() => {
     // Check if debug mode was enabled in localStorage
     return process.env.NODE_ENV === 'development' && 
@@ -95,16 +118,34 @@ export const useDebugMode = () => {
     const newValue = !isDebugMode;
     setIsDebugMode(newValue);
     localStorage.setItem('debug_mode', String(newValue));
+    
+    // Show feedback when debug mode changes
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Debug mode ${newValue ? 'enabled' : 'disabled'}`);
+    }
   };
   
-  return { isDebugMode, toggleDebugMode };
+  const contextValue = {
+    isDebugMode,
+    componentBoundaries: options.componentBoundaries ?? true,
+    logPerformance: options.logPerformance ?? true,
+    verboseLogging: options.verboseLogging ?? false,
+    toggleDebugMode,
+  };
+  
+  return (
+    <DebugContext.Provider value={contextValue}>
+      {children}
+      {process.env.NODE_ENV === 'development' && <DebugToggle />}
+    </DebugContext.Provider>
+  );
 };
 
 /**
  * Debug button to toggle debug mode
  */
 export const DebugToggle: React.FC = () => {
-  const { isDebugMode, toggleDebugMode } = useDebugMode();
+  const { isDebugMode, toggleDebugMode } = useDebugContext();
   
   if (process.env.NODE_ENV !== 'development') {
     return null;
@@ -113,46 +154,9 @@ export const DebugToggle: React.FC = () => {
   return (
     <button
       onClick={toggleDebugMode}
-      className="fixed bottom-4 right-4 z-50 bg-gray-800 text-white text-xs p-2 rounded-full shadow-lg opacity-70 hover:opacity-100"
+      className="fixed bottom-4 right-4 z-50 bg-gray-800 text-white text-xs p-2 rounded-full shadow-lg opacity-70 hover:opacity-100 transition-all"
     >
       {isDebugMode ? 'Debug: ON' : 'Debug: OFF'}
     </button>
   );
 };
-
-/**
- * Context provider for app-wide debugging configuration
- */
-export const DebugContext = React.createContext({
-  isDebugMode: false,
-  componentBoundaries: false,
-  logPerformance: false,
-  verboseLogging: false,
-});
-
-export const DebugProvider: React.FC<{
-  children: React.ReactNode;
-  options?: {
-    componentBoundaries?: boolean;
-    logPerformance?: boolean;
-    verboseLogging?: boolean;
-  };
-}> = ({ children, options = {} }) => {
-  const { isDebugMode } = useDebugMode();
-  
-  const contextValue = {
-    isDebugMode,
-    componentBoundaries: options.componentBoundaries ?? true,
-    logPerformance: options.logPerformance ?? true,
-    verboseLogging: options.verboseLogging ?? false,
-  };
-  
-  return (
-    <DebugContext.Provider value={contextValue}>
-      {children}
-      {isDebugMode && <DebugToggle />}
-    </DebugContext.Provider>
-  );
-};
-
-export const useDebugContext = () => React.useContext(DebugContext);
