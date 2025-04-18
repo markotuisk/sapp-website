@@ -1,5 +1,5 @@
-
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Wifi, Volume2, ShieldOff, Headphones } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
@@ -7,19 +7,27 @@ import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { useDebugContext } from '@/contexts/DebugContext';
+import { DebugInfo, DebugToggle } from '@/components/debug';
+import QuoteCard from '@/components/ui/QuoteCard';
 
 const SpeechPrivacy = () => {
+  const { isDebugMode } = useDebugContext();
+  
   useEffect(() => {
-    // Scroll to the top when component mounts
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Speech Privacy & Sound Masking | SAPP Security</title>
+        <meta name="description" content="Advanced speech privacy and sound masking solutions for secure environments." />
+      </Helmet>
       <Navbar />
+      <DebugToggle />
       <main className="pt-32 pb-16">
         <div className="container mx-auto px-4">
-          {/* Navigation buttons */}
           <div className="flex justify-between items-center mb-8">
             <Link to="/installations/cctv-access">
               <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
@@ -35,30 +43,32 @@ const SpeechPrivacy = () => {
             </Link>
           </div>
           
-          {/* Hero */}
-          <div className="bg-gradient-to-b from-slate-50 to-white rounded-xl overflow-hidden shadow-md mb-10">
-            <div className="relative h-64 md:h-96">
-              <img 
-                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
-                alt="Speech Privacy & Sound Masking" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 p-8">
-                <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
-                  <Wifi className="h-8 w-8" />
-                </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Speech Privacy & Sound Masking</h1>
-                <p className="text-white/90 text-lg max-w-2xl">Protect conversations and reduce acoustic exposure in sensitive or shared environments.</p>
-              </div>
+          <div className="bg-[#022B3A] rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+            <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+              <Volume2 className="h-64 w-64 text-sapp-blue/10" />
+            </div>
+            
+            <div className="relative z-10 md:max-w-xl">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Speech Privacy & Sound Masking</h1>
+              <p className="text-white/90 text-lg max-w-2xl">Protect conversations and secure sensitive discussions with advanced acoustic solutions.</p>
             </div>
           </div>
           
-          {/* Feature Cards */}
-          <Animated animation="fade-up" delay={100}>
-            <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
+          <section className="py-16">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Key Features & Benefits</h3>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
+                Advanced Speech Privacy Solutions
+              </h2>
+              <p className="text-sapp-gray max-w-3xl mx-auto">
+                Our sound masking and speech privacy solutions ensure confidential conversations remain private while maintaining acoustic comfort.
+              </p>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
                 <Volume2 className="h-10 w-10 text-sapp-blue mb-4" />
                 <h3 className="text-lg font-semibold mb-2">Sound Masking Technology</h3>
@@ -77,9 +87,16 @@ const SpeechPrivacy = () => {
                 <p className="text-sapp-gray text-sm">Enhanced acoustic quality that improves workplace concentration and productivity.</p>
               </Card>
             </div>
-          </Animated>
-          
-          {/* Content */}
+          </section>
+
+          <section className="py-16">
+            <QuoteCard
+              quote="In today's open workspaces, speech privacy isn't just about confidentiality—it's about creating an environment where sensitive discussions can happen naturally and securely."
+              author="Acoustics Director"
+              position="SAPP Security"
+            />
+          </section>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-6">
               <h2 className="text-2xl font-display font-semibold text-sapp-dark">Speech Privacy Solutions for Confidential Environments</h2>
@@ -146,7 +163,6 @@ const SpeechPrivacy = () => {
             </div>
           </div>
           
-          {/* Bottom navigation */}
           <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-100">
             <Link to="/installations/cctv-access">
               <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">

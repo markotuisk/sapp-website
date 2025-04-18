@@ -1,25 +1,33 @@
-
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Users, Server, Network, Database } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Server, Network, Database, Users } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { useDebugContext } from '@/contexts/DebugContext';
+import { DebugInfo, DebugToggle } from '@/components/debug';
+import QuoteCard from '@/components/ui/QuoteCard';
 
 const NetworkInfrastructure = () => {
+  const { isDebugMode } = useDebugContext();
+  
   useEffect(() => {
-    // Scroll to the top when component mounts
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Network Infrastructure & Communication | SAPP Security</title>
+        <meta name="description" content="Enterprise-grade network infrastructure and communication solutions for secure environments." />
+      </Helmet>
       <Navbar />
+      <DebugToggle />
       <main className="pt-32 pb-16">
         <div className="container mx-auto px-4">
-          {/* Navigation buttons */}
           <div className="flex justify-between items-center mb-8">
             <Link to="/installations/counter-surveillance">
               <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
@@ -35,26 +43,18 @@ const NetworkInfrastructure = () => {
             </Link>
           </div>
           
-          {/* Hero */}
-          <div className="bg-gradient-to-b from-slate-50 to-white rounded-xl overflow-hidden shadow-md mb-10">
-            <div className="relative h-64 md:h-96">
-              <img 
-                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
-                alt="Network Infrastructure & Communication" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 p-8">
-                <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
-                  <Users className="h-8 w-8" />
-                </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Network Infrastructure & Communication</h1>
-                <p className="text-white/90 text-lg max-w-2xl">Lay secure foundations for communication and control — whether on-site, distributed, or hybrid.</p>
-              </div>
+          <div className="bg-[#022B3A] rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+            <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+              <Network className="h-64 w-64 text-sapp-blue/10" />
+            </div>
+            
+            <div className="relative z-10 md:max-w-xl">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Network Infrastructure & Communication</h1>
+              <p className="text-white/90 text-lg max-w-2xl">Build secure foundations for your organization's communication and control systems.</p>
             </div>
           </div>
           
-          {/* Feature Cards */}
           <Animated animation="fade-up" delay={100}>
             <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
             
@@ -79,7 +79,14 @@ const NetworkInfrastructure = () => {
             </div>
           </Animated>
           
-          {/* Content */}
+          <section className="py-16">
+            <QuoteCard
+              quote="A robust and secure network infrastructure is the foundation of modern security systems. Our solutions ensure reliability while maintaining the highest security standards."
+              author="Infrastructure Director"
+              position="SAPP Security"
+            />
+          </section>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-6">
               <h2 className="text-2xl font-display font-semibold text-sapp-dark">Secure Network Foundations for Modern Operations</h2>
@@ -146,7 +153,6 @@ const NetworkInfrastructure = () => {
             </div>
           </div>
           
-          {/* Bottom navigation */}
           <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-100">
             <Link to="/installations/counter-surveillance">
               <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
