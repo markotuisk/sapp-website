@@ -1,3 +1,3 @@
 
-// Re-export the toast implementation
-export { toast, useToast } from "@/hooks/use-toast";
+// Re-export the toast implementation from hooks
+export { useToast, toast } from "@/hooks/use-toast";
