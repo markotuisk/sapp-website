@@ -2,12 +2,15 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
 
 const FoundingTeam = () => {
   const [sectionRef, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const { logEvent } = useComponentLogger('FoundingTeam');
 
   // Add state to track image loading for debugging
   const [imageLoadState, setImageLoadState] = useState({
@@ -22,11 +25,11 @@ const FoundingTeam = () => {
       ...prev,
       [imageType]: true
     }));
-    console.log(`Image loaded: ${imageType}`);
+    logEvent('ImageLoaded', imageType);
   };
 
   const handleImageError = (imageType, error) => {
-    console.error(`Failed to load image (${imageType}):`, error);
+    logEvent('ImageError', { imageType, error });
   };
 
   const founders = [
@@ -34,8 +37,8 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: 'Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP\'s integrated offering across markets.',
-      image: '/lovable-uploads/63e9e1ac-4272-4ca1-802a-55f5f36806a8.png', // Update with correct path
-      hoverImage: '/lovable-uploads/c7299f63-1f0c-43ce-a05d-0263a7bed735.png', // Update with correct path
+      image: '/lovable-uploads/c7299f63-1f0c-43ce-a05d-0263a7bed735.png', // Swapped with hover image
+      hoverImage: '/lovable-uploads/63e9e1ac-4272-4ca1-802a-55f5f36806a8.png', // Swapped with default image
     },
     {
       name: 'Marko Tuisk',
@@ -68,65 +71,78 @@ const FoundingTeam = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {founders.map((founder, index) => (
-            <Animated 
+            <DebugInfo
               key={founder.name}
-              animation="fade-up" 
-              delay={100 + (index * 100)}
+              componentName={`FounderCard-${founder.name}`}
+              data={{
+                name: founder.name,
+                defaultImageLoaded: index === 0 ? imageLoadState.railiDefault : imageLoadState.markoDefault,
+                hoverImageLoaded: index === 0 ? imageLoadState.railiHover : imageLoadState.markoHover,
+                defaultImagePath: founder.image,
+                hoverImagePath: founder.hoverImage
+              }}
             >
-              <div className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                {/* Profile Card Container */}
-                <div className="relative h-[400px] overflow-hidden rounded-t-xl">
-                  {/* Default Image */}
-                  <img 
-                    src={founder.image}
-                    alt={`${founder.name} profile`}
-                    className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ease-in-out group-hover:opacity-0"
-                    onLoad={() => handleImageLoad(index === 0 ? 'railiDefault' : 'markoDefault')}
-                    onError={(e) => handleImageError(index === 0 ? 'railiDefault' : 'markoDefault', e)}
-                  />
-                  {/* Hover Image */}
-                  <img 
-                    src={founder.hoverImage}
-                    alt={`${founder.name} profile hover`}
-                    className="absolute inset-0 w-full h-full object-cover object-top opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-                    onLoad={() => handleImageLoad(index === 0 ? 'railiHover' : 'markoHover')}
-                    onError={(e) => handleImageError(index === 0 ? 'railiHover' : 'markoHover', e)}
-                  />
-                </div>
-                
-                {/* Content */}
-                <div className="p-6 text-center">
-                  <h3 className="text-xl font-bold text-sapp-dark mb-1">{founder.name}</h3>
-                  <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
-                  <p className="text-sapp-gray text-sm">{founder.bio}</p>
-                </div>
-
-                {/* Debug Information - Only visible during development */}
-                {process.env.NODE_ENV === 'development' && (
-                  <div className="absolute top-0 left-0 bg-red-500 text-white text-xs p-1">
-                    {index === 0 ? 
-                      `R: ${imageLoadState.railiDefault}/${imageLoadState.railiHover}` : 
-                      `M: ${imageLoadState.markoDefault}/${imageLoadState.markoHover}`
-                    }
+              <Animated 
+                animation="fade-up" 
+                delay={100 + (index * 100)}
+              >
+                <div className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                  {/* Profile Card Container */}
+                  <div className="relative h-[400px] overflow-hidden rounded-t-xl">
+                    {/* Default Image */}
+                    <img 
+                      src={founder.image}
+                      alt={`${founder.name} profile`}
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ease-in-out group-hover:opacity-0"
+                      onLoad={() => handleImageLoad(index === 0 ? 'railiDefault' : 'markoDefault')}
+                      onError={(e) => handleImageError(index === 0 ? 'railiDefault' : 'markoDefault', e)}
+                    />
+                    {/* Hover Image */}
+                    <img 
+                      src={founder.hoverImage}
+                      alt={`${founder.name} profile hover`}
+                      className="absolute inset-0 w-full h-full object-cover object-top opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
+                      onLoad={() => handleImageLoad(index === 0 ? 'railiHover' : 'markoHover')}
+                      onError={(e) => handleImageError(index === 0 ? 'railiHover' : 'markoHover', e)}
+                    />
                   </div>
-                )}
-              </div>
-            </Animated>
+                  
+                  {/* Content */}
+                  <div className="p-6 text-center">
+                    <h3 className="text-xl font-bold text-sapp-dark mb-1">{founder.name}</h3>
+                    <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
+                    <p className="text-sapp-gray text-sm">{founder.bio}</p>
+                  </div>
+                </div>
+              </Animated>
+            </DebugInfo>
           ))}
         </div>
 
-        {/* Debug information */}
+        {/* Debug Information - Only visible during development */}
         {process.env.NODE_ENV === 'development' && (
-          <div className="mt-4 p-2 bg-gray-100 text-xs">
-            <p>Image load states: {JSON.stringify(imageLoadState)}</p>
-            <p>Image paths:</p>
-            <ul>
-              <li>Raili default: {founders[0].image}</li>
-              <li>Raili hover: {founders[0].hoverImage}</li>
-              <li>Marko default: {founders[1].image}</li>
-              <li>Marko hover: {founders[1].hoverImage}</li>
-            </ul>
-          </div>
+          <DebugInfo
+            componentName="FoundingTeamDebug"
+            data={{
+              inView,
+              imageLoadState,
+              founderPaths: founders.map(f => ({name: f.name, image: f.image, hoverImage: f.hoverImage}))
+            }}
+            showOutline={false}
+          >
+            <div className="mt-6 p-3 bg-gray-100 text-xs rounded-md max-w-4xl mx-auto">
+              <h4 className="font-bold mb-2">Debug Information</h4>
+              <p>Image load states: {JSON.stringify(imageLoadState)}</p>
+              <p>Section in view: {String(inView)}</p>
+              <p className="font-bold mt-2">Image paths:</p>
+              <ul className="space-y-1">
+                <li>Raili default: {founders[0].image}</li>
+                <li>Raili hover: {founders[0].hoverImage}</li>
+                <li>Marko default: {founders[1].image}</li>
+                <li>Marko hover: {founders[1].hoverImage}</li>
+              </ul>
+            </div>
+          </DebugInfo>
         )}
       </div>
     </section>
