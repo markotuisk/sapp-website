@@ -13,6 +13,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import ImageDebugInfo from '@/components/ui/ImageDebugInfo';
 import { useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
+import CTASection from '@/components/services/technology-systems-testing/CTASection';
+import NavigationButtons from '@/components/services/technology-systems-testing/NavigationButtons';
 
 const TechnologySystemsTesting = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
@@ -43,20 +45,7 @@ const TechnologySystemsTesting = () => {
         <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative">
           <div className="container mx-auto px-4">
             {/* Navigation buttons */}
-            <div className="flex justify-between items-center mb-8">
-              <Link to="/services/compliance-audits">
-                <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
-                  <ArrowLeft className="h-4 w-4" />
-                  Back to Compliance Audits
-                </Button>
-              </Link>
-              <Link to="/security-audits">
-                <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[5px]">
-                  Back to Security Audits
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
+            <NavigationButtons />
             
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -172,26 +161,7 @@ const TechnologySystemsTesting = () => {
         </section>
         
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-sapp-blue to-blue-600 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <Animated animation="fade-up" delay={100}>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Ensure Your Technology Is Secure
-              </h2>
-              <p className="max-w-2xl mx-auto mb-8 text-white/90">
-                Contact our team to schedule a comprehensive technology and systems assessment for your organization.
-              </p>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="bg-white text-sapp-blue hover:bg-white/90 border-0 shadow-lg hover:scale-105 transition-all duration-200"
-                onClick={() => setContactDialogOpen(true)}
-              >
-                Request a Technology Assessment
-              </Button>
-            </Animated>
-          </div>
-        </section>
+        <CTASection onRequestAssessment={() => setContactDialogOpen(true)} />
         
         {/* Bottom navigation */}
         <div className="container mx-auto px-4">
