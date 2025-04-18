@@ -11,7 +11,8 @@ import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { ImageDebugInfo, useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
+import ImageDebugInfo from '@/components/ui/ImageDebugInfo';
+import { useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
 
 const TechnologySystemsTesting = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
