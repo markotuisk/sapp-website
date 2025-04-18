@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
@@ -56,14 +55,9 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ serviceDetails }) => 
                   {service.description}
                 </CardDescription>
               </CardContent>
-              <CardFooter className="mt-auto flex justify-between">
-                <Link to={service.href}>
-                  <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
-                    Read More <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
-                </Link>
+              <CardFooter className="mt-auto">
                 <Button 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
                   onClick={() => handleGetDetails(service.title)}
                 >
                   Get Details

@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
@@ -91,14 +90,9 @@ const Services = () => {
                   {service.description}
                 </CardDescription>
               </CardContent>
-              <CardFooter className="mt-auto flex justify-between">
-                <Link to={service.href}>
-                  <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
-                    Read More <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
-                </Link>
-                <Link to={service.href}>
-                  <Button className="bg-sapp-blue hover:bg-sapp-blue/90">
+              <CardFooter className="mt-auto">
+                <Link to={service.href} className="w-full">
+                  <Button className="bg-sapp-blue hover:bg-sapp-blue/90 w-full">
                     Learn More
                   </Button>
                 </Link>
@@ -112,4 +106,3 @@ const Services = () => {
 };
 
 export default Services;
-

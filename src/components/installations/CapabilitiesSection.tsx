@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
@@ -34,101 +33,43 @@ const CapabilitiesSection = () => {
         </Animated>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <Card className="border-gray-100 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-xl text-sapp-dark">Physical Security</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                Control visibility, movement, and presence with CCTV, access and visitor management systems.
-              </CardDescription>
-            </CardContent>
-            <CardFooter className="mt-auto flex justify-between">
-              <Link to="/installations/cctv-access">
-                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
-                  Read More <ChevronRight className="h-4 w-4 ml-1" />
+          {[
+            {
+              title: "Physical Security",
+              description: "Control visibility, movement, and presence with CCTV, access and visitor management systems."
+            },
+            {
+              title: "Speech & Sound Masking",
+              description: "Protect conversations and reduce acoustic exposure in sensitive or shared environments."
+            },
+            {
+              title: "Counter Surveillance TSCM",
+              description: "Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors."
+            },
+            {
+              title: "IT Network Systems",
+              description: "Implement secure foundation for communication and control, whether is local or distributed cloud or hybrid solution."
+            }
+          ].map((service, index) => (
+            <Card key={index} className="border-gray-100 flex flex-col">
+              <CardHeader>
+                <CardTitle className="text-xl text-sapp-dark">{service.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                  {service.description}
+                </CardDescription>
+              </CardContent>
+              <CardFooter className="mt-auto">
+                <Button 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
+                  onClick={() => handleGetDetails(service.title)}
+                >
+                  Get Details
                 </Button>
-              </Link>
-              <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90" 
-                onClick={() => handleGetDetails('Physical Security')}
-              >
-                Get Details
-              </Button>
-            </CardFooter>
-          </Card>
-          
-          <Card className="border-gray-100 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-xl text-sapp-dark">Speech & Sound Masking</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                Protect conversations and reduce acoustic exposure in sensitive or shared environments.
-              </CardDescription>
-            </CardContent>
-            <CardFooter className="mt-auto flex justify-between">
-              <Link to="/installations/speech-privacy">
-                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
-                  Read More <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
-              <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90" 
-                onClick={() => handleGetDetails('Speech & Sound Masking')}
-              >
-                Get Details
-              </Button>
-            </CardFooter>
-          </Card>
-          
-          <Card className="border-gray-100 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-xl text-sapp-dark">Counter Surveillance TSCM</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors.
-              </CardDescription>
-            </CardContent>
-            <CardFooter className="mt-auto flex justify-between">
-              <Link to="/installations/counter-surveillance">
-                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
-                  Read More <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
-              <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90" 
-                onClick={() => handleGetDetails('Counter Surveillance TSCM')}
-              >
-                Get Details
-              </Button>
-            </CardFooter>
-          </Card>
-          
-          <Card className="border-gray-100 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-xl text-sapp-dark">IT Network Systems</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
-                Implement secure foundation for communication and control, whether is local or distributed cloud or hybrid solution.
-              </CardDescription>
-            </CardContent>
-            <CardFooter className="mt-auto flex justify-between">
-              <Link to="/installations/network-infrastructure">
-                <Button variant="outline" className="text-sapp-blue border-sapp-blue/30 hover:bg-sapp-blue/5">
-                  Read More <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
-              <Button 
-                className="bg-sapp-blue hover:bg-sapp-blue/90" 
-                onClick={() => handleGetDetails('IT Network Systems')}
-              >
-                Get Details
-              </Button>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
 
         <div className="text-center">
