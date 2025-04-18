@@ -27,7 +27,8 @@ export type TranslationKey =
   | 'readMore'
   | 'becomePartner'
   | 'becomePartnerDescription'
-  | 'partnerWithUs';
+  | 'partnerWithUs'
+  | 'currentLanguage';
 
 export type Language = {
   code: string;

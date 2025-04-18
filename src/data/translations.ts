@@ -36,7 +36,8 @@ export const translations: Translations = {
     visitWebsite: 'Visit Website',
     becomePartner: 'Become a SAPP Security Partner',
     becomePartnerDescription: 'Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide.',
-    partnerWithUs: 'Partner With Us'
+    partnerWithUs: 'Partner With Us',
+    currentLanguage: 'English'
   },
   de: {
     home: 'Startseite',
@@ -66,7 +67,8 @@ export const translations: Translations = {
     visitWebsite: 'Website besuchen',
     becomePartner: 'Werden Sie SAPP Sicherheitspartner',
     becomePartnerDescription: 'Schließen Sie sich unserem Netzwerk von Technologiepartnern und Sicherheitsexperten an, um weltweit hochmoderne Sicherheitslösungen für Organisationen anzubieten.',
-    partnerWithUs: 'Partner werden'
+    partnerWithUs: 'Partner werden',
+    currentLanguage: 'Deutsch'
   },
   nl: {
     home: 'Home',
@@ -96,7 +98,8 @@ export const translations: Translations = {
     visitWebsite: 'Website bezoeken',
     becomePartner: 'Word een SAPP Beveiligingspartner',
     becomePartnerDescription: 'Sluit u aan bij ons netwerk van technologiepartners en beveiligingsexperts om geavanceerde beveiligingsoplossingen te leveren aan organisaties wereldwijd.',
-    partnerWithUs: 'Partner met ons'
+    partnerWithUs: 'Partner met ons',
+    currentLanguage: 'Nederlands'
   },
   fr: {
     home: 'Accueil',
@@ -126,6 +129,7 @@ export const translations: Translations = {
     visitWebsite: 'Visiter le site',
     becomePartner: 'Devenez partenaire de sécurité SAPP',
     becomePartnerDescription: 'Rejoignez notre réseau de partenaires technologiques et d\'experts en sécurité pour fournir des solutions de sécurité de pointe aux organisations du monde entier.',
-    partnerWithUs: 'Devenez partenaire'
+    partnerWithUs: 'Devenez partenaire',
+    currentLanguage: 'Français'
   },
 };
