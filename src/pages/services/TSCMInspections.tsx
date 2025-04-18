@@ -11,11 +11,13 @@ import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import ImageDebugInfo from '@/components/ui/ImageDebugInfo';
 
 const TSCMInspections = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const location = useLocation();
-  
+  const isDebugMode = process.env.NODE_ENV === 'development';
+
   useEffect(() => {
     // Scroll to the top when component mounts or location changes
     window.scrollTo(0, 0);
@@ -56,36 +58,38 @@ const TSCMInspections = () => {
             
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 mb-10 md:mb-0">
-                <Animated animation="fade-up" delay={100}>
-                  <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                    <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Bug Sweeps</h3>
-                  </div>
-                  <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
-                    TSCM Inspections
-                  </h1>
-                  <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
-                    Systematic technical and physical inspections that detect unauthorized listening devices and protect your organization from corporate espionage.
-                  </p>
-                  <Button 
-                    size="lg" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-                    onClick={() => setContactDialogOpen(true)}
-                  >
-                    Schedule a TSCM Inspection
-                  </Button>
-                </Animated>
+                <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                  <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Bug Sweeps</h3>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
+                  TSCM Inspections
+                </h1>
+                <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
+                  Systematic technical and physical inspections that detect unauthorized listening devices and protect your organization from corporate espionage.
+                </p>
+                <Button 
+                  size="lg" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
+                  onClick={() => setContactDialogOpen(true)}
+                >
+                  Schedule a TSCM Inspection
+                </Button>
               </div>
-              <div className="md:w-1/2">
-                <Animated animation="fade-up" delay={200} className="relative">
-                  <div className="absolute -inset-4 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                  <div className="relative z-10 rounded-xl overflow-hidden shadow-xl">
-                    <img 
-                      src="/lovable-uploads/7bf6f8ff-6cf1-4ab0-abba-6a916c49bfb8.png" 
-                      alt="TSCM Inspection" 
-                      className="w-full h-auto"
+              <div className="md:w-1/2 relative">
+                <div className="w-[684px] h-[380px] flex items-center justify-center">
+                  {isDebugMode && (
+                    <ImageDebugInfo
+                      src="/lovable-uploads/7bf6f8ff-6cf1-4ab0-abba-6a916c49bfb8.png"
+                      dimensions={{ width: 380, height: 380 }}
+                      aspectRatio={1}
                     />
-                  </div>
-                </Animated>
+                  )}
+                  <img 
+                    src="/lovable-uploads/7bf6f8ff-6cf1-4ab0-abba-6a916c49bfb8.png" 
+                    alt="TSCM Inspection" 
+                    className="w-[380px] h-[380px] object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>

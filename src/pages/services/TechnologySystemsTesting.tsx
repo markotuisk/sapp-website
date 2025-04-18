@@ -11,10 +11,13 @@ import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ImageDebugInfo, useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
 
 const TechnologySystemsTesting = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const location = useLocation();
+  const { logEvent } = useComponentLogger('TechnologySystemsTesting');
+  const { isDebugMode } = useDebugContext();
   
   useEffect(() => {
     // Scroll to the top when component mounts or location changes
@@ -36,7 +39,7 @@ const TechnologySystemsTesting = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
+        <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative">
           <div className="container mx-auto px-4">
             {/* Navigation buttons */}
             <div className="flex justify-between items-center mb-8">
@@ -56,36 +59,38 @@ const TechnologySystemsTesting = () => {
             
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 mb-10 md:mb-0">
-                <Animated animation="fade-up" delay={100}>
-                  <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                    <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Technical Testing</h3>
-                  </div>
-                  <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
-                    Technology & Systems Testing
-                  </h1>
-                  <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
-                    Comprehensive testing of your security and communications technology to identify vulnerabilities and protect against both physical and cyber attacks.
-                  </p>
-                  <Button 
-                    size="lg" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-                    onClick={() => setContactDialogOpen(true)}
-                  >
-                    Schedule a Technology Assessment
-                  </Button>
-                </Animated>
+                <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                  <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Technical Testing</h3>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
+                  Technology & Systems Testing
+                </h1>
+                <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
+                  Comprehensive testing of your security and communications technology to identify vulnerabilities and protect against both physical and cyber attacks.
+                </p>
+                <Button 
+                  size="lg" 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
+                  onClick={() => setContactDialogOpen(true)}
+                >
+                  Schedule a Technology Assessment
+                </Button>
               </div>
-              <div className="md:w-1/2">
-                <Animated animation="fade-up" delay={200} className="relative">
-                  <div className="absolute -inset-4 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                  <div className="relative z-10 rounded-xl overflow-hidden shadow-xl">
-                    <img 
-                      src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
-                      alt="Technology Systems Testing" 
-                      className="w-full h-auto"
+              <div className="md:w-1/2 relative">
+                <div className="w-[684px] h-[380px] flex items-center justify-center">
+                  {isDebugMode && (
+                    <ImageDebugInfo
+                      src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
+                      dimensions={{ width: 380, height: 380 }}
+                      aspectRatio={1}
                     />
-                  </div>
-                </Animated>
+                  )}
+                  <img 
+                    src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
+                    alt="Technology Systems Testing" 
+                    className="w-[380px] h-[380px] object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
