@@ -23,16 +23,16 @@ export const DebugInfo: React.FC<{
   data?: Record<string, any>;
   showOutline?: boolean;
 }> = ({ componentName, children, data, showOutline = true }) => {
+  const { isDebugMode } = useDebugContext();
   const [isExpanded, setIsExpanded] = useState(false);
   const renderCountRef = useRef(0);
-  const { isDebugMode } = useDebugContext();
   
   // Skip entirely in production or if debug mode is off
   if (process.env.NODE_ENV !== 'development' || !isDebugMode) {
     return <>{children}</>;
   }
   
-  // Increment render count on each render but avoid state updates
+  // Increment render count on each render
   useEffect(() => {
     renderCountRef.current += 1;
   });
