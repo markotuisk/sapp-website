@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
@@ -51,19 +50,18 @@ const CCTVAccess = () => {
             data={{
               section: "Hero",
               bg: "#333333 (dark gray)",
-              height: "64px (md:96px)"
+              height: "280px"
             }}
           >
-            <div className="bg-[#333333] rounded-xl overflow-hidden shadow-md mb-10">
-              <div className="relative h-64 md:h-96">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 p-8">
-                  <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
-                    <MonitorCheck className="h-8 w-8" />
-                  </div>
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">CCTV, Access & Visitor Systems</h1>
-                  <p className="text-white/90 text-lg max-w-2xl">Control visibility, movement, and presence — with systems that scale from single sites to global estates.</p>
-                </div>
+            <div className="bg-[#333333] rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+              <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                <Shield className="h-64 w-64 text-sapp-blue/10" />
+              </div>
+              
+              <div className="relative z-10 md:max-w-xl">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">CCTV, Access & Visitor Systems</h1>
+                <p className="text-white/90 text-lg max-w-2xl">Control visibility, movement, and presence — with systems that scale from single sites to global estates.</p>
               </div>
             </div>
           </DebugInfo>
