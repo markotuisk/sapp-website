@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 /**
  * Debug wrapper component that provides debugging information in development mode
@@ -11,16 +11,16 @@ export const DebugInfo: React.FC<{
   showOutline?: boolean;
 }> = ({ componentName, children, data, showOutline = true }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [renderCount, setRenderCount] = useState(0);
+  const renderCountRef = useRef(0);
   
   // Skip entirely in production
   if (process.env.NODE_ENV !== 'development') {
     return <>{children}</>;
   }
   
-  // Increment render count on each render
+  // Increment render count on each render but avoid state updates
   useEffect(() => {
-    setRenderCount(prev => prev + 1);
+    renderCountRef.current += 1;
   });
   
   return (
@@ -39,7 +39,7 @@ export const DebugInfo: React.FC<{
       {isExpanded && (
         <div className="absolute top-6 right-0 z-50 bg-gray-100 text-xs p-2 rounded-bl-md border border-gray-200 shadow-md max-w-xs max-h-60 overflow-auto">
           <div className="mb-1 pb-1 border-b border-gray-200">
-            <span className="font-bold">Render count:</span> {renderCount}
+            <span className="font-bold">Render count:</span> {renderCountRef.current}
           </div>
           {data && Object.entries(data).map(([key, value]) => (
             <div key={key} className="mb-1">

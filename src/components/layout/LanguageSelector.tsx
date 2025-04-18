@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { toast } from "sonner";
+import { toast } from '@/hooks/use-toast';
 import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
 
 const LanguageSelector = () => {
@@ -25,15 +25,15 @@ const LanguageSelector = () => {
       });
       
       setLanguage(language);
-      toast(`Language changed to ${language.name}`, {
+      toast.sonner(`Language changed to ${language.name}`, {
         description: "The website language has been updated.",
         duration: 3000,
       });
       
       if (process.env.NODE_ENV === 'development') {
-        toast(`Debug: Language Resources Loaded`, {
-          description: `${Object.keys(language.translations || {}).length} translation keys available`,
-          icon: "🐞",
+        const translationCount = Object.keys(currentLanguage?.translations || {}).length;
+        toast.sonner.debug(`Debug: Language Resources Loaded`, {
+          description: `${translationCount} translation keys available`,
           duration: 5000,
         });
       }
@@ -46,7 +46,7 @@ const LanguageSelector = () => {
       data={{
         currentLanguage: currentLanguage.code,
         availableLanguages: languages.map(l => l.code),
-        translationCount: Object.keys(currentLanguage.translations || {}).length
+        translationCount: Object.keys(currentLanguage?.translations || {}).length || 0
       }}
     >
       <div className="flex items-center">

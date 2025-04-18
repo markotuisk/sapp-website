@@ -1,5 +1,6 @@
 
-import { useToast as useToastUI, toast as toastUI } from "@/components/ui/toast";
+import { type ToastProps, ToastActionElement } from "@/components/ui/toast";
+import { useToast as useToastUI, toast as toastUI } from "@/components/ui/use-toast";
 import { toast as sonnerToast } from 'sonner';
 
 type ToastType = 'default' | 'success' | 'error' | 'warning' | 'info' | 'debug';
