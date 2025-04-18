@@ -55,29 +55,39 @@ const NetworkInfrastructure = () => {
             </div>
           </div>
           
-          <Animated animation="fade-up" delay={100}>
-            <h2 className="text-2xl font-display font-semibold text-sapp-dark mb-6">Key Features & Benefits</h2>
+          <section className="py-16">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Key Features & Benefits</h3>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
+                Advanced Network Solutions
+              </h2>
+              <p className="text-sapp-gray max-w-3xl mx-auto">
+                Our network infrastructure solutions provide secure, resilient foundations for your security operations and critical communications.
+              </p>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
                 <Server className="h-10 w-10 text-sapp-blue mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Secure Network Infrastructure</h3>
-                <p className="text-sapp-gray text-sm">Hardened networks designed to withstand both digital and physical threats.</p>
+                <h3 className="text-lg font-semibold mb-2">Secure Infrastructure</h3>
+                <p className="text-sapp-gray text-sm">Advanced network architecture designed for maximum security and reliability.</p>
               </Card>
               
               <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
                 <Network className="h-10 w-10 text-sapp-blue mb-4" />
                 <h3 className="text-lg font-semibold mb-2">System Integration</h3>
-                <p className="text-sapp-gray text-sm">Seamless integration between your different security systems for cohesive protection.</p>
+                <p className="text-sapp-gray text-sm">Seamless integration between security systems for comprehensive protection.</p>
               </Card>
               
               <Card className="p-6 border border-gray-100 hover:shadow-lg transition-all">
                 <Database className="h-10 w-10 text-sapp-blue mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Redundant Backup Systems</h3>
-                <p className="text-sapp-gray text-sm">Ensure continuous operation of critical security infrastructure even during disruptions.</p>
+                <h3 className="text-lg font-semibold mb-2">Redundant Systems</h3>
+                <p className="text-sapp-gray text-sm">Failover and backup systems ensuring continuous operation of critical infrastructure.</p>
               </Card>
             </div>
-          </Animated>
+          </section>
           
           <section className="py-16">
             <QuoteCard
@@ -89,36 +99,35 @@ const NetworkInfrastructure = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-6">
-              <h2 className="text-2xl font-display font-semibold text-sapp-dark">Secure Network Foundations for Modern Operations</h2>
-              <p>The backbone of modern security is a secure, resilient network infrastructure. Our network and communication installations create hardened foundations for your security operations, ensuring continuity, integrity and availability across all operational environments.</p>
+              <h2 className="text-2xl font-display font-semibold text-sapp-dark">Secure Network Foundations</h2>
+              <p className="text-sapp-gray">Our network infrastructure solutions create hardened foundations for your security operations, ensuring continuity, integrity and availability across all operational environments.</p>
               
-              <h3 className="text-xl font-display font-semibold text-sapp-dark mt-8">Our Network Infrastructure Solutions</h3>
-              <div className="space-y-4">
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                  <h4 className="font-semibold text-sapp-dark mb-2">Secure Network Infrastructure</h4>
-                  <p className="text-sm text-sapp-gray">We install hardened network infrastructure designed to withstand both digital and physical threats while supporting your operational requirements.</p>
+              <div className="space-y-4 mt-8">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <h4 className="font-semibold text-sapp-dark mb-2">Secure Network Architecture</h4>
+                  <p className="text-sm text-sapp-gray">We design and implement hardened network infrastructures that protect against both digital and physical threats while supporting operational requirements.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">Custom System Integration</h4>
-                  <p className="text-sm text-sapp-gray">Our team builds software or sensor-based solutions for task automation and integration, connecting your different security systems into a cohesive whole.</p>
+                  <p className="text-sm text-sapp-gray">Our team creates software and sensor-based solutions for task automation and integration, connecting your security systems into a cohesive whole.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-sapp-dark mb-2">Secure Communication Systems</h4>
-                  <p className="text-sm text-sapp-gray">We deploy encrypted, reliable communication systems for sensitive environments and critical operations where standard channels might be compromised.</p>
+                  <p className="text-sm text-sapp-gray">We deploy encrypted, reliable communication systems for sensitive environments where standard channels might be compromised.</p>
                 </div>
                 
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-                  <h4 className="font-semibold text-sapp-dark mb-2">Redundant Backup Systems</h4>
-                  <p className="text-sm text-sapp-gray">Our installations include failover and backup systems to ensure continuous operation of critical security infrastructure even during network disruptions.</p>
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <h4 className="font-semibold text-sapp-dark mb-2">Redundant Systems</h4>
+                  <p className="text-sm text-sapp-gray">Our installations include failover and backup systems to ensure continuous operation of critical security infrastructure during disruptions.</p>
                 </div>
               </div>
             </div>
             
             <div className="md:col-span-1">
               <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100 sticky top-24">
-                <h3 className="text-xl font-display font-semibold text-sapp-dark mb-4">Why Choose Our Network Solutions</h3>
+                <h3 className="text-xl font-display font-semibold text-sapp-dark mb-4">Why Choose Our Solutions</h3>
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
@@ -126,32 +135,45 @@ const NetworkInfrastructure = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                    <span className="text-sm text-sapp-gray">Seamless integration with existing systems</span>
+                    <span className="text-sm text-sapp-gray">Seamless integration capabilities</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                    <span className="text-sm text-sapp-gray">Designed for scalability and future expansion</span>
+                    <span className="text-sm text-sapp-gray">Designed for scalability and expansion</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                    <span className="text-sm text-sapp-gray">Resilient against both physical and cyber threats</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-sapp-blue mr-2 text-lg leading-none">•</span>
-                    <span className="text-sm text-sapp-gray">Professional installation and comprehensive documentation</span>
+                    <span className="text-sm text-sapp-gray">Advanced monitoring and analytics</span>
                   </li>
                 </ul>
                 
-                <div className="mt-6">
-                  <Link to="/installations">
-                    <Button className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 hover:scale-105">
-                      Request a Consultation
-                    </Button>
-                  </Link>
-                </div>
+                <Button className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white mt-6 transition-all duration-300 hover:scale-105">
+                  Request Consultation
+                </Button>
               </div>
             </div>
           </div>
+          
+          <section className="py-8">
+            <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+              <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                <Network className="h-64 w-64 text-sapp-blue/10" />
+              </div>
+              
+              <div className="relative z-10 md:max-w-xl">
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                  Enhance Your Network Security
+                </h3>
+                <p className="text-gray-300 mb-6">
+                  Our comprehensive network infrastructure solutions help protect your critical systems and communications.
+                </p>
+                <Button className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors">
+                  Get Started Today
+                </Button>
+              </div>
+            </div>
+          </section>
           
           <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-100">
             <Link to="/installations/counter-surveillance">
