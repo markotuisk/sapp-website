@@ -3,25 +3,27 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { Shield, Lock, Search, FileCheck } from 'lucide-react';
+import { Shield, Lock, Search, FileCheck, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Animated } from '@/components/ui/AnimatedElements';
 import QuoteCard from '@/components/ui/QuoteCard';
 import { useState } from 'react';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { DebugInfo, ImageDebugInfo, AnimationDebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
 const PhysicalSecurityAssessments = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const location = useLocation();
+  const { logEvent } = useComponentLogger('PhysicalSecurityAssessments');
+  const { isDebugMode } = useDebugContext();
   
   useEffect(() => {
     // Scroll to the top when component mounts or location changes
     window.scrollTo(0, 0);
   }, [location]);
 
-  return (
+  const content = (
     <div className="min-h-screen">
       <Helmet>
         <title>Physical Security Assessments | SAPP Security</title>
@@ -36,7 +38,7 @@ const PhysicalSecurityAssessments = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
+        <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative">
           <div className="container mx-auto px-4">
             {/* Navigation buttons */}
             <div className="flex justify-between items-center mb-8">
@@ -75,14 +77,32 @@ const PhysicalSecurityAssessments = () => {
                   </Button>
                 </Animated>
               </div>
-              <div className="md:w-1/2">
-                <Animated animation="fade-up" delay={200} className="relative">
-                  <div className="absolute -inset-4 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                  <div className="relative z-10 rounded-xl overflow-hidden shadow-xl">
+              <div className="md:w-1/2 relative">
+                <Animated 
+                  animation="fade-up" 
+                  delay={200} 
+                  className="relative"
+                >
+                  {isDebugMode && (
+                    <AnimationDebugInfo
+                      name="Hero Image Animation"
+                      duration="0.6s"
+                      delay="200ms"
+                      timing="ease-out"
+                    />
+                  )}
+                  <div className="relative rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                    {isDebugMode && (
+                      <ImageDebugInfo
+                        src="/lovable-uploads/5b9dc9b8-59b3-4180-a9c1-fae40b4ca2b8.png"
+                        dimensions={{ width: 480, height: 360 }}
+                        aspectRatio={1.33}
+                      />
+                    )}
                     <img 
-                      src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png" 
+                      src="/lovable-uploads/5b9dc9b8-59b3-4180-a9c1-fae40b4ca2b8.png" 
                       alt="Physical Security Assessment" 
-                      className="w-full h-auto"
+                      className="w-[480px] h-[360px] object-cover rounded-xl"
                     />
                   </div>
                 </Animated>
@@ -183,24 +203,33 @@ const PhysicalSecurityAssessments = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-sapp-blue to-blue-600 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <Animated animation="fade-up" delay={100}>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Strengthen Your Physical Security Today
-              </h2>
-              <p className="max-w-2xl mx-auto mb-8 text-white/90">
-                Contact our team to schedule a comprehensive physical security assessment for your organization.
-              </p>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="bg-white text-sapp-blue hover:bg-white/90 border-0 shadow-lg hover:scale-105 transition-all duration-200"
-                onClick={() => setContactDialogOpen(true)}
-              >
-                Request an Assessment
-              </Button>
+        {/* Replace CTA section with the new card design */}
+        <section className="py-8">
+          <div className="container mx-auto px-4">
+            <Animated animation="fade-up">
+              <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+                <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+                  <Shield className="h-64 w-64 text-sapp-blue/10" />
+                </div>
+                
+                <div className="relative z-10 md:max-w-xl">
+                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                    Identify Security Vulnerabilities
+                  </h3>
+                  <p className="text-gray-300 mb-6">
+                    Our comprehensive security assessments help you identify and address vulnerabilities before they can be exploited.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button 
+                      className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
+                      onClick={() => setContactDialogOpen(true)}
+                    >
+                      Request Assessment
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </Animated>
           </div>
         </section>
@@ -234,6 +263,24 @@ const PhysicalSecurityAssessments = () => {
       />
     </div>
   );
+
+  // Wrap with DebugInfo when in debug mode
+  if (isDebugMode && process.env.NODE_ENV === 'development') {
+    return (
+      <DebugInfo 
+        componentName="PhysicalSecurityAssessments"
+        data={{
+          route: "/services/physical-security-assessments",
+          sections: ['Hero', 'Features', 'Quote', 'CTA'],
+          animations: ['fade-up', 'scale-in', 'slide-in'],
+        }}
+      >
+        {content}
+      </DebugInfo>
+    );
+  }
+
+  return content;
 };
 
 export default PhysicalSecurityAssessments;
