@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -9,10 +10,8 @@ import QuoteCard from '@/components/ui/QuoteCard';
 import { useState } from 'react';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
-import { Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import ImageDebugInfo from '@/components/ui/ImageDebugInfo';
-import { useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
+import { useLocation } from 'react-router-dom';
+import { useComponentLogger, useDebugContext } from '@/utils/debugTools';
 import CTASection from '@/components/services/technology-systems-testing/CTASection';
 import NavigationButtons from '@/components/services/technology-systems-testing/NavigationButtons';
 
@@ -44,9 +43,6 @@ const TechnologySystemsTesting = () => {
         {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative">
           <div className="container mx-auto px-4">
-            {/* Navigation buttons */}
-            <NavigationButtons />
-            
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
                 <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Technical Testing</h3>
@@ -164,22 +160,7 @@ const TechnologySystemsTesting = () => {
         <CTASection onRequestAssessment={() => setContactDialogOpen(true)} />
         
         {/* Bottom navigation */}
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-8 border-t border-gray-100">
-            <Link to="/services/compliance-audits">
-              <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
-                <ArrowLeft className="h-4 w-4" />
-                Back to Compliance Audits
-              </Button>
-            </Link>
-            <Link to="/security-audits">
-              <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[5px]">
-                Back to Security Audits
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
+        <NavigationButtons />
       </main>
       
       <Footer />
