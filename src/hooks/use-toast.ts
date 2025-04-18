@@ -26,8 +26,8 @@ export const useToast = () => {
   };
 };
 
-// Enhanced toast function with debug type
-export const toast = {
+// Create our enhanced toast object
+const toastEnhanced = {
   ...toastOriginal,
   debug: (title: string, description?: string) => {
     if (isDev) {
@@ -52,3 +52,6 @@ export const toast = {
     }
   }
 };
+
+// Export the enhanced toast object
+export const toast = toastEnhanced;
