@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -81,28 +82,28 @@ const PhysicalSecurityAssessments = () => {
                 <Animated 
                   animation="fade-up" 
                   delay={200} 
-                  className="relative"
+                  className="relative group hover:shadow-xl transition-shadow duration-300 rounded-xl"
                 >
                   {isDebugMode && (
-                    <AnimationDebugInfo
-                      name="Hero Image Animation"
-                      duration="0.6s"
-                      delay="200ms"
-                      timing="ease-out"
-                    />
-                  )}
-                  <div className="relative rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                    {isDebugMode && (
-                      <ImageDebugInfo
-                        src="/lovable-uploads/5b9dc9b8-59b3-4180-a9c1-fae40b4ca2b8.png"
-                        dimensions={{ width: 480, height: 360 }}
-                        aspectRatio={1.33}
+                    <>
+                      <AnimationDebugInfo
+                        name="Hero Image Animation"
+                        duration="0.6s"
+                        delay="200ms"
+                        timing="ease-out"
                       />
-                    )}
+                      <ImageDebugInfo
+                        src="/lovable-uploads/fa460706-1791-4544-9401-1802ec85c6e9.png"
+                        dimensions={{ width: 380, height: 380 }}
+                        aspectRatio={1}
+                      />
+                    </>
+                  )}
+                  <div className="relative rounded-xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
                     <img 
-                      src="/lovable-uploads/5b9dc9b8-59b3-4180-a9c1-fae40b4ca2b8.png" 
+                      src="/lovable-uploads/fa460706-1791-4544-9401-1802ec85c6e9.png" 
                       alt="Physical Security Assessment" 
-                      className="w-[480px] h-[360px] object-cover rounded-xl"
+                      className="w-[380px] h-[380px] object-cover rounded-xl transform transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                 </Animated>
