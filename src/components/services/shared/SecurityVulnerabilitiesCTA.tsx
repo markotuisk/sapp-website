@@ -15,7 +15,7 @@ const SecurityVulnerabilitiesCTA: React.FC<SecurityVulnerabilitiesCTAProps> = ({
       <div className="container mx-auto px-4">
         <Animated animation="fade-up">
           <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-dark-blue to-transparent opacity-80"></div>
             <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
               <Sparkles className="h-64 w-64 text-sapp-blue/10" />
             </div>
