@@ -16,7 +16,6 @@ const Installations = () => {
   const [isLoaded, setIsLoaded] = useState(true);
   
   useEffect(() => {
-    // Scroll to the top when component mounts
     window.scrollTo(0, 0);
   }, []);
 
@@ -24,25 +23,12 @@ const Installations = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Hero Section */}
         <HeroSection />
-
-        {/* Main Content - Why Choose Our Solutions */}
         <SolutionsSection />
-
-        {/* Industry Leader Opinion Section */}
         <QuoteSection />
-
-        {/* Installation Capabilities Section */}
         <CapabilitiesSection />
-
-        {/* How We Deploy Section */}
         <DeploymentSection />
-
-        {/* Deployment Consultation Section */}
         <DeploymentConsultationSection />
-
-        {/* CTA Section */}
         <CTASection />
       </main>
       <Footer />

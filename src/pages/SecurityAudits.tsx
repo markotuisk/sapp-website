@@ -11,7 +11,6 @@ import CTASection from '@/components/security-audits/CTASection';
 
 const SecurityAudits = () => {
   useEffect(() => {
-    // Scroll to top when navigating to this page
     window.scrollTo(0, 0);
   }, []);
 
@@ -19,22 +18,11 @@ const SecurityAudits = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        {/* Hero Section */}
         <HeroSection />
-
-        {/* Why Independent Audits Matter */}
         <WhyIndependentAudits />
-
-        {/* Quote Section */}
         <QuoteSection />
-
-        {/* Security Audit Services Cards (What We Deliver) */}
         <ServiceCardsSection />
-
-        {/* Image Banner Section */}
         <ImageBannerSection />
-
-        {/* CTA Section */}
         <CTASection />
       </main>
       <Footer />

@@ -5,7 +5,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
-// Lazy load sections to improve initial page load performance
 const HeroSection = React.lazy(() => import('@/components/cyber-security/HeroSection'));
 const ServicesSection = React.lazy(() => import('@/components/cyber-security/ServicesSection'));
 const FeaturesSection = React.lazy(() => import('@/components/cyber-security/FeaturesSection'));
@@ -51,8 +50,6 @@ const CyberSecurity = React.memo(() => {
     </div>
   );
 
-  // Always render the component structure the same way
-  // but conditionally wrap with DebugInfo
   if (isDebugMode && process.env.NODE_ENV === 'development') {
     return (
       <DebugInfo 
