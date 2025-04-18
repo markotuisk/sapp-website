@@ -1,12 +1,13 @@
-
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, MonitorCheck, Shield, Lock, BarChart } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { DebugInfo } from '@/utils/debugTools';
 
 const CCTVAccess = () => {
   useEffect(() => {
@@ -16,6 +17,10 @@ const CCTVAccess = () => {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>CCTV & Access Control Systems | SAPP Security</title>
+        <meta name="description" content="Enterprise-grade CCTV and access control systems for comprehensive security solutions." />
+      </Helmet>
       <Navbar />
       <main className="pt-32 pb-16">
         <div className="container mx-auto px-4">
@@ -35,24 +40,34 @@ const CCTVAccess = () => {
             </Link>
           </div>
           
-          {/* Hero */}
-          <div className="bg-gradient-to-b from-slate-50 to-white rounded-xl overflow-hidden shadow-md mb-10">
-            <div className="relative h-64 md:h-96">
-              <img 
-                src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
-                alt="CCTV & Access Control Systems" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 p-8">
-                <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
-                  <MonitorCheck className="h-8 w-8" />
+          {/* Hero Section */}
+          <DebugInfo
+            componentName="CCTVHeroCard"
+            data={{
+              section: 'Hero',
+              backgroundColor: 'gradient-to-b from-slate-50 to-white',
+              dimensions: { height: '64px md:96px' },
+              imageUrl: '/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png'
+            }}
+          >
+            <div className="bg-gradient-to-b from-white to-slate-50 rounded-xl overflow-hidden shadow-md mb-10">
+              <div className="relative h-64 md:h-96">
+                <img 
+                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
+                  alt="CCTV & Access Control Systems" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 p-8">
+                  <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
+                    <MonitorCheck className="h-8 w-8" />
+                  </div>
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">CCTV, Access & Visitor Systems</h1>
+                  <p className="text-white/90 text-lg max-w-2xl">Control visibility, movement, and presence — with systems that scale from single sites to global estates.</p>
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">CCTV, Access & Visitor Systems</h1>
-                <p className="text-white/90 text-lg max-w-2xl">Control visibility, movement, and presence — with systems that scale from single sites to global estates.</p>
               </div>
             </div>
-          </div>
+          </DebugInfo>
           
           {/* Feature Cards */}
           <Animated animation="fade-up" delay={100}>
