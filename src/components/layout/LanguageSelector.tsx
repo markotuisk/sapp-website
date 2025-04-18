@@ -1,3 +1,4 @@
+
 import { useLanguage } from '@/hooks/useLanguage';
 import { languages } from '@/data/translations';
 import { 
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { toast } from '@/hooks/use-toast';
+import { toast as sonnerToast } from 'sonner';
 import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
 
 const LanguageSelector = () => {
@@ -25,14 +26,14 @@ const LanguageSelector = () => {
       });
       
       setLanguage(language);
-      toast.sonner(`Language changed to ${language.name}`, {
+      sonnerToast(`Language changed to ${language.name}`, {
         description: "The website language has been updated.",
         duration: 3000,
       });
       
       if (process.env.NODE_ENV === 'development') {
         const translationCount = Object.keys(currentLanguage?.translations || {}).length;
-        toast.sonner.debug(`Debug: Language Resources Loaded`, {
+        sonnerToast.debug(`Debug: Language Resources Loaded`, {
           description: `${translationCount} translation keys available`,
           duration: 5000,
         });

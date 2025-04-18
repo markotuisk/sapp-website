@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from '@/hooks/use-toast';
+import { toast as sonnerToast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ContactFormValues, contactFormSchema } from '@/components/home/contact/types';
@@ -109,10 +109,9 @@ export function useContactFormDialog(
       if (emailResponse.error) {
         console.warn('Email sending error:', emailResponse.error);
         // We show a success message but also notify about email issues
-        toast({
-          title: "Message received",
-          description: `Your inquiry has been logged, but there was an issue sending confirmation emails. Our team will contact you soon.`,
-        });
+        sonnerToast("Message received", 
+          `Your inquiry has been logged, but there was an issue sending confirmation emails. Our team will contact you soon.`
+        );
       }
       
       // Move to success step regardless of email status (as long as DB submission worked)
@@ -120,11 +119,9 @@ export function useContactFormDialog(
       
     } catch (error) {
       console.error('Comprehensive contact form submission error:', error);
-      toast({
-        variant: "destructive",
-        title: "Failed to send message",
-        description: "Please try again later or contact support if the issue persists.",
-      });
+      sonnerToast.error("Failed to send message", 
+        "Please try again later or contact support if the issue persists."
+      );
     } finally {
       setIsSubmitting(false);
     }
