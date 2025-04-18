@@ -1,11 +1,11 @@
 
 // Re-export the toast implementation from hooks
-export { useToast, toast, type ToastOptions } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { toast as hookToast } from "@/hooks/use-toast";
+import type { ToastOptions } from "@/hooks/use-toast";
 
-// For compatibility with existing code
-export const toast = {
-  dismiss: (toastId?: string) => {
-    const { toast } = require("@/hooks/use-toast");
-    toast.dismiss(toastId);
-  }
-};
+// Export the hook
+export { useToast, ToastOptions };
+
+// Export the toast function
+export const toast = hookToast;

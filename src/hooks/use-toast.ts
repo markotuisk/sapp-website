@@ -1,10 +1,9 @@
 
 import * as React from "react";
 import { toast as sonnerToast } from 'sonner';
-import { 
+import type { 
   ToastProps, 
-  ToastActionElement,
-  Toast
+  ToastActionElement 
 } from "@/components/ui/toast";
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -14,6 +13,8 @@ export interface ToastOptions extends Omit<ToastProps, "variant"> {
   description?: string;
   variant?: "default" | "destructive";
   action?: ToastActionElement;
+  duration?: number;
+  className?: string;
 }
 
 // This stores toast state when using the hook version
@@ -53,15 +54,16 @@ export function useToast() {
   }, []);
 
   const toast = React.useCallback((options: ToastOptions) => {
-    const { title, description, variant, ...props } = options;
+    const { title, description, variant, duration, className, ...props } = options;
     const id = generateId();
     
     // Use Sonner toast as primary implementation
     sonnerToast(title || description || '', {
       description: description && title ? description : undefined,
+      duration: duration,
       className: variant === 'destructive' 
         ? 'bg-red-500 text-white' 
-        : 'bg-blue-500 text-white'
+        : className || 'bg-blue-500 text-white'
     });
     
     // Also add to our toast store for Radix UI toast
@@ -72,6 +74,8 @@ export function useToast() {
       variant,
       ...props
     });
+
+    return id;
   }, []);
 
   const debug = React.useCallback((message: string, options?: any) => {
@@ -99,13 +103,14 @@ export function useToast() {
 
 // Direct toast function
 export const toast = (options: ToastOptions) => {
-  const { title, description, variant, ...props } = options;
+  const { title, description, variant, duration, className, ...props } = options;
   
   sonnerToast(title || description || '', {
     description: description && title ? description : undefined,
+    duration: duration,
     className: variant === 'destructive' 
       ? 'bg-red-500 text-white' 
-      : 'bg-blue-500 text-white'
+      : className || 'bg-blue-500 text-white'
   });
   
   // Also add to our toast store for potential Radix UI toast usage
@@ -126,4 +131,5 @@ toast.dismiss = (toastId?: string) => {
   if (toastId) {
     TOAST_STORE.dismissToast(toastId);
   }
+  sonnerToast.dismiss(toastId);
 };
