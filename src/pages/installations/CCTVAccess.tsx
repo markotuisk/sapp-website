@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
@@ -7,9 +8,11 @@ import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { DebugInfo } from '@/utils/debugTools';
+import { useDebugContext } from '@/utils/debugTools';
 
 const CCTVAccess = () => {
+  const { isDebugMode } = useDebugContext();
+  
   useEffect(() => {
     // Scroll to the top when component mounts
     window.scrollTo(0, 0);
@@ -41,16 +44,22 @@ const CCTVAccess = () => {
           </div>
           
           {/* Hero Section */}
-          <DebugInfo
-            componentName="CCTVHeroCard"
-            data={{
-              section: 'Hero',
-              backgroundColor: 'gradient-to-b from-slate-50 to-white',
-              dimensions: { height: '64px md:96px' },
-              imageUrl: '/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png'
-            }}
-          >
-            <div className="bg-gradient-to-b from-white to-slate-50 rounded-xl overflow-hidden shadow-md mb-10">
+          <div className="relative">
+            {isDebugMode && (
+              <div className="absolute top-0 right-0 z-50 bg-gray-100 text-xs p-1 rounded-bl-md">
+                <div className="flex items-center opacity-70">
+                  <span className="w-3 h-3 rounded-full bg-blue-400 mr-1"></span>
+                  <span>CCTVHeroCard</span>
+                </div>
+                <div className="text-xs">
+                  <div>Section: Hero</div>
+                  <div>BG: #333333 (dark gray)</div>
+                  <div>Height: 64px (md:96px)</div>
+                </div>
+              </div>
+            )}
+            
+            <div className="bg-[#333333] rounded-xl overflow-hidden shadow-md mb-10">
               <div className="relative h-64 md:h-96">
                 <img 
                   src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
@@ -67,7 +76,7 @@ const CCTVAccess = () => {
                 </div>
               </div>
             </div>
-          </DebugInfo>
+          </div>
           
           {/* Feature Cards */}
           <Animated animation="fade-up" delay={100}>
