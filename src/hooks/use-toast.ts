@@ -1,14 +1,14 @@
 
 import * as React from "react";
 import { toast as sonnerToast } from 'sonner';
-import { type ToastActionElement, type ToastProps } from "@/components/ui/toast";
-import {
-  useToast as useToastPrimitive,
+import { 
+  ToastProps, 
+  ToastActionElement,
+  toast as radixToast 
 } from "@/components/ui/toast";
 
 const isDev = process.env.NODE_ENV === 'development';
 
-// Define types
 export interface ToastOptions extends Omit<ToastProps, "variant"> {
   title?: string;
   description?: string;
@@ -16,70 +16,52 @@ export interface ToastOptions extends Omit<ToastProps, "variant"> {
   action?: ToastActionElement;
 }
 
-// Radix UI toast implementation
 export function useToast() {
-  const { toast: toastPrimitive, ...methods } = useToastPrimitive();
+  const toast = React.useCallback((options: ToastOptions) => {
+    const { title, description, variant, ...props } = options;
+    
+    // Use Sonner toast as primary implementation
+    sonnerToast(title || description || '', {
+      description: description && title ? description : undefined,
+      className: variant === 'destructive' 
+        ? 'bg-red-500 text-white' 
+        : 'bg-blue-500 text-white'
+    });
 
-  // Don't reference useToast again to avoid recursion
-  const toast = React.useCallback(
-    ({ title, description, variant, ...props }: ToastOptions) => {
-      toastPrimitive({
+    // Optional: Also trigger Radix toast if needed
+    if (radixToast) {
+      radixToast({
         title,
         description,
         variant: variant || "default",
-        ...props,
+        ...props
       });
-    },
-    [toastPrimitive]
-  );
+    }
+  }, []);
 
-  // Debug toast wrapper
-  const debug = React.useCallback(
-    (title: string, description?: string) => {
-      if (isDev) {
-        toastPrimitive({
-          title,
-          description,
-          variant: "default",
-          className: "bg-purple-100 border-purple-400 text-purple-900",
-        });
-      }
-    },
-    [toastPrimitive]
-  );
+  const debug = React.useCallback((message: string, options?: any) => {
+    if (isDev) {
+      sonnerToast.info(message, {
+        description: options?.description,
+        className: 'bg-purple-100 text-purple-900'
+      });
+    }
+  }, []);
 
   return {
-    ...methods,
     toast,
-    debug,
+    debug
   };
 }
 
-// Direct toast function implementation
-const toast = (options: ToastOptions) => {
+// Direct toast function
+export const toast = (options: ToastOptions) => {
   const { title, description, variant, ...props } = options;
   
-  console.log('Toast triggered:', options);
-  
-  // Add additional toast implementations here if needed
+  sonnerToast(title || description || '', {
+    description: description && title ? description : undefined,
+    className: variant === 'destructive' 
+      ? 'bg-red-500 text-white' 
+      : 'bg-blue-500 text-white'
+  });
 };
-
-// Debug toast helper
-const debug = (title: string, description?: string) => {
-  if (isDev) {
-    console.log(`DEBUG TOAST: ${title}`, description);
-    // We only log in console, no UI toast in the direct implementation
-  }
-};
-
-// Enhanced toast object with proper types
-const enhancedToast = Object.assign(toast, {
-  debug,
-  sonner: sonnerToast,
-  dismiss: (toastId?: string) => {
-    console.log('Toast dismissed:', toastId);
-  }
-});
-
-// Export the enhanced toast object
-export { enhancedToast as toast };
