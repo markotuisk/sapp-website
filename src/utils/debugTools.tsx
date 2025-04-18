@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
 
 /**
@@ -15,7 +14,7 @@ export const DebugContext = React.createContext({
 export const useDebugContext = () => useContext(DebugContext);
 
 /**
- * Debug wrapper component that provides debugging information in development mode
+ * Enhanced debug wrapper component with performance monitoring
  */
 export const DebugInfo: React.FC<{
   componentName: string;
@@ -23,20 +22,27 @@ export const DebugInfo: React.FC<{
   data?: Record<string, any>;
   showOutline?: boolean;
 }> = ({ componentName, children, data, showOutline = true }) => {
-  const { isDebugMode } = useDebugContext();
+  const { isDebugMode, logPerformance } = useDebugContext();
   const [isExpanded, setIsExpanded] = useState(false);
   const renderCountRef = useRef(0);
+  const mountTimeRef = useRef(performance.now());
+  const [renderTime, setRenderTime] = useState<number | null>(null);
   
   // Skip entirely in production or if debug mode is off
   if (process.env.NODE_ENV !== 'development' || !isDebugMode) {
     return <>{children}</>;
   }
   
-  // Increment render count on each render
   useEffect(() => {
+    if (logPerformance) {
+      const timeToRender = performance.now() - mountTimeRef.current;
+      setRenderTime(timeToRender);
+      console.log(`[${componentName}] Time to render: ${timeToRender.toFixed(2)}ms`);
+    }
+    
     renderCountRef.current += 1;
   });
-  
+
   return (
     <div 
       className={`relative ${showOutline ? 'outline outline-1 outline-dashed outline-blue-300/50' : ''}`}
@@ -55,6 +61,11 @@ export const DebugInfo: React.FC<{
           <div className="mb-1 pb-1 border-b border-gray-200">
             <span className="font-bold">Render count:</span> {renderCountRef.current}
           </div>
+          {renderTime && (
+            <div className="mb-1 pb-1 border-b border-gray-200">
+              <span className="font-bold">Initial render time:</span> {renderTime.toFixed(2)}ms
+            </div>
+          )}
           {data && Object.entries(data).map(([key, value]) => (
             <div key={key} className="mb-1">
               <span className="font-bold">{key}:</span> {
@@ -98,7 +109,7 @@ export const useComponentLogger = (componentName: string) => {
 };
 
 /**
- * Debug provider for app-wide debugging configuration
+ * Enhanced debug provider with more configuration options
  */
 export const DebugProvider: React.FC<{
   children: React.ReactNode;
@@ -109,7 +120,6 @@ export const DebugProvider: React.FC<{
   };
 }> = ({ children, options = {} }) => {
   const [isDebugMode, setIsDebugMode] = useState(() => {
-    // Check if debug mode was enabled in localStorage
     return process.env.NODE_ENV === 'development' && 
       localStorage.getItem('debug_mode') === 'true';
   });
@@ -119,9 +129,15 @@ export const DebugProvider: React.FC<{
     setIsDebugMode(newValue);
     localStorage.setItem('debug_mode', String(newValue));
     
-    // Show feedback when debug mode changes
     if (process.env.NODE_ENV === 'development') {
       console.log(`Debug mode ${newValue ? 'enabled' : 'disabled'}`);
+      if (newValue) {
+        console.log('Available debug features:', {
+          componentBoundaries: options.componentBoundaries ?? true,
+          logPerformance: options.logPerformance ?? true,
+          verboseLogging: options.verboseLogging ?? false,
+        });
+      }
     }
   };
   

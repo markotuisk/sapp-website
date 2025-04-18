@@ -11,32 +11,55 @@ import JoinTeam from '@/components/home/about/JoinTeam';
 import FoundingTeam from '@/components/home/FoundingTeam';
 import VisionMission from '@/components/home/VisionMission';
 import Contact from '@/components/home/contact/Contact';
+import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
 
 const About = () => {
   const location = useLocation();
+  const { logEvent } = useComponentLogger('AboutPage');
   
   useEffect(() => {
-    // Scroll to top when navigating to this page
+    logEvent('PageMount', { path: location.pathname });
     window.scrollTo(0, 0);
-  }, [location]);
+    
+    return () => {
+      logEvent('PageUnmount', { path: location.pathname });
+    };
+  }, [location, logEvent]);
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <main>
-        <AboutHero />
-        <OurStory />
-        <FoundingTeam />
-        <OurApproach />
-        <TeamAdvisors />
-        <VisionMission />
-        <JoinTeam />
-        <div id="contact">
-          <Contact />
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <DebugInfo 
+      componentName="AboutPage" 
+      data={{
+        path: location.pathname,
+        sections: [
+          'AboutHero',
+          'OurStory',
+          'FoundingTeam',
+          'OurApproach',
+          'TeamAdvisors',
+          'VisionMission',
+          'JoinTeam',
+          'Contact'
+        ]
+      }}
+    >
+      <div className="min-h-screen">
+        <Navbar />
+        <main>
+          <AboutHero />
+          <OurStory />
+          <FoundingTeam />
+          <OurApproach />
+          <TeamAdvisors />
+          <VisionMission />
+          <JoinTeam />
+          <div id="contact">
+            <Contact />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </DebugInfo>
   );
 };
 

@@ -1,4 +1,3 @@
-
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -10,12 +9,16 @@ import QuoteSection from '@/components/home/QuoteSection';
 import { useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocation } from 'react-router-dom';
+import { DebugInfo, useComponentLogger } from '@/utils/debugTools';
 
 const Index = () => {
   const { t } = useLanguage();
   const location = useLocation();
+  const { logEvent } = useComponentLogger('IndexPage');
   
   useEffect(() => {
+    logEvent('PageMount', { path: location.pathname });
+    
     // Scroll to top when navigating to this page
     window.scrollTo(0, 0);
     
@@ -25,6 +28,7 @@ const Index = () => {
         const id = location.hash.substring(1);
         const element = document.getElementById(id);
         if (element) {
+          logEvent('HashScroll', { hash: location.hash });
           element.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
@@ -32,7 +36,11 @@ const Index = () => {
         }
       }, 100);
     }
-  }, [location]);
+    
+    return () => {
+      logEvent('PageUnmount', { path: location.pathname });
+    };
+  }, [location, logEvent]);
   
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
@@ -57,20 +65,37 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <main>
-        <Hero />
-        <Services />
-        <QuoteSection />
-        <AboutSAPP />
-        <Partners />
-        <div id="contact">
-          <Contact />
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <DebugInfo 
+      componentName="IndexPage"
+      data={{
+        currentPath: location.pathname,
+        hash: location.hash,
+        sections: [
+          'Hero',
+          'Services',
+          'QuoteSection',
+          'AboutSAPP',
+          'Partners',
+          'Contact'
+        ],
+        language: t('currentLanguage')
+      }}
+    >
+      <div className="min-h-screen">
+        <Navbar />
+        <main>
+          <Hero />
+          <Services />
+          <QuoteSection />
+          <AboutSAPP />
+          <Partners />
+          <div id="contact">
+            <Contact />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </DebugInfo>
   );
 };
 
