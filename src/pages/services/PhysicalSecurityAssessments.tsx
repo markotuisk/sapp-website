@@ -9,7 +9,7 @@ import { useState } from 'react';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import FeatureCard from '@/components/ui/FeatureCard';
 import { Link, useLocation } from 'react-router-dom';
-import { ImageDebugInfo, useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
+import { useComponentLogger, useDebugContext, DebugInfo } from '@/utils/debugTools';
 
 const PhysicalSecurityAssessments = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
