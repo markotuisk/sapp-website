@@ -8,7 +8,8 @@ import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { useDebugContext } from '@/utils/debugTools';
+import { useDebugContext } from '@/contexts/DebugContext';
+import { DebugInfo, DebugToggle } from '@/components/debug';
 
 const CCTVAccess = () => {
   const { isDebugMode } = useDebugContext();
@@ -25,6 +26,7 @@ const CCTVAccess = () => {
         <meta name="description" content="Enterprise-grade CCTV and access control systems for comprehensive security solutions." />
       </Helmet>
       <Navbar />
+      <DebugToggle />
       <main className="pt-32 pb-16">
         <div className="container mx-auto px-4">
           {/* Navigation buttons */}
@@ -44,29 +46,17 @@ const CCTVAccess = () => {
           </div>
           
           {/* Hero Section */}
-          <div className="relative">
-            {isDebugMode && (
-              <div className="absolute top-0 right-0 z-50 bg-gray-100 text-xs p-1 rounded-bl-md">
-                <div className="flex items-center opacity-70">
-                  <span className="w-3 h-3 rounded-full bg-blue-400 mr-1"></span>
-                  <span>CCTVHeroCard</span>
-                </div>
-                <div className="text-xs">
-                  <div>Section: Hero</div>
-                  <div>BG: #333333 (dark gray)</div>
-                  <div>Height: 64px (md:96px)</div>
-                </div>
-              </div>
-            )}
-            
+          <DebugInfo
+            componentName="CCTVHeroCard"
+            data={{
+              section: "Hero",
+              bg: "#333333 (dark gray)",
+              height: "64px (md:96px)"
+            }}
+          >
             <div className="bg-[#333333] rounded-xl overflow-hidden shadow-md mb-10">
               <div className="relative h-64 md:h-96">
-                <img 
-                  src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
-                  alt="CCTV & Access Control Systems" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8">
                   <div className="bg-sapp-blue/90 backdrop-blur-sm w-16 h-16 rounded-lg flex items-center justify-center mb-4 text-white">
                     <MonitorCheck className="h-8 w-8" />
@@ -76,7 +66,7 @@ const CCTVAccess = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </DebugInfo>
           
           {/* Feature Cards */}
           <Animated animation="fade-up" delay={100}>

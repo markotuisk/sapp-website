@@ -33,7 +33,10 @@ export const DebugInfo: React.FC<DebugInfoProps> = ({
     }
     
     renderCountRef.current += 1;
-  });
+    
+    // Return empty function to avoid exhaustive deps warning
+    return () => {};
+  }, [componentName, logPerformance]);
 
   return (
     <div 
@@ -41,7 +44,7 @@ export const DebugInfo: React.FC<DebugInfoProps> = ({
       data-component={componentName}
     >
       <div 
-        className="absolute top-0 right-0 z-50 bg-gray-100 text-xs p-1 rounded-bl-md cursor-pointer flex items-center opacity-50 hover:opacity-100"
+        className="absolute top-0 right-0 z-50 bg-gray-100 text-xs p-1 rounded-bl-md cursor-pointer flex items-center opacity-70 hover:opacity-100"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <span className="w-3 h-3 rounded-full bg-blue-400 mr-1"></span>
