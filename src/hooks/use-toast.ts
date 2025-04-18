@@ -1,6 +1,6 @@
 
 import { type ToastProps, ToastActionElement } from "@/components/ui/toast";
-import { useToast as useToastUI, toast as toastUI } from "@/components/ui/use-toast";
+import { useToast as useToastOriginal, toast as toastOriginal } from "@/components/ui/use-toast";
 import { toast as sonnerToast } from 'sonner';
 
 type ToastType = 'default' | 'success' | 'error' | 'warning' | 'info' | 'debug';
@@ -9,7 +9,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 // Enhanced toast with debug type
 export const useToast = () => {
-  const baseToast = useToastUI();
+  const baseToast = useToastOriginal();
   
   return {
     ...baseToast,
@@ -28,10 +28,10 @@ export const useToast = () => {
 
 // Enhanced toast function with debug type
 export const toast = {
-  ...toastUI,
+  ...toastOriginal,
   debug: (title: string, description?: string) => {
     if (isDev) {
-      toastUI({
+      toastOriginal({
         title,
         description,
         variant: "default",

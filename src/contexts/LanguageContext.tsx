@@ -1,20 +1,5 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type Language = {
-  code: string;
-  name: string;
-  flag: string;
-};
-
-export const languages: Language[] = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-];
-
-// Define translation keys and their values for each language
 type TranslationKey = 
   | 'home'
   | 'about'
@@ -46,11 +31,28 @@ type TranslationKey =
   | 'partnerWithUs';
 
 type Translations = {
-  [key in Language['code']]: {
+  [key: string]: {
     [key in TranslationKey]: string;
   };
 };
 
+export type Language = {
+  code: string;
+  name: string;
+  flag: string;
+  translations?: {
+    [key in TranslationKey]?: string;
+  };
+};
+
+export const languages: Language[] = [
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+];
+
+// Define translation keys and their values for each language
 export const translations: Translations = {
   en: {
     home: 'Home',
