@@ -11,42 +11,23 @@ interface CTASectionProps {
 
 const CTASection: React.FC<CTASectionProps> = ({ onRequestAssessment }) => {
   return (
-    <section className="py-8">
-      <div className="container mx-auto px-4">
-        <Animated animation="fade-up">
-          <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-accent-dark-blue to-transparent opacity-80"></div>
-            <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
-              <Shield className="h-64 w-64 text-sapp-blue/10" />
-            </div>
-            
-            <div className="relative z-10 md:max-w-xl">
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                Professional Close Protection
-              </h3>
-              <p className="text-gray-300 mb-6">
-                Expert close protection services for high-profile executives and restricted corporate events, ensuring safety while maintaining discretion.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
-                  asChild
-                >
-                  <Link to="/">
-                    Back to Home
-                  </Link>
-                </Button>
-                <Button 
-                  size="lg" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white"
-                  onClick={onRequestAssessment}
-                >
-                  Request Close Protection
-                </Button>
-              </div>
-            </div>
-          </div>
+    <section className="py-20 bg-gradient-to-r from-accent-dark-blue to-sapp-blue text-white">
+      <div className="container mx-auto px-4 text-center">
+        <Animated animation="fade-up" delay={100}>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            Protect Your Executives and Events
+          </h2>
+          <p className="max-w-2xl mx-auto mb-8 text-white/90">
+            Contact our team to arrange professional close protection for your next high-profile corporate event.
+          </p>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="bg-white text-sapp-blue hover:bg-white/90 border-0 shadow-lg hover:scale-105 transition-all duration-200"
+            onClick={onRequestAssessment}
+          >
+            Get Started Today
+          </Button>
         </Animated>
       </div>
     </section>
