@@ -58,41 +58,23 @@ const TechnologySystemsTesting = () => {
               </Link>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 mb-10 md:mb-0">
-                <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                  <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Technical Testing</h3>
-                </div>
-                <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
-                  Technology & Systems Testing
-                </h1>
-                <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
-                  Comprehensive testing of your security and communications technology to identify vulnerabilities and protect against both physical and cyber attacks.
-                </p>
-                <Button 
-                  size="lg" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-                  onClick={() => setContactDialogOpen(true)}
-                >
-                  Schedule a Technology Assessment
-                </Button>
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Technical Testing</h3>
               </div>
-              <div className="md:w-1/2 relative">
-                <div className="w-[684px] h-[380px] flex items-center justify-center">
-                  {isDebugMode && (
-                    <ImageDebugInfo
-                      src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
-                      dimensions={{ width: 380, height: 380 }}
-                      aspectRatio={1}
-                    />
-                  )}
-                  <img 
-                    src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png" 
-                    alt="Technology Systems Testing" 
-                    className="w-[380px] h-[380px] object-cover"
-                  />
-                </div>
-              </div>
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
+                Technology & Systems Testing
+              </h1>
+              <p className="text-lg text-sapp-gray mb-8 max-w-2xl mx-auto">
+                Comprehensive testing of your security and communications technology to identify vulnerabilities and protect against both physical and cyber attacks.
+              </p>
+              <Button 
+                size="lg" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
+                onClick={() => setContactDialogOpen(true)}
+              >
+                Schedule a Technology Assessment
+              </Button>
             </div>
           </div>
         </section>

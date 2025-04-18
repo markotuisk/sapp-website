@@ -18,7 +18,6 @@ const PhysicalSecurityAssessments = () => {
   const { isDebugMode } = useDebugContext();
   
   useEffect(() => {
-    // Scroll to the top when component mounts or location changes
     window.scrollTo(0, 0);
   }, [location]);
 
@@ -36,10 +35,8 @@ const PhysicalSecurityAssessments = () => {
       <Navbar />
       
       <main>
-        {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative">
           <div className="container mx-auto px-4">
-            {/* Navigation buttons */}
             <div className="flex justify-between items-center mb-8">
               <Link to="/security-audits">
                 <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
@@ -55,46 +52,27 @@ const PhysicalSecurityAssessments = () => {
               </Link>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 mb-10 md:mb-0">
-                <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                  <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Security Assessment</h3>
-                </div>
-                <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
-                  Physical Security Assessments
-                </h1>
-                <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
-                  Comprehensive evaluation of your organization's physical security measures to identify vulnerabilities and strengthen your security posture against potential threats.
-                </p>
-                <Button 
-                  size="lg" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-                  onClick={() => setContactDialogOpen(true)}
-                >
-                  Request an Assessment
-                </Button>
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Security Assessment</h3>
               </div>
-              <div className="md:w-1/2 relative">
-                <div className="w-[684px] h-[380px] flex items-center justify-center">
-                  {isDebugMode && (
-                    <ImageDebugInfo
-                      src="/lovable-uploads/fa460706-1791-4544-9401-1802ec85c6e9.png"
-                      dimensions={{ width: 380, height: 380 }}
-                      aspectRatio={1}
-                    />
-                  )}
-                  <img 
-                    src="/lovable-uploads/fa460706-1791-4544-9401-1802ec85c6e9.png" 
-                    alt="Physical Security Assessment" 
-                    className="w-[380px] h-[380px] object-cover"
-                  />
-                </div>
-              </div>
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
+                Physical Security Assessments
+              </h1>
+              <p className="text-lg text-sapp-gray mb-8 max-w-2xl mx-auto">
+                Comprehensive evaluation of your organization's physical security measures to identify vulnerabilities and strengthen your security posture against potential threats.
+              </p>
+              <Button 
+                size="lg" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
+                onClick={() => setContactDialogOpen(true)}
+              >
+                Request an Assessment
+              </Button>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
@@ -173,7 +151,6 @@ const PhysicalSecurityAssessments = () => {
           </div>
         </section>
         
-        {/* Quote Section */}
         <section className="py-16 bg-slate-50">
           <div className="container mx-auto px-6">
             <QuoteCard
@@ -184,7 +161,6 @@ const PhysicalSecurityAssessments = () => {
           </div>
         </section>
         
-        {/* Replace CTA section with the new card design */}
         <section className="py-8">
           <div className="container mx-auto px-4">
             <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
@@ -213,7 +189,6 @@ const PhysicalSecurityAssessments = () => {
           </div>
         </section>
         
-        {/* Bottom navigation */}
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-8 border-t border-gray-100">
             <Link to="/security-audits">
@@ -243,7 +218,6 @@ const PhysicalSecurityAssessments = () => {
     </div>
   );
 
-  // Wrap with DebugInfo when in debug mode
   if (isDebugMode && process.env.NODE_ENV === 'development') {
     return (
       <DebugInfo 
@@ -263,4 +237,5 @@ const PhysicalSecurityAssessments = () => {
 };
 
 export default PhysicalSecurityAssessments;
+
 import { Shield, Lock, Search, FileCheck } from 'lucide-react';

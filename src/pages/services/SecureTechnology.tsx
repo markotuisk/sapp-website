@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useLocation } from 'react-router-dom';
@@ -16,7 +15,6 @@ const SecureTechnology = () => {
   const location = useLocation();
   
   useEffect(() => {
-    // Scroll to the top when component mounts or location changes
     window.scrollTo(0, 0);
   }, [location]);
 
@@ -34,10 +32,8 @@ const SecureTechnology = () => {
       <Navbar />
       
       <main>
-        {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
           <div className="container mx-auto px-4">
-            {/* Navigation buttons */}
             <div className="flex justify-between items-center mb-8">
               <Link to="/services/event-monitoring">
                 <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[-5px]">
@@ -53,44 +49,27 @@ const SecureTechnology = () => {
               </Link>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 mb-10 md:mb-0">
-                <Animated animation="fade-up" delay={100}>
-                  <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-                    <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Event Security</h3>
-                  </div>
-                  <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
-                    Secure Technology
-                  </h1>
-                  <p className="text-lg text-sapp-gray mb-8 max-w-2xl">
-                    Protecting your sensitive information with hardened technology solutions during corporate events and executive meetings.
-                  </p>
-                  <Button 
-                    size="lg" 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
-                    onClick={() => setContactDialogOpen(true)}
-                  >
-                    Schedule Technology Assessment
-                  </Button>
-                </Animated>
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+                <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Event Security</h3>
               </div>
-              <div className="md:w-1/2">
-                <Animated animation="fade-up" delay={200} className="relative">
-                  <div className="absolute -inset-4 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-                  <div className="relative z-10 rounded-xl overflow-hidden shadow-xl">
-                    <img 
-                      src="/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png" 
-                      alt="Secure Technology" 
-                      className="w-full h-auto"
-                    />
-                  </div>
-                </Animated>
-              </div>
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
+                Secure Technology
+              </h1>
+              <p className="text-lg text-sapp-gray mb-8 max-w-2xl mx-auto">
+                Protecting your sensitive information with hardened technology solutions during corporate events and executive meetings.
+              </p>
+              <Button 
+                size="lg" 
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 hover:scale-105 transition-all duration-200"
+                onClick={() => setContactDialogOpen(true)}
+              >
+                Schedule Technology Assessment
+              </Button>
             </div>
           </div>
         </section>
         
-        {/* Features Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <Animated animation="fade-up" delay={100}>
@@ -195,7 +174,6 @@ const SecureTechnology = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-sapp-blue to-blue-600 text-white">
           <div className="container mx-auto px-4 text-center">
             <Animated animation="fade-up" delay={100}>
@@ -217,7 +195,6 @@ const SecureTechnology = () => {
           </div>
         </section>
         
-        {/* Bottom navigation */}
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-8 border-t border-gray-100">
             <Link to="/services/event-monitoring">
