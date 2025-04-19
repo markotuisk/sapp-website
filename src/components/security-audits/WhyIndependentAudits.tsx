@@ -55,8 +55,8 @@ const WhyIndependentAudits = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div>
+        <div className="grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <div 
@@ -70,16 +70,20 @@ const WhyIndependentAudits = () => {
                   <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-3 inline-block rounded-md">
                     <feature.icon className="h-5 w-5" />
                   </div>
-                  <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">{feature.title}</h3>
-                  <p className="text-sm text-sapp-gray">{feature.description}</p>
+                  <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-sapp-gray">
+                    {feature.description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="relative h-full flex items-center">
+          <div className="lg:col-span-4 relative h-full flex items-center">
             <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
             <div className="w-full h-full relative z-10 rounded-xl shadow-md overflow-hidden">
-              <AspectRatio ratio={4/3} className="w-full">
+              <AspectRatio ratio={3/4} className="w-full h-full">
                 <img 
                   src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
                   alt="Compliance and Security Standards Diagram" 
