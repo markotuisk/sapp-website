@@ -112,12 +112,12 @@ const WhyIndependentAudits = () => {
                 <AspectRatio ratio={3/4}>
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10"></div>
                   <img 
-                    src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
-                    alt="Live Security Audits in Practice" 
+                    src="/lovable-uploads/b3bb129a-056f-4b86-af60-ffc31bf85737.png"
+                    alt="Compliance and Security Standards" 
                     className="w-full h-full object-cover brightness-95"
                   />
                   <div className="absolute bottom-4 left-4 right-4 text-white text-sm font-medium bg-black/30 backdrop-blur-sm rounded px-3 py-2">
-                    Live Security Audits in Practice
+                    Compliance and Security Standards Implementation
                   </div>
                 </AspectRatio>
               </div>
