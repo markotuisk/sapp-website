@@ -77,12 +77,12 @@ const WhyIndependentAudits = () => {
                     )}
                   >
                     <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-3 inline-block rounded-md">
-                      <feature.icon className="h-5 w-5" />
+                      <feature.icon className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
+                    <h3 className="text-xl font-display font-semibold mb-2 text-sapp-dark">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-sapp-gray leading-relaxed">
+                    <p className="text-base text-sapp-gray leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
