@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FileText, Lock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,7 +17,7 @@ import {
 const DeploymentSection = () => {
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-12">
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -33,8 +32,7 @@ const DeploymentSection = () => {
           </div>
         </Animated>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Assessment & Planning */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-8">
           <Animated animation="fade-up" delay={300} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <FileText className="h-6 w-6 text-sapp-blue" />
@@ -45,7 +43,6 @@ const DeploymentSection = () => {
             </p>
           </Animated>
 
-          {/* Implementation & Integration */}
           <Animated animation="fade-up" delay={400} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-sapp-blue" />
@@ -56,7 +53,6 @@ const DeploymentSection = () => {
             </p>
           </Animated>
 
-          {/* Testing & Handover */}
           <Animated animation="fade-up" delay={500} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <Users className="h-6 w-6 text-sapp-blue" />

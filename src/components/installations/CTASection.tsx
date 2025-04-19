@@ -15,7 +15,7 @@ import {
 const CTASection = () => {
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 text-center">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to upgrade your security infrastructure?</h2>
         <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
           Our team of installation experts is ready to help you implement the latest security technologies for your organisation.

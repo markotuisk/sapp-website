@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
@@ -11,7 +10,7 @@ const DeploymentConsultationSection = () => {
 
   return (
     <section className="py-8">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up">
           <div 
             className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden"

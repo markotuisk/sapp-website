@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Cpu, Scale, Wrench, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,14 +9,14 @@ const SolutionsSection = () => {
 
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why Choose Our Solutions</h3>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <Animated animation="fade-up" delay={100} className="relative order-2 md:order-1">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+          <Animated animation="fade-up" delay={100} className="relative order-2 md:order-1 md:col-span-6">
             <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
             <img 
               src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
@@ -25,7 +24,7 @@ const SolutionsSection = () => {
               className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover hover:scale-[1.02] transition-all duration-300"
             />
           </Animated>
-          <div className="order-1 md:order-2">
+          <div className="order-1 md:order-2 md:col-span-6">
             <Animated animation="fade-up" delay={150}>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-sapp-dark mb-6">
                 Competent Next Gen Installations

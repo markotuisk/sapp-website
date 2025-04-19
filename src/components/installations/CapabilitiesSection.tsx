@@ -17,7 +17,7 @@ const CapabilitiesSection = () => {
 
   return (
     <section className="py-16 bg-slate-50">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-12">
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -32,7 +32,7 @@ const CapabilitiesSection = () => {
           </div>
         </Animated>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-12">
           {[
             {
               title: "Physical Security",
@@ -51,7 +51,7 @@ const CapabilitiesSection = () => {
               description: "Implement secure foundation for communication and control, whether is local or distributed cloud or hybrid solution."
             }
           ].map((service, index) => (
-            <Card key={index} className="border-gray-100 flex flex-col">
+            <Card key={index} className="border-gray-100 flex flex-col lg:col-span-3">
               <CardHeader>
                 <CardTitle className="text-xl text-sapp-dark">{service.title}</CardTitle>
               </CardHeader>
