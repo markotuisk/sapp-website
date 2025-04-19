@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -19,9 +18,9 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col items-center justify-center text-center">
+    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
           <h1 
             className={cn(
               "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
@@ -78,4 +77,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

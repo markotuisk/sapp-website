@@ -1,4 +1,3 @@
-
 import { Wifi, Server, Database, Lock, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
@@ -11,8 +10,8 @@ const ServicesSection = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24 bg-white">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Why IoT Device Security</h3>
@@ -29,7 +28,7 @@ const ServicesSection = () => {
           </Animated>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-7xl mx-auto">
           <div className="order-2 md:order-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <Animated animation="fade-up" delay={150} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-4 transition-all duration-200">

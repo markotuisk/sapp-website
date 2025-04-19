@@ -16,8 +16,8 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section className="py-16 bg-slate-50">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24 bg-slate-50">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-12">
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -34,7 +34,7 @@ const FeaturesSection = () => {
           </div>
         </Animated>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 max-w-7xl mx-auto">
           {[
             {
               title: "IoT Device Security",
@@ -72,6 +72,15 @@ const FeaturesSection = () => {
               </CardFooter>
             </Card>
           ))}
+        </div>
+        
+        <div className="mt-12 max-w-5xl mx-auto">
+          <ContactFormDialog 
+            open={contactDialogOpen}
+            onOpenChange={setContactDialogOpen}
+            defaultMessage={`I'm interested in learning more about your ${selectedService} services.`}
+            serviceName={selectedService}
+          />
         </div>
       </div>
 

@@ -16,7 +16,7 @@ const CyberSecurity = React.memo(() => {
   const { isDebugMode } = useDebugContext();
 
   const content = (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Helmet>
         <title>Comprehensive Cyber Security Services | SAPP Security</title>
         <meta 
@@ -37,13 +37,19 @@ const CyberSecurity = React.memo(() => {
       </Helmet>
       
       <Navbar />
-      <main>
-        <Suspense fallback={<div>Loading...</div>}>
-          <HeroSection />
-          <ServicesSection />
-          <QuoteSection />
-          <FeaturesSection />
-          <CTASection />
+      <main className="flex-grow">
+        <Suspense fallback={
+          <div className="min-h-[200px] flex items-center justify-center">
+            <div className="animate-pulse text-sapp-gray">Loading...</div>
+          </div>
+        }>
+          <div className="space-y-16 md:space-y-24">
+            <HeroSection />
+            <ServicesSection />
+            <QuoteSection />
+            <FeaturesSection />
+            <CTASection />
+          </div>
         </Suspense>
       </main>
       <Footer />
