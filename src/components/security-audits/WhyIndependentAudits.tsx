@@ -1,10 +1,10 @@
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { Button } from '@/components/ui/button';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 
 const WhyIndependentAudits = () => {
@@ -72,15 +72,15 @@ const WhyIndependentAudits = () => {
                 >
                   <div 
                     className={cn(
-                      "bg-white h-full rounded-xl border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out p-6",
+                      "bg-white h-full rounded-xl border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out p-4",
                       "hover:shadow-xl hover:scale-[1.02]",
                       "shadow-md"
                     )}
                   >
-                    <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-4 inline-block rounded-md">
+                    <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-3 inline-block rounded-md">
                       <feature.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
+                    <h3 className="text-lg font-display font-semibold mb-2 text-sapp-dark">
                       {feature.title}
                     </h3>
                     <p className="text-sm text-sapp-gray leading-relaxed">
@@ -89,16 +89,6 @@ const WhyIndependentAudits = () => {
                   </div>
                 </Animated>
               ))}
-            </div>
-            
-            <div className="mt-8">
-              <Button 
-                size="lg"
-                onClick={() => setContactDialogOpen(true)}
-                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
-              >
-                Get In Touch
-              </Button>
             </div>
           </div>
           
