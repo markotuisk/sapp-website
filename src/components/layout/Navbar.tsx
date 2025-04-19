@@ -65,9 +65,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-24 md:h-28">
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0 group">
             <img 
-              src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png" 
+              src="/favicon/favicon-32x32.png" 
               alt="SAPP Security Logo" 
-              className="h-16 w-16 transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-3"
+              width="32"
+              height="32"
+              className="transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-3"
             />
             <div className="flex flex-col transition-all duration-300 group-hover:translate-x-1">
               <span className="font-display font-bold text-xl text-sapp-dark">
