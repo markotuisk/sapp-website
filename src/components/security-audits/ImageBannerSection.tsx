@@ -10,8 +10,8 @@ const ImageBannerSection = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
 
   return (
-    <section className="py-8">
-      <div className="container mx-auto px-4">
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up">
           <div 
             className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden"
@@ -62,4 +62,3 @@ const ImageBannerSection = () => {
 };
 
 export default ImageBannerSection;
-

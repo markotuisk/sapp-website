@@ -8,8 +8,8 @@ const CTASection = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 text-center">
+    <section className="py-16 bg-slate-50">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl text-center">
         <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to improve your security posture?</h2>
         <p className="text-sapp-gray max-w-2xl mx-auto mb-8">
           Our team of security audit experts is ready to help you identify vulnerabilities and enhance your overall security posture.

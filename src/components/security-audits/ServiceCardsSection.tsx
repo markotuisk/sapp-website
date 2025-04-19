@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -51,7 +52,7 @@ const ServiceCardsSection = () => {
 
   return (
     <section id="security-audit-services" className="py-16 bg-slate-50" ref={ref}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">What We Deliver</h3>
@@ -64,9 +65,9 @@ const ServiceCardsSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
           {auditServices.map((service, index) => (
-            <Card key={index} className="border-gray-100 flex flex-col">
+            <Card key={index} className="border-gray-100 flex flex-col lg:col-span-3">
               <CardHeader>
                 <CardTitle className="text-xl text-sapp-dark">{service.title}</CardTitle>
               </CardHeader>
