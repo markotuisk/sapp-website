@@ -18,7 +18,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 relative z-10">
         <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
           <h1 

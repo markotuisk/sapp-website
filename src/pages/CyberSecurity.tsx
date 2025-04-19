@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -10,6 +9,7 @@ const ServicesSection = React.lazy(() => import('@/components/cyber-security/Ser
 const FeaturesSection = React.lazy(() => import('@/components/cyber-security/FeaturesSection'));
 const QuoteSection = React.lazy(() => import('@/components/cyber-security/QuoteSection'));
 const CTASection = React.lazy(() => import('@/components/cyber-security/CTASection'));
+const Contact = React.lazy(() => import('@/components/home/contact/Contact'));
 
 const CyberSecurity = React.memo(() => {
   const { logEvent } = useComponentLogger('CyberSecurityPage');
@@ -49,6 +49,7 @@ const CyberSecurity = React.memo(() => {
             <QuoteSection />
             <FeaturesSection />
             <CTASection />
+            <Contact />
           </div>
         </Suspense>
       </main>
@@ -66,7 +67,8 @@ const CyberSecurity = React.memo(() => {
             'ServicesSection',
             'FeaturesSection',
             'QuoteSection',
-            'CTASection'
+            'CTASection',
+            'Contact'
           ],
           metaTitle: "Comprehensive Cyber Security Services | SAPP Security",
           route: "/cyber-security"
