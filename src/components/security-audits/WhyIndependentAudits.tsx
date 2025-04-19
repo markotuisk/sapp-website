@@ -55,9 +55,9 @@ const WhyIndependentAudits = () => {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-12 gap-10">
-          <div className="lg:col-span-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-8 flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
               {features.map((feature, index) => (
                 <div 
                   key={index}
@@ -82,12 +82,12 @@ const WhyIndependentAudits = () => {
           </div>
           <div className="lg:col-span-4 relative h-full flex items-center">
             <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-            <div className="w-full h-full relative z-10 rounded-xl shadow-md overflow-hidden">
-              <AspectRatio ratio={3/4} className="w-full h-full">
+            <div className="w-full relative z-10 rounded-xl shadow-md overflow-hidden">
+              <AspectRatio ratio={2/3} className="w-full">
                 <img 
                   src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
                   alt="Compliance and Security Standards Diagram" 
-                  className="w-full h-full object-cover transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.01]"
+                  className="w-full h-full object-cover"
                 />
               </AspectRatio>
             </div>
