@@ -28,24 +28,32 @@ const InfoSection: React.FC<InfoSectionProps> = () => {
           <div className="order-2 md:order-1 md:col-span-7">
             <div className="grid grid-cols-1 sm:grid-cols-2 h-full gap-4">
               <div className="bg-white rounded-xl shadow-md border border-gray-100 p-3 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out flex flex-col">
-                <Shield className="h-5 w-5 text-sapp-blue mb-1.5" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Weakest Link</h4>
-                <p className="text-sm text-sapp-gray">Off-site corporate meetings and events are statistically most vulnerable to security attacks.</p>
+                <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-1.5 inline-block rounded-md">
+                  <Shield className="h-6 w-6" />
+                </div>
+                <h4 className="text-xl font-display font-semibold mb-1 text-sapp-dark">Weakest Link</h4>
+                <p className="text-base text-sapp-gray">Off-site corporate meetings and events are statistically most vulnerable to security attacks.</p>
               </div>
               <div className="bg-white rounded-xl shadow-md border border-gray-100 p-3 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out flex flex-col">
-                <Calendar className="h-5 w-5 text-sapp-blue mb-1.5" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Professional Competence</h4>
-                <p className="text-sm text-sapp-gray">Experienced security professionals let organisations focus on their event.</p>
+                <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-1.5 inline-block rounded-md">
+                  <Calendar className="h-6 w-6" />
+                </div>
+                <h4 className="text-xl font-display font-semibold mb-1 text-sapp-dark">Professional Competence</h4>
+                <p className="text-base text-sapp-gray">Experienced security professionals let organisations focus on their event.</p>
               </div>
               <div className="bg-white rounded-xl shadow-md border border-gray-100 p-3 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out flex flex-col">
-                <FileText className="h-5 w-5 text-sapp-blue mb-1.5" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Containment and Reputation</h4>
-                <p className="text-sm text-sapp-gray">Security team handles crisis management and contains your reputation.</p>
+                <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-1.5 inline-block rounded-md">
+                  <FileText className="h-6 w-6" />
+                </div>
+                <h4 className="text-xl font-display font-semibold mb-1 text-sapp-dark">Containment and Reputation</h4>
+                <p className="text-base text-sapp-gray">Security team handles crisis management and contains your reputation.</p>
               </div>
               <div className="bg-white rounded-xl shadow-md border border-gray-100 p-3 hover:shadow-xl hover:scale-[1.02] transition-all duration-200 ease-in-out flex flex-col">
-                <Users className="h-5 w-5 text-sapp-blue mb-1.5" />
-                <h4 className="font-semibold text-sapp-dark mb-1">Confidentiality and Discretion</h4>
-                <p className="text-sm text-sapp-gray">External security team enhances the event confidentiality demonstrating duty of care to shareholders.</p>
+                <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-1.5 inline-block rounded-md">
+                  <Users className="h-6 w-6" />
+                </div>
+                <h4 className="text-xl font-display font-semibold mb-1 text-sapp-dark">Confidentiality and Discretion</h4>
+                <p className="text-base text-sapp-gray">External security team enhances the event confidentiality demonstrating duty of care to shareholders.</p>
               </div>
             </div>
           </div>
