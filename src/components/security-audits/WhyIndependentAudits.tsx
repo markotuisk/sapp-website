@@ -92,7 +92,7 @@ const WhyIndependentAudits = () => {
               ))}
             </div>
             
-            <div className="mt-8 text-center">
+            <div className="mt-8">
               <Button 
                 size="lg"
                 onClick={() => setContactDialogOpen(true)}
