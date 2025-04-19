@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -62,24 +61,29 @@ const WhyIndependentAudits = () => {
           <div className="lg:col-span-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {features.map((feature, index) => (
-                <div 
+                <Animated
                   key={index}
-                  className={cn(
-                    "bg-white rounded-xl shadow-sm hover:shadow-md border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out p-6",
-                    inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  )}
-                  style={{ transitionDelay: inView ? `${feature.delay}ms` : '0ms' }}
+                  animation="fade-up"
+                  delay={feature.delay}
                 >
-                  <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-4 inline-block rounded-md">
-                    <feature.icon className="h-5 w-5" />
+                  <div 
+                    className={cn(
+                      "bg-white rounded-xl border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out p-6",
+                      "hover:shadow-xl hover:scale-[1.02]",
+                      "shadow-md"
+                    )}
+                  >
+                    <div className="bg-accent-teal/10 text-accent-dark-blue p-3 mb-4 inline-block rounded-md">
+                      <feature.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-sapp-gray leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm text-sapp-gray leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
+                </Animated>
               ))}
             </div>
           </div>
