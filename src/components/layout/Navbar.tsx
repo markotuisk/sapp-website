@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
@@ -67,7 +66,6 @@ const Navbar = () => {
       <MobileMenu 
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        id="mobile-menu"
       />
     </header>
   );

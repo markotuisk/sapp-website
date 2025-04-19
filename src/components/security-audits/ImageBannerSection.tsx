@@ -34,17 +34,17 @@ const ImageBannerSection = () => {
                   className="bg-white text-sapp-dark hover:bg-sapp-blue hover:text-white transition-colors"
                   asChild
                 >
-                  <Link to="/">
-                    Back to Home
+                  <Link to="/" aria-label="Return to SAPP Security homepage">
+                    Return to Homepage
                   </Link>
                 </Button>
                 <Button 
                   size="lg" 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 text-white"
                   onClick={() => setContactDialogOpen(true)}
-                  aria-label="Request a security audit"
+                  aria-label="Request a comprehensive security audit assessment"
                 >
-                  Request an Audit
+                  Request Security Audit Assessment
                 </Button>
               </div>
             </div>

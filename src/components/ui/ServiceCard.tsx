@@ -51,19 +51,24 @@ const ServiceCard = ({
         <p className="text-sapp-gray text-sm mb-4 flex-grow">{description}</p>
         
         <div className="flex flex-row gap-2 mt-2">
-          <Link to={href} onClick={handleNavigation}>
+          <Link 
+            to={href} 
+            onClick={handleNavigation}
+            aria-label={`Discover our ${title.toLowerCase()} solutions and services`}
+          >
             <Button 
               variant="outline" 
               className="text-sm border-sapp-blue text-sapp-dark rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
             >
-              Read More
+              {`Explore ${title}`}
             </Button>
           </Link>
           <Button 
             className="bg-sapp-blue hover:bg-sapp-blue/90 text-white text-sm rounded-md font-medium transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-md"
             onClick={() => setContactDialogOpen(true)}
+            aria-label={`Get detailed information about our ${title.toLowerCase()} services`}
           >
-            Get Details
+            {`Request ${title} Details`}
           </Button>
         </div>
       </Animated>
