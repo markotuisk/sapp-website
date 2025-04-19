@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -64,7 +63,7 @@ const WhyIndependentAudits = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-screen-xl mx-auto">
           <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 h-full">
               {features.map((feature, index) => (
                 <Animated
                   key={index}
@@ -103,13 +102,11 @@ const WhyIndependentAudits = () => {
             </div>
           </div>
           
-          <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end">
-            <Animated animation="fade-up" delay={500} className="w-full">
+          <div className="lg:col-span-5 relative flex items-stretch">
+            <Animated animation="fade-up" delay={500} className="w-full h-full">
               <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
-              <div 
-                className="w-full h-full relative z-10 rounded-xl shadow-xl overflow-hidden bg-white hover:scale-[1.02] transition-all duration-200"
-              >
-                <AspectRatio ratio={3/4}>
+              <div className="relative w-full h-full rounded-xl shadow-xl overflow-hidden bg-white hover:scale-[1.02] transition-all duration-200">
+                <AspectRatio ratio={3/4} className="h-full">
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10"></div>
                   <img 
                     src="/lovable-uploads/c3474cad-d095-45e7-843c-cfaf49c62044.png"
@@ -126,7 +123,7 @@ const WhyIndependentAudits = () => {
         </div>
 
         <ContactFormDialog 
-          open={contactDialogOpen} 
+          open={contactDialogOpen}
           onOpenChange={setContactDialogOpen}
           defaultMessage="I'm interested in learning more about your security audit services."
         />
