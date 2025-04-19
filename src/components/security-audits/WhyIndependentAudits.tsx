@@ -62,8 +62,8 @@ const WhyIndependentAudits = () => {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-12 gap-8 items-stretch max-w-screen-xl mx-auto">
-          <div className="lg:col-span-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-screen-xl mx-auto">
+          <div className="lg:col-span-7">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <Animated
@@ -103,7 +103,7 @@ const WhyIndependentAudits = () => {
             </div>
           </div>
           
-          <div className="lg:col-span-4 relative flex items-center">
+          <div className="lg:col-span-5 relative flex items-center justify-center lg:justify-end">
             <Animated animation="fade-up" delay={500} className="w-full">
               <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
               <div 
