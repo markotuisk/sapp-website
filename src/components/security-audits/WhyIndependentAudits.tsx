@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -102,17 +103,16 @@ const WhyIndependentAudits = () => {
             </div>
           </div>
           
-          <div className="lg:col-span-4 relative flex items-stretch">
-            <Animated animation="fade-up" delay={500}>
+          <div className="lg:col-span-4 relative flex items-center">
+            <Animated animation="fade-up" delay={500} className="w-full">
               <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
               <div 
                 className="w-full h-full relative z-10 rounded-xl shadow-xl overflow-hidden bg-white hover:scale-[1.02] transition-all duration-200"
-                style={{ minHeight: "calc(100% - 2rem)" }}
               >
                 <AspectRatio ratio={3/4}>
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10"></div>
                   <img 
-                    src="/lovable-uploads/b3bb129a-056f-4b86-af60-ffc31bf85737.png"
+                    src="/lovable-uploads/c3474cad-d095-45e7-843c-cfaf49c62044.png"
                     alt="Compliance and Security Standards" 
                     className="w-full h-full object-cover brightness-95"
                   />
