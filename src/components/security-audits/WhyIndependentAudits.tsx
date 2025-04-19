@@ -40,7 +40,7 @@ const WhyIndependentAudits = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center space-y-4 mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5">
@@ -58,9 +58,9 @@ const WhyIndependentAudits = () => {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-12 gap-10 items-stretch max-w-screen-xl mx-auto">
-          <div className="lg:col-span-8 flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full">
+        <div className="grid lg:grid-cols-12 gap-8 items-stretch max-w-screen-xl mx-auto">
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <div 
                   key={index}
@@ -86,7 +86,7 @@ const WhyIndependentAudits = () => {
           <div className="lg:col-span-4 relative flex items-stretch">
             <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
             <div className="w-full relative z-10 rounded-xl shadow-md overflow-hidden bg-white">
-              <AspectRatio ratio={3/4} className="w-full h-full">
+              <AspectRatio ratio={3/4} className="h-full">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10"></div>
                 <img 
                   src="/lovable-uploads/94d4676f-3535-4967-ab30-0ec0bbc3eeb3.png"
