@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FileText, Lock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -32,44 +33,59 @@ const DeploymentSection = () => {
           </div>
         </Animated>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-8">
-          <Animated animation="fade-up" delay={300} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1 */}
+          <Animated 
+            animation="fade-up" 
+            delay={300} 
+            className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-200 ease-in-out border border-gray-100 p-6 h-full flex flex-col"
+          >
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <FileText className="h-6 w-6 text-sapp-blue" />
             </div>
             <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">Assessment & Planning</h3>
-            <p className="text-sapp-gray text-sm">
+            <p className="text-sapp-gray text-sm flex-grow">
               We begin with a comprehensive site assessment and requirements gathering, followed by detailed project planning and documentation. This phase includes risk assessment, stakeholder consultation, and technical feasibility studies.
             </p>
           </Animated>
 
-          <Animated animation="fade-up" delay={400} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
+          {/* Card 2 */}
+          <Animated 
+            animation="fade-up" 
+            delay={400} 
+            className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-200 ease-in-out border border-gray-100 p-6 h-full flex flex-col"
+          >
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <Lock className="h-6 w-6 text-sapp-blue" />
             </div>
             <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">Implementation & Integration</h3>
-            <p className="text-sapp-gray text-sm">
+            <p className="text-sapp-gray text-sm flex-grow">
               Our technical teams handle the physical installation, system configuration, and integration with existing infrastructure. We coordinate with IT, facilities, and security departments to ensure minimal disruption during deployment.
             </p>
           </Animated>
 
-          <Animated animation="fade-up" delay={500} className="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 p-6 transition-all duration-200 ease-in-out">
+          {/* Card 3 */}
+          <Animated 
+            animation="fade-up" 
+            delay={500} 
+            className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-200 ease-in-out border border-gray-100 p-6 h-full flex flex-col"
+          >
             <div className="h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mb-4">
               <Users className="h-6 w-6 text-sapp-blue" />
             </div>
             <h3 className="text-xl font-display font-semibold mb-3 text-sapp-dark">Testing & Handover</h3>
-            <p className="text-sapp-gray text-sm">
+            <p className="text-sapp-gray text-sm flex-grow">
               We conduct rigorous testing, user training, and system documentation before handover. Our comprehensive approach includes acceptance testing, user training sessions, and complete documentation for future reference and maintenance.
             </p>
           </Animated>
         </div>
 
         <AlertDialog>
-          <Animated animation="fade-up" delay={600} className="max-w-3xl mx-auto text-center">
+          <Animated animation="fade-up" delay={600} className="max-w-3xl mx-auto text-center mt-10">
             <AlertDialogTrigger asChild>
               <Button 
                 size="lg" 
-                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 hover:scale-105"
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 transition-all duration-300 hover:scale-105 mt-6"
               >
                 Request Deployment Consultation
               </Button>
