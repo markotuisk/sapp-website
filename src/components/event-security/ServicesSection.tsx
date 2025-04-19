@@ -27,7 +27,7 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ serviceDetails }) => 
 
   return (
     <section className="py-16 bg-slate-50" id="executive-events">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-12">
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
@@ -44,9 +44,9 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ serviceDetails }) => 
           </div>
         </Animated>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
           {serviceDetails.map((service, index) => (
-            <Card key={index} className="border-gray-100 flex flex-col">
+            <Card key={index} className="border-gray-100 flex flex-col lg:col-span-3">
               <CardHeader>
                 <CardTitle className="text-xl text-sapp-dark">{service.title}</CardTitle>
               </CardHeader>
