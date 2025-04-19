@@ -1,0 +1,26 @@
+
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SAPP Security",
+  "alternateName": "Security and Privacy Partners",
+  "url": "https://www.sappsecurity.com",
+  "logo": "https://www.sappsecurity.com/favicon/favicon-180x180.png",
+  "sameAs": [
+    "https://twitter.com/sappsecurity",
+    "https://www.linkedin.com/company/sappsecurity"
+  ],
+  "description": "Comprehensive security and privacy solutions for organizations, including physical security audits, event security, technology installations, and cyber security services.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "UK"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+44-123-456-7890",
+    "contactType": "customer service",
+    "areaServed": "Worldwide",
+    "availableLanguage": ["English"]
+  },
+  "serviceArea": "Worldwide"
+}

@@ -34,34 +34,40 @@ const Navbar = () => {
           ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50'
           : 'bg-transparent'
       )}
+      role="banner"
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-24 md:h-28">
           <Logo />
 
-          <div className="hidden md:block">
+          <nav className="hidden md:block" aria-label="Main Navigation">
             <NavLinks isScrolled={isScrolled} />
+          </nav>
+
+          <div className="flex items-center">
+            <NavActions />
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden flex items-center text-sapp-dark"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
           </div>
-
-          <NavActions />
-
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex items-center text-sapp-dark"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
         </div>
       </div>
 
       <MobileMenu 
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
+        id="mobile-menu"
       />
     </header>
   );

@@ -14,10 +14,11 @@ const HeroSection = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50" aria-labelledby="security-audits-title">
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 
+            id="security-audits-title"
             className={cn(
               "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -56,6 +57,7 @@ const HeroSection = () => {
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
               onClick={() => setServicesOpen(true)}
+              aria-label="Open Rapid Service Navigator"
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
                 Rapid Service Navigator
