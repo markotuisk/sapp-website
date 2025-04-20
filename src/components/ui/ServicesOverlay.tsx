@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,7 +28,7 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[1200px] p-0 gap-0 bg-white">
+      <DialogContent className="sm:max-w-[800px] p-0 gap-0 bg-white">
         <DialogTitle className="sr-only">Explore Our Services</DialogTitle>
         
         <div className="flex flex-col h-[80vh] max-h-[800px]">

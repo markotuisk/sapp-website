@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Search } from 'lucide-react';
 import CategorySection from './CategorySection';
@@ -29,7 +28,7 @@ const ResourcesTab = ({ filteredResources, searchQuery, onItemClick }: Resources
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
       {filteredResources.map((category) => (
         <CategorySection 
           key={category.category} 
