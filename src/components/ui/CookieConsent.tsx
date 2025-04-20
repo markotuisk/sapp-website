@@ -30,22 +30,14 @@ const CookieConsent = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl border border-gray-100 p-4 mx-auto max-w-5xl flex flex-col md:flex-row items-center gap-6">
-        <div className="flex flex-shrink-0 items-center justify-center">
-          <img 
-            src="/lovable-uploads/7873b956-7e24-4ea7-83ea-d00e1007c5cb.png" 
-            alt="Cookie" 
-            className="w-20 h-20 object-contain"
-          />
-        </div>
-        
-        <div className="flex-grow">
-          <h3 className="text-lg font-semibold mb-2">Are you ok with optional cookies?</h3>
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gray-50">
+      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6 mx-auto max-w-4xl flex flex-col md:flex-row items-center gap-4">
+        <div className="flex-grow text-center md:text-left">
+          <h3 className="text-lg font-semibold mb-2 text-gray-800">Cookie Preferences</h3>
           <p className="text-gray-600 text-sm">
-            They let us give you a better experience, improve our products, and keep our marketing costs down. We won't turn them on until you accept.{' '}
+            We use optional cookies to improve your experience and analyze site traffic.{' '}
             <Link to="/privacy-policy" className="text-sapp-blue hover:underline font-medium">
-              Learn more in our cookie policy
+              Learn more about our cookie policy
             </Link>
             .
           </p>
@@ -54,14 +46,14 @@ const CookieConsent = () => {
         <div className="flex flex-col sm:flex-row gap-2 mt-4 md:mt-0">
           <Button
             variant="outline"
-            className="border-2 border-gray-800 hover:border-gray-900 hover:bg-gray-50 text-gray-800 min-w-[120px]"
+            className="border-sapp-blue text-sapp-blue hover:bg-sapp-blue/10 min-w-[120px]"
             onClick={handleAccept}
           >
             Accept
           </Button>
           <Button
             variant="outline"
-            className="border-2 border-gray-800 hover:border-gray-900 hover:bg-gray-50 text-gray-800 min-w-[120px]"
+            className="border-gray-500 text-gray-700 hover:bg-gray-100 min-w-[120px]"
             onClick={handleDecline}
           >
             Decline
