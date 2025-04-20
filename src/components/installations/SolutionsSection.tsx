@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Cpu, Scale, Wrench, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,8 +20,8 @@ const SolutionsSection = () => {
           <Animated animation="fade-up" delay={100} className="relative order-2 md:order-1 md:col-span-6">
             <div className="absolute -inset-2 bg-sapp-blue/5 rounded-2xl blur-xl"></div>
             <img 
-              src="/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
-              alt="Security Installation Services" 
+              src="/lovable-uploads/b68e9ca0-ae38-4724-b03c-b048666927c1.png"
+              alt="Network Infrastructure Installations" 
               className="relative z-10 rounded-xl shadow-2xl w-full h-auto object-cover hover:scale-[1.02] transition-all duration-300"
             />
           </Animated>
