@@ -8,6 +8,18 @@
     <meta name="description" content="SAPP Security - Your Comprehensive Security and Privacy Partner" />
     <meta name="author" content="SAPP Security" />
 
+    <style>
+      @keyframes spin-favicon {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      link[rel*="icon"] {
+        animation: spin-favicon 5s ease-in-out infinite;
+        transform-origin: center;
+      }
+    </style>
+
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -41,3 +53,4 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
