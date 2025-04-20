@@ -49,8 +49,8 @@ const AboutHero = () => {
                 <CardContent className="p-0">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img 
-                      src="/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png" 
-                      alt="SAPP Security Team" 
+                      src="/lovable-uploads/48270e05-d230-406a-bdf9-2d518a447907.png" 
+                      alt="SAPP Security Founders Raili and Marko" 
                       className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/30 to-transparent"></div>
@@ -70,3 +70,4 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
+
