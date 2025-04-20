@@ -13,8 +13,8 @@ const OurStory = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
             <img 
-              src="/lovable-uploads/7505824c-c5d3-4ba5-b867-ae9d71c13965.png" 
-              alt="SAPP Security History" 
+              src="/lovable-uploads/cd071450-90f8-4b5b-bcda-1a5cb6a9bb5c.png" 
+              alt="SAPP Security Founders at Technology Presentation" 
               className="rounded-lg shadow-lg w-full"
             />
           </div>
