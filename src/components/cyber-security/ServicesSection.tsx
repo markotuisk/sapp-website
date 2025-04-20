@@ -67,8 +67,8 @@ const ServicesSection = () => {
             <div className="w-full h-full relative z-10 rounded-xl shadow-md overflow-hidden">
               <AspectRatio ratio={4/3} className="w-full">
                 <img 
-                  src="/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
-                  alt="Cyber Security Services" 
+                  src="/lovable-uploads/82e41510-c98d-49d5-a90e-4408b9bc5cd6.png"
+                  alt="IoT Devices Network Security" 
                   className="w-full h-full object-cover hover:scale-[1.02] transition-all duration-300"
                 />
               </AspectRatio>
