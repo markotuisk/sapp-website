@@ -8,6 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
 import { DebugProvider } from "./utils/debugTools";
+import { DebugToggle } from "./components/debug/DebugToggle";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientArea from "./pages/VirtualOffice";
@@ -57,6 +58,7 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <CookieConsent />
+                  <DebugToggle />
                 </BrowserRouter>
               </DebugProvider>
             </HelmetProvider>

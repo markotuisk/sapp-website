@@ -1,11 +1,27 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDebugContext } from '@/contexts/DebugContext';
 
 export const DebugToggle: React.FC = () => {
   const { isDebugMode, toggleDebugMode } = useDebugContext();
   const [showGrid, setShowGrid] = useState(false);
   
+  // Add keyboard shortcut for toggling debug mode (Ctrl+Shift+D)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.shiftKey && event.key === 'D') {
+        event.preventDefault();
+        toggleDebugMode();
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [toggleDebugMode]);
+  
+  // Skip rendering in production
   if (process.env.NODE_ENV !== 'development') {
     return null;
   }
@@ -51,19 +67,34 @@ export const DebugToggle: React.FC = () => {
   
   return (
     <>
-      <div className="fixed bottom-4 right-4 z-50 flex space-x-2">
-        <button
-          onClick={toggleDebugMode}
-          className="bg-gray-800 text-white text-xs p-2 rounded-full shadow-lg opacity-70 hover:opacity-100 transition-all"
-        >
-          {isDebugMode ? 'Debug: ON' : 'Debug: OFF'}
-        </button>
-        <button
-          onClick={handleToggleGrid}
-          className="bg-gray-800 text-white text-xs p-2 rounded-full shadow-lg opacity-70 hover:opacity-100 transition-all"
-        >
-          {showGrid ? 'Grid: ON' : 'Grid: OFF'}
-        </button>
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+        <div className="flex gap-2 bg-black/10 backdrop-blur-sm p-2 rounded-lg shadow-lg">
+          <button
+            onClick={toggleDebugMode}
+            className={`text-white text-xs p-2 rounded-full shadow-lg transition-all ${
+              isDebugMode ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-800 hover:bg-gray-900'
+            }`}
+            aria-label="Toggle debug mode"
+            title="Toggle debug mode (Ctrl+Shift+D)"
+          >
+            {isDebugMode ? 'Debug: ON' : 'Debug: OFF'}
+          </button>
+          <button
+            onClick={handleToggleGrid}
+            className={`text-white text-xs p-2 rounded-full shadow-lg transition-all ${
+              showGrid ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-900'
+            }`}
+            aria-label="Toggle grid"
+            title="Toggle grid overlay"
+          >
+            {showGrid ? 'Grid: ON' : 'Grid: OFF'}
+          </button>
+        </div>
+        {isDebugMode && (
+          <div className="text-xs bg-black/80 text-white p-2 rounded-lg text-center">
+            Debug Mode Active
+          </div>
+        )}
       </div>
       
       {showGrid && (
