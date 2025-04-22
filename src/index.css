@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -169,5 +169,40 @@
   .tailwind-grid-overlay-columns > div {
     background: rgba(33, 150, 243, 0.3);
     height: 20px;
+  }
+}
+
+/* Title (heading) design system update: Avoid button-like headings */
+
+@layer components {
+  .heading-main {
+    @apply font-display font-bold text-sapp-dark;
+    @apply tracking-tight;
+    @apply text-3xl md:text-4xl;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: default !important;
+    transition: none !important;
+  }
+  .heading-secondary {
+    @apply font-display font-semibold text-sapp-blue;
+    @apply text-xl md:text-2xl;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: default !important;
+    transition: none !important;
+  }
+  .heading-section-label {
+    @apply text-sapp-blue tracking-wider text-sm font-semibold uppercase;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: default !important;
+    transition: none !important;
   }
 }

@@ -14,10 +14,10 @@ const ServiceCardsSection = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
-  
+
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
-  
+
   const auditServices = [
     {
       title: "Physical Security Assessments",
@@ -54,22 +54,22 @@ const ServiceCardsSection = () => {
     <section id="security-audit-services" className="py-16 bg-slate-50" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center mb-12">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">What We Deliver</h3>
+          <div className="mb-4">
+            <h3 className="heading-section-label">What We Deliver</h3>
           </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
+          <h2 className="heading-main mb-4">
             Comprehensive Security Audit Services
           </h2>
           <p className="text-sapp-gray max-w-3xl mx-auto">
             Certified security audits detect and identify any potential gaps and oversights, providing detailed risk-based recommendations for improvement. The security audits can be both comprehensive and tailored to the organisation's specific requirement, such as TSCM, assessment of access control systems etc.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
           {auditServices.map((service, index) => (
             <Card key={index} className="border-gray-100 flex flex-col lg:col-span-3">
               <CardHeader>
-                <CardTitle className="text-xl text-sapp-dark">{service.title}</CardTitle>
+                <CardTitle className="heading-secondary">{service.title}</CardTitle>
               </CardHeader>
               <CardContent className="flex-grow">
                 <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
@@ -88,7 +88,7 @@ const ServiceCardsSection = () => {
           ))}
         </div>
       </div>
-      
+
       <ContactFormDialog 
         open={contactDialogOpen} 
         onOpenChange={setContactDialogOpen}
