@@ -28,6 +28,7 @@ export type TranslationKey =
   | 'becomePartner'
   | 'becomePartnerDescription'
   | 'partnerWithUs'
+  | 'resources'
   | 'currentLanguage';
 
 export type Language = {
