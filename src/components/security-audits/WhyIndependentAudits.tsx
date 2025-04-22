@@ -94,7 +94,7 @@ const WhyIndependentAudits = () => {
               <div className="relative w-full h-full rounded-xl shadow-xl overflow-hidden bg-white hover:scale-[1.02] transition-all duration-200">
                 <AspectRatio ratio={3/4} className="h-full">
                   <img 
-                    src="/lovable-uploads/07df3a7d-370a-4b36-b72a-e9311c374a67.png"
+                    src="/lovable-uploads/4f879d70-20e6-4f2a-ae60-e44a5a9cf965.png"
                     alt="Compliance and Security Framework" 
                     className="w-full h-full object-cover brightness-95"
                   />
