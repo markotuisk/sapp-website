@@ -24,7 +24,7 @@ const NavActions = () => {
     
       <Button 
         variant="default" 
-        className="bg-red-600 hover:bg-red-700 text-white rounded-md group relative overflow-hidden whitespace-nowrap shadow-lg shadow-red-600/20"
+        className="bg-[#FF6B6B] hover:bg-[#FF6B6B]/90 text-white rounded-md group relative overflow-hidden whitespace-nowrap shadow-lg shadow-red-600/20"
         asChild
       >
         <a href="/#contact" className="inline-flex items-center justify-center gap-2">

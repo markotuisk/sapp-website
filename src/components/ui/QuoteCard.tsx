@@ -25,7 +25,7 @@ const QuoteCard = ({ quote, author, position, delay = 100 }: QuoteCardProps) => 
     >
       <div 
         className={cn(
-          "bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] border border-gray-100 overflow-hidden transition-all duration-200 ease-in-out p-8",
+          "bg-gradient-to-br from-[#F1F0FB] to-[#E6E5F9] rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] border border-gray-100/50 overflow-hidden transition-all duration-200 ease-in-out p-8",
           inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         )}
         style={{ transitionDelay: inView ? '100ms' : '0ms' }}

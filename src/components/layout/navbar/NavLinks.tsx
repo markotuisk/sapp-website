@@ -34,10 +34,11 @@ const NavLinks = ({ isScrolled }: { isScrolled: boolean }) => {
                 <NavigationMenuLink 
                   href={link.href}
                   className={cn(
-                    'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap',
+                    'px-3 py-2 text-sm font-medium transition-colors relative group/nav whitespace-nowrap',
                     active 
                       ? 'text-sapp-blue font-semibold' 
-                      : isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
+                      : isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue',
+                    "border-transparent border border-b-2 hover:border-sapp-blue transition-all duration-300"
                   )}
                 >
                   <TranslatedText textKey={link.key} />
@@ -50,10 +51,11 @@ const NavLinks = ({ isScrolled }: { isScrolled: boolean }) => {
                 <Link 
                   to={link.href}
                   className={cn(
-                    'px-3 py-2 text-sm font-medium rounded-md transition-colors relative group/nav whitespace-nowrap flex items-center',
+                    'px-3 py-2 text-sm font-medium transition-colors relative group/nav whitespace-nowrap flex items-center',
                     active 
                       ? 'text-sapp-blue font-semibold' 
-                      : isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue'
+                      : isScrolled ? 'text-sapp-dark hover:text-sapp-blue' : 'text-sapp-dark hover:text-sapp-blue',
+                    "border-transparent border border-b-2 hover:border-sapp-blue transition-all duration-300"
                   )}
                 >
                   <TranslatedText textKey={link.key} />
