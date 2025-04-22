@@ -48,7 +48,7 @@ const WhyIndependentAudits = () => {
         <div className="text-center space-y-4 mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">
-              Why Independent Security Audits?
+              WHY INDEPENDENT SECURITY AUDITS
             </h3>
           </div>
           
@@ -99,7 +99,7 @@ const WhyIndependentAudits = () => {
                   <img 
                     src="/lovable-uploads/234aaca6-5b0c-4f49-8c83-8ba21ada8ff9.png"
                     alt="Compliance Controls Evidence Stack" 
-                    className="w-full h-full object-cover brightness-95"
+                    className="w-full h-full object-cover object-center" 
                   />
                   <div className="absolute bottom-4 left-4 right-4 text-white text-sm font-medium bg-black/30 backdrop-blur-sm rounded px-3 py-2">
                     Compliance, Controls, and Evidence

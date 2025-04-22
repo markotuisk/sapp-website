@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
@@ -50,15 +51,17 @@ const Services = () => {
     <section id="services" className="py-24 bg-white relative">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span 
+          <div 
             ref={ref}
             className={cn(
-              "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
+              "inline-block mb-4 transition-all duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            Our Competence
-          </span>
+            <h3 className="uppercase text-sapp-blue text-sm font-medium tracking-wider">
+              OUR COMPETENCE
+            </h3>
+          </div>
           <h2 
             className={cn(
               "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
