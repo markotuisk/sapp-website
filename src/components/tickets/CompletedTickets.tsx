@@ -22,6 +22,17 @@ const CompletedTickets = () => {
     return <div>Loading completed tickets...</div>;
   }
 
+  // Function to calculate days to resolution
+  const getDaysToCompletion = (createdAt: string, completedAt: string | null) => {
+    if (!completedAt) return 0;
+    
+    const created = new Date(createdAt);
+    const completed = new Date(completedAt);
+    const diffTime = Math.abs(completed.getTime() - created.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -46,7 +57,7 @@ const CompletedTickets = () => {
                 <TableCell>{ticket.category}</TableCell>
                 <TableCell className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
-                  {ticket.get_days_to_completion} days
+                  {getDaysToCompletion(ticket.created_at, ticket.completed_at)} days
                 </TableCell>
               </TableRow>
             ))}

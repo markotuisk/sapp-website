@@ -22,6 +22,15 @@ const TicketsBacklog = () => {
     return <div>Loading tickets...</div>;
   }
 
+  // Function to calculate days since creation
+  const getDaysSinceCreation = (createdAt: string) => {
+    const created = new Date(createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - created.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -52,7 +61,7 @@ const TicketsBacklog = () => {
                 <TableCell>{ticket.category}</TableCell>
                 <TableCell className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
-                  {ticket.get_days_since_creation} days
+                  {getDaysSinceCreation(ticket.created_at)} days
                 </TableCell>
               </TableRow>
             ))}
