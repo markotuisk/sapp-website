@@ -10,7 +10,9 @@ const QuoteSection = () => {
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-8">
             <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Industry Leader Opinion</h3>
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">
+                Installations: What Leaders Say
+              </h3>
             </div>
           </div>
         </Animated>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -28,7 +29,7 @@ const WhyIndependentAudits = () => {
       delay: 200
     },
     {
-      title: "Best Industry Practises",
+      title: "Best Industry Practices",
       description: "Benefit from our deep understanding of international security standards and industry best practices to enhance your security posture.",
       icon: FileCheck,
       delay: 300
@@ -47,7 +48,7 @@ const WhyIndependentAudits = () => {
         <div className="text-center space-y-4 mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">
-              Improve Your Security Resilience
+              Why Independent Security Audits?
             </h3>
           </div>
           
@@ -56,7 +57,7 @@ const WhyIndependentAudits = () => {
           </h2>
           
           <p className="text-sapp-gray max-w-3xl mx-auto">
-            Comply with international best practises and objectively evaluate the state of play of the physical and information security processes and technology at your organisation.
+            Comply with international best practices and objectively evaluate the state of play of the physical and information security processes and technology at your organisation.
           </p>
         </div>
         
@@ -96,12 +97,12 @@ const WhyIndependentAudits = () => {
               <div className="relative w-full h-full rounded-xl shadow-xl overflow-hidden bg-white hover:scale-[1.02] transition-all duration-200">
                 <AspectRatio ratio={3/4} className="h-full">
                   <img 
-                    src="/lovable-uploads/c69d98d7-dca8-4fe7-a6f7-c4446dca3c9b.png"
-                    alt="Compliance and Security Standards" 
+                    src="/lovable-uploads/234aaca6-5b0c-4f49-8c83-8ba21ada8ff9.png"
+                    alt="Compliance Controls Evidence Stack" 
                     className="w-full h-full object-cover brightness-95"
                   />
                   <div className="absolute bottom-4 left-4 right-4 text-white text-sm font-medium bg-black/30 backdrop-blur-sm rounded px-3 py-2">
-                    Compliance and Security Standards Implementation
+                    Compliance, Controls, and Evidence
                   </div>
                 </AspectRatio>
               </div>

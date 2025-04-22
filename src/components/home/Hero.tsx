@@ -64,17 +64,7 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          
-          <div className="w-full md:w-1/2 transition-all duration-700 delay-300 max-w-lg mx-auto md:mx-0">
-            <img 
-              src="/lovable-uploads/a5b82fed-c490-449d-9761-06788453d90b.png" 
-              alt="Security Compliance Framework" 
-              className={cn(
-                "w-full h-auto transition-all duration-700 shadow-xl rounded-md",
-                isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}
-            />
-          </div>
+          {/* Removed the image as per instructions */}
         </div>
       </div>
 

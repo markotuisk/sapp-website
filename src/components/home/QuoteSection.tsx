@@ -8,7 +8,9 @@ const QuoteSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-8">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Industry Leader Opinion</h3>
+            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">
+              Client and Industry Feedback
+            </h3>
           </div>
         </div>
         <InsightQuote />
