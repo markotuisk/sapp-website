@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -38,9 +37,14 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
     ? "data-[state=active]:border-white data-[state=active]:text-white data-[state=inactive]:text-gray-400" 
     : "data-[state=active]:border-sapp-blue data-[state=active]:text-sapp-dark data-[state=inactive]:text-gray-500";
 
+  // Responsive fix: full mobile height, overflow auto for scroll area
+  // Only apply this for mobile (below md)
+  const mobileContentClass =
+    "max-h-screen h-screen overflow-y-auto md:max-h-[800px] md:h-auto";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`sm:max-w-[800px] p-0 gap-0 ${bgClass}`}>
+      <DialogContent className={`sm:max-w-[800px] p-0 gap-0 ${bgClass} ${mobileContentClass}`}>
         <DialogTitle className="sr-only">Explore Our Services</DialogTitle>
 
         <div className="flex flex-col h-[80vh] max-h-[800px]">

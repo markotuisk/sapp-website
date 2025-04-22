@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -8,6 +7,7 @@ import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronRight } from 'lucide-react';
 import { Animated } from '@/components/ui/AnimatedElements';
+import SectionLabel from '@/components/ui/SectionLabel';
 
 const ServiceCardsSection = () => {
   const [ref, inView] = useInView({
@@ -54,9 +54,7 @@ const ServiceCardsSection = () => {
     <section id="security-audit-services" className="py-16 bg-slate-50" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center mb-12">
-          <div className="mb-4">
-            <h3 className="heading-section-label">What We Deliver</h3>
-          </div>
+          <SectionLabel>What We Deliver</SectionLabel>
           <h2 className="heading-main mb-4">
             Comprehensive Security Audit Services
           </h2>

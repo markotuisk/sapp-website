@@ -9,6 +9,7 @@ import ServiceCardsSection from '@/components/security-audits/ServiceCardsSectio
 import ImageBannerSection from '@/components/security-audits/ImageBannerSection';
 import CTASection from '@/components/security-audits/CTASection';
 import AcronymEnhancer from '@/components/resources/AcronymEnhancer';
+import SectionLabel from '@/components/ui/SectionLabel';
 
 const SecurityAudits = () => {
   useEffect(() => {
@@ -31,7 +32,14 @@ const SecurityAudits = () => {
       </Helmet>
       <Navbar />
       <main>
-        <HeroSection />
+        <section className="relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center pt-8 md:pt-16">
+              <SectionLabel>Security Audits</SectionLabel>
+              <HeroSection />
+            </div>
+          </div>
+        </section>
         <WhyIndependentAudits />
         <QuoteSection />
         <ServiceCardsSection />

@@ -40,7 +40,8 @@ const NavActions = () => {
           </span>
         </a>
       </Button>
-      <button
+      {/* REMOVE Easy Read button for now */}
+      {/* <button
         type="button"
         aria-label="Toggle display mode"
         onClick={toggleDisplayMode}
@@ -57,7 +58,7 @@ const NavActions = () => {
         <span className="hidden md:inline text-sm font-medium">
           {displayMode === "high-contrast" ? "High Contrast" : "Easy Read"}
         </span>
-      </button>
+      </button> */}
       <LanguageSelector />
     </div>
   );
