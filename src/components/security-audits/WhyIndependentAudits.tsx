@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -5,6 +6,7 @@ import { Shield, FileText, Lock, FileCheck } from 'lucide-react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Animated } from '@/components/ui/AnimatedElements';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
+import SectionLabel from '@/components/ui/SectionLabel';
 
 const WhyIndependentAudits = () => {
   const [ref, inView] = useInView({
@@ -45,11 +47,7 @@ const WhyIndependentAudits = () => {
     <section className="py-16 bg-white" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center space-y-4 mb-12">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">
-              Improve Your Security Resilience
-            </h3>
-          </div>
+          <SectionLabel>Improve Your Security Resilience</SectionLabel>
           
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark">
             Independent Audits Matter
@@ -96,12 +94,12 @@ const WhyIndependentAudits = () => {
               <div className="relative w-full h-full rounded-xl shadow-xl overflow-hidden bg-white hover:scale-[1.02] transition-all duration-200">
                 <AspectRatio ratio={3/4} className="h-full">
                   <img 
-                    src="/lovable-uploads/c69d98d7-dca8-4fe7-a6f7-c4446dca3c9b.png"
-                    alt="Compliance and Security Standards" 
+                    src="/lovable-uploads/07df3a7d-370a-4b36-b72a-e9311c374a67.png"
+                    alt="Compliance and Security Framework" 
                     className="w-full h-full object-cover brightness-95"
                   />
                   <div className="absolute bottom-4 left-4 right-4 text-white text-sm font-medium bg-black/30 backdrop-blur-sm rounded px-3 py-2">
-                    Compliance and Security Standards Implementation
+                    Compliance and Security Framework
                   </div>
                 </AspectRatio>
               </div>
