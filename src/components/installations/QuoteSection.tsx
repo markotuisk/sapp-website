@@ -2,7 +2,6 @@
 import React from 'react';
 import QuoteCard from '@/components/ui/QuoteCard';
 import { Animated } from '@/components/ui/AnimatedElements';
-import SectionLabel from '@/components/ui/SectionLabel';
 
 const QuoteSection = () => {
   return (
@@ -10,7 +9,9 @@ const QuoteSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-8">
-            <SectionLabel>Industry Leader Opinion</SectionLabel>
+            <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
+              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Industry Leader Opinion</h3>
+            </div>
           </div>
         </Animated>
         <QuoteCard
