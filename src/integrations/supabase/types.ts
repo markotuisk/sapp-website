@@ -193,6 +193,7 @@ export type Database = {
           reporter_name: string
           state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
+          ticket_number: number | null
           title: string
           updated_at: string
         }
@@ -208,6 +209,7 @@ export type Database = {
           reporter_name: string
           state?: Database["public"]["Enums"]["ticket_state"]
           tags?: string[] | null
+          ticket_number?: number | null
           title: string
           updated_at?: string
         }
@@ -223,6 +225,7 @@ export type Database = {
           reporter_name?: string
           state?: Database["public"]["Enums"]["ticket_state"]
           tags?: string[] | null
+          ticket_number?: number | null
           title?: string
           updated_at?: string
         }
@@ -254,6 +257,32 @@ export type Database = {
           reporter_name: string
           state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
+          ticket_number: number | null
+          title: string
+          updated_at: string
+        }
+      }
+      add_ticket_with_id: {
+        Args: {
+          _title: string
+          _description: string
+          _reporter_name: string
+          _category: string
+          _priority?: string
+        }
+        Returns: {
+          assigned_to: string | null
+          category: string
+          completed_at: string | null
+          created_at: string
+          description: string
+          developer_notes: string | null
+          id: string
+          priority: string
+          reporter_name: string
+          state: Database["public"]["Enums"]["ticket_state"]
+          tags: string[] | null
+          ticket_number: number | null
           title: string
           updated_at: string
         }
@@ -285,6 +314,7 @@ export type Database = {
           reporter_name: string
           state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
+          ticket_number: number | null
           title: string
           updated_at: string
         }[]
@@ -371,6 +401,7 @@ export type Database = {
           reporter_name: string
           state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
+          ticket_number: number | null
           title: string
           updated_at: string
         }

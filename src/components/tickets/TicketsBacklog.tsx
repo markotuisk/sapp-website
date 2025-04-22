@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
@@ -24,11 +23,6 @@ const TicketsBacklog = () => {
     },
   });
 
-  if (isLoading) {
-    return <div>Loading tickets...</div>;
-  }
-
-  // Function to calculate days since creation
   const getDaysSinceCreation = (createdAt: string) => {
     const created = new Date(createdAt);
     const now = new Date();
@@ -44,6 +38,15 @@ const TicketsBacklog = () => {
       year: 'numeric'
     });
   };
+
+  const formatTicketId = (ticket: any) => {
+    const year = new Date(ticket.created_at).getFullYear();
+    return `WEB-${year}-${String(ticket.ticket_number).padStart(3, '0')}`;
+  };
+
+  if (isLoading) {
+    return <div>Loading tickets...</div>;
+  }
 
   return (
     <Card>
@@ -67,7 +70,7 @@ const TicketsBacklog = () => {
           <TableBody>
             {tickets.map((ticket) => (
               <TableRow key={ticket.id}>
-                <TableCell className="font-medium">{ticket.id.split('-')[0]}</TableCell>
+                <TableCell className="font-medium">{formatTicketId(ticket)}</TableCell>
                 <TableCell>{ticket.title}</TableCell>
                 <TableCell>{formatDate(ticket.created_at)}</TableCell>
                 <TableCell>
