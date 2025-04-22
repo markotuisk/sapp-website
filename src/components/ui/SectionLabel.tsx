@@ -7,14 +7,11 @@ interface SectionLabelProps {
 }
 
 const SectionLabel: React.FC<SectionLabelProps> = ({ children, className }) => (
-  <div>
-    <h3
-      className={`uppercase font-bold text-sapp-blue text-base tracking-wider ${className || ""}`}
-      style={{ margin: 0 }}
-    >
-      {children}
-    </h3>
-  </div>
+  <h3
+    className={`uppercase text-sapp-blue text-base tracking-wider mb-4 ${className || ""}`}
+  >
+    {children}
+  </h3>
 );
 
 export default SectionLabel;

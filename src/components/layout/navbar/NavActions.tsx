@@ -40,25 +40,6 @@ const NavActions = () => {
           </span>
         </a>
       </Button>
-      {/* REMOVE Easy Read button for now */}
-      {/* <button
-        type="button"
-        aria-label="Toggle display mode"
-        onClick={toggleDisplayMode}
-        className={`relative inline-flex items-center px-3 py-2 rounded-md ring-1 ring-sapp-blue bg-white text-sapp-blue hover:bg-blue-50 transition-colors focus:outline-none ml-2 ${
-          displayMode === "high-contrast" ? "animate-pulse bg-sapp-blue text-white" : ""
-        }`}
-        title={
-          displayMode === "high-contrast"
-            ? "Switch to easy read background"
-            : "Switch to high contrast"
-        }
-      >
-        <Accessibility className="w-5 h-5 mr-1" />
-        <span className="hidden md:inline text-sm font-medium">
-          {displayMode === "high-contrast" ? "High Contrast" : "Easy Read"}
-        </span>
-      </button> */}
       <LanguageSelector />
     </div>
   );
