@@ -25,6 +25,15 @@ export const DisplayModeProvider = ({ children }: { children: ReactNode }) => {
       document.body.classList.add(
         displayMode === "high-contrast" ? "high-contrast-bg" : "easy-read-bg"
       );
+
+      // Add additional styles for different display modes
+      if (displayMode === "high-contrast") {
+        document.documentElement.style.setProperty('--background-color', '#1A1F2C');
+        document.documentElement.style.setProperty('--text-color', '#FFFFFF');
+      } else {
+        document.documentElement.style.setProperty('--background-color', '#F1F0FB');
+        document.documentElement.style.setProperty('--text-color', '#333333');
+      }
     }
     if (typeof window !== "undefined")
       localStorage.setItem("displayMode", displayMode);

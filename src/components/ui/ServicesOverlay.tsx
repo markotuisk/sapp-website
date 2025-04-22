@@ -10,6 +10,7 @@ import ServicesTab from './ServicesOverlay/ServicesTab';
 import ResourcesTab from './ServicesOverlay/ResourcesTab';
 import AcronymsTab from './ServicesOverlay/AcronymsTab';
 import { services, resources, filterItems } from './ServicesOverlay/servicesData';
+import { useDisplayMode } from '@/contexts/DisplayModeContext';
 
 interface ServicesOverlayProps {
   open: boolean;
@@ -19,6 +20,7 @@ interface ServicesOverlayProps {
 const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('services');
+  const { displayMode } = useDisplayMode();
 
   useEffect(() => {
     if (open) {
@@ -30,14 +32,22 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
   const filteredServices = filterItems(services, searchQuery);
   const filteredResources = filterItems(resources, searchQuery);
 
+  const bgClass = displayMode === "high-contrast" ? "bg-[#1A1F2C] text-white" : "bg-white";
+  const borderClass = displayMode === "high-contrast" ? "border-gray-700" : "border-b";
+  const tabClass = displayMode === "high-contrast" 
+    ? "data-[state=active]:border-white data-[state=active]:text-white data-[state=inactive]:text-gray-400" 
+    : "data-[state=active]:border-sapp-blue data-[state=active]:text-sapp-dark data-[state=inactive]:text-gray-500";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] p-0 gap-0 bg-white">
+      <DialogContent className={`sm:max-w-[800px] p-0 gap-0 ${bgClass}`}>
         <DialogTitle className="sr-only">Explore Our Services</DialogTitle>
 
         <div className="flex flex-col h-[80vh] max-h-[800px]">
-          <header className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-xl font-semibold text-sapp-dark">Explore Our Services</h2>
+          <header className={`flex items-center justify-between p-4 ${borderClass}`}>
+            <h2 className={`text-xl font-semibold ${displayMode === "high-contrast" ? "text-white" : "text-sapp-dark"}`}>
+              Explore Our Services
+            </h2>
             <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
               <X className="h-5 w-5" />
             </Button>
@@ -50,22 +60,22 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
             <div className="px-4 pt-3">
-              <TabsList className="w-full justify-start border-b rounded-none bg-transparent p-0 mb-1">
+              <TabsList className={`w-full justify-start border-b rounded-none bg-transparent p-0 mb-1`}>
                 <TabsTrigger
                   value="services"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-sapp-blue data-[state=active]:text-sapp-dark data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent data-[state=inactive]:text-gray-500"
+                  className={`data-[state=active]:border-b-2 data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent ${tabClass}`}
                 >
                   Services
                 </TabsTrigger>
                 <TabsTrigger
                   value="resources"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-sapp-blue data-[state=active]:text-sapp-dark data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent data-[state=inactive]:text-gray-500"
+                  className={`data-[state=active]:border-b-2 data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent ${tabClass}`}
                 >
                   Resources
                 </TabsTrigger>
                 <TabsTrigger
                   value="acronyms"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-sapp-blue data-[state=active]:text-sapp-dark data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent data-[state=inactive]:text-gray-500"
+                  className={`data-[state=active]:border-b-2 data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent ${tabClass}`}
                 >
                   Acronyms
                 </TabsTrigger>

@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
 import { DebugProvider } from "./utils/debugTools";
 import { DebugToggle } from "./components/debug/DebugToggle";
+import { DisplayModeProvider } from "./contexts/DisplayModeContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientArea from "./pages/VirtualOffice";
@@ -43,23 +44,25 @@ const App = () => {
                 logPerformance: true,
                 verboseLogging: false,
               }}>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/client-area" element={<ClientArea />} />
-                    <Route path="/event-security" element={<EventSecurity />} />
-                    <Route path="/security-audits" element={<SecurityAudits />} />
-                    <Route path="/installations" element={<Installations />} />
-                    <Route path="/cyber-security" element={<CyberSecurity />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/version-info" element={<VersionInfo />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                  <CookieConsent />
-                  <DebugToggle />
-                </BrowserRouter>
+                <DisplayModeProvider>
+                  <Toaster />
+                  <Sonner />
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/client-area" element={<ClientArea />} />
+                      <Route path="/event-security" element={<EventSecurity />} />
+                      <Route path="/security-audits" element={<SecurityAudits />} />
+                      <Route path="/installations" element={<Installations />} />
+                      <Route path="/cyber-security" element={<CyberSecurity />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/version-info" element={<VersionInfo />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <CookieConsent />
+                    <DebugToggle />
+                  </BrowserRouter>
+                </DisplayModeProvider>
               </DebugProvider>
             </HelmetProvider>
           </AuthProvider>
