@@ -180,11 +180,84 @@ export type Database = {
         }
         Relationships: []
       }
+      tickets: {
+        Row: {
+          assigned_to: string | null
+          category: string
+          completed_at: string | null
+          created_at: string
+          description: string
+          developer_notes: string | null
+          id: string
+          priority: string
+          reporter_name: string
+          state: Database["public"]["Enums"]["ticket_state"]
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          category: string
+          completed_at?: string | null
+          created_at?: string
+          description: string
+          developer_notes?: string | null
+          id?: string
+          priority?: string
+          reporter_name: string
+          state?: Database["public"]["Enums"]["ticket_state"]
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          category?: string
+          completed_at?: string | null
+          created_at?: string
+          description?: string
+          developer_notes?: string | null
+          id?: string
+          priority?: string
+          reporter_name?: string
+          state?: Database["public"]["Enums"]["ticket_state"]
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      add_ticket: {
+        Args: {
+          _title: string
+          _description: string
+          _reporter_name: string
+          _category: string
+          _priority?: string
+          _tags?: string[]
+        }
+        Returns: {
+          assigned_to: string | null
+          category: string
+          completed_at: string | null
+          created_at: string
+          description: string
+          developer_notes: string | null
+          id: string
+          priority: string
+          reporter_name: string
+          state: Database["public"]["Enums"]["ticket_state"]
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+      }
       get_all_page_versions: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -196,6 +269,24 @@ export type Database = {
           last_update: string
           update_count: number
           version: string
+        }[]
+      }
+      get_all_tickets: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          assigned_to: string | null
+          category: string
+          completed_at: string | null
+          created_at: string
+          description: string
+          developer_notes: string | null
+          id: string
+          priority: string
+          reporter_name: string
+          state: Database["public"]["Enums"]["ticket_state"]
+          tags: string[] | null
+          title: string
+          updated_at: string
         }[]
       }
       get_contact_submission: {
@@ -210,6 +301,14 @@ export type Database = {
           pages_visited: Json
           created_at: string
         }[]
+      }
+      get_days_since_creation: {
+        Args: { ticket_row: Database["public"]["Tables"]["tickets"]["Row"] }
+        Returns: number
+      }
+      get_days_to_completion: {
+        Args: { ticket_row: Database["public"]["Tables"]["tickets"]["Row"] }
+        Returns: number
       }
       get_page_version: {
         Args: { _component_id: string }
@@ -254,9 +353,37 @@ export type Database = {
         }
         Returns: Json
       }
+      update_ticket_state: {
+        Args: {
+          _ticket_id: string
+          _new_state: Database["public"]["Enums"]["ticket_state"]
+          _developer_notes?: string
+        }
+        Returns: {
+          assigned_to: string | null
+          category: string
+          completed_at: string | null
+          created_at: string
+          description: string
+          developer_notes: string | null
+          id: string
+          priority: string
+          reporter_name: string
+          state: Database["public"]["Enums"]["ticket_state"]
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+      }
     }
     Enums: {
-      [_ in never]: never
+      ticket_state:
+        | "found"
+        | "accepted"
+        | "rejected"
+        | "in_process"
+        | "testing"
+        | "completed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -371,6 +498,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      ticket_state: [
+        "found",
+        "accepted",
+        "rejected",
+        "in_process",
+        "testing",
+        "completed",
+      ],
+    },
   },
 } as const
