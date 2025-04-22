@@ -4,7 +4,13 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Calendar, Clock } from 'lucide-react';
+import { Clock, Info } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const CompletedTickets = () => {
   const { data: tickets = [], isLoading } = useQuery({
@@ -33,6 +39,14 @@ const CompletedTickets = () => {
     return diffDays;
   };
 
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -43,21 +57,42 @@ const CompletedTickets = () => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Ticket</TableHead>
               <TableHead>Title</TableHead>
-              <TableHead>Reporter</TableHead>
+              <TableHead>Date Received</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Time to Resolution</TableHead>
+              <TableHead>Resolution Time</TableHead>
+              <TableHead className="w-[30px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {tickets.map((ticket) => (
               <TableRow key={ticket.id}>
-                <TableCell className="font-medium">{ticket.title}</TableCell>
-                <TableCell>{ticket.reporter_name}</TableCell>
+                <TableCell className="font-medium">{ticket.id.split('-')[0]}</TableCell>
+                <TableCell>{ticket.title}</TableCell>
+                <TableCell>{formatDate(ticket.created_at)}</TableCell>
                 <TableCell>{ticket.category}</TableCell>
                 <TableCell className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
                   {getDaysToCompletion(ticket.created_at, ticket.completed_at)} days
+                </TableCell>
+                <TableCell>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[300px]">
+                        <p className="font-semibold mb-1">Reporter: {ticket.reporter_name}</p>
+                        <p className="text-sm mb-2">Feedback: {ticket.description}</p>
+                        {ticket.developer_notes && (
+                          <p className="text-sm text-gray-500">
+                            Dev Notes: {ticket.developer_notes}
+                          </p>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </TableCell>
               </TableRow>
             ))}

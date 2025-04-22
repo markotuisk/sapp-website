@@ -4,7 +4,13 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Info } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const TicketsBacklog = () => {
   const { data: tickets = [], isLoading } = useQuery({
@@ -31,6 +37,14 @@ const TicketsBacklog = () => {
     return diffDays;
   };
 
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -41,18 +55,21 @@ const TicketsBacklog = () => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Ticket</TableHead>
               <TableHead>Title</TableHead>
-              <TableHead>Reporter</TableHead>
+              <TableHead>Date Received</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Age</TableHead>
+              <TableHead className="w-[30px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {tickets.map((ticket) => (
               <TableRow key={ticket.id}>
-                <TableCell className="font-medium">{ticket.title}</TableCell>
-                <TableCell>{ticket.reporter_name}</TableCell>
+                <TableCell className="font-medium">{ticket.id.split('-')[0]}</TableCell>
+                <TableCell>{ticket.title}</TableCell>
+                <TableCell>{formatDate(ticket.created_at)}</TableCell>
                 <TableCell>
                   <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset">
                     {ticket.state}
@@ -62,6 +79,24 @@ const TicketsBacklog = () => {
                 <TableCell className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
                   {getDaysSinceCreation(ticket.created_at)} days
+                </TableCell>
+                <TableCell>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-[300px]">
+                        <p className="font-semibold mb-1">Reporter: {ticket.reporter_name}</p>
+                        <p className="text-sm mb-2">Feedback: {ticket.description}</p>
+                        {ticket.developer_notes && (
+                          <p className="text-sm text-gray-500">
+                            Dev Notes: {ticket.developer_notes}
+                          </p>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </TableCell>
               </TableRow>
             ))}
