@@ -10,7 +10,6 @@ export const mainNavLinks = [
   { key: 'installations' as const, href: '/installations' },
   { key: 'cyberSecurity' as const, href: '/cyber-security' },
   { key: 'about' as const, href: '/about' },
-  { key: 'resources' as const, href: '/resources' },
 ];
 
 const NavLinks = ({ isScrolled }: { isScrolled: boolean }) => {

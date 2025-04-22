@@ -17,7 +17,6 @@ import SecurityAudits from "./pages/SecurityAudits";
 import Installations from "./pages/Installations";
 import CyberSecurity from "./pages/CyberSecurity";
 import About from "./pages/About";
-import Resources from "./pages/Resources";
 import CookieConsent from "./components/ui/CookieConsent";
 import VersionInfo from "./pages/VersionInfo";
 
@@ -55,7 +54,6 @@ const App = () => {
                     <Route path="/installations" element={<Installations />} />
                     <Route path="/cyber-security" element={<CyberSecurity />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/resources" element={<Resources />} />
                     <Route path="/version-info" element={<VersionInfo />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
