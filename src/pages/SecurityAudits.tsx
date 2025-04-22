@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -9,6 +8,7 @@ import QuoteSection from '@/components/security-audits/QuoteSection';
 import ServiceCardsSection from '@/components/security-audits/ServiceCardsSection';
 import ImageBannerSection from '@/components/security-audits/ImageBannerSection';
 import CTASection from '@/components/security-audits/CTASection';
+import AcronymEnhancer from '@/components/resources/AcronymEnhancer';
 
 const SecurityAudits = () => {
   useEffect(() => {
