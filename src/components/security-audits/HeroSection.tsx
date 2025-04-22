@@ -67,7 +67,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
       <ServicesOverlay 
         open={servicesOpen}
         onOpenChange={setServicesOpen}

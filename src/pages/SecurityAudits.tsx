@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
@@ -9,7 +10,6 @@ import ServiceCardsSection from '@/components/security-audits/ServiceCardsSectio
 import ImageBannerSection from '@/components/security-audits/ImageBannerSection';
 import CTASection from '@/components/security-audits/CTASection';
 import AcronymEnhancer from '@/components/resources/AcronymEnhancer';
-import SectionLabel from '@/components/ui/SectionLabel';
 
 const SecurityAudits = () => {
   useEffect(() => {
@@ -35,7 +35,7 @@ const SecurityAudits = () => {
         <section className="relative">
           <div className="container mx-auto px-4">
             <div className="text-center pt-8 md:pt-16">
-              <SectionLabel>Security Audits</SectionLabel>
+              {/* Removed SectionLabel as per Task 3 */}
               <HeroSection />
             </div>
           </div>
