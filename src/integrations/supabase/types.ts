@@ -150,6 +150,36 @@ export type Database = {
         }
         Relationships: []
       }
+      technical_acronyms: {
+        Row: {
+          acronym: string
+          category: string
+          created_at: string | null
+          description: string
+          full_name: string
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          acronym: string
+          category: string
+          created_at?: string | null
+          description: string
+          full_name: string
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          acronym?: string
+          category?: string
+          created_at?: string | null
+          description?: string
+          full_name?: string
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
