@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -13,7 +12,6 @@ const FoundingTeam = () => {
   const { logEvent } = useComponentLogger('FoundingTeam');
   const { isDebugMode } = useDebugContext();
 
-  // Add state to track image loading for debugging
   const [imageLoadState, setImageLoadState] = useState({
     railiDefault: false,
     railiHover: false,
@@ -38,15 +36,15 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: "Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP's integrated offering across markets.",
-      image: '/lovable-uploads/ea8614fb-011c-4b29-bc87-2b06d850d822.png', // updated to user's latest upload
-      hoverImage: '/lovable-uploads/ea8614fb-011c-4b29-bc87-2b06d850d822.png',
+      image: '/lovable-uploads/12dc1226-e4e5-48df-9b0c-2e2a6db5fa32.png',
+      hoverImage: '/lovable-uploads/12dc1226-e4e5-48df-9b0c-2e2a6db5fa32.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: '/lovable-uploads/ea8614fb-011c-4b29-bc87-2b06d850d822.png', // updated to user's latest upload
-      hoverImage: '/lovable-uploads/ea8614fb-011c-4b29-bc87-2b06d850d822.png',
+      image: '/lovable-uploads/12dc1226-e4e5-48df-9b0c-2e2a6db5fa32.png',
+      hoverImage: '/lovable-uploads/12dc1226-e4e5-48df-9b0c-2e2a6db5fa32.png',
     },
   ];
 
@@ -103,7 +101,6 @@ const FoundingTeam = () => {
           ))}
         </div>
 
-        {/* Debug Information - Only visible during development and when debug mode is on */}
         {process.env.NODE_ENV === 'development' && isDebugMode && (
           <div className="mt-6 p-3 bg-gray-100 text-xs rounded-md max-w-4xl mx-auto">
             <h4 className="font-bold mb-2">Debug Information</h4>
@@ -123,7 +120,6 @@ const FoundingTeam = () => {
   );
 };
 
-// Extracted Founder Card component to prevent hook rule violations
 const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
   return (
     <Animated 
@@ -131,9 +127,7 @@ const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
       delay={100 + (index * 100)}
     >
       <div className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
-        {/* Profile Card Container */}
         <div className="relative h-[400px] overflow-hidden rounded-t-xl">
-          {/* Default Image */}
           <img 
             src={founder.image}
             alt={`${founder.name} profile`}
@@ -141,7 +135,6 @@ const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
             onLoad={() => handleImageLoad(index === 0 ? 'railiDefault' : 'markoDefault')}
             onError={(e) => handleImageError(index === 0 ? 'railiDefault' : 'markoDefault', e)}
           />
-          {/* Hover Image */}
           <img 
             src={founder.hoverImage}
             alt={`${founder.name} profile hover`}
@@ -151,7 +144,6 @@ const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
           />
         </div>
         
-        {/* Content */}
         <div className="p-6 text-center">
           <h3 className="text-xl font-bold text-sapp-dark mb-1">{founder.name}</h3>
           <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
@@ -163,4 +155,3 @@ const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
 };
 
 export default FoundingTeam;
-
