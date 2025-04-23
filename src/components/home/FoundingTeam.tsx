@@ -38,15 +38,15 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: 'Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP\'s integrated offering across markets.',
-      image: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png', 
-      hoverImage: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png',
+      image: '/lovable-uploads/32cdde06-2dbf-44a8-bb63-fae69dd2a45a.png', 
+      hoverImage: '/lovable-uploads/32cdde06-2dbf-44a8-bb63-fae69dd2a45a.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png',
-      hoverImage: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png',
+      image: '/lovable-uploads/32cdde06-2dbf-44a8-bb63-fae69dd2a45a.png',
+      hoverImage: '/lovable-uploads/32cdde06-2dbf-44a8-bb63-fae69dd2a45a.png',
     },
   ];
 
@@ -163,3 +163,4 @@ const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
 };
 
 export default FoundingTeam;
+
