@@ -38,15 +38,15 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: 'Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP\'s integrated offering across markets.',
-      image: '/lovable-uploads/c7299f63-1f0c-43ce-a05d-0263a7bed735.png', 
-      hoverImage: '/lovable-uploads/63e9e1ac-4272-4ca1-802a-55f5f36806a8.png',
+      image: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png', 
+      hoverImage: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: '/lovable-uploads/c1e65442-ee2d-4805-902e-00744cb3d481.png',
-      hoverImage: '/lovable-uploads/c1e65442-ee2d-4805-902e-00744cb3d481.png',
+      image: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png',
+      hoverImage: '/lovable-uploads/fd63dc46-1f9c-447d-83c8-8bc4fb866736.png',
     },
   ];
 
