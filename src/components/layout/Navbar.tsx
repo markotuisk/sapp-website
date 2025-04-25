@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -25,12 +27,26 @@ const Navbar = () => {
     };
   }, []);
 
+  // Close mobile menu when escape key is pressed
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header
       className={cn(
         'fixed top-0 w-full z-50 transition-all duration-300',
         isScrolled 
-          ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200/50'
+          ? 'bg-white shadow-sm border-b border-gray-200/50'
           : 'bg-transparent'
       )}
       role="banner"
@@ -48,7 +64,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden flex items-center text-sapp-dark"
+              className="md:hidden flex items-center justify-center h-10 w-10 rounded-md text-sapp-dark hover:bg-gray-100"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
