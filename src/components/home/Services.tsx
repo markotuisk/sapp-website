@@ -58,7 +58,9 @@ const Services = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            <h3 className="uppercase text-sapp-blue text-sm font-medium tracking-wider">
+            <h3 
+              className="uppercase text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium"
+            >
               OUR COMPETENCE
             </h3>
           </div>
