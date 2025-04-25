@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Shield, Calendar, FileText, Users } from 'lucide-react';
 import TranslatedText from '@/components/ui/TranslatedText';
@@ -13,9 +12,9 @@ const InfoSection: React.FC<InfoSectionProps> = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center mb-12">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Corporate Event Security</h3>
-          </div>
+          <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+            CORPORATE EVENT SECURITY
+          </h3>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
             Why Event Security Matters
           </h2>

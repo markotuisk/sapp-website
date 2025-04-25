@@ -11,9 +11,9 @@ const CTASection: React.FC = () => {
     <section className="py-16 bg-slate-50">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl text-center">
         <div className="text-center mb-8">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Get Started</h3>
-          </div>
+          <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+            GET STARTED
+          </h3>
         </div>
         
         <h2 className="text-3xl font-display font-bold text-sapp-dark mb-6">Ready to secure your next event?</h2>
