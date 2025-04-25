@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -46,11 +45,9 @@ const WhyIndependentAudits = () => {
     <section className="py-16 bg-white" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center space-y-4 mb-12">
-          <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">
-              WHY INDEPENDENT SECURITY AUDITS
-            </h3>
-          </div>
+          <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+            WHY INDEPENDENT SECURITY AUDITS
+          </h3>
           
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark">
             Independent Audits Matter
