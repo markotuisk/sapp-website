@@ -1,4 +1,3 @@
-
 import React from 'react';
 import QuoteCard from '@/components/ui/QuoteCard';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -9,11 +8,9 @@ const QuoteSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-8">
-            <div className="inline-block mb-4">
-              <h3 className="uppercase text-sm font-medium text-sapp-blue tracking-wider">
-                INSTALLATIONS: WHAT LEADERS SAY
-              </h3>
-            </div>
+            <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+              INSTALLATIONS: WHAT LEADERS SAY
+            </h3>
           </div>
         </Animated>
         <QuoteCard
