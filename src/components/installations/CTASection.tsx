@@ -18,6 +18,9 @@ const CTASection = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="max-w-3xl mx-auto text-center">
+          <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase mb-4">
+            GET STARTED
+          </h3>
           <h2 className="text-3xl font-display font-bold text-sapp-dark mb-4">Ready to upgrade your security infrastructure?</h2>
           <p className="text-sapp-gray mb-8">
             Our team of installation experts is ready to help you implement the latest security technologies for your organisation.
