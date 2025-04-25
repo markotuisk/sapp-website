@@ -38,7 +38,15 @@ export const translations: Translations = {
     becomePartnerDescription: 'Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide.',
     partnerWithUs: 'Partner With Us',
     resources: 'Resources',
-    currentLanguage: 'English'
+    currentLanguage: 'English',
+    innovativeSolutions: 'Innovative Solutions',
+    innovativeSolutionsDescription: 'We leverage cutting-edge technologies and methodologies to address complex security challenges with forward-thinking solutions.',
+    clientCentricApproach: 'Client-Centric Approach',
+    clientCentricApproachDescription: 'We prioritize understanding your unique needs and objectives to deliver tailored security solutions that align with your goals.',
+    globalExpertise: 'Global Expertise',
+    globalExpertiseDescription: 'Our team brings international experience and knowledge to provide comprehensive security services across diverse environments.',
+    aboutSappTitle: 'Who We Are',
+    aboutSappDescription: 'Founded by security professionals with extensive experience in both physical and digital security, SAPP Security combines technical expertise with a deep understanding of the evolving security landscape to protect your most valuable assets.'
   },
   de: {
     home: 'Startseite',
@@ -70,7 +78,15 @@ export const translations: Translations = {
     becomePartnerDescription: 'Schließen Sie sich unserem Netzwerk von Technologiepartnern und Sicherheitsexperten an, um weltweit hochmoderne Sicherheitslösungen für Organisationen anzubieten.',
     partnerWithUs: 'Partner werden',
     resources: 'Ressourcen',
-    currentLanguage: 'Deutsch'
+    currentLanguage: 'Deutsch',
+    innovativeSolutions: 'Innovative Lösungen',
+    innovativeSolutionsDescription: 'Wir nutzen modernste Technologien und Methoden, um komplexe Sicherheitsherausforderungen mit zukunftsweisenden Lösungen zu bewältigen.',
+    clientCentricApproach: 'Kundenorientierter Ansatz',
+    clientCentricApproachDescription: 'Wir legen Wert darauf, Ihre individuellen Anforderungen und Ziele zu verstehen, um maßgeschneiderte Sicherheitslösungen zu liefern, die mit Ihren Zielen übereinstimmen.',
+    globalExpertise: 'Globale Expertise',
+    globalExpertiseDescription: 'Unser Team bringt internationale Erfahrung und Wissen mit, um umfassende Sicherheitsdienstleistungen in verschiedenen Umgebungen anzubieten.',
+    aboutSappTitle: 'Wer wir sind',
+    aboutSappDescription: 'SAPP Security wurde von Sicherheitsexperten mit umfangreicher Erfahrung in physischer und digitaler Sicherheit gegründet und kombiniert technisches Know-how mit einem tiefen Verständnis der sich entwickelnden Sicherheitslandschaft, um Ihre wertvollsten Vermögenswerte zu schützen.'
   },
   nl: {
     home: 'Home',
@@ -102,7 +118,15 @@ export const translations: Translations = {
     becomePartnerDescription: 'Sluit u aan bij ons netwerk van technologiepartners en beveiligingsexperts om geavanceerde beveiligingsoplossingen te leveren aan organisaties wereldwijd.',
     partnerWithUs: 'Partner met ons',
     resources: 'Bronnen',
-    currentLanguage: 'Nederlands'
+    currentLanguage: 'Nederlands',
+    innovativeSolutions: 'Innovatieve Oplossingen',
+    innovativeSolutionsDescription: 'We maken gebruik van geavanceerde technologieën en methoden om complexe veiligheidsproblemen aan te pakken met toekomstgerichte oplossingen.',
+    clientCentricApproach: 'Klantgerichte Aanpak',
+    clientCentricApproachDescription: 'We stellen prioriteit aan het begrijpen van uw unieke behoeften en doelstellingen om op maat gemaakte beveiligingsoplossingen te leveren die aansluiten bij uw doelen.',
+    globalExpertise: 'Globale Expertise',
+    globalExpertiseDescription: 'Ons team brengt internationale ervaring en kennis mee om uitgebreide beveiligingsdiensten te bieden in diverse omgevingen.',
+    aboutSappTitle: 'Wie wij zijn',
+    aboutSappDescription: 'SAPP Security is opgericht door beveiligingsprofessionals met uitgebreide ervaring in zowel fysieke als digitale beveiliging en combineert technische expertise met een diepgaand begrip van het evoluerende beveiligingslandschap om uw meest waardevolle bezittingen te beschermen.'
   },
   fr: {
     home: 'Accueil',
@@ -134,6 +158,14 @@ export const translations: Translations = {
     becomePartnerDescription: 'Rejoignez notre réseau de partenaires technologiques et d\'experts en sécurité pour fournir des solutions de sécurité de pointe aux organisations du monde entier.',
     partnerWithUs: 'Devenez partenaire',
     resources: 'Ressources',
-    currentLanguage: 'Français'
+    currentLanguage: 'Français',
+    innovativeSolutions: 'Solutions Innovantes',
+    innovativeSolutionsDescription: 'Nous exploitons des technologies et des méthodologies de pointe pour relever des défis de sécurité complexes avec des solutions avant-gardistes.',
+    clientCentricApproach: 'Approche Centrée sur le Client',
+    clientCentricApproachDescription: 'Nous donnons la priorité à la compréhension de vos besoins et objectifs uniques afin de fournir des solutions de sécurité sur mesure qui s\'alignent sur vos objectifs.',
+    globalExpertise: 'Expertise Mondiale',
+    globalExpertiseDescription: 'Notre équipe apporte une expérience et des connaissances internationales pour fournir des services de sécurité complets dans divers environnements.',
+    aboutSappTitle: 'Qui nous sommes',
+    aboutSappDescription: 'Fondée par des professionnels de la sécurité ayant une vaste expérience tant dans la sécurité physique que numérique, SAPP Security combine expertise technique et compréhension approfondie du paysage de sécurité en évolution pour protéger vos actifs les plus précieux.'
   },
 };

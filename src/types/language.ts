@@ -1,4 +1,3 @@
-
 export type TranslationKey = 
   | 'home'
   | 'about'
@@ -29,7 +28,15 @@ export type TranslationKey =
   | 'becomePartnerDescription'
   | 'partnerWithUs'
   | 'resources'
-  | 'currentLanguage';
+  | 'currentLanguage'
+  | 'innovativeSolutions'
+  | 'innovativeSolutionsDescription'
+  | 'clientCentricApproach'
+  | 'clientCentricApproachDescription'
+  | 'globalExpertise'
+  | 'globalExpertiseDescription'
+  | 'aboutSappTitle'
+  | 'aboutSappDescription';
 
 export type Language = {
   code: string;
