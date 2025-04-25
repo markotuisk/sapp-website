@@ -1,93 +1,82 @@
-
-import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Animated } from '@/components/ui/AnimatedElements';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Separator } from '@/components/ui/separator';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Rocket } from 'lucide-react';
 
 const AboutSAPP = () => {
-  const [sectionRef, inView] = useInView({
+  const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
   
-  const isMobile = useIsMobile();
+  const { t } = useLanguage();
+
+  const features = [
+    {
+      title: t('innovativeSolutions'),
+      description: t('innovativeSolutionsDescription'),
+      icon: <Rocket className="h-6 w-6 text-sapp-blue" />,
+    },
+    {
+      title: t('clientCentricApproach'),
+      description: t('clientCentricApproachDescription'),
+      icon: <Rocket className="h-6 w-6 text-sapp-blue" />,
+    },
+    {
+      title: t('globalExpertise'),
+      description: t('globalExpertiseDescription'),
+      icon: <Rocket className="h-6 w-6 text-sapp-blue" />,
+    },
+  ];
 
   return (
-    <section 
-      ref={sectionRef}
-      className="section-padding bg-gradient-to-b from-white to-gray-50"
-      id="about-sapp"
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
-          <Animated animation="fade-up" delay={0}>
-            <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Founders on a Mission</h3>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">
-              About Founders and <span className="text-[#20798C]">The Team</span>
-            </h2>
-            <div className="w-16 h-1 bg-sapp-blue mx-auto rounded-full"></div>
-          </Animated>
+    <section id="about" className="py-24 bg-white relative">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <span 
+            ref={ref}
+            className={cn(
+              "inline-block mb-4 transition-all duration-500",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+            )}
+          >
+            <h3 className="uppercase text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+              FOUNDERS ON A MISSION
+            </h3>
+          </span>
+          <h2 
+            className={cn(
+              "text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            <span className="text-[#20798C]">{t('aboutSappTitle')}</span>
+          </h2>
+          <p 
+            className={cn(
+              "text-sapp-gray text-lg transition-all duration-500 delay-200",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            {t('aboutSappDescription')}
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <Animated 
-            animation="fade-up" 
-            delay={100} 
-            className="lg:col-span-5"
-          >
-            <div className="overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-full">
-              <AspectRatio ratio={4/3} className="bg-gray-100">
-                <img 
-                  src="/lovable-uploads/12dc1226-e4e5-48df-9b0c-2e2a6db5fa32.png" 
-                  alt="SAPP Security Founders Raili and Marko" 
-                  className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
-                />
-              </AspectRatio>
-            </div>
-          </Animated>
-          
-          <Animated 
-            animation="fade-up" 
-            delay={200}
-            className="lg:col-span-7 space-y-6"
-          >
-            <div className="space-y-6 p-2 flex flex-col h-full">
-              <div>
-                <h3 className="text-xl font-semibold text-sapp-dark mb-3">Our Expertise</h3>
-                <p className="text-sapp-gray leading-relaxed">
-                  SAPP Security brings together versatile backgrounds and security expertise with a vision to converge physical and digital security. Our 30 years of global technical security experience is driven by analytical, data-based strategies and practical Estonian logic.
-                </p>
-              </div>
-              
-              <Separator className="my-4" />
-              
-              <div className="mt-auto">
-                <h3 className="text-xl font-semibold text-sapp-dark mb-3">Our Approach</h3>
-                <p className="text-sapp-gray leading-relaxed mb-6">
-                  Organisations need both physical and digital security. Companies need this equally, so both fields must break their bubbles, embrace collaboration, and work together. The SAPP Vision is to lead by example by creating a unique security offering to assist corporations in converging their physical and cyber security.
-                </p>
-                
-                <Button 
-                  variant="default" 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 text-white rounded-md group relative overflow-hidden mt-auto"
-                  asChild
-                >
-                  <Link to="/about" className="inline-flex items-center justify-center gap-2">
-                    <span className="relative z-10 transition-all duration-300 group-hover:translate-x-1">
-                      More About The Team
-                    </span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </Animated>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <Card key={index} className="border-gray-100 flex flex-col">
+              <CardHeader>
+                {feature.icon}
+                <CardTitle className="text-xl text-sapp-dark mt-3">{feature.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                  {feature.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
@@ -95,4 +84,3 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
-

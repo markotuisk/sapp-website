@@ -50,11 +50,11 @@ const Partners = () => {
           <span 
             ref={ref}
             className={cn(
-              "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-sm font-medium mb-4 transition-all duration-500",
+              "inline-block px-4 py-1.5 bg-sapp-blue/10 rounded-full text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium mb-4 transition-all duration-500",
               inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
             )}
           >
-            Partners We Trust
+            PARTNERS WE TRUST
           </span>
           <h2 
             className={cn(
