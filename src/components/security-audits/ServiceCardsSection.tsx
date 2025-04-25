@@ -54,7 +54,9 @@ const ServiceCardsSection = () => {
     <section id="security-audit-services" className="py-16 bg-slate-50" ref={ref}>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <div className="text-center mb-12">
-          <SectionLabel>What We Deliver</SectionLabel>
+          <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+            WHAT WE DELIVER
+          </h3>
           <h2 className="heading-main mb-4">
             Comprehensive Security Audit Services
           </h2>
