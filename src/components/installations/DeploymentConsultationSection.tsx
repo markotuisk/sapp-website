@@ -29,7 +29,7 @@ const DeploymentConsultationSection = () => {
                 GET STARTED
               </h3>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                Ready to upgrade your security infrastructure?
+                Book your consultation today
               </h2>
               <p className="text-gray-300 mb-6">
                 Our project management methodology ensures clear communication, detailed documentation, and transparent processes throughout the deployment lifecycle, regardless of project complexity.
