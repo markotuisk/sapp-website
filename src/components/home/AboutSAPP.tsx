@@ -8,6 +8,9 @@ const AboutSAPP = () => {
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto text-center">
+          <span className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase mb-2 block">
+            Our Mission and Vision
+          </span>
           <h2 
             title="Our Mission and Vision" 
             className="text-3xl md:text-4xl font-display font-bold mb-6 text-sapp-dark"
@@ -32,4 +35,3 @@ const AboutSAPP = () => {
 };
 
 export default AboutSAPP;
-
