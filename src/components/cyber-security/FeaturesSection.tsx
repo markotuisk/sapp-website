@@ -20,12 +20,12 @@ const FeaturesSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <Animated animation="fade-up" delay={100}>
           <div className="text-center mb-12">
-            <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Our IoT Security Expertise</h3>
-            </div>
+            <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
+              OUR IOT SECURITY EXPERTISE
+            </h3>
             
             <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-              Our IoT Security Capabilities
+              OUR IoT Security Capabilities
             </h2>
             
             <p className="text-sapp-gray max-w-3xl mx-auto mb-8">
