@@ -84,8 +84,8 @@ const FoundingTeam = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-12">
           <Animated animation="fade-up" delay={0}>
-            <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-              <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Leadership</h3>
+            <div className="inline-block mb-4">
+              <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase">Leadership</h3>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">Our Founding Team</h2>
             <p className="text-lg text-sapp-gray mx-auto max-w-2xl">
