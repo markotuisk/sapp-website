@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
@@ -21,9 +22,12 @@ const DeploymentConsultationSection = () => {
             </div>
             
             <div className="relative z-10 md:max-w-xl">
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                Request Deployment Consultation
+              <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase mb-4">
+                DEPLOYMENT CONSULTATION
               </h3>
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                Ready to upgrade your security infrastructure?
+              </h2>
               <p className="text-gray-300 mb-6">
                 Our project management methodology ensures clear communication, detailed documentation, and transparent processes throughout the deployment lifecycle, regardless of project complexity.
               </p>
