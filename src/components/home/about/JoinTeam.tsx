@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -10,9 +9,9 @@ const JoinTeam = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <Animated animation="fade-up" delay={200}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-sapp-dark">
-              Become a SAPP Security Innovator
-            </h2>
+            <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium mb-4">
+              BECOME A SAPP SECURITY INNOVATOR
+            </h3>
             <p className="text-sapp-gray text-lg mb-8 mx-auto max-w-2xl">
               Join our growing team of innovative thinkers and no-nonsense shakers to create the next-gen security offering
             </p>
