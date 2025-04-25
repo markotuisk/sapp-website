@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
@@ -13,9 +12,7 @@ const DeploymentConsultationSection = () => {
     <section className="py-8">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up">
-          <div 
-            className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden"
-          >
+          <div className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80"></div>
             <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
               <Sparkles className="h-64 w-64 text-sapp-blue/10" />
@@ -23,7 +20,7 @@ const DeploymentConsultationSection = () => {
             
             <div className="relative z-10 md:max-w-xl">
               <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase mb-4">
-                DEPLOYMENT CONSULTATION
+                GET STARTED
               </h3>
               
               <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
@@ -68,4 +65,3 @@ const DeploymentConsultationSection = () => {
 };
 
 export default DeploymentConsultationSection;
-
