@@ -23,10 +23,10 @@ const DeploymentConsultationSection = () => {
             
             <div className="relative z-10 md:max-w-xl">
               <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase mb-4">
-                GET STARTED
+                DEPLOYMENT CONSULTATION
               </h3>
               <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase mb-4">
-                DEPLOYMENT CONSULTATION
+                GET STARTED
               </h3>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
                 Ready to upgrade your security infrastructure?
