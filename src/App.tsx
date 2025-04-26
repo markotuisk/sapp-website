@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { DebugProvider } from "./utils/debugTools";
 import { DebugToggle } from "./components/debug/DebugToggle";
 import { DisplayModeProvider } from "./contexts/DisplayModeContext";
+import ConsentBanner from "./components/ui/ConsentBanner";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientArea from "./pages/VirtualOffice";
@@ -60,6 +60,7 @@ const App = () => {
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <CookieConsent />
+                    <ConsentBanner />
                     <DebugToggle />
                   </BrowserRouter>
                 </DisplayModeProvider>
