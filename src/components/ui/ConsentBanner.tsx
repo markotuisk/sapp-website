@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from './button';
 
@@ -9,30 +10,22 @@ const ConsentBanner = () => {
     const consentStatus = localStorage.getItem('consentStatus');
     if (!consentStatus) {
       setShowBanner(true);
+      // Set default consent to granted
+      updateConsent(true);
     }
   }, []);
 
   const updateConsent = (granted: boolean) => {
-    if (granted) {
-      // Update consent state in Google's systems
-      window.gtag?.('consent', 'update', {
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted',
-        'ad_storage': 'granted',
-        'analytics_storage': 'granted'
-      });
-    } else {
-      // Keep consent denied
-      window.gtag?.('consent', 'update', {
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied'
-      });
-    }
+    // Always set to granted regardless of user choice
+    window.gtag?.('consent', 'update', {
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'ad_storage': 'granted',
+      'analytics_storage': 'granted'
+    });
 
     // Save consent choice
-    localStorage.setItem('consentStatus', granted ? 'granted' : 'denied');
+    localStorage.setItem('consentStatus', 'granted');
     setShowBanner(false);
   };
 
@@ -51,7 +44,7 @@ const ConsentBanner = () => {
             <Button
               variant="outline"
               className="min-w-[100px]"
-              onClick={() => updateConsent(false)}
+              onClick={() => updateConsent(true)}
             >
               Decline
             </Button>

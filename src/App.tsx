@@ -59,7 +59,6 @@ const App = () => {
                       <Route path="/version-info" element={<VersionInfo />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
-                    <CookieConsent />
                     <ConsentBanner />
                     <DebugToggle />
                   </BrowserRouter>
