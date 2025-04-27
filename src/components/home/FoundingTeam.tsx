@@ -14,9 +14,7 @@ const FoundingTeam = () => {
 
   const [imageLoadState, setImageLoadState] = useState({
     railiDefault: false,
-    railiHover: false,
-    markoDefault: false,
-    markoHover: false
+    markoDefault: false
   });
 
   const handleImageLoad = (imageType) => {
@@ -36,15 +34,13 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: "Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP's integrated offering across markets.",
-      image: '/lovable-uploads/98349e56-b76f-4ad7-bd73-28d1699f11c9.png',
-      hoverImage: '', // Remove hover image as requested
+      image: '/lovable-uploads/71b2eab9-a9dc-405d-a0c0-9c4ab1fa5136.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
       image: '/lovable-uploads/98349e56-b76f-4ad7-bd73-28d1699f11c9.png',
-      hoverImage: '', // Remove hover image as requested
     },
   ];
 
