@@ -21,6 +21,19 @@ export const DebugPanel: React.FC<DebugPanelProps> = ({ imageLoadState, inView, 
         <li>Raili default: {founders[0].image}</li>
         <li>Marko default: {founders[1].image}</li>
       </ul>
+      <p className="font-bold mt-2">Image URLs (for manual testing):</p>
+      <ul className="space-y-1 break-all">
+        <li>
+          <a href={founders[0].image} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+            Test Raili image: {founders[0].image}
+          </a>
+        </li>
+        <li>
+          <a href={founders[1].image} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+            Test Marko image: {founders[1].image}
+          </a>
+        </li>
+      </ul>
     </div>
   );
 };
