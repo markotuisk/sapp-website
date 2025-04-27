@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -20,7 +21,7 @@ const AboutHero = () => {
       
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-          <div className="order-2 lg:order-1">
+          <div className="order-1 lg:order-1">
             <div className="max-w-2xl space-y-12">
               <Animated animation="fade-up" delay={200}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] mb-12 text-sapp-dark tracking-normal">
@@ -38,7 +39,7 @@ const AboutHero = () => {
             </div>
           </div>
           
-          <div className="order-1 lg:order-2">
+          <div className="order-2">
             <Animated
               animation="fade-left"
               delay={300}
@@ -69,3 +70,4 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
+
