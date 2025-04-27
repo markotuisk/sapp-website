@@ -1,8 +1,7 @@
-
-import { Mail, Phone, MapPin, Linkedin, Twitter, Info } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { TikTokIcon, SAPPLogo } from '@/components/icons/CustomIcons';
+import { SAPPLogo } from '@/components/icons/CustomIcons';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,7 +18,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-400 text-sm max-w-xs">
-              Your trusted technical security and privacy partner providing comprehensive solutions for corporate organizations worldwide.
+              Your trusted technical security and privacy partner providing comprehensive solutions for corporate organisations worldwide.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
@@ -27,9 +26,6 @@ const Footer = () => {
               </a>
               <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
                 <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-sapp-blue transition-colors">
-                <TikTokIcon />
               </a>
             </div>
           </div>
@@ -103,22 +99,22 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-sapp-blue flex-shrink-0" />
-                <a href="tel:+44123456789" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
-                  +44 123 456 789
+                <a href="tel:+442070888270" className="text-gray-400 hover:text-sapp-blue transition-colors text-sm">
+                  +44 (0) 207 0888 270
                 </a>
               </li>
             </ul>
-            <Link to="/contact">
+            <a href="/#contact">
               <Button className="mt-6 bg-sapp-blue hover:bg-sapp-blue/90 text-white">
                 Contact Us
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
         
         <div className="mt-12 pt-8 border-t border-gray-800 text-center md:flex md:justify-between md:items-center">
           <p className="text-gray-500 text-sm">
-            © {currentYear} SAPP Security. All rights reserved.
+            © | Security and Privacy Partners Ltd | {currentYear}
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex justify-center md:justify-end space-x-6 items-center">
