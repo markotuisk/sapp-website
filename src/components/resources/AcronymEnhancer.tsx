@@ -10,11 +10,11 @@ interface AcronymEnhancerProps {
 }
 
 const AcronymEnhancer = ({ text, className }: AcronymEnhancerProps) => {
-  const { acronyms } = useAcronyms();
+  const { acronyms, loading } = useAcronyms();
   const [selectedAcronym, setSelectedAcronym] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  if (!acronyms.length) {
+  if (loading || !acronyms.length) {
     return <span className={className}>{text}</span>;
   }
 

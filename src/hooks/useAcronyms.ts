@@ -13,16 +13,24 @@ interface Acronym {
 export const useAcronyms = () => {
   const [acronyms, setAcronyms] = useState<Acronym[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAcronyms = async () => {
       try {
-        const { data } = await supabase
+        const { data, error: fetchError } = await supabase
           .from("technical_acronyms")
           .select("*")
           .order("acronym");
         
+        if (fetchError) {
+          throw new Error(fetchError.message);
+        }
+        
         setAcronyms(data || []);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load acronyms");
+        console.error("Error fetching acronyms:", err);
       } finally {
         setLoading(false);
       }
@@ -38,6 +46,7 @@ export const useAcronyms = () => {
   return {
     acronyms,
     loading,
+    error,
     findAcronym,
   };
 };

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { useAcronyms } from "@/hooks/useAcronyms";
 
 interface Acronym {
   id: string;
@@ -23,31 +24,11 @@ interface Acronym {
 }
 
 const AcronymsTab = () => {
-  const [acronyms, setAcronyms] = useState<Acronym[]>([]);
+  const { acronyms, loading, error } = useAcronyms();
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState<Acronym[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selected, setSelected] = useState<Acronym | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAcronyms = async () => {
-      try {
-        const { data, error: fetchError } = await supabase
-          .from("technical_acronyms")
-          .select("*")
-          .order("acronym");
-        if (fetchError) throw new Error(fetchError.message);
-        setAcronyms(data || []);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load acronyms");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAcronyms();
-  }, []);
 
   useEffect(() => {
     if (!search) {
