@@ -47,9 +47,9 @@ const AboutHero = () => {
             >
               <Card className="overflow-hidden bg-white border-0 shadow-xl h-full">
                 <CardContent className="p-0">
-                  <div className="relative aspect-[16/9] overflow-hidden">
+                  <div className="relative aspect-[3/4] overflow-hidden">
                     <img 
-                      src="/lovable-uploads/d6d3c231-c39b-4a25-8ef8-cd402638e995.png" 
+                      src="/lovable-uploads/7708cec8-524d-4c91-ba6b-9a96ddf50e70.png" 
                       alt="SAPP Security Founders at Security & Policing 2024" 
                       className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                     />
