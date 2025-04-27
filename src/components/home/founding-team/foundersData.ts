@@ -6,7 +6,7 @@ export const founders: Founder[] = [
     name: 'Raili Maripuu',
     title: 'Commercial Director',
     bio: "Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP's integrated offering across markets.",
-    image: '/lovable-uploads/SAPP Security 2.png',
+    image: '/lovable-uploads/raili-maripuu-profile.png',
   },
   {
     name: 'Marko Tuisk',
