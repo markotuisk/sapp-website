@@ -14,6 +14,9 @@ const AcronymEnhancer = ({ text, className }: AcronymEnhancerProps) => {
   const [selectedAcronym, setSelectedAcronym] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  console.log('AcronymEnhancer - Loaded Acronyms:', acronyms);
+  console.log('AcronymEnhancer - Text to process:', text);
+
   if (!acronyms.length) {
     return <span className={className}>{text}</span>;
   }
@@ -24,8 +27,11 @@ const AcronymEnhancer = ({ text, className }: AcronymEnhancerProps) => {
     'g'
   );
 
+  console.log('AcronymEnhancer - Regex Pattern:', pattern);
+
   // Split text and preserve whitespace
   const parts = text.split(pattern);
+  console.log('AcronymEnhancer - Processed Parts:', parts);
 
   return (
     <>
@@ -34,6 +40,7 @@ const AcronymEnhancer = ({ text, className }: AcronymEnhancerProps) => {
           const acronym = acronyms.find(a => a.acronym === part);
           
           if (acronym) {
+            console.log('Found Acronym:', acronym);
             return (
               <AcronymTooltip
                 key={index}
