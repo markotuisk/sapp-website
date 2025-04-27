@@ -18,6 +18,8 @@ export const useAcronyms = () => {
   useEffect(() => {
     const fetchAcronyms = async () => {
       try {
+        setLoading(true);
+        
         const { data, error: fetchError } = await supabase
           .from("technical_acronyms")
           .select("*")
@@ -27,6 +29,7 @@ export const useAcronyms = () => {
           throw new Error(fetchError.message);
         }
         
+        console.log("Acronyms fetched:", data?.length || 0);
         setAcronyms(data || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load acronyms");

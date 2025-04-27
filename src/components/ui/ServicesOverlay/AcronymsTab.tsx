@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import AcronymDialog from "@/components/resources/AcronymDialog";
 import {
   Table,
@@ -31,6 +30,7 @@ const AcronymsTab = () => {
   const [selected, setSelected] = useState<Acronym | null>(null);
 
   useEffect(() => {
+    console.log("Acronyms in tab:", acronyms.length);
     if (!search) {
       setFiltered(acronyms);
     } else {
@@ -66,6 +66,9 @@ const AcronymsTab = () => {
           <h2 className="text-lg font-semibold text-sapp-dark">Technical Acronyms Database</h2>
           <p className="text-sm text-muted-foreground">
             Search and explore technical acronyms used throughout our documentation and services.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Currently showing {acronyms.length} acronyms
           </p>
         </div>
 
