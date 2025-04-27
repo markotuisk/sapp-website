@@ -29,7 +29,7 @@ const AboutSAPP = () => {
               <img
                 src="/lovable-uploads/ba598655-6726-4a15-8a8e-19079a60dbe1.png"
                 alt="SAPP Security Founders at Security & Policing 2024"
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full object-top"
               />
             </AspectRatio>
           </div>
