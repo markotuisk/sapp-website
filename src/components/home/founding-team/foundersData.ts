@@ -12,6 +12,6 @@ export const founders: Founder[] = [
     name: 'Marko Tuisk',
     title: 'Technical Director',
     bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-    image: '/lovable-uploads/SAPP Security 1.png',
+    image: '/lovable-uploads/49556f08.png',
   },
 ];
