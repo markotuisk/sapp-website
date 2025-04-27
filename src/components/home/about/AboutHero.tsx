@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -49,9 +48,9 @@ const AboutHero = () => {
                 <CardContent className="p-0">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img 
-                      src="/lovable-uploads/48270e05-d230-406a-bdf9-2d518a447907.png" 
+                      src="/lovable-uploads/ba598655-6726-4a15-8a8e-19079a60dbe1.png" 
                       alt="SAPP Security Founders Raili and Marko" 
-                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/30 to-transparent"></div>
                   </div>
@@ -70,4 +69,3 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
-

@@ -2,7 +2,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const AboutSAPP = () => {
   return (
@@ -22,16 +21,6 @@ const AboutSAPP = () => {
             <p className="text-sapp-gray text-lg mb-8 max-w-2xl mx-auto">
               SAPP Security brings together versatile backgrounds and security expertise with a vision to converge physical and digital security.
             </p>
-          </div>
-
-          <div className="mb-10 overflow-hidden rounded-xl shadow-lg">
-            <AspectRatio ratio={16/9} className="bg-gray-100">
-              <img
-                src="/lovable-uploads/ba598655-6726-4a15-8a8e-19079a60dbe1.png"
-                alt="SAPP Security Founders at Security & Policing 2024"
-                className="object-cover w-full h-full object-top"
-              />
-            </AspectRatio>
           </div>
           
           <div className="text-center">
