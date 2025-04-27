@@ -1,4 +1,5 @@
-import { Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
+
+import { Mail, Phone, MapPin, Linkedin, Twitter, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SAPPLogo } from '@/components/icons/CustomIcons';
