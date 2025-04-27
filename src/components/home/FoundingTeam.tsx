@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
+import { FounderCard } from './founding-team/FounderCard';
+import { DebugPanel } from './founding-team/DebugPanel';
+import { founders } from './founding-team/foundersData';
 
 const FoundingTeam = () => {
   const [sectionRef, inView] = useInView({
@@ -18,7 +21,7 @@ const FoundingTeam = () => {
     markoDefault: false
   });
 
-  const handleImageLoad = (imageType) => {
+  const handleImageLoad = (imageType: string) => {
     setImageLoadState(prev => ({
       ...prev,
       [imageType]: true
@@ -26,50 +29,8 @@ const FoundingTeam = () => {
     logEvent('ImageLoaded', imageType);
   };
 
-  const handleImageError = (imageType, error) => {
+  const handleImageError = (imageType: string, error: any) => {
     logEvent('ImageError', { imageType, error });
-  };
-
-  const founders = [
-    {
-      name: 'Raili Maripuu',
-      title: 'Commercial Director',
-      bio: "Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP's integrated offering across markets.",
-      image: '/lovable-uploads/59a4abaf-c24b-4b91-a5a3-6b74cf943082.png',
-    },
-    {
-      name: 'Marko Tuisk',
-      title: 'Technical Director',
-      bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: '/lovable-uploads/49556f08-78a0-4b98-ae2e-2abc99a6c474.png',
-    },
-  ];
-
-  const FounderCard = ({ founder, index, handleImageLoad, handleImageError }) => {
-    return (
-      <Animated 
-        animation="fade-up" 
-        delay={100 + (index * 100)}
-      >
-        <div className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
-          <div className="relative h-[400px] overflow-hidden rounded-t-xl">
-            <img 
-              src={founder.image}
-              alt={`${founder.name} profile`}
-              className="w-full h-full object-cover object-top"
-              onLoad={() => handleImageLoad(index === 0 ? 'railiDefault' : 'markoDefault')}
-              onError={(e) => handleImageError(index === 0 ? 'railiDefault' : 'markoDefault', e)}
-            />
-          </div>
-          
-          <div className="p-6 text-center">
-            <h3 className="text-xl font-bold text-sapp-dark mb-1">{founder.name}</h3>
-            <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
-            <p className="text-sapp-gray text-sm">{founder.bio}</p>
-          </div>
-        </div>
-      </Animated>
-    );
   };
 
   return (
@@ -82,9 +43,13 @@ const FoundingTeam = () => {
         <div className="text-center mb-12">
           <Animated animation="fade-up" delay={0}>
             <div className="inline-block mb-4">
-              <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase">Leadership</h3>
+              <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium uppercase">
+                Leadership
+              </h3>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">Our Founding Team</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-sapp-dark mb-2">
+              Our Founding Team
+            </h2>
             <p className="text-lg text-sapp-gray mx-auto max-w-2xl">
               Meet the founders of SAPP Security – leading with vision, experience and dedication.
             </p>
@@ -124,16 +89,11 @@ const FoundingTeam = () => {
         </div>
 
         {process.env.NODE_ENV === 'development' && isDebugMode && (
-          <div className="mt-6 p-3 bg-gray-100 text-xs rounded-md max-w-4xl mx-auto">
-            <h4 className="font-bold mb-2">Debug Information</h4>
-            <p>Image load states: {JSON.stringify(imageLoadState)}</p>
-            <p>Section in view: {String(inView)}</p>
-            <p className="font-bold mt-2">Image paths:</p>
-            <ul className="space-y-1">
-              <li>Raili default: {founders[0].image}</li>
-              <li>Marko default: {founders[1].image}</li>
-            </ul>
-          </div>
+          <DebugPanel 
+            imageLoadState={imageLoadState}
+            inView={inView}
+            founders={founders}
+          />
         )}
       </div>
     </section>
