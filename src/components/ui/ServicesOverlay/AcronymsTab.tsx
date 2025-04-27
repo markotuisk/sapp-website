@@ -3,6 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import AcronymDialog from "@/components/resources/AcronymDialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 
 interface Acronym {
   id: string;
@@ -26,7 +36,8 @@ const AcronymsTab = () => {
       try {
         const { data, error: fetchError } = await supabase
           .from("technical_acronyms")
-          .select("*");
+          .select("*")
+          .order("acronym");
         if (fetchError) throw new Error(fetchError.message);
         setAcronyms(data || []);
       } catch (err) {
@@ -55,14 +66,6 @@ const AcronymsTab = () => {
     }
   }, [search, acronyms]);
 
-  const grouped: Record<string, Acronym[]> = {};
-  filtered
-    .sort((a, b) => a.acronym.localeCompare(b.acronym))
-    .forEach((acronym) => {
-      if (!grouped[acronym.category]) grouped[acronym.category] = [];
-      grouped[acronym.category].push(acronym);
-    });
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[200px]">
@@ -70,61 +73,72 @@ const AcronymsTab = () => {
       </div>
     );
   }
+
   if (error) {
     return <div className="text-center text-red-600 py-4">{error}</div>;
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <div className="p-4 md:p-0">
-        <div className="bg-blue-50 border border-blue-200 text-blue-900 rounded p-3 text-sm mb-4">
-          <strong>Info:</strong> All acronyms in our site are explained here, or when you hover/tap on them in content.
+    <div className="max-w-4xl mx-auto">
+      <div className="p-4 space-y-4">
+        <div className="flex flex-col space-y-2">
+          <h2 className="text-lg font-semibold text-sapp-dark">Technical Acronyms Database</h2>
+          <p className="text-sm text-muted-foreground">
+            Search and explore technical acronyms used throughout our documentation and services.
+          </p>
         </div>
-        <div className="mb-4 flex items-center">
-          <Search className="w-5 h-5 mr-2 text-sapp-gray" />
-          <input
-            className="w-full border border-sapp-gray/30 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sapp-blue bg-white"
-            placeholder="Search acronym or phrase..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-        {filtered.length === 0 && (
-          <div className="text-center text-gray-400 py-12">No acronyms match your search.</div>
-        )}
 
-        <div>
-          {Object.keys(grouped).sort().map((cat) => (
-            <div key={cat} className="mb-7">
-              <div className="border-l-4 border-sapp-blue pl-3 mb-2">
-                <span className="font-semibold text-lg text-sapp-blue">{cat}</span>
-              </div>
-              <table className="w-full table-auto mb-3 text-left">
-                <thead>
-                  <tr className="text-xs text-sapp-gray uppercase">
-                    <th className="py-1 pr-2">Acronym</th>
-                    <th className="py-1 pr-2">Definition</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {grouped[cat].map((a) => (
-                    <tr
-                      key={a.id}
-                      className="group cursor-pointer hover:bg-slate-100 transition"
-                      onClick={() => {
-                        setSelected(a);
-                        setDialogOpen(true);
-                      }}
-                    >
-                      <td className="text-sapp-dark font-medium pr-2">{a.acronym}</td>
-                      <td className="truncate max-w-xs text-sapp-gray group-hover:underline">{a.full_name}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ))}
-        </div>
+        <Card className="p-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              className="w-full pl-9 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sapp-blue bg-white"
+              placeholder="Search acronyms, definitions, or categories..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </Card>
+
+        {filtered.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            No acronyms match your search criteria.
+          </div>
+        ) : (
+          <div className="bg-white rounded-lg border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Acronym</TableHead>
+                  <TableHead>Definition</TableHead>
+                  <TableHead className="w-[120px]">Category</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((acronym) => (
+                  <TableRow
+                    key={acronym.id}
+                    className="cursor-pointer hover:bg-slate-50 transition-colors"
+                    onClick={() => {
+                      setSelected(acronym);
+                      setDialogOpen(true);
+                    }}
+                  >
+                    <TableCell className="font-medium text-sapp-blue">
+                      {acronym.acronym}
+                    </TableCell>
+                    <TableCell>{acronym.full_name}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className="font-normal">
+                        {acronym.category}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </div>
 
       <AcronymDialog
