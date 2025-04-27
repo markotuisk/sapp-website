@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -41,7 +40,7 @@ const FoundingTeam = () => {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: 'https://github.com/markotuisk/sapp-website/blob/e9cca370b1e0987bf34cbe96b44e245ea14ec20e/public/lovable-uploads/SAPP%20Security%201.png',
+      image: '/lovable-uploads/SAPP Security 1.png',
     },
   ];
 
@@ -141,4 +140,3 @@ const FoundingTeam = () => {
 };
 
 export default FoundingTeam;
-
