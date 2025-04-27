@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -34,13 +35,13 @@ const FoundingTeam = () => {
       name: 'Raili Maripuu',
       title: 'Commercial Director',
       bio: "Commercial security strategist with deep understanding of corporate dynamics and executive risk, leading SAPP's integrated offering across markets.",
-      image: '/lovable-uploads/cfbac482-a717-4729-ada2-60901a4b0f07.png',
+      image: '/lovable-uploads/59a4abaf-c24b-4b91-a5a3-6b74cf943082.png',
     },
     {
       name: 'Marko Tuisk',
       title: 'Technical Director',
       bio: 'Engineer with over 15 years of experience delivering global technical security solutions across critical infrastructure and sensitive projects.',
-      image: '/lovable-uploads/1f2e3d4c-5a6b-7c8d-9e0f-1a2b3c4d5e6f.png',
+      image: '/lovable-uploads/49556f08-78a0-4b98-ae2e-2abc99a6c474.png',
     },
   ];
 
