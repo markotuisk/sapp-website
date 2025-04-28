@@ -9,7 +9,7 @@ const QuoteSection = () => {
         <div className="text-center mb-8">
           <div className="inline-block mb-4">
             <h3 className="uppercase text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium">
-              FEEDBACK
+              OPINION
             </h3>
           </div>
         </div>
