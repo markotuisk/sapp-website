@@ -1,8 +1,10 @@
+
+import React, { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
 import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 const HeroSection = () => {
   const [ref, inView] = useInView({

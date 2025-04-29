@@ -1,15 +1,17 @@
+
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
-const HeroSection = React.lazy(() => import('@/components/cyber-security/HeroSection'));
-const ServicesSection = React.lazy(() => import('@/components/cyber-security/ServicesSection'));
-const FeaturesSection = React.lazy(() => import('@/components/cyber-security/FeaturesSection'));
-const QuoteSection = React.lazy(() => import('@/components/cyber-security/QuoteSection'));
-const CTASection = React.lazy(() => import('@/components/cyber-security/CTASection'));
-const Contact = React.lazy(() => import('@/components/home/contact/Contact'));
+// Import components without using React.lazy() to fix the loading issue
+import HeroSection from '@/components/cyber-security/HeroSection';
+import ServicesSection from '@/components/cyber-security/ServicesSection';
+import FeaturesSection from '@/components/cyber-security/FeaturesSection';
+import QuoteSection from '@/components/cyber-security/QuoteSection';
+import CTASection from '@/components/cyber-security/CTASection';
+import Contact from '@/components/home/contact/Contact';
 
 const CyberSecurity = React.memo(() => {
   const { logEvent } = useComponentLogger('CyberSecurityPage');
@@ -38,20 +40,14 @@ const CyberSecurity = React.memo(() => {
       
       <Navbar />
       <main className="flex-grow">
-        <Suspense fallback={
-          <div className="min-h-[200px] flex items-center justify-center">
-            <div className="animate-pulse text-sapp-gray">Loading...</div>
-          </div>
-        }>
-          <div className="space-y-16 md:space-y-24">
-            <HeroSection />
-            <ServicesSection />
-            <QuoteSection />
-            <FeaturesSection />
-            <CTASection />
-            <Contact />
-          </div>
-        </Suspense>
+        <div className="space-y-16 md:space-y-24">
+          <HeroSection />
+          <ServicesSection />
+          <QuoteSection />
+          <FeaturesSection />
+          <CTASection />
+          <Contact />
+        </div>
       </main>
       <Footer />
     </div>
@@ -62,14 +58,6 @@ const CyberSecurity = React.memo(() => {
       <DebugInfo 
         componentName="CyberSecurityPage"
         data={{
-          lazyLoadedSections: [
-            'HeroSection',
-            'ServicesSection',
-            'FeaturesSection',
-            'QuoteSection',
-            'CTASection',
-            'Contact'
-          ],
           metaTitle: "Comprehensive Cyber Security Services | SAPP Security",
           route: "/cyber-security"
         }}
