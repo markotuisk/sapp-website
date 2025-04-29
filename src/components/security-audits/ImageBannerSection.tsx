@@ -14,9 +14,10 @@ const ImageBannerSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
         <Animated animation="fade-up">
           <div 
-            className="bg-sapp-dark rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden"
+            className="rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden"
+            style={{ background: '#022B3A' }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-sapp-navy to-transparent opacity-80" aria-hidden="true"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#022B3A] to-[#022B3A]/70 opacity-100" aria-hidden="true"></div>
             <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4" aria-hidden="true">
               <Sparkles className="h-64 w-64 text-sapp-blue/10" />
             </div>
