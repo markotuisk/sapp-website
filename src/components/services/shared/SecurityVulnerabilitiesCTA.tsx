@@ -1,10 +1,9 @@
 
 import React, { useState } from 'react';
-import { Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { Link } from 'react-router-dom';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
+import Sparkles from '@/components/ui/Sparkles';
 
 interface SecurityVulnerabilitiesCTAProps {
   onRequestAssessment: () => void;
