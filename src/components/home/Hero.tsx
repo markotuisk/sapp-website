@@ -66,16 +66,6 @@ const Hero = () => {
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
             </Button>
-            <Button 
-              size="lg" 
-              className="bg-sapp-dark hover:bg-sapp-dark/90 text-white shadow-lg shadow-sapp-dark/10 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-              onClick={() => navigate('/tscm')}
-            >
-              <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                Explore TSCM Services
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-sapp-blue to-accent-dark-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-            </Button>
           </div>
         </div>
       </div>

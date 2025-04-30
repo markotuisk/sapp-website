@@ -12,21 +12,17 @@ interface ServiceItemProps {
 }
 
 const ServiceItem = ({ name, description, link, onItemClick }: ServiceItemProps) => {
-  // All services should now have a testing note instead of "Coming Soon"
-  // For implemented or not implemented - same visual
   return (
     <div className="flex items-center justify-between px-4 py-3 bg-slate-50 group select-none">
       <div className="pr-2 flex-1">
         <div className="flex items-center gap-2 mb-1">
           <h4 className="font-medium text-sapp-dark">{name}</h4>
-          <span className="inline-block text-xs rounded bg-[#DB2626]/10 text-[#DB2626] px-2 py-0.5 font-semibold">
-            Under Testing
-          </span>
         </div>
         <p className="text-sm text-sapp-gray line-clamp-2">{description}</p>
       </div>
-      {/* Disable navigation visually */}
-      <ChevronRight className="h-4 w-4 text-gray-300 flex-shrink-0" />
+      <Link to={link} onClick={onItemClick}>
+        <ChevronRight className="h-4 w-4 text-sapp-blue flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+      </Link>
     </div>
   );
 };
