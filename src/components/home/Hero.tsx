@@ -3,15 +3,18 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigateToServices = () => {
+    navigate('/service-navigator');
+  };
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
@@ -56,7 +59,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-              onClick={() => setServicesOpen(true)}
+              onClick={handleNavigateToServices}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
                 Rapid Service Navigator
@@ -66,11 +69,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      <ServicesOverlay 
-        open={servicesOpen}
-        onOpenChange={setServicesOpen}
-      />
     </section>
   );
 };

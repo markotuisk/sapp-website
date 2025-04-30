@@ -20,6 +20,7 @@ import CyberSecurity from "./pages/CyberSecurity";
 import About from "./pages/About";
 import CookieConsent from "./components/ui/CookieConsent";
 import VersionInfo from "./pages/VersionInfo";
+import ServiceNavigator from "./pages/ServiceNavigator";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,6 +58,7 @@ const App = () => {
                       <Route path="/cyber-security" element={<CyberSecurity />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/version-info" element={<VersionInfo />} />
+                      <Route path="/service-navigator" element={<ServiceNavigator />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <ConsentBanner />
