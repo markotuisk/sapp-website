@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -28,7 +29,7 @@ const ServiceCardsSection = () => {
     {
       title: "TSCM Inspections",
       description: "Commonly referred to as a bug sweep is a systematic technical and physical inspection that includes scanning and search for unauthorised listening devices to protect the organisation from corporate espionage.",
-      href: "/services/tscm-inspections",
+      href: "/tscm",
       delay: 200
     },
     {
@@ -77,12 +78,23 @@ const ServiceCardsSection = () => {
                 </CardDescription>
               </CardContent>
               <CardFooter className="mt-auto">
-                <Button 
-                  className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
-                  onClick={() => handleGetDetails(service.title)}
-                >
-                  Get Details
-                </Button>
+                {service.title === "TSCM Inspections" ? (
+                  <Button 
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 w-full"
+                    asChild
+                  >
+                    <Link to="/tscm">
+                      Explore TSCM Services
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button 
+                    className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
+                    onClick={() => handleGetDetails(service.title)}
+                  >
+                    Get Details
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}
