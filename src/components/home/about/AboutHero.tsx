@@ -1,68 +1,35 @@
-
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { Animated } from '@/components/ui/AnimatedElements';
-import { Card, CardContent } from '@/components/ui/card';
 
 const AboutHero = () => {
-  const [heroRef, heroInView] = useInView({
+  const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <section ref={heroRef} className="relative pt-32 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-b from-white to-gray-50">
-      {/* Abstract Background Pattern */}
-      <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none"></div>
-      
-      {/* Accent Color Element */}
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent-teal/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-accent-teal/5 rounded-full blur-3xl pointer-events-none"></div>
-      
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-          <div className="order-1 lg:order-1">
-            <div className="max-w-2xl space-y-12">
-              <Animated animation="fade-up" delay={200}>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] mb-12 text-sapp-dark tracking-normal">
-                  Security expertise built on competence, integrity and experience
-                </h1>
-              </Animated>
-              
-              <Animated
-                animation="fade-up"
-                delay={400}
-                className="text-sapp-gray text-xl leading-relaxed"
-              >
-                <p>SAPP Security unifies combined backgrounds in corporate security, technology, counter espionage, law, banking, engineering and information security.</p>
-              </Animated>
-            </div>
-          </div>
-          
-          <div className="order-2">
-            <Animated
-              animation="fade-left"
-              delay={300}
-              className="relative"
-            >
-              <Card className="overflow-hidden bg-white border-0 shadow-xl h-full">
-                <CardContent className="p-0">
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <img 
-                      src="/lovable-uploads/7708cec8-524d-4c91-ba6b-9a96ddf50e70.png" 
-                      alt="SAPP Security Founders at Security & Policing 2024" 
-                      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-sapp-dark/30 to-transparent"></div>
-                  </div>
-                  <div className="p-6 bg-white">
-                    <h3 className="font-display font-semibold text-xl mb-2 text-accent-dark-blue">Trusted Professionals</h3>
-                    <p className="text-sapp-gray text-sm">Our team combines industry expertise with innovative approach and personalized service to ensure your security needs are met with excellence.</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </Animated>
-          </div>
+    <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+          <h1 
+            id="about-heading"
+            className={cn(
+              "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+            ref={ref}
+          >
+            About <span className="text-sapp-blue">SAPP Security</span>
+          </h1>
+          <p 
+            className={cn(
+              "text-sapp-gray text-lg md:text-xl mb-8 transition-all duration-500 delay-200 max-w-3xl mx-auto",
+              inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            )}
+          >
+            Learn about our mission, values, and the team behind SAPP Security.
+          </p>
         </div>
       </div>
     </section>
@@ -70,4 +37,3 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
-

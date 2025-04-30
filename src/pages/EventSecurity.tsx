@@ -50,7 +50,7 @@ const EventSecurity = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main>
+      <main aria-labelledby="event-security-heading">
         <HeroSection setServicesOpen={setServicesOpen} />
         <InfoSection setServicesOpen={setServicesOpen} />
         <QuoteSection />

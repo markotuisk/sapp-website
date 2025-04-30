@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -28,7 +29,7 @@ const About = () => {
   const content = (
     <div className="min-h-screen">
       <Navbar />
-      <main>
+      <main aria-labelledby="about-heading">
         <AboutHero />
         <OurStory />
         <FoundingTeam />

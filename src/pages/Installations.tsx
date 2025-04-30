@@ -22,7 +22,7 @@ const Installations = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main>
+      <main aria-labelledby="installations-heading">
         <HeroSection />
         <SolutionsSection />
         <QuoteSection />

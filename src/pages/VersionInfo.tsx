@@ -49,6 +49,9 @@ const VersionInfo = () => {
           <LoadingState />
         ) : (
           <>
+            <h1 id="version-info-heading" className="text-3xl font-bold text-sapp-dark mb-6 sr-only">
+              Version Information and Issue Tracker
+            </h1>
             <SummaryCards buildInfo={buildInfo} buildDate={buildDate} lastUpdate={lastUpdate} />
             <CodebaseMetrics versions={versions} />
             

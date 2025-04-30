@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -19,6 +18,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 
+            id="installations-heading"
             className={cn(
               "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -74,4 +74,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

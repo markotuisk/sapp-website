@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
@@ -50,7 +51,7 @@ const CounterSurveillance = () => {
             </div>
             
             <div className="relative z-10 md:max-w-xl">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Counter-Surveillance & RF Monitoring</h1>
+              <h1 id="counter-surveillance-heading" className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-2">Counter-Surveillance & RF Monitoring</h1>
               <p className="text-white/90 text-lg max-w-2xl">Detect and neutralize unauthorized surveillance attempts across all vectors.</p>
             </div>
           </div>

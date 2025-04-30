@@ -69,7 +69,7 @@ const Index = () => {
   const content = (
     <div className="min-h-screen">
       <Navbar />
-      <main>
+      <main aria-labelledby="home-heading">
         <Hero />
         <Services />
         <QuoteSection />

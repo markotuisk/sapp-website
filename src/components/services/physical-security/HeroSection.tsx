@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -31,7 +32,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRequestAssessment }) => {
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
             <h3 className="text-sm font-medium text-sapp-blue tracking-wider">Security Assessment</h3>
           </div>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
+          <h1 id="physical-security-heading" className="text-4xl md:text-5xl font-display font-bold text-sapp-dark mb-6">
             Physical Security Assessments
           </h1>
           <p className="text-lg text-sapp-gray mb-8 max-w-2xl mx-auto">

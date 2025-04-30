@@ -31,7 +31,7 @@ const SecurityAudits = () => {
         <meta property="og:url" content="https://www.sappsecurity.com/security-audits" />
       </Helmet>
       <Navbar />
-      <main>
+      <main aria-labelledby="security-audits-heading">
         <HeroSection />
         <WhyIndependentAudits />
         <QuoteSection />
