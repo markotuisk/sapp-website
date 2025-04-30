@@ -1,16 +1,25 @@
 
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import AboutHero from '@/components/home/about/AboutHero';
-import OurStory from '@/components/home/about/OurStory';
-import OurApproach from '@/components/home/about/OurApproach';
-import JoinTeam from '@/components/home/about/JoinTeam';
-import FoundingTeam from '@/components/home/FoundingTeam';
-import VisionMission from '@/components/home/VisionMission';
-import Contact from '@/components/home/contact/Contact';
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
+
+// Lazy load components
+const AboutHero = lazy(() => import('@/components/home/about/AboutHero'));
+const OurStory = lazy(() => import('@/components/home/about/OurStory'));
+const OurApproach = lazy(() => import('@/components/home/about/OurApproach'));
+const JoinTeam = lazy(() => import('@/components/home/about/JoinTeam'));
+const FoundingTeam = lazy(() => import('@/components/home/FoundingTeam'));
+const VisionMission = lazy(() => import('@/components/home/VisionMission'));
+const Contact = lazy(() => import('@/components/home/contact/Contact'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex justify-center items-center py-12">
+    <div className="w-8 h-8 border-4 border-sapp-blue border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 const About = () => {
   const location = useLocation();
@@ -31,14 +40,16 @@ const About = () => {
       <Navbar />
       <main aria-labelledby="about-heading">
         <AboutHero />
-        <OurStory />
-        <FoundingTeam />
-        <OurApproach />
-        <VisionMission />
-        <JoinTeam />
-        <div id="contact">
-          <Contact />
-        </div>
+        <Suspense fallback={<LoadingFallback />}>
+          <OurStory />
+          <FoundingTeam />
+          <OurApproach />
+          <VisionMission />
+          <JoinTeam />
+          <div id="contact">
+            <Contact />
+          </div>
+        </Suspense>
       </main>
       <Footer />
     </div>

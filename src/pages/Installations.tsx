@@ -1,15 +1,24 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
-import QuoteSection from '@/components/installations/QuoteSection';
 import HeroSection from '@/components/installations/HeroSection';
-import SolutionsSection from '@/components/installations/SolutionsSection';
-import CapabilitiesSection from '@/components/installations/CapabilitiesSection';
-import DeploymentSection from '@/components/installations/DeploymentSection';
-import DeploymentConsultationSection from '@/components/installations/DeploymentConsultationSection';
-import CTASection from '@/components/installations/CTASection';
+
+// Lazy load components
+const QuoteSection = lazy(() => import('@/components/installations/QuoteSection'));
+const SolutionsSection = lazy(() => import('@/components/installations/SolutionsSection'));
+const CapabilitiesSection = lazy(() => import('@/components/installations/CapabilitiesSection'));
+const DeploymentSection = lazy(() => import('@/components/installations/DeploymentSection'));
+const DeploymentConsultationSection = lazy(() => import('@/components/installations/DeploymentConsultationSection'));
+const CTASection = lazy(() => import('@/components/installations/CTASection'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex justify-center items-center py-8">
+    <div className="w-6 h-6 border-3 border-sapp-blue border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 const Installations = () => {
   const { t } = useLanguage();
@@ -24,12 +33,14 @@ const Installations = () => {
       <Navbar />
       <main aria-labelledby="installations-heading">
         <HeroSection />
-        <SolutionsSection />
-        <QuoteSection />
-        <CapabilitiesSection />
-        <DeploymentSection />
-        <DeploymentConsultationSection />
-        <CTASection />
+        <Suspense fallback={<LoadingFallback />}>
+          <SolutionsSection />
+          <QuoteSection />
+          <CapabilitiesSection />
+          <DeploymentSection />
+          <DeploymentConsultationSection />
+          <CTASection />
+        </Suspense>
       </main>
       <Footer />
     </div>
