@@ -10,11 +10,11 @@ const AboutHero = () => {
   });
 
   return (
-    <section id="about-hero-section" className="relative overflow-hidden bg-white py-16 md:py-24">
-      {/* Add a spacer div at the top to create proper padding without affecting layout */}
-      <div className="h-20 md:h-24"></div>
+    <section id="about-hero-section" className="relative overflow-hidden bg-white">
+      {/* Navigation offset - ensures content starts below fixed navbar */}
+      <div className="h-24 md:h-28"></div>
       
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="order-1">
             <div className="max-w-2xl" ref={ref}>
