@@ -1,13 +1,17 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import ServicesOverlay from '@/components/ui/ServicesOverlay';
 
 const Hero = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
@@ -21,7 +25,7 @@ const Hero = () => {
             )}
             ref={ref}
           >
-            Comprehensive <span className="text-sapp-blue">security solutions</span> for businesses
+            Your trusted technical security and privacy partner
           </h1>
           
           <p 
@@ -30,7 +34,7 @@ const Hero = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Protect your organisation with comprehensive security services, including cyber security, physical security, and event security.
+            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security.
           </p>
           
           <p 
@@ -51,22 +55,21 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
+              onClick={() => setServicesOpen(true)}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                Explore Our Services
+                Rapid Service Navigator
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-sapp-dark to-sapp-blue opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-sapp-blue text-sapp-blue hover:bg-sapp-blue/10 w-full sm:w-auto transition-all duration-300"
-            >
-              Contact Us
             </Button>
           </div>
         </div>
       </div>
+
+      <ServicesOverlay 
+        open={servicesOpen}
+        onOpenChange={setServicesOpen}
+      />
     </section>
   );
 };
