@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { Twitter, Linkedin } from 'lucide-react';
 import type { FounderCardProps } from './types';
 
 export const FounderCard: React.FC<FounderCardProps> = ({ 
@@ -29,6 +30,31 @@ export const FounderCard: React.FC<FounderCardProps> = ({
           <h3 className="text-xl font-bold text-sapp-dark mb-1">{founder.name}</h3>
           <p className="text-sapp-blue font-medium mb-3">{founder.title}</p>
           <p className="text-sapp-gray text-sm">{founder.bio}</p>
+          
+          <div className="flex justify-center items-center mt-4 space-x-3">
+            {founder.linkedin && (
+              <a 
+                href={founder.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-sapp-blue transition-colors duration-300"
+                aria-label={`${founder.name}'s LinkedIn profile`}
+              >
+                <Linkedin size={20} />
+              </a>
+            )}
+            {founder.twitter && (
+              <a 
+                href={founder.twitter} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-sapp-blue transition-colors duration-300"
+                aria-label={`${founder.name}'s Twitter profile`}
+              >
+                <Twitter size={20} />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </Animated>

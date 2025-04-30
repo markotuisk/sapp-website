@@ -1,5 +1,5 @@
 
-import { useEffect, lazy, Suspense, useState, useTransition } from 'react';
+import { useEffect, lazy, Suspense, useState, useTransition, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -27,15 +27,31 @@ const About = () => {
   const { isDebugMode } = useDebugContext();
   const [isPending, startTransition] = useTransition();
   const [mounted, setMounted] = useState(false);
+  const pageRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     logEvent('PageMount', { path: location.pathname });
-    window.scrollTo(0, 0);
+    
+    // Handle scrolling to the top when the page loads
+    if (pageRef.current) {
+      pageRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+    } else {
+      window.scrollTo(0, 0);
+    }
     
     // Use startTransition to prevent suspension during initial render
     startTransition(() => {
       setMounted(true);
     });
+    
+    // Handle any URL hash for scrolling to sections
+    if (location.hash) {
+      const id = location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
     
     return () => {
       logEvent('PageUnmount', { path: location.pathname });
@@ -43,7 +59,7 @@ const About = () => {
   }, [location, logEvent]);
 
   const content = (
-    <div className="min-h-screen">
+    <div className="min-h-screen" ref={pageRef}>
       <Navbar />
       <main aria-labelledby="about-heading">
         <Suspense fallback={<LoadingFallback />}>

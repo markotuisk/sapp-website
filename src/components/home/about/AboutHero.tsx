@@ -45,7 +45,7 @@ const AboutHero = () => {
             >
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img 
-                  src="/lovable-uploads/ed2d65bf-fbeb-4c89-aedf-679dc7249a9a.png" 
+                  src="/lovable-uploads/7708cec8-524d-4c91-ba6b-9a96ddf50e70.png" 
                   alt="SAPP Security Team" 
                   className="w-full h-auto object-cover"
                 />

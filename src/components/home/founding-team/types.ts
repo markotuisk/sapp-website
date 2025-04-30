@@ -4,6 +4,8 @@ export interface Founder {
   title: string;
   bio: string;
   image: string;
+  linkedin?: string;
+  twitter?: string;
 }
 
 export interface FounderCardProps {
