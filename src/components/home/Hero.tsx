@@ -25,7 +25,7 @@ const Hero = () => {
             )}
             ref={ref}
           >
-            Your trusted technical security and privacy partner
+            Your <span className="text-sapp-blue">trusted</span> technical <span className="text-sapp-blue">security</span> and privacy <span className="text-sapp-blue">partner</span>
           </h1>
           
           <p 

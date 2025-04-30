@@ -1,4 +1,3 @@
-
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
@@ -79,7 +78,7 @@ const Services = () => {
             )}
           >
             We provide a wide range of technical security services designed to protect
-            your organization's most valuable assets and information, with seamless integration of industry-leading third-party solutions where needed.
+            your organisation's most valuable assets and information, with seamless integration of industry-leading third-party solutions where needed.
           </p>
         </div>
 
