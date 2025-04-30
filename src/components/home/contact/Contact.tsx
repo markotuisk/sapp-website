@@ -9,6 +9,8 @@ import ContactFormSection from './ContactFormSection';
 import ContactFormPreview from './ContactFormPreview';
 import { ContactFormValues } from './types';
 import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -18,6 +20,8 @@ const Contact = () => {
   
   const [showPreview, setShowPreview] = useState(false);
   const [submissionData, setSubmissionData] = useState<ContactFormValues | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   
   const {
     copiedEmail,
@@ -33,8 +37,71 @@ const Contact = () => {
     setShowPreview(true);
   };
 
-  const handleConfirmSubmission = () => {
-    // This functionality is handled by ContactFormSection
+  const handleConfirmSubmission = async () => {
+    if (!submissionData) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Log the submission attempt with sanitized data
+      console.log('Submitting contact form', {
+        name: submissionData.name,
+        email: submissionData.email,
+        hasOrganization: !!submissionData.organization,
+        messageLength: submissionData.message.length
+      });
+
+      // First, submit the contact form to the database
+      const { data, error: submissionError } = await supabase.rpc('submit_contact_form', {
+        name_input: submissionData.name,
+        email_input: submissionData.email,
+        organization_input: submissionData.organization || null,
+        message_input: submissionData.message,
+        pages_visited_input: {} // Empty object since we're not tracking pages
+      });
+
+      if (submissionError) {
+        console.error('Database submission error:', submissionError);
+        throw submissionError;
+      }
+
+      console.log('Form successfully submitted to database. Lead ID:', data[0].lead_id);
+
+      // If database submission is successful, send emails via edge function
+      const emailResponse = await supabase.functions.invoke('send-contact-confirmation', {
+        body: JSON.stringify({
+          name: submissionData.name,
+          email: submissionData.email,
+          organization: submissionData.organization,
+          message: submissionData.message,
+          leadId: data[0].lead_id
+        })
+      });
+
+      // Log the email response for debugging
+      console.log('Email service response:', emailResponse);
+
+      // Show success toast
+      toast({
+        title: "Message sent!",
+        description: "Thank you for contacting us. We'll be in touch shortly.",
+        duration: 3000,
+      });
+      
+      // Close preview and reset form
+      setShowPreview(false);
+      setSubmissionData(null);
+      
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again later or contact support if the issue persists.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -107,6 +174,7 @@ const Contact = () => {
         submissionData={submissionData}
         userMetadata={userMetadata}
         handleConfirmSubmission={handleConfirmSubmission}
+        isSubmitting={isSubmitting}
       />
     </section>
   );

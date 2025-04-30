@@ -10,6 +10,7 @@ interface ContactFormPreviewProps {
   submissionData: ContactFormValues | null;
   userMetadata: UserMetadata;
   handleConfirmSubmission: () => void;
+  isSubmitting?: boolean;
 }
 
 export default function ContactFormPreview({
@@ -17,7 +18,8 @@ export default function ContactFormPreview({
   setShowPreview,
   submissionData,
   userMetadata,
-  handleConfirmSubmission
+  handleConfirmSubmission,
+  isSubmitting = false
 }: ContactFormPreviewProps) {
   return (
     <Dialog open={showPreview} onOpenChange={setShowPreview}>
@@ -37,10 +39,12 @@ export default function ContactFormPreview({
                 <p className="text-sapp-dark">{submissionData.name}</p>
               </div>
               
-              <div className="space-y-2">
-                <h4 className="font-semibold text-sm text-muted-foreground">Topic</h4>
-                <p className="text-sapp-dark">{submissionData.topic}</p>
-              </div>
+              {submissionData.topic && (
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-sm text-muted-foreground">Topic</h4>
+                  <p className="text-sapp-dark">{submissionData.topic}</p>
+                </div>
+              )}
 
               {submissionData.email && (
                 <div className="space-y-2">
@@ -95,14 +99,23 @@ export default function ContactFormPreview({
           <Button 
             variant="outline" 
             onClick={() => setShowPreview(false)}
+            disabled={isSubmitting}
           >
             Edit Details
           </Button>
           <Button 
             onClick={handleConfirmSubmission}
             className="bg-sapp-blue hover:bg-sapp-blue/90 text-white"
+            disabled={isSubmitting}
           >
-            Confirm & Send Message
+            {isSubmitting ? (
+              <>
+                <span className="inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                Sending...
+              </>
+            ) : (
+              'Confirm & Send Message'
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>
