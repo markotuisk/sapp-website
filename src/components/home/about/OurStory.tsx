@@ -1,13 +1,16 @@
+
 import React from 'react';
+import SectionLabel from '@/components/ui/SectionLabel';
 
 const OurStory = () => {
   return (
     <section id="our-story" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <h3 className="text-sapp-blue text-[19px] leading-[77px] tracking-[3.62px] font-medium mb-4">
-            FOUNDERS STORY
-          </h3>
+          <SectionLabel>FOUNDERS STORY</SectionLabel>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-sapp-dark">
+            Our Security Journey
+          </h2>
           <p className="text-sapp-gray">We brings together versatile backgrounds and security expertise with a vision to converge physical and digital security</p>
         </div>
         
