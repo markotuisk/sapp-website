@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useTransition } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -22,10 +22,16 @@ const LoadingFallback = () => (
 
 const Installations = () => {
   const { t } = useLanguage();
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isPending, startTransition] = useTransition();
+  const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    // Use startTransition to prevent suspension during initial render
+    startTransition(() => {
+      setMounted(true);
+    });
   }, []);
 
   return (
@@ -34,12 +40,16 @@ const Installations = () => {
       <main aria-labelledby="installations-heading">
         <HeroSection />
         <Suspense fallback={<LoadingFallback />}>
-          <SolutionsSection />
-          <QuoteSection />
-          <CapabilitiesSection />
-          <DeploymentSection />
-          <DeploymentConsultationSection />
-          <CTASection />
+          {mounted && (
+            <>
+              <SolutionsSection />
+              <QuoteSection />
+              <CapabilitiesSection />
+              <DeploymentSection />
+              <DeploymentConsultationSection />
+              <CTASection />
+            </>
+          )}
         </Suspense>
       </main>
       <Footer />

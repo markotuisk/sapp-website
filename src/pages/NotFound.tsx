@@ -1,17 +1,24 @@
 
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
 const NotFound = () => {
   const location = useLocation();
   const { logEvent } = useComponentLogger('NotFoundPage');
   const { isDebugMode } = useDebugContext();
+  const [isPending, startTransition] = useTransition();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     logEvent('404Error', {
       attemptedPath: location.pathname,
       timestamp: new Date().toISOString()
+    });
+    
+    // Use startTransition to prevent suspension during initial render
+    startTransition(() => {
+      setMounted(true);
     });
   }, [location.pathname, logEvent]);
 

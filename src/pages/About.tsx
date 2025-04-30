@@ -1,5 +1,5 @@
 
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense, useState, useTransition } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -25,10 +25,17 @@ const About = () => {
   const location = useLocation();
   const { logEvent } = useComponentLogger('AboutPage');
   const { isDebugMode } = useDebugContext();
+  const [isPending, startTransition] = useTransition();
+  const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     logEvent('PageMount', { path: location.pathname });
     window.scrollTo(0, 0);
+    
+    // Use startTransition to prevent suspension during initial render
+    startTransition(() => {
+      setMounted(true);
+    });
     
     return () => {
       logEvent('PageUnmount', { path: location.pathname });
@@ -39,16 +46,22 @@ const About = () => {
     <div className="min-h-screen">
       <Navbar />
       <main aria-labelledby="about-heading">
-        <AboutHero />
         <Suspense fallback={<LoadingFallback />}>
-          <OurStory />
-          <FoundingTeam />
-          <OurApproach />
-          <VisionMission />
-          <JoinTeam />
-          <div id="contact">
-            <Contact />
-          </div>
+          {mounted && <AboutHero />}
+        </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          {mounted && (
+            <>
+              <OurStory />
+              <FoundingTeam />
+              <OurApproach />
+              <VisionMission />
+              <JoinTeam />
+              <div id="contact">
+                <Contact />
+              </div>
+            </>
+          )}
         </Suspense>
       </main>
       <Footer />
