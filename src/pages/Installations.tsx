@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import HeroSection from '@/components/installations/HeroSection';
 
 // Lazy load components
-const QuoteSection = lazy(() => import('@/components/installations/QuoteSection'));
+const InstallationsQuoteSection = lazy(() => import('@/components/installations/QuoteSection'));
 const SolutionsSection = lazy(() => import('@/components/installations/SolutionsSection'));
 const CapabilitiesSection = lazy(() => import('@/components/installations/CapabilitiesSection'));
 const DeploymentSection = lazy(() => import('@/components/installations/DeploymentSection'));
@@ -43,7 +43,7 @@ const Installations = () => {
           {mounted && (
             <>
               <SolutionsSection />
-              <QuoteSection />
+              <InstallationsQuoteSection />
               <CapabilitiesSection />
               <DeploymentSection />
               <DeploymentConsultationSection />

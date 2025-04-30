@@ -9,7 +9,7 @@ import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugToo
 import HeroSection from '@/components/cyber-security/HeroSection';
 import ServicesSection from '@/components/cyber-security/ServicesSection';
 import FeaturesSection from '@/components/cyber-security/FeaturesSection';
-import QuoteSection from '@/components/cyber-security/QuoteSection';
+import CyberSecurityQuoteSection from '@/components/cyber-security/QuoteSection';
 import CTASection from '@/components/cyber-security/CTASection';
 import Contact from '@/components/home/contact/Contact';
 
@@ -43,7 +43,7 @@ const CyberSecurity = React.memo(() => {
         <div className="space-y-16 md:space-y-24">
           <HeroSection />
           <ServicesSection />
-          <QuoteSection />
+          <CyberSecurityQuoteSection />
           <FeaturesSection />
           <CTASection />
           <Contact />

@@ -3,7 +3,7 @@ import React from 'react';
 import QuoteCard from '@/components/ui/QuoteCard';
 import { Animated } from '@/components/ui/AnimatedElements';
 
-const QuoteSection = () => {
+const InstallationsQuoteSection = () => {
   return (
     <section className="py-16 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -24,4 +24,4 @@ const QuoteSection = () => {
   );
 };
 
-export default QuoteSection;
+export default InstallationsQuoteSection;

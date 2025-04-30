@@ -1,7 +1,8 @@
+
 import React from 'react';
 import QuoteCard from '@/components/ui/QuoteCard';
 
-const QuoteSection: React.FC = () => {
+const PhysicalSecurityQuoteSection: React.FC = () => {
   return (
     <section className="py-16 bg-slate-50">
       <div className="container mx-auto px-6">
@@ -15,4 +16,4 @@ const QuoteSection: React.FC = () => {
   );
 };
 
-export default QuoteSection;
+export default PhysicalSecurityQuoteSection;

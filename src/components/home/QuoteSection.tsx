@@ -2,7 +2,7 @@
 import React from 'react';
 import InsightQuote from '@/components/home/InsightQuote';
 
-const QuoteSection = () => {
+const HomeQuoteSection = () => {
   return (
     <section className="py-16 relative overflow-hidden">
       <div className="container mx-auto px-6">
@@ -19,5 +19,4 @@ const QuoteSection = () => {
   );
 };
 
-export default QuoteSection;
-
+export default HomeQuoteSection;
