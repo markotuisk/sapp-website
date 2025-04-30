@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { Twitter, Linkedin } from 'lucide-react';
+import { Twitter, Linkedin, Github } from 'lucide-react';
 import type { FounderCardProps } from './types';
 
 export const FounderCard: React.FC<FounderCardProps> = ({ 
@@ -52,6 +52,17 @@ export const FounderCard: React.FC<FounderCardProps> = ({
                 aria-label={`${founder.name}'s Twitter profile`}
               >
                 <Twitter size={20} />
+              </a>
+            )}
+            {founder.github && (
+              <a 
+                href={founder.github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-sapp-blue transition-colors duration-300"
+                aria-label={`${founder.name}'s GitHub profile`}
+              >
+                <Github size={20} />
               </a>
             )}
           </div>

@@ -6,6 +6,7 @@ export interface Founder {
   image: string;
   linkedin?: string;
   twitter?: string;
+  github?: string;
 }
 
 export interface FounderCardProps {
