@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
+import { cn } from '@/lib/utils';
 import {
   Accordion,
   AccordionContent,
@@ -8,6 +10,11 @@ import {
 } from "@/components/ui/accordion";
 
 const FAQSection: React.FC = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   const faqs = [
     {
       question: "What exactly is TSCM?",
@@ -44,9 +51,12 @@ const FAQSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
+    <section ref={ref} className="py-20 md:py-28 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className={cn(
+          "text-center max-w-3xl mx-auto mb-16 transition-all duration-700",
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        )}>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
             Frequently Asked Questions
           </h2>
@@ -55,10 +65,22 @@ const FAQSection: React.FC = () => {
           </p>
         </div>
         
-        <div className="max-w-3xl mx-auto">
+        <div className={cn(
+          "max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 transition-all duration-700",
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        )}>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={index} className="border-b border-gray-200">
+              <AccordionItem 
+                value={`item-${index}`} 
+                key={index} 
+                className={cn(
+                  "transition-all duration-500",
+                  index !== faqs.length - 1 ? "border-b border-gray-200" : "",
+                  inView ? "opacity-100" : "opacity-0"
+                )}
+                style={{ transitionDelay: `${200 + index * 100}ms` }}
+              >
                 <AccordionTrigger className="text-left font-medium text-sapp-dark hover:text-sapp-blue py-4">
                   {faq.question}
                 </AccordionTrigger>
@@ -70,7 +92,10 @@ const FAQSection: React.FC = () => {
           </Accordion>
         </div>
         
-        <div className="mt-12 text-center">
+        <div className={cn(
+          "mt-12 text-center transition-all duration-700 delay-1000",
+          inView ? "opacity-100" : "opacity-0"
+        )}>
           <p className="text-sapp-gray max-w-2xl mx-auto">
             Have more questions? Contact our TSCM specialists for confidential assistance with your specific concerns.
           </p>

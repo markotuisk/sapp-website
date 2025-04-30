@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { useInView } from 'react-intersection-observer';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { Briefcase, Home, Car, Building } from 'lucide-react';
 
 const ServicesSection: React.FC = () => {
   const [ref, inView] = useInView({
@@ -14,6 +14,7 @@ const ServicesSection: React.FC = () => {
 
   const services = [
     {
+      icon: <Briefcase className="h-6 w-6 text-sapp-blue" />,
       title: "Corporate TSCM Inspections",
       description: "Protect your boardrooms, executive offices, and other sensitive spaces from corporate espionage.",
       features: [
@@ -25,6 +26,7 @@ const ServicesSection: React.FC = () => {
       path: "/tscm/corporate"
     },
     {
+      icon: <Home className="h-6 w-6 text-sapp-blue" />,
       title: "Private & Residential TSCM",
       description: "Ensure your home and personal spaces remain private and free from unwanted surveillance.",
       features: [
@@ -36,6 +38,7 @@ const ServicesSection: React.FC = () => {
       path: "/tscm/residential"
     },
     {
+      icon: <Car className="h-6 w-6 text-sapp-blue" />,
       title: "Vehicle & Travel TSCM",
       description: "Secure your vehicles, hotel rooms, and temporary spaces during travel and important events.",
       features: [
@@ -47,6 +50,7 @@ const ServicesSection: React.FC = () => {
       path: "/tscm/travel"
     },
     {
+      icon: <Building className="h-6 w-6 text-sapp-blue" />,
       title: "Enterprise TSCM Programs",
       description: "Ongoing protection and monitoring for organizations requiring continuous security assurance.",
       features: [
@@ -60,9 +64,12 @@ const ServicesSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-white" id="services" ref={ref}>
+    <section ref={ref} className="py-20 md:py-28 bg-white" id="services">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className={cn(
+          "text-center max-w-3xl mx-auto mb-16 transition-all duration-700",
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        )}>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
             Our TSCM Services
           </h2>
@@ -73,38 +80,58 @@ const ServicesSection: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, index) => (
-            <div key={index} 
+            <div 
+              key={index}
               className={cn(
-                "transition-all duration-700 transform",
-                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12",
+                "bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1 border border-gray-100",
+                inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               )}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              <Card className="h-full">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-display text-sapp-dark">{service.title}</CardTitle>
-                  <CardDescription className="text-base">{service.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <ul className="space-y-2">
+              <div className="p-7">
+                <div className="flex items-center mb-5">
+                  <div className="w-12 h-12 bg-sapp-blue/10 rounded-full flex items-center justify-center mr-4">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-display font-semibold text-sapp-dark">
+                    {service.title}
+                  </h3>
+                </div>
+                
+                <p className="text-sapp-gray mb-6">
+                  {service.description}
+                </p>
+                
+                <div className="bg-gray-50 rounded-lg p-5 mb-6">
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
                     {service.features.map((feature, i) => (
-                      <li key={i} className="flex items-start">
-                        <span className="text-sapp-blue mr-2 text-lg">•</span>
-                        <span>{feature}</span>
+                      <li key={i} className="flex items-center">
+                        <span className="w-5 h-5 bg-sapp-blue/10 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                          <span className="block h-1.5 w-1.5 rounded-full bg-sapp-blue"></span>
+                        </span>
+                        <span className="text-sm text-sapp-gray">{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <Button className="mt-4 bg-sapp-blue hover:bg-sapp-blue/90 text-white w-full" asChild>
-                    <Link to={service.path}>Learn More</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                </div>
+                
+                <Button 
+                  className="w-full bg-sapp-blue hover:bg-sapp-blue/90 text-white transition-all duration-300 hover:shadow-lg" 
+                  asChild
+                >
+                  <Link to={service.path}>Learn More</Link>
+                </Button>
+              </div>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <Button variant="outline" size="lg" className="border-sapp-blue text-sapp-blue hover:bg-sapp-blue/10">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="border-sapp-blue text-sapp-blue hover:bg-sapp-blue/10 hover:shadow-lg transition-all duration-300"
+          >
             View All Services
           </Button>
         </div>

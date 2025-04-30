@@ -2,6 +2,7 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
+import { FileText, Search, Lock, ChartBar } from 'lucide-react';
 
 const HowItWorksSection: React.FC = () => {
   const [ref, inView] = useInView({
@@ -9,10 +10,44 @@ const HowItWorksSection: React.FC = () => {
     threshold: 0.1,
   });
 
+  const steps = [
+    {
+      icon: <FileText className="h-8 w-8 text-white" />,
+      step: 1,
+      title: "Initial Consultation",
+      description: "We discuss your concerns and assess potential risks in a secure setting. This helps us understand your specific needs and tailor our approach.",
+      image: "assessment-planning"
+    },
+    {
+      icon: <Search className="h-8 w-8 text-white" />,
+      step: 2,
+      title: "Technical Sweep",
+      description: "Our engineers conduct a thorough inspection using specialized equipment to detect electronic surveillance devices, wireless transmitters, and other threats.",
+      image: "thorough-inspection"
+    },
+    {
+      icon: <ChartBar className="h-8 w-8 text-white" />,
+      step: 3,
+      title: "Analysis & Verification",
+      description: "We analyze all findings, validate potential threats, and document evidence of surveillance when discovered.",
+      image: "detailed-analysis"
+    },
+    {
+      icon: <Lock className="h-8 w-8 text-white" />,
+      step: 4,
+      title: "Comprehensive Reporting",
+      description: "Receive a detailed report with findings, recommendations, and ongoing security measures to protect against future threats.",
+      image: "secure-reporting"
+    }
+  ];
+
   return (
-    <section className="py-16 md:py-24 bg-gray-50" ref={ref}>
+    <section ref={ref} className="py-20 md:py-28 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className={cn(
+          "text-center max-w-3xl mx-auto mb-16 transition-all duration-700",
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        )}>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
             Our TSCM Process
           </h2>
@@ -22,128 +57,40 @@ const HowItWorksSection: React.FC = () => {
         </div>
         
         <div className="max-w-5xl mx-auto">
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-sapp-blue/20 hidden md:block"></div>
-            
-            {/* Steps */}
-            <div className="space-y-24 relative">
-              {/* Step 1 */}
-              <div className={cn(
-                "flex flex-col md:flex-row items-center transition-all duration-700",
-                inView ? "opacity-100" : "opacity-0 translate-y-12"
-              )}>
-                <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12 md:text-right">
-                  <div className="bg-white rounded-xl shadow-lg p-6 md:ml-auto md:mr-0 max-w-md">
-                    <span className="inline-block px-3 py-1 bg-sapp-blue/10 text-sapp-blue rounded-full text-sm font-medium mb-4">STEP 1</span>
-                    <h3 className="text-2xl font-display font-semibold mb-3 text-sapp-dark">Initial Consultation</h3>
-                    <p className="text-sapp-gray">
-                      We discuss your concerns and assess potential risks in a secure setting. This helps us understand your specific needs and tailor our approach.
-                    </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {steps.map((step, index) => (
+              <div 
+                key={index}
+                className={cn(
+                  "bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transition-all duration-700 transform",
+                  inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                )}
+                style={{ transitionDelay: `${index * 200}ms` }}
+              >
+                <div className="h-2 bg-gradient-to-r from-sapp-blue to-accent-dark-blue"></div>
+                <div className="p-7">
+                  <div className="flex items-center mb-5">
+                    <div className="w-12 h-12 bg-sapp-blue rounded-lg flex items-center justify-center mr-4 shadow-lg">
+                      {step.icon}
+                    </div>
+                    <h3 className="text-xl font-display font-semibold text-sapp-dark">
+                      <span className="text-sapp-blue mr-2">{step.step}.</span> {step.title}
+                    </h3>
                   </div>
-                </div>
-                <div className="md:w-1/2 relative">
-                  <div className="w-12 h-12 rounded-full bg-sapp-blue flex items-center justify-center text-white font-bold text-xl absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 shadow-lg hidden md:flex">1</div>
-                  <div className="md:pl-12">
-                    <div className="bg-gradient-to-br from-slate-100 to-white rounded-xl h-64 shadow overflow-hidden relative">
-                      <div className="absolute inset-0 flex items-center justify-center p-6">
-                        <div className="text-center">
-                          <span className="text-5xl mb-3 block text-sapp-blue/20">📋</span>
-                          <span className="text-xl font-medium text-sapp-gray">Assessment & Planning</span>
-                        </div>
-                      </div>
+                  
+                  <p className="text-sapp-gray mb-6">
+                    {step.description}
+                  </p>
+                  
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 h-32 rounded-lg flex items-center justify-center">
+                    <div className="text-center opacity-60">
+                      <span className="text-4xl mb-2 block">{step.step === 1 ? '📋' : step.step === 2 ? '🔍' : step.step === 3 ? '🔬' : '📊'}</span>
+                      <span className="text-sm font-medium text-sapp-gray">{step.image.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</span>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              {/* Step 2 */}
-              <div className={cn(
-                "flex flex-col md:flex-row-reverse items-center transition-all duration-700",
-                inView ? "opacity-100 delay-300" : "opacity-0 translate-y-12"
-              )}>
-                <div className="md:w-1/2 mb-8 md:mb-0 md:pl-12 md:text-left">
-                  <div className="bg-white rounded-xl shadow-lg p-6 md:mr-auto md:ml-0 max-w-md">
-                    <span className="inline-block px-3 py-1 bg-sapp-blue/10 text-sapp-blue rounded-full text-sm font-medium mb-4">STEP 2</span>
-                    <h3 className="text-2xl font-display font-semibold mb-3 text-sapp-dark">Technical Sweep</h3>
-                    <p className="text-sapp-gray">
-                      Our engineers conduct a thorough inspection using specialized equipment to detect electronic surveillance devices, wireless transmitters, and other threats.
-                    </p>
-                  </div>
-                </div>
-                <div className="md:w-1/2 relative">
-                  <div className="w-12 h-12 rounded-full bg-sapp-blue flex items-center justify-center text-white font-bold text-xl absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 shadow-lg hidden md:flex">2</div>
-                  <div className="md:pr-12">
-                    <div className="bg-gradient-to-br from-slate-100 to-white rounded-xl h-64 shadow overflow-hidden relative">
-                      <div className="absolute inset-0 flex items-center justify-center p-6">
-                        <div className="text-center">
-                          <span className="text-5xl mb-3 block text-sapp-blue/20">🔍</span>
-                          <span className="text-xl font-medium text-sapp-gray">Thorough Inspection</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 3 */}
-              <div className={cn(
-                "flex flex-col md:flex-row items-center transition-all duration-700",
-                inView ? "opacity-100 delay-600" : "opacity-0 translate-y-12"
-              )}>
-                <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12 md:text-right">
-                  <div className="bg-white rounded-xl shadow-lg p-6 md:ml-auto md:mr-0 max-w-md">
-                    <span className="inline-block px-3 py-1 bg-sapp-blue/10 text-sapp-blue rounded-full text-sm font-medium mb-4">STEP 3</span>
-                    <h3 className="text-2xl font-display font-semibold mb-3 text-sapp-dark">Analysis & Verification</h3>
-                    <p className="text-sapp-gray">
-                      We analyze all findings, validate potential threats, and document evidence of surveillance when discovered.
-                    </p>
-                  </div>
-                </div>
-                <div className="md:w-1/2 relative">
-                  <div className="w-12 h-12 rounded-full bg-sapp-blue flex items-center justify-center text-white font-bold text-xl absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 shadow-lg hidden md:flex">3</div>
-                  <div className="md:pl-12">
-                    <div className="bg-gradient-to-br from-slate-100 to-white rounded-xl h-64 shadow overflow-hidden relative">
-                      <div className="absolute inset-0 flex items-center justify-center p-6">
-                        <div className="text-center">
-                          <span className="text-5xl mb-3 block text-sapp-blue/20">🔬</span>
-                          <span className="text-xl font-medium text-sapp-gray">Detailed Analysis</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 4 */}
-              <div className={cn(
-                "flex flex-col md:flex-row-reverse items-center transition-all duration-700",
-                inView ? "opacity-100 delay-900" : "opacity-0 translate-y-12"
-              )}>
-                <div className="md:w-1/2 mb-8 md:mb-0 md:pl-12 md:text-left">
-                  <div className="bg-white rounded-xl shadow-lg p-6 md:mr-auto md:ml-0 max-w-md">
-                    <span className="inline-block px-3 py-1 bg-sapp-blue/10 text-sapp-blue rounded-full text-sm font-medium mb-4">STEP 4</span>
-                    <h3 className="text-2xl font-display font-semibold mb-3 text-sapp-dark">Comprehensive Reporting</h3>
-                    <p className="text-sapp-gray">
-                      Receive a detailed report with findings, recommendations, and ongoing security measures to protect against future threats.
-                    </p>
-                  </div>
-                </div>
-                <div className="md:w-1/2 relative">
-                  <div className="w-12 h-12 rounded-full bg-sapp-blue flex items-center justify-center text-white font-bold text-xl absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 shadow-lg hidden md:flex">4</div>
-                  <div className="md:pr-12">
-                    <div className="bg-gradient-to-br from-slate-100 to-white rounded-xl h-64 shadow overflow-hidden relative">
-                      <div className="absolute inset-0 flex items-center justify-center p-6">
-                        <div className="text-center">
-                          <span className="text-5xl mb-3 block text-sapp-blue/20">📊</span>
-                          <span className="text-xl font-medium text-sapp-gray">Secure Reporting</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

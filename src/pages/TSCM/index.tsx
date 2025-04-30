@@ -28,7 +28,7 @@ const TSCM = () => {
       
       <Navbar />
       
-      <main>
+      <main className="overflow-hidden">
         <HeroSection />
         <BenefitsSection />
         <HowItWorksSection />

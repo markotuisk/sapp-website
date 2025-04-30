@@ -2,7 +2,7 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import QuoteCard from '@/components/ui/QuoteCard';
+import { Quote } from 'lucide-react';
 
 const TestimonialsSection: React.FC = () => {
   const [ref, inView] = useInView({
@@ -29,9 +29,12 @@ const TestimonialsSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-white" ref={ref}>
+    <section className="py-20 md:py-28 bg-gray-50" ref={ref}>
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className={cn(
+          "text-center max-w-3xl mx-auto mb-16 transition-all duration-700",
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        )}>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-4">
             Client Testimonials
           </h2>
@@ -45,16 +48,26 @@ const TestimonialsSection: React.FC = () => {
             <div 
               key={index} 
               className={cn(
-                "transition-all duration-700",
+                "bg-gradient-to-br from-[#F8F9FF] to-white rounded-xl p-8 shadow-xl border border-gray-100/40 transition-all duration-700 hover:shadow-2xl transform hover:-translate-y-1",
                 inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               )}
               style={{ transitionDelay: `${index * 200}ms` }}
             >
-              <QuoteCard
-                quote={testimonial.quote}
-                author={testimonial.author}
-                position={testimonial.position}
-              />
+              <Quote className="h-12 w-12 text-sapp-blue/20 mb-4" />
+              <blockquote className="mb-6">
+                <p className="text-xl md:text-2xl font-display italic text-sapp-dark leading-relaxed">
+                  "{testimonial.quote}"
+                </p>
+              </blockquote>
+              <footer className="flex items-center">
+                <div className="mr-4 h-12 w-12 bg-sapp-blue/10 rounded-full flex items-center justify-center text-sapp-blue font-medium">
+                  {testimonial.author.charAt(0)}
+                </div>
+                <div>
+                  <p className="font-semibold text-sapp-dark">{testimonial.author}</p>
+                  <p className="text-sm text-sapp-gray">{testimonial.position}</p>
+                </div>
+              </footer>
             </div>
           ))}
         </div>
