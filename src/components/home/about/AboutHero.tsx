@@ -10,7 +10,10 @@ const AboutHero = () => {
   });
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden bg-white pt-32 md:pt-40">
+    <section id="about-hero-section" className="relative overflow-hidden bg-white py-16 md:py-24">
+      {/* Add a spacer div at the top to create proper padding without affecting layout */}
+      <div className="h-20 md:h-24"></div>
+      
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="order-1">
