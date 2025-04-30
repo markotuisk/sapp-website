@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
@@ -134,7 +133,7 @@ const Partners = () => {
                 Become a SAPP Security Partner
               </h3>
               <p className="text-gray-300 mb-6">
-                Join our network of technology partners and security experts to deliver cutting-edge security solutions to organizations worldwide.
+                Join our network of technology partners and security experts to deliver cutting-edge security solutions to organisations worldwide.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 

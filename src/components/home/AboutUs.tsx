@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Shield, Check, Info, Users } from 'lucide-react';
