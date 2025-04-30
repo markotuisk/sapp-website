@@ -47,7 +47,7 @@ const Navbar = () => {
         'fixed top-0 w-full z-50 transition-all duration-300',
         isScrolled 
           ? 'bg-white shadow-sm border-b border-gray-200/50'
-          : 'bg-transparent'
+          : 'bg-white/80 backdrop-blur-md' // Changed from 'bg-transparent' to maintain slight opacity
       )}
       role="banner"
     >
