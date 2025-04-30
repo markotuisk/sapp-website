@@ -1,3 +1,4 @@
+
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import ServiceCard from '@/components/ui/ServiceCard';
@@ -21,28 +22,32 @@ const Services = () => {
       title: t('eventSecurity'),
       description: "Real-time protection for high-profile confidential meetings and events. We coordinate with third-party specialists where required.",
       href: "/event-security",
-      imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png"
+      imagePath: "/lovable-uploads/fc9a9c2e-5129-4b70-89e2-7617a4e5578a.png",
+      buttonText: "View Event Security"
     },
     {
       icon: <AlertTriangle className="h-6 w-6 text-sapp-blue" />,
       title: t('securityAudits'),
       description: "Certified ISO27001 physical security audits to identify security gaps and provide risk-based recommendations. Coordinated with compliance partners.",
       href: "/security-audits",
-      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
+      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png",
+      buttonText: "Explore Audit Services"
     },
     {
       icon: <MonitorCheck className="h-6 w-6 text-sapp-blue" />,
       title: t('installations'),
       description: "Implementation of cutting-edge security systems covering CCTV, access control, speech privacy, and more. Seamless integration with existing enterprise systems.",
       href: "/installations",
-      imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png"
+      imagePath: "/lovable-uploads/85184084-bca0-497c-8950-601f002a465f.png",
+      buttonText: "See Installations"
     },
     {
       icon: <Wifi className="h-6 w-6 text-sapp-blue" />,
       title: t('cyberSecurity'),
       description: "Enterprise-grade cyber security services protecting digital assets and IoT infrastructure from emerging threats. Partnerships with leading cybersecurity providers.",
       href: "/cyber-security",
-      imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png"
+      imagePath: "/lovable-uploads/234f523c-dec6-4bb9-8b48-d308fc61a7ec.png",
+      buttonText: "Discover Cyber Solutions"
     }
   ];
 
@@ -97,7 +102,7 @@ const Services = () => {
               <CardFooter className="mt-auto">
                 <Link to={service.href} className="w-full">
                   <Button className="bg-sapp-blue hover:bg-sapp-blue/90 w-full">
-                    Learn More
+                    {service.buttonText}
                   </Button>
                 </Link>
               </CardFooter>
