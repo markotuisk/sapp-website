@@ -39,7 +39,7 @@ const CyberSecurity = React.memo(() => {
       </Helmet>
       
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow" aria-labelledby="cyber-security-heading">
         <div className="space-y-16 md:space-y-24">
           <HeroSection />
           <ServicesSection />

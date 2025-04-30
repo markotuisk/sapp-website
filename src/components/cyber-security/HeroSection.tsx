@@ -24,6 +24,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24 relative z-10">
         <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
           <h1 
+            id="cyber-security-heading"
             className={cn(
               "text-4xl md:text-5xl lg:text-6xl font-display font-bold text-sapp-dark mb-6 transition-all duration-500 delay-100 leading-tight",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
