@@ -22,6 +22,7 @@ import About from "./pages/About";
 import CookieConsent from "./components/ui/CookieConsent";
 import VersionInfo from "./pages/VersionInfo";
 import ServiceNavigator from "./pages/ServiceNavigator";
+import TSCM from "./pages/TSCM";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,6 +61,7 @@ const App = () => {
                       <Route path="/about" element={<About />} />
                       <Route path="/version-info" element={<VersionInfo />} />
                       <Route path="/service-navigator" element={<ServiceNavigator />} />
+                      <Route path="/tscm" element={<TSCM />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <ConsentBanner />

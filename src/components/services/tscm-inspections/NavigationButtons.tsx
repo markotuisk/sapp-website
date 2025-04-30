@@ -14,9 +14,9 @@ const NavigationButtons: React.FC = () => {
             Back to Physical Security Assessments
           </Button>
         </Link>
-        <Link to="/services/compliance-audits">
+        <Link to="/tscm">
           <Button variant="outline" className="flex items-center gap-2 transition-all duration-300 hover:translate-x-[5px]">
-            Next: Compliance Audits
+            Learn more about TSCM
             <ArrowRight className="h-4 w-4" />
           </Button>
         </Link>
