@@ -2,7 +2,6 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const AboutHero = () => {
   const [ref, inView] = useInView({
@@ -48,13 +47,11 @@ const AboutHero = () => {
               )}
             >
               <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-100">
-                <AspectRatio ratio={4/3} className="w-full">
-                  <img 
-                    src="/lovable-uploads/7708cec8-524d-4c91-ba6b-9a96ddf50e70.png" 
-                    alt="SAPP Security Team" 
-                    className="w-full h-full object-cover"
-                  />
-                </AspectRatio>
+                <img 
+                  src="/lovable-uploads/7708cec8-524d-4c91-ba6b-9a96ddf50e70.png" 
+                  alt="SAPP Security Team" 
+                  className="w-full h-auto object-cover"
+                />
                 <div className="p-6 md:p-8">
                   <h3 className="font-display font-semibold text-xl md:text-2xl mb-3 text-accent-dark-blue">Trusted Professionals</h3>
                   <p className="text-sapp-gray">Our team combines industry expertise with innovative approach and personalized service to ensure your security needs are met with excellence.</p>
