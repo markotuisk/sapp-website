@@ -32,36 +32,57 @@ const About = () => {
   useEffect(() => {
     logEvent('PageMount', { path: location.pathname });
     
-    // Handle scrolling to the top when the page loads
-    if (pageRef.current) {
-      pageRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
-    } else {
-      window.scrollTo(0, 0);
-    }
+    // Handle initial scroll position - use setTimeout to ensure DOM is ready
+    setTimeout(() => {
+      if (location.hash) {
+        const id = location.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (pageRef.current) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'auto'
+        });
+      }
+    }, 100);
     
     // Use startTransition to prevent suspension during initial render
     startTransition(() => {
       setMounted(true);
     });
     
-    // Handle any URL hash for scrolling to sections
-    if (location.hash) {
-      const id = location.hash.substring(1);
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    
     return () => {
       logEvent('PageUnmount', { path: location.pathname });
     };
   }, [location, logEvent]);
 
+  // Handle hash changes after initial load
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (location.hash) {
+        setTimeout(() => {
+          const id = location.hash.substring(1);
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    };
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, [location.hash]);
+
   const content = (
-    <div className="min-h-screen" ref={pageRef}>
+    <div className="flex flex-col min-h-screen" ref={pageRef}>
       <Navbar />
-      <main aria-labelledby="about-heading">
+      <main className="flex-grow" aria-labelledby="about-heading">
         <Suspense fallback={<LoadingFallback />}>
           {mounted && <AboutHero />}
         </Suspense>
