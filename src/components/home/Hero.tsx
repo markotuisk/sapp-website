@@ -25,7 +25,8 @@ const Hero = () => {
             )}
             ref={ref}
           >
-            Your <span className="text-sapp-blue">trusted</span> technical <span className="text-sapp-blue">security</span> and privacy <span className="text-sapp-blue">partner</span>
+            Your <span className="text-sapp-blue">trusted</span> technical <span className="text-sapp-blue">security</span><br className="hidden md:block" />
+            and privacy <span className="text-sapp-blue">partner</span>
           </h1>
           
           <p 
@@ -34,7 +35,7 @@ const Hero = () => {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security.
+            Helping corporate clients with technical security services to seamlessly align compliance, physical and cyber security
           </p>
           
           <p 
