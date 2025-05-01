@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 const AcronymsResource = () => {
   const { 
@@ -188,11 +189,12 @@ const AcronymsResource = () => {
             <Card 
               key={acronym.id}
               className="cursor-pointer hover:shadow-md transition-shadow"
-              onClick={() => handleViewDetails(acronym)}
             >
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
-                  <CardTitle className="text-xl font-bold">{acronym.acronym}</CardTitle>
+                  <Link to={`/acronyms/${acronym.url_slug || acronym.id}`} className="hover:underline">
+                    <CardTitle className="text-xl font-bold">{acronym.acronym}</CardTitle>
+                  </Link>
                   <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200">
                     {acronym.category}
                   </Badge>

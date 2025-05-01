@@ -23,6 +23,7 @@ import CookieConsent from "./components/ui/CookieConsent";
 import VersionInfo from "./pages/VersionInfo";
 import ServiceNavigator from "./pages/ServiceNavigator";
 import TSCM from "./pages/TSCM";
+import AcronymDetail from "./pages/AcronymDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,6 +63,7 @@ const App = () => {
                       <Route path="/version-info" element={<VersionInfo />} />
                       <Route path="/service-navigator" element={<ServiceNavigator />} />
                       <Route path="/tscm" element={<TSCM />} />
+                      <Route path="/acronyms/:slug" element={<AcronymDetail />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <ConsentBanner />
