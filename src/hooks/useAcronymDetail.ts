@@ -38,12 +38,16 @@ export const useAcronymDetail = (slug: string | undefined) => {
       
       try {
         console.log("Loading acronym data for slug:", slug);
-        // Handle the "what-is-" prefix in slugs
-        const cleanSlug = slug.startsWith("what-is-") ? slug.replace("what-is-", "") : slug;
-        const acronymData = await findAcronymBySlug(cleanSlug);
+        
+        // Fix the "what-is-" prefix handling
+        // Extract the actual acronym slug, regardless of how many "what-is-" prefixes
+        const actualSlug = slug.replace(/^(what-is-)+/i, "");
+        console.log("Processed slug for lookup:", actualSlug);
+        
+        const acronymData = await findAcronymBySlug(actualSlug);
         
         if (!acronymData) {
-          console.error("Acronym not found for slug:", cleanSlug);
+          console.error("Acronym not found for slug:", actualSlug);
           setError("Acronym not found");
         } else {
           console.log("Acronym data loaded successfully:", acronymData.acronym);
@@ -62,8 +66,11 @@ export const useAcronymDetail = (slug: string | undefined) => {
 
   const handleCopyLink = () => {
     try {
-      // Create a stable URL path with current page URL
-      const url = window.location.href;
+      // Create a stable URL path that won't cause recursion
+      // Always use a single "what-is-" prefix
+      const baseUrl = window.location.origin;
+      const cleanSlug = acronym?.url_slug || slug?.replace(/^(what-is-)+/i, "");
+      const url = `${baseUrl}/acronyms/what-is-${cleanSlug}`;
       
       navigator.clipboard.writeText(url)
         .then(() => {

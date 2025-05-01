@@ -29,7 +29,11 @@ import AcronymDetail from "./pages/AcronymDetail";
 const LegacyAcronymRedirect = () => {
   const location = useLocation();
   const slug = location.pathname.split('/').pop();
-  return <Navigate to={`/acronyms/what-is-${slug}`} replace />;
+  
+  // Remove any existing "what-is-" prefixes to avoid duplication
+  const cleanSlug = slug ? slug.replace(/^(what-is-)+/i, "") : "";
+  
+  return <Navigate to={`/acronyms/what-is-${cleanSlug}`} replace />;
 };
 
 const queryClient = new QueryClient({

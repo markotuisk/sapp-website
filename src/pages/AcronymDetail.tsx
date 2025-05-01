@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAcronymDetail } from "@/hooks/useAcronymDetail";
 
 const AcronymDetail = () => {
+  // Get the slug from URL params
   const { slug } = useParams<{ slug: string }>();
   const {
     acronym,
@@ -36,8 +37,8 @@ const AcronymDetail = () => {
             <meta property="og:title" content={`${acronym.acronym} - ${acronym.full_name} | SAPP Security`} />
             <meta property="og:description" content={acronym.description.substring(0, 160)} />
             <meta property="og:type" content="article" />
-            <meta property="og:url" content={`https://sappsecurity.com/acronyms/what-is-${slug}`} />
-            <link rel="canonical" href={`https://sappsecurity.com/acronyms/what-is-${slug}`} />
+            <meta property="og:url" content={`https://sappsecurity.com/acronyms/what-is-${acronym.url_slug || slug?.replace(/^(what-is-)+/i, "")}`} />
+            <link rel="canonical" href={`https://sappsecurity.com/acronyms/what-is-${acronym.url_slug || slug?.replace(/^(what-is-)+/i, "")}`} />
             {acronym.category && <meta name="keywords" content={`${acronym.acronym}, ${acronym.full_name}, security acronym, ${acronym.category}`} />}
           </>
         )}
