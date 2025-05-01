@@ -7,6 +7,7 @@ import { ThumbsUp, ThumbsDown, Copy, Globe, Tag, Calendar } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Acronym } from "@/types/acronyms";
+import { Animated } from "@/components/ui/AnimatedElements";
 
 interface AcronymDetailCardProps {
   acronym: Acronym;
@@ -24,92 +25,104 @@ const AcronymDetailCard: React.FC<AcronymDetailCardProps> = ({
   handleDislike,
 }) => {
   return (
-    <Card className="shadow-md">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-3xl font-bold text-sapp-blue">
-              {acronym.acronym}
-            </CardTitle>
-            <CardDescription className="text-lg font-medium mt-1">
-              {acronym.full_name}
-            </CardDescription>
+    <Animated animation="fade-up" delay={200} className="w-full">
+      <Card className="shadow-md transition-all duration-300 hover:shadow-lg">
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div>
+              <Animated animation="fade-right" delay={300}>
+                <CardTitle className="text-3xl font-bold text-sapp-blue">
+                  {acronym.acronym}
+                </CardTitle>
+              </Animated>
+              <Animated animation="fade-right" delay={400}>
+                <CardDescription className="text-lg font-medium mt-1">
+                  {acronym.full_name}
+                </CardDescription>
+              </Animated>
+            </div>
+            <Animated animation="fade-left" delay={300}>
+              <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200">
+                {acronym.category}
+              </Badge>
+            </Animated>
           </div>
-          <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200">
-            {acronym.category}
-          </Badge>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="space-y-6">
-        <div className="text-gray-700 leading-relaxed">
-          {acronym.description}
-        </div>
+        </CardHeader>
         
-        <Separator />
-        
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          {acronym.type && (
-            <div className="flex items-center gap-2">
-              <Tag className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Type:</span>
-              <span>{acronym.type}</span>
+        <CardContent className="space-y-6">
+          <Animated animation="fade-up" delay={500}>
+            <div className="text-gray-700 leading-relaxed">
+              {acronym.description}
             </div>
-          )}
+          </Animated>
           
-          {acronym.source_country && (
-            <div className="flex items-center gap-2">
-              <Globe className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Source:</span>
-              <span>{acronym.source_country}</span>
-            </div>
-          )}
+          <Separator />
           
-          {acronym.language && (
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Language:</span>
-              <span>{acronym.language}</span>
-            </div>
-          )}
-        </div>
-      </CardContent>
-      
-      <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={handleCopyLink}>
-          <Copy className="h-4 w-4 mr-2" />
-          Copy Link
-        </Button>
-        
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            className={cn(
-              "flex items-center gap-1",
-              userInteracted && "opacity-50 cursor-not-allowed"
+          <Animated animation="fade-up" delay={600} className="grid grid-cols-2 gap-4 text-sm">
+            {acronym.type && (
+              <div className="flex items-center gap-2">
+                <Tag className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">Type:</span>
+                <span>{acronym.type}</span>
+              </div>
             )}
-            onClick={handleLike}
-            disabled={userInteracted}
-          >
-            <ThumbsUp className="h-4 w-4" />
-            <span>{acronym.likes || 0}</span>
-          </Button>
-          
-          <Button
-            variant="ghost"
-            className={cn(
-              "flex items-center gap-1",
-              userInteracted && "opacity-50 cursor-not-allowed"
+            
+            {acronym.source_country && (
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">Source:</span>
+                <span>{acronym.source_country}</span>
+              </div>
             )}
-            onClick={handleDislike}
-            disabled={userInteracted}
-          >
-            <ThumbsDown className="h-4 w-4" />
-            <span>{acronym.dislikes || 0}</span>
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
+            
+            {acronym.language && (
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">Language:</span>
+                <span>{acronym.language}</span>
+              </div>
+            )}
+          </Animated>
+        </CardContent>
+        
+        <CardFooter className="flex justify-between">
+          <Animated animation="fade-right" delay={700}>
+            <Button variant="outline" onClick={handleCopyLink} className="transition-all duration-300">
+              <Copy className="h-4 w-4 mr-2" />
+              Copy Link
+            </Button>
+          </Animated>
+          
+          <Animated animation="fade-left" delay={700} className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center gap-1 transition-all duration-300",
+                userInteracted && "opacity-50 cursor-not-allowed"
+              )}
+              onClick={handleLike}
+              disabled={userInteracted}
+            >
+              <ThumbsUp className="h-4 w-4" />
+              <span>{acronym.likes || 0}</span>
+            </Button>
+            
+            <Button
+              variant="ghost"
+              className={cn(
+                "flex items-center gap-1 transition-all duration-300",
+                userInteracted && "opacity-50 cursor-not-allowed"
+              )}
+              onClick={handleDislike}
+              disabled={userInteracted}
+            >
+              <ThumbsDown className="h-4 w-4" />
+              <span>{acronym.dislikes || 0}</span>
+            </Button>
+          </Animated>
+        </CardFooter>
+      </Card>
+    </Animated>
   );
 };
 
