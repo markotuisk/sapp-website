@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -12,45 +12,79 @@ import { ThumbsUp, ThumbsDown, Copy, Globe, Tag, Calendar } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Acronym } from "@/types/acronyms";
+import AcronymLoadingState from "@/components/resources/AcronymLoadingState";
 
 const AcronymDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [acronym, setAcronym] = useState<any>(null);
+  const location = useLocation();
+  const [acronym, setAcronym] = useState<Acronym | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userInteracted, setUserInteracted] = useState(false);
   const { findAcronymBySlug, incrementLikes, incrementDislikes } = useAcronyms();
 
+  // Use passed state if available to avoid flashing
+  const passedAcronymData = location.state?.acronymData;
+
   useEffect(() => {
+    // Reset state when slug changes
+    setLoading(true);
+    setError(null);
+    
+    // If we have data passed via router state, use it immediately
+    if (passedAcronymData) {
+      console.log("Using passed acronym data", passedAcronymData);
+      setAcronym(passedAcronymData);
+      setLoading(false);
+      return;
+    }
+    
     const loadAcronym = async () => {
-      if (!slug) return;
+      if (!slug) {
+        setError("No acronym specified");
+        setLoading(false);
+        return;
+      }
       
       try {
-        setLoading(true);
-        setError(null);
+        console.log("Loading acronym data for slug:", slug);
         const acronymData = await findAcronymBySlug(slug);
         
         if (!acronymData) {
+          console.error("Acronym not found for slug:", slug);
           setError("Acronym not found");
         } else {
+          console.log("Acronym data loaded successfully:", acronymData.acronym);
           setAcronym(acronymData);
         }
       } catch (err) {
-        setError("Failed to load acronym details");
         console.error("Error loading acronym:", err);
+        setError("Failed to load acronym details");
       } finally {
         setLoading(false);
       }
     };
     
     loadAcronym();
-  }, [slug, findAcronymBySlug]);
+  }, [slug, findAcronymBySlug, passedAcronymData]);
 
   const handleCopyLink = () => {
-    // Simply use the current URL, which already contains the correct domain
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-    toast.success("Link copied to clipboard");
+    try {
+      // Create a stable URL path with current page URL
+      const url = window.location.href;
+      
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          toast.success("Link copied to clipboard");
+        })
+        .catch((err) => {
+          console.error("Failed to copy to clipboard:", err);
+          toast.error("Could not copy link");
+        });
+    } catch (err) {
+      console.error("Error generating link:", err);
+    }
   };
 
   const handleLike = () => {
@@ -88,11 +122,11 @@ const AcronymDetail = () => {
       <main className="min-h-screen bg-slate-50 pt-24">
         <div className="container mx-auto px-4 py-12">
           {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sapp-blue"></div>
+            <div className="max-w-2xl mx-auto">
+              <AcronymLoadingState />
             </div>
           ) : error ? (
-            <div className="text-center">
+            <div className="text-center max-w-2xl mx-auto">
               <h1 className="text-2xl font-bold text-red-600 mb-4">{error}</h1>
               <p className="text-gray-600 mb-6">The acronym you're looking for could not be found.</p>
               <Button onClick={() => window.history.back()}>Go Back</Button>

@@ -1,4 +1,5 @@
 
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown, Globe, Copy, Tag, Calendar } from "lucide-react";
@@ -6,38 +7,42 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useAcronyms } from "@/hooks/useAcronyms";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Acronym } from "@/types/acronyms";
+import { useNavigate } from "react-router-dom";
 
 interface AcronymDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  acronym: {
-    id: string;
-    acronym: string;
-    full_name: string;
-    description: string;
-    category: string;
-    url_slug?: string;
-    likes?: number;
-    dislikes?: number;
-    type?: string;
-    source_country?: string;
-    language?: string;
-  } | null;
+  acronym: Acronym | null;
 }
 
-const AcronymDialog = ({ open, onOpenChange, acronym }: AcronymDialogProps) => {
+const AcronymDialog: React.FC<AcronymDialogProps> = ({ open, onOpenChange, acronym }) => {
   const { incrementLikes, incrementDislikes } = useAcronyms();
   const [userInteracted, setUserInteracted] = useState(false);
+  const navigate = useNavigate();
   
   if (!acronym) return null;
+
+  // Generate a stable URL path
+  const acronymPath = `/acronyms/${acronym.url_slug || acronym.id}`;
+
+  const handleViewDetails = () => {
+    // Close dialog first to prevent UI issues
+    onOpenChange(false);
+    
+    // Use a small timeout to ensure dialog closes first
+    setTimeout(() => {
+      navigate(acronymPath, { 
+        state: { acronymData: acronym }
+      });
+    }, 50);
+  };
 
   const handleCopyLink = () => {
     try {
       // Create the URL path reliably
-      const path = `/acronyms/${acronym.url_slug || acronym.id}`;
-      const fullUrl = window.location.origin + path;
+      const fullUrl = `${window.location.origin}${acronymPath}`;
       
       // Copy to clipboard with error handling
       navigator.clipboard.writeText(fullUrl)
@@ -117,11 +122,16 @@ const AcronymDialog = ({ open, onOpenChange, acronym }: AcronymDialogProps) => {
           )}
         </div>
         
-        <div className="flex items-center justify-between">
-          <Button variant="outline" size="sm" onClick={handleCopyLink}>
-            <Copy className="h-4 w-4 mr-2" />
-            Copy Link
-          </Button>
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={handleCopyLink}>
+              <Copy className="h-4 w-4 mr-2" />
+              Copy Link
+            </Button>
+            <Button variant="default" size="sm" onClick={handleViewDetails}>
+              View Details
+            </Button>
+          </div>
           
           <div className="flex items-center gap-4">
             <Button

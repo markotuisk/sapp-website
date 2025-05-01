@@ -22,14 +22,16 @@ const AcronymCard: React.FC<AcronymCardProps> = ({
   handleDislike,
   interacted,
 }) => {
+  // Generate a stable URL path
+  const acronymPath = `/acronyms/${acronym.url_slug || acronym.id}`;
+  
   const handleCopyLink = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault(); // Prevent any navigation issues
     
     try {
-      // Create URL path consistently
-      const path = `/acronyms/${acronym.url_slug || acronym.id}`;
-      const fullUrl = window.location.origin + path;
+      // Create URL path consistently using window.location.origin
+      const fullUrl = `${window.location.origin}${acronymPath}`;
       
       // Copy with error handling
       navigator.clipboard.writeText(fullUrl)
@@ -51,7 +53,7 @@ const AcronymCard: React.FC<AcronymCardProps> = ({
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <Link
-            to={`/acronyms/${acronym.url_slug || acronym.id}`}
+            to={acronymPath}
             className="hover:underline"
             state={{ acronymData: acronym }} // Pass the data through router state for immediate rendering
           >
