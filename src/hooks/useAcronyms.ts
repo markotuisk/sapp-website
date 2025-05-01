@@ -67,34 +67,44 @@ export const useAcronyms = () => {
 
   const fetchDistinctValues = async () => {
     try {
-      // Fetch distinct categories
-      const { data: categoryData } = await supabase
+      // Fetch categories - using GROUP BY instead of distinct()
+      const { data: categoryData, error: categoryError } = await supabase
         .from("technical_acronyms")
         .select("category")
-        .distinct();
+        .order('category');
       
-      // Fetch distinct languages
-      const { data: languageData } = await supabase
+      if (categoryError) throw categoryError;
+      
+      // Fetch languages - using GROUP BY instead of distinct()
+      const { data: languageData, error: languageError } = await supabase
         .from("technical_acronyms")
         .select("language")
-        .distinct();
+        .order('language');
       
-      // Fetch distinct types
-      const { data: typeData } = await supabase
+      if (languageError) throw languageError;
+      
+      // Fetch types - using GROUP BY instead of distinct()
+      const { data: typeData, error: typeError } = await supabase
         .from("technical_acronyms")
         .select("type")
-        .distinct();
+        .order('type');
       
+      if (typeError) throw typeError;
+      
+      // Extract unique values using Set
       if (categoryData) {
-        setCategories(categoryData.map(item => item.category).filter(Boolean));
+        const uniqueCategories = [...new Set(categoryData.map(item => item.category))].filter(Boolean);
+        setCategories(uniqueCategories);
       }
       
       if (languageData) {
-        setLanguages(languageData.map(item => item.language).filter(Boolean));
+        const uniqueLanguages = [...new Set(languageData.map(item => item.language))].filter(Boolean);
+        setLanguages(uniqueLanguages);
       }
       
       if (typeData) {
-        setTypes(typeData.map(item => item.type).filter(Boolean));
+        const uniqueTypes = [...new Set(typeData.map(item => item.type))].filter(Boolean);
+        setTypes(uniqueTypes);
       }
     } catch (error) {
       console.error("Error fetching filter options:", error);
