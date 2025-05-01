@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,12 +46,26 @@ const AcronymsResource = () => {
 
   const handleCopyLink = (acronym: any, e: React.MouseEvent) => {
     e.stopPropagation();
-    // Use a relative URL path that works with any domain
-    const url = `/acronyms/${acronym.url_slug || acronym.id}`;
-    // Get the current origin to ensure the correct domain is used
-    const fullUrl = `${window.location.origin}${url}`;
-    navigator.clipboard.writeText(fullUrl);
-    toast.success("Link copied to clipboard");
+    e.preventDefault(); // Prevent any navigation issues
+    
+    try {
+      // Create URL path consistently
+      const path = `/acronyms/${acronym.url_slug || acronym.id}`;
+      const fullUrl = window.location.origin + path;
+      
+      // Copy with error handling
+      navigator.clipboard.writeText(fullUrl)
+        .then(() => {
+          toast.success("Link copied to clipboard");
+        })
+        .catch((err) => {
+          console.error("Failed to copy link:", err);
+          toast.error("Failed to copy link");
+        });
+    } catch (err) {
+      console.error("Error generating link:", err);
+      toast.error("Failed to generate link");
+    }
   };
 
   const handleLike = (acronymId: string, e: React.MouseEvent) => {
@@ -195,7 +208,11 @@ const AcronymsResource = () => {
             >
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
-                  <Link to={`/acronyms/${acronym.url_slug || acronym.id}`} className="hover:underline">
+                  <Link 
+                    to={`/acronyms/${acronym.url_slug || acronym.id}`} 
+                    className="hover:underline"
+                    state={{ acronymData: acronym }} // Pass the data through router state for immediate rendering
+                  >
                     <CardTitle className="text-xl font-bold">{acronym.acronym}</CardTitle>
                   </Link>
                   <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200">

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -121,16 +120,38 @@ export const useAcronyms = () => {
 
   const findAcronymBySlug = async (slug: string): Promise<Acronym | null> => {
     try {
-      const { data, error } = await supabase
+      console.log("Finding acronym by slug:", slug);
+      
+      // First try exact match
+      let { data, error } = await supabase
         .from("technical_acronyms")
         .select("*")
         .eq("url_slug", slug)
-        .single();
+        .maybeSingle();
       
       if (error) {
+        console.error("Error in first lookup attempt:", error);
         throw error;
       }
       
+      // If not found by url_slug, try finding by id as fallback
+      if (!data) {
+        console.log("Not found by slug, trying ID lookup");
+        const { data: idData, error: idError } = await supabase
+          .from("technical_acronyms")
+          .select("*")
+          .eq("id", slug)
+          .maybeSingle();
+          
+        if (idError) {
+          console.error("Error in ID lookup attempt:", idError);
+          throw idError;
+        }
+        
+        data = idData;
+      }
+      
+      console.log("Acronym lookup result:", data ? "Found" : "Not found");
       return data;
     } catch (error) {
       console.error("Error finding acronym by slug:", error);

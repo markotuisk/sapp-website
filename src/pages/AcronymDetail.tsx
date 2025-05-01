@@ -27,6 +27,7 @@ const AcronymDetail = () => {
       
       try {
         setLoading(true);
+        setError(null);
         const acronymData = await findAcronymBySlug(slug);
         
         if (!acronymData) {
@@ -74,7 +75,7 @@ const AcronymDetail = () => {
     <>
       <Helmet>
         <title>
-          {acronym ? `${acronym.acronym} - ${acronym.full_name}` : "Acronym Details"} | SAPP Security
+          {acronym ? `${acronym.acronym} - ${acronym.full_name}` : loading ? "Loading..." : "Acronym Details"} | SAPP Security
         </title>
         <meta 
           name="description" 

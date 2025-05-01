@@ -34,12 +34,24 @@ const AcronymDialog = ({ open, onOpenChange, acronym }: AcronymDialogProps) => {
   if (!acronym) return null;
 
   const handleCopyLink = () => {
-    // Use a relative URL path that works with any domain
-    const url = `/acronyms/${acronym.url_slug || acronym.id}`;
-    // Get the current origin to ensure the correct domain is used
-    const fullUrl = `${window.location.origin}${url}`;
-    navigator.clipboard.writeText(fullUrl);
-    toast.success("Link copied to clipboard");
+    try {
+      // Create the URL path reliably
+      const path = `/acronyms/${acronym.url_slug || acronym.id}`;
+      const fullUrl = window.location.origin + path;
+      
+      // Copy to clipboard with error handling
+      navigator.clipboard.writeText(fullUrl)
+        .then(() => {
+          toast.success("Link copied to clipboard");
+        })
+        .catch((err) => {
+          console.error("Failed to copy link:", err);
+          toast.error("Failed to copy link");
+        });
+    } catch (err) {
+      console.error("Error generating link:", err);
+      toast.error("Failed to generate link");
+    }
   };
 
   const handleLike = () => {
