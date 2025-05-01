@@ -49,10 +49,12 @@ const AcronymDetail = () => {
       
       try {
         console.log("Loading acronym data for slug:", slug);
-        const acronymData = await findAcronymBySlug(slug);
+        // Handle the "what-is-" prefix in slugs
+        const cleanSlug = slug.startsWith("what-is-") ? slug.replace("what-is-", "") : slug;
+        const acronymData = await findAcronymBySlug(cleanSlug);
         
         if (!acronymData) {
-          console.error("Acronym not found for slug:", slug);
+          console.error("Acronym not found for slug:", cleanSlug);
           setError("Acronym not found");
         } else {
           console.log("Acronym data loaded successfully:", acronymData.acronym);

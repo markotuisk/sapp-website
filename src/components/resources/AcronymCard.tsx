@@ -22,8 +22,8 @@ const AcronymCard: React.FC<AcronymCardProps> = ({
   handleDislike,
   interacted,
 }) => {
-  // Generate a stable URL path
-  const acronymPath = `/acronyms/${acronym.url_slug || acronym.id}`;
+  // Generate a stable URL path with the new "what-is-" prefix
+  const acronymPath = `/acronyms/what-is-${acronym.url_slug || acronym.id}`;
   
   const handleCopyLink = (e: React.MouseEvent) => {
     e.stopPropagation();

@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
@@ -63,7 +63,9 @@ const App = () => {
                       <Route path="/version-info" element={<VersionInfo />} />
                       <Route path="/service-navigator" element={<ServiceNavigator />} />
                       <Route path="/tscm" element={<TSCM />} />
-                      <Route path="/acronyms/:slug" element={<AcronymDetail />} />
+                      <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />
+                      {/* Legacy route - redirect to new format */}
+                      <Route path="/acronyms/:slug" element={<Navigate to={(location) => `/acronyms/what-is-${location.pathname.split('/').pop()}`} />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <ConsentBanner />

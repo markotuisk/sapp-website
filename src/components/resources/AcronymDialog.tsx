@@ -24,8 +24,8 @@ const AcronymDialog: React.FC<AcronymDialogProps> = ({ open, onOpenChange, acron
   
   if (!acronym) return null;
 
-  // Generate a stable URL path
-  const acronymPath = `/acronyms/${acronym.url_slug || acronym.id}`;
+  // Generate a stable URL path with the new "what-is-" prefix
+  const acronymPath = `/acronyms/what-is-${acronym.url_slug || acronym.id}`;
 
   const handleViewDetails = () => {
     // Close dialog first to prevent UI issues
@@ -41,7 +41,7 @@ const AcronymDialog: React.FC<AcronymDialogProps> = ({ open, onOpenChange, acron
 
   const handleCopyLink = () => {
     try {
-      // Create the URL path reliably
+      // Create the URL path reliably with the new "what-is-" prefix
       const fullUrl = `${window.location.origin}${acronymPath}`;
       
       // Copy to clipboard with error handling
