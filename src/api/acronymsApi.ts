@@ -94,21 +94,38 @@ export async function findAcronymBySlugFromApi(slug: string): Promise<Acronym | 
       throw error;
     }
     
-    // If not found by url_slug, try finding by id as fallback
+    // If not found by url_slug, try finding by acronym as fallback
     if (!data) {
-      console.log("Not found by slug, trying ID lookup");
-      const { data: idData, error: idError } = await supabase
+      console.log("Not found by slug, trying acronym lookup");
+      const { data: acronymData, error: acronymError } = await supabase
         .from("technical_acronyms")
         .select("*")
-        .eq("id", slug)
+        .ilike("acronym", slug)
         .maybeSingle();
         
-      if (idError) {
-        console.error("Error in ID lookup attempt:", idError);
-        throw idError;
+      if (acronymError) {
+        console.error("Error in acronym lookup attempt:", acronymError);
+        throw acronymError;
       }
       
-      data = idData;
+      data = acronymData;
+      
+      // If still not found, try ID lookup as a last resort
+      if (!data) {
+        console.log("Not found by acronym, trying ID lookup");
+        const { data: idData, error: idError } = await supabase
+          .from("technical_acronyms")
+          .select("*")
+          .eq("id", slug)
+          .maybeSingle();
+          
+        if (idError) {
+          console.error("Error in ID lookup attempt:", idError);
+          throw idError;
+        }
+        
+        data = idData;
+      }
     }
     
     console.log("Acronym lookup result:", data ? "Found" : "Not found");

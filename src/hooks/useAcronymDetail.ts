@@ -39,9 +39,16 @@ export const useAcronymDetail = (slug: string | undefined) => {
       try {
         console.log("Loading acronym data for slug:", slug);
         
-        // Fix the "what-is-" prefix handling
         // Extract the actual acronym slug, regardless of how many "what-is-" prefixes
-        const actualSlug = slug.replace(/^(what-is-)+/i, "");
+        // For slugs like "what-is-bs-bespoke-sweep", we need to extract just "bs"
+        let actualSlug = slug.replace(/^(what-is-)+/i, "");
+        
+        // If the slug contains hyphens after removing the prefix, we need to get just the acronym part
+        if (actualSlug.includes("-")) {
+          // Extract the acronym part (first segment before any hyphen)
+          actualSlug = actualSlug.split("-")[0];
+        }
+        
         console.log("Processed slug for lookup:", actualSlug);
         
         const acronymData = await findAcronymBySlug(actualSlug);
