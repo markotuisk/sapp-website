@@ -21,13 +21,14 @@ const ServiceItem = ({
 }: ServiceItemProps) => {
   return (
     <Link 
-      to={link} 
-      onClick={onItemClick}
+      to={isActive ? link : '#'}
+      onClick={isActive ? onItemClick : (e) => e.preventDefault()}
       className={cn(
-        "flex items-center justify-between px-4 py-3 group select-none",
+        "flex items-center justify-between px-4 py-3 group transition-all",
         isActive 
-          ? "bg-slate-50 hover:bg-slate-100 transition-colors" 
-          : "bg-slate-50/70 opacity-60 pointer-events-none"
+          ? "bg-slate-50 hover:bg-slate-100 cursor-pointer" 
+          : "bg-slate-50/70 opacity-60 pointer-events-none",
+        "select-none"
       )}
     >
       <div className="pr-2 flex-1">
@@ -47,7 +48,8 @@ const ServiceItem = ({
         <p className="text-sm text-sapp-gray line-clamp-2">{description}</p>
       </div>
       <ChevronRight className={cn(
-        "h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1",
+        "h-4 w-4 flex-shrink-0 transition-transform duration-300",
+        isActive && "group-hover:translate-x-1",
         isActive ? "text-sapp-blue" : "text-sapp-gray/50"
       )} />
     </Link>

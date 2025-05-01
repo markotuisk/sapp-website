@@ -40,6 +40,8 @@ const AcronymEnhancer = ({ text, className }: AcronymEnhancerProps) => {
                 acronym={acronym.acronym}
                 fullName={acronym.full_name}
                 description={acronym.description}
+                category={acronym.category}
+                likes={acronym.likes}
                 onClick={() => {
                   setSelectedAcronym(acronym);
                   setDialogOpen(true);

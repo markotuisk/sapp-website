@@ -156,27 +156,45 @@ export type Database = {
           category: string
           created_at: string | null
           description: string
+          dislikes: number | null
           full_name: string
           id: string
+          language: string | null
+          likes: number | null
+          source_country: string | null
+          type: string | null
           updated_at: string | null
+          url_slug: string | null
         }
         Insert: {
           acronym: string
           category: string
           created_at?: string | null
           description: string
+          dislikes?: number | null
           full_name: string
           id?: string
+          language?: string | null
+          likes?: number | null
+          source_country?: string | null
+          type?: string | null
           updated_at?: string | null
+          url_slug?: string | null
         }
         Update: {
           acronym?: string
           category?: string
           created_at?: string | null
           description?: string
+          dislikes?: number | null
           full_name?: string
           id?: string
+          language?: string | null
+          likes?: number | null
+          source_country?: string | null
+          type?: string | null
           updated_at?: string | null
+          url_slug?: string | null
         }
         Relationships: []
       }
@@ -359,6 +377,37 @@ export type Database = {
           count: number
           first_attempt: string
           last_attempt: string
+        }[]
+      }
+      increment_acronym_dislikes: {
+        Args: { acronym_id: string }
+        Returns: undefined
+      }
+      increment_acronym_likes: {
+        Args: { acronym_id: string }
+        Returns: undefined
+      }
+      search_acronyms: {
+        Args: {
+          search_query: string
+          category_filter?: string
+          language_filter?: string
+          type_filter?: string
+        }
+        Returns: {
+          acronym: string
+          category: string
+          created_at: string | null
+          description: string
+          dislikes: number | null
+          full_name: string
+          id: string
+          language: string | null
+          likes: number | null
+          source_country: string | null
+          type: string | null
+          updated_at: string | null
+          url_slug: string | null
         }[]
       }
       submit_contact_form: {

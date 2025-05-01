@@ -21,10 +21,24 @@ const CategorySection = ({ category, onItemClick }: CategorySectionProps) => {
     return null;
   }
 
+  // Check if any items in this category are active
+  const hasActiveItems = category.items.some(item => item.isActive);
+
   return (
-    <div className="bg-slate-50 rounded-lg overflow-hidden">
-      <div className="bg-sapp-blue/10 px-4 py-2">
-        <h3 className="font-medium text-sapp-blue">{category.category}</h3>
+    <div className={cn(
+      "bg-slate-50 rounded-lg overflow-hidden",
+      !hasActiveItems && "opacity-80"
+    )}>
+      <div className={cn(
+        "px-4 py-2",
+        hasActiveItems ? "bg-sapp-blue/10" : "bg-slate-200/50"
+      )}>
+        <h3 className={cn(
+          "font-medium",
+          hasActiveItems ? "text-sapp-blue" : "text-sapp-dark/70"
+        )}>
+          {category.category}
+        </h3>
       </div>
       <div className="divide-y">
         {category.items.map((item) => (
