@@ -46,6 +46,7 @@ const AcronymDetail = () => {
   }, [slug, findAcronymBySlug]);
 
   const handleCopyLink = () => {
+    // Simply use the current URL, which already contains the correct domain
     const url = window.location.href;
     navigator.clipboard.writeText(url);
     toast.success("Link copied to clipboard");

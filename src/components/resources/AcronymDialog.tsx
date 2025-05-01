@@ -34,9 +34,11 @@ const AcronymDialog = ({ open, onOpenChange, acronym }: AcronymDialogProps) => {
   if (!acronym) return null;
 
   const handleCopyLink = () => {
-    // Use the current origin combined with the acronym path
-    const url = `${window.location.origin}/acronyms/${acronym.url_slug || acronym.id}`;
-    navigator.clipboard.writeText(url);
+    // Use a relative URL path that works with any domain
+    const url = `/acronyms/${acronym.url_slug || acronym.id}`;
+    // Get the current origin to ensure the correct domain is used
+    const fullUrl = `${window.location.origin}${url}`;
+    navigator.clipboard.writeText(fullUrl);
     toast.success("Link copied to clipboard");
   };
 
