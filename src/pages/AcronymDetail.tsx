@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAcronymDetail } from "@/hooks/useAcronymDetail";
 
 const AcronymDetail = () => {
-  // Get the slug from URL params
+  // Get the slug from URL params - this will include any descriptive parts
   const { slug } = useParams<{ slug: string }>();
   const {
     acronym,
@@ -22,18 +22,19 @@ const AcronymDetail = () => {
     handleDislike
   } = useAcronymDetail(slug);
 
-  // Extract the actual acronym for display (without hyphens and descriptive text)
-  const displaySlug = slug?.replace(/^(what-is-)+/i, "").split("-")[0];
+  // For display purposes, extract just the acronym part (e.g., "BS" from "bs-bespoke-sweep")
+  const cleanSlug = slug?.replace(/^(what-is-)+/i, "") || "";
+  const displayAcronym = cleanSlug.split("-")[0].toUpperCase();
 
   return (
     <>
       <Helmet>
         <title>
-          {acronym ? `${acronym.acronym} - ${acronym.full_name}` : loading ? "Loading..." : "Acronym Details"} | SAPP Security
+          {acronym ? `${acronym.acronym} - ${acronym.full_name}` : loading ? "Loading..." : displayAcronym ? `${displayAcronym} - Acronym Details` : "Acronym Details"} | SAPP Security
         </title>
         <meta 
           name="description" 
-          content={acronym ? `Learn about ${acronym.acronym} (${acronym.full_name}) in the security industry` : "Technical acronym details"} 
+          content={acronym ? `Learn about ${acronym.acronym} (${acronym.full_name}) in the security industry` : `Learn about ${displayAcronym} in the security industry`} 
         />
         {acronym && (
           <>

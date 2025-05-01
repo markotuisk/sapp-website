@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,14 +28,16 @@ import AcronymDetail from "./pages/AcronymDetail";
 // Create a wrapper component for handling legacy redirects
 const LegacyAcronymRedirect = () => {
   const location = useLocation();
+  
+  // Get the full slug from the URL - this preserves descriptive parts like "bs-bespoke-sweep"
   const fullPathSlug = location.pathname.split('/').pop() || "";
   
-  // Remove any existing "what-is-" prefixes to avoid duplication
-  // For paths like /acronyms/bs-bespoke-sweep, we want to preserve the full slug
-  // but still remove any redundant prefixes
+  // Remove any existing "what-is-" prefixes but preserve the rest of the slug
   const cleanSlug = fullPathSlug.replace(/^(what-is-)+/i, "");
   
-  // Keep the full slug for the redirect to preserve any descriptive text
+  console.log("Legacy redirect: from", fullPathSlug, "to", cleanSlug);
+  
+  // Return the canonical URL format with a single "what-is-" prefix
   return <Navigate to={`/acronyms/what-is-${cleanSlug}`} replace />;
 };
 

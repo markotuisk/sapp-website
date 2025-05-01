@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Acronym } from "@/types/acronyms";
@@ -39,23 +38,33 @@ export const useAcronymDetail = (slug: string | undefined) => {
       try {
         console.log("Loading acronym data for slug:", slug);
         
-        // Extract the actual acronym slug, regardless of how many "what-is-" prefixes
-        // For slugs like "what-is-bs-bespoke-sweep", we need to extract just "bs"
-        let actualSlug = slug.replace(/^(what-is-)+/i, "");
+        // Clean the slug by removing any 'what-is-' prefixes
+        const cleanedSlug = slug.replace(/^(what-is-)+/i, "");
+        console.log("Cleaned slug:", cleanedSlug);
         
-        // If the slug contains hyphens after removing the prefix, we need to get just the acronym part
-        if (actualSlug.includes("-")) {
-          // Extract the acronym part (first segment before any hyphen)
-          actualSlug = actualSlug.split("-")[0];
-        }
-        
-        console.log("Processed slug for lookup:", actualSlug);
-        
-        const acronymData = await findAcronymBySlug(actualSlug);
+        // Important: Use the full cleaned slug (including any descriptive parts)
+        // This allows URLs like "bs-bespoke-sweep" to work correctly
+        const acronymData = await findAcronymBySlug(cleanedSlug);
         
         if (!acronymData) {
-          console.error("Acronym not found for slug:", actualSlug);
-          setError("Acronym not found");
+          console.error("Acronym not found for slug:", cleanedSlug);
+          
+          // If the full slug doesn't work, try just the first part (the acronym itself)
+          if (cleanedSlug.includes("-")) {
+            const acronymPart = cleanedSlug.split("-")[0];
+            console.log("Trying with just the acronym part:", acronymPart);
+            
+            const fallbackData = await findAcronymBySlug(acronymPart);
+            
+            if (!fallbackData) {
+              setError("Acronym not found");
+            } else {
+              console.log("Found acronym using fallback:", fallbackData.acronym);
+              setAcronym(fallbackData);
+            }
+          } else {
+            setError("Acronym not found");
+          }
         } else {
           console.log("Acronym data loaded successfully:", acronymData.acronym);
           setAcronym(acronymData);
@@ -74,10 +83,22 @@ export const useAcronymDetail = (slug: string | undefined) => {
   const handleCopyLink = () => {
     try {
       // Create a stable URL path that won't cause recursion
-      // Always use a single "what-is-" prefix
       const baseUrl = window.location.origin;
-      const cleanSlug = acronym?.url_slug || slug?.replace(/^(what-is-)+/i, "");
-      const url = `${baseUrl}/acronyms/what-is-${cleanSlug}`;
+      
+      // If we have an acronym, use its acronym property (lowercase) for a consistent URL
+      // Otherwise fall back to the current slug
+      let linkSlug;
+      
+      if (acronym) {
+        // Use just the acronym for a clean, consistent URL
+        linkSlug = acronym.acronym.toLowerCase();
+      } else {
+        // Fall back to current slug, cleaned of any prefixes
+        const cleanSlug = slug?.replace(/^(what-is-)+/i, "") || "";
+        linkSlug = cleanSlug;
+      }
+      
+      const url = `${baseUrl}/acronyms/what-is-${linkSlug}`;
       
       navigator.clipboard.writeText(url)
         .then(() => {
