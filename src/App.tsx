@@ -68,7 +68,13 @@ const App = () => {
                       <Route path="/cyber-security" element={<CyberSecurity />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/version-info" element={<VersionInfo />} />
+                      
+                      {/* Service Navigator routes - dedicated pages for SEO */}
                       <Route path="/service-navigator" element={<ServiceNavigator />} />
+                      <Route path="/service-navigator/services" element={<ServiceNavigator defaultTab="services" />} />
+                      <Route path="/service-navigator/resources" element={<ServiceNavigator defaultTab="resources" />} />
+                      <Route path="/service-navigator/acronyms" element={<ServiceNavigator defaultTab="acronyms" />} />
+                      
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />
                       {/* Legacy route - redirect to new format */}

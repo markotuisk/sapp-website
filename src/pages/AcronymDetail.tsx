@@ -31,6 +31,16 @@ const AcronymDetail = () => {
           name="description" 
           content={acronym ? `Learn about ${acronym.acronym} (${acronym.full_name}) in the security industry` : "Technical acronym details"} 
         />
+        {acronym && (
+          <>
+            <meta property="og:title" content={`${acronym.acronym} - ${acronym.full_name} | SAPP Security`} />
+            <meta property="og:description" content={acronym.description.substring(0, 160)} />
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content={`https://sappsecurity.com/acronyms/what-is-${slug}`} />
+            <link rel="canonical" href={`https://sappsecurity.com/acronyms/what-is-${slug}`} />
+            {acronym.category && <meta name="keywords" content={`${acronym.acronym}, ${acronym.full_name}, security acronym, ${acronym.category}`} />}
+          </>
+        )}
       </Helmet>
       
       <Navbar />
