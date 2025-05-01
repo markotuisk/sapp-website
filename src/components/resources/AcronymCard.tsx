@@ -49,7 +49,7 @@ const AcronymCard: React.FC<AcronymCardProps> = ({
   };
 
   return (
-    <Card className="cursor-pointer hover:shadow-md transition-shadow">
+    <Card className="cursor-pointer shadow-md hover:shadow-lg transition-shadow">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
           <Link

@@ -135,7 +135,7 @@ const AcronymDetail = () => {
             </div>
           ) : acronym && (
             <div className="max-w-2xl mx-auto">
-              <Card className="shadow-lg">
+              <Card className="shadow-md">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
