@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
@@ -24,6 +24,13 @@ import VersionInfo from "./pages/VersionInfo";
 import ServiceNavigator from "./pages/ServiceNavigator";
 import TSCM from "./pages/TSCM";
 import AcronymDetail from "./pages/AcronymDetail";
+
+// Create a wrapper component for handling legacy redirects
+const LegacyAcronymRedirect = () => {
+  const location = useLocation();
+  const slug = location.pathname.split('/').pop();
+  return <Navigate to={`/acronyms/what-is-${slug}`} replace />;
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,7 +72,7 @@ const App = () => {
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />
                       {/* Legacy route - redirect to new format */}
-                      <Route path="/acronyms/:slug" element={<Navigate to={(location) => `/acronyms/what-is-${location.pathname.split('/').pop()}`} />} />
+                      <Route path="/acronyms/:slug" element={<LegacyAcronymRedirect />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <ConsentBanner />
