@@ -1,4 +1,3 @@
-
 export interface ServiceItem {
   name: string;
   description: string;
@@ -17,15 +16,15 @@ export const services: ServiceCategory[] = [
       { name: 'Venue Security Audits', description: 'Pre-event security assessment and planning', link: '/services/venue-security-audits' },
       { name: 'Event Monitoring', description: 'Real-time surveillance during high-profile events', link: '/services/event-monitoring' },
       { name: 'Secure Technology', description: 'Secure communications for event organizers', link: '/services/secure-technology' },
-      { name: 'Close Protection', description: 'VIP security and personal protection', link: '/services/close-protection' }
+      { name: 'Close Protection', description: 'Executive protection for high-profile individuals at events and during travel.', link: '/services/close-protection' }
     ]
   },
   {
     category: 'Security Audits',
     items: [
-      { name: 'Physical Security Assessments', description: 'Comprehensive evaluation of security measures', link: '/security-audits#physical' },
+      { name: 'Physical Security Assessments', description: 'Comprehensive evaluation of physical security measures and vulnerabilities.', link: '/services/physical-security-assessments' },
       { name: 'Compliance Audits', description: 'ISO27001 and regulatory compliance checks', link: '/security-audits#compliance' },
-      { name: 'TSCM Inspections', description: 'Technical surveillance countermeasures', link: '/security-audits#tscm' },
+      { name: 'TSCM Inspections', description: 'Technical surveillance countermeasures to detect and prevent eavesdropping.', link: '/tscm' },
       { name: 'Penetration Tests', description: 'Identifying vulnerabilities in your security', link: '/security-audits#penetration' }
     ]
   },
