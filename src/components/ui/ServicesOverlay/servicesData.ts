@@ -1,4 +1,3 @@
-
 export interface ServiceItem {
   name: string;
   description: string;
@@ -18,7 +17,7 @@ export const services: ServiceCategory[] = [
       { name: 'Venue Security Audits', description: 'Pre-event security assessment and planning', link: '/services/venue-security-audits', isActive: false },
       { name: 'Event Monitoring', description: 'Real-time surveillance during high-profile events', link: '/services/event-monitoring', isActive: false },
       { name: 'Secure Technology', description: 'Secure communications for event organizers', link: '/services/secure-technology', isActive: false },
-      { name: 'Close Protection', description: 'Executive protection for high-profile individuals at events and during travel.', link: '/services/close-protection', isActive: false }
+      { name: 'Close Protection', description: 'Personalized protection for individuals facing modern threats, from online harassment to physical security concerns.', link: '/services/close-protection', isActive: true }
     ]
   },
   {

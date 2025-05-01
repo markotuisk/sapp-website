@@ -67,6 +67,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://sappsecurity.com/services/close-protection</loc>
+    <lastmod>2025-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- Example acronym detail pages with various formats -->
   <url>
     <loc>https://sappsecurity.com/acronyms/what-is-tscm</loc>
