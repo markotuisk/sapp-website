@@ -10,6 +10,7 @@ interface CategorySectionProps {
       name: string;
       description: string;
       link: string;
+      isActive?: boolean;
     }[];
   };
   onItemClick: () => void;
@@ -33,6 +34,7 @@ const CategorySection = ({ category, onItemClick }: CategorySectionProps) => {
             description={item.description}
             link={item.link}
             onItemClick={onItemClick}
+            isActive={item.isActive}
           />
         ))}
       </div>
