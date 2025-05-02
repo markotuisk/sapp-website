@@ -3,98 +3,104 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sappsecurity.com/</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/event-security</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/security-audits</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/installations</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/cyber-security</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/about</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/service-navigator</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/service-navigator/services</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/service-navigator/resources</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/service-navigator/acronyms</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/tscm</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/services/close-protection</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sappsecurity.com/services/speech-privacy</loc>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Example acronym detail pages with various formats -->
   <url>
     <loc>https://sappsecurity.com/acronyms/what-is-tscm</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/acronyms/what-is-bs-bespoke-sweep</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/acronyms/what-is-iot-internet-of-things</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://sappsecurity.com/acronyms/what-is-rfid</loc>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

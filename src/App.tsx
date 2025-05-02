@@ -25,6 +25,7 @@ import ServiceNavigator from "./pages/ServiceNavigator";
 import TSCM from "./pages/TSCM";
 import AcronymDetail from "./pages/AcronymDetail";
 import CloseProtection from "./pages/services/CloseProtection";
+import SpeechPrivacy from "./pages/services/SpeechPrivacy";
 
 // Create a wrapper component for handling legacy redirects
 const LegacyAcronymRedirect = () => {
@@ -87,6 +88,7 @@ const App = () => {
                       
                       {/* Service detail pages */}
                       <Route path="/services/close-protection" element={<CloseProtection />} />
+                      <Route path="/services/speech-privacy" element={<SpeechPrivacy />} />
                       
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />

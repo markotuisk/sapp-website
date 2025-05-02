@@ -1,3 +1,4 @@
+
 export interface ServiceItem {
   name: string;
   description: string;
@@ -33,7 +34,7 @@ export const services: ServiceCategory[] = [
     category: 'Installations',
     items: [
       { name: 'CCTV & Access Control', description: 'Modern surveillance and access systems', link: '/installations/cctv-access', isActive: false },
-      { name: 'Speech Privacy Systems', description: 'Protecting sensitive conversations', link: '/installations/speech-privacy', isActive: false },
+      { name: 'Speech Privacy & Soundmasking', description: 'Protecting sensitive conversations from eavesdropping through advanced acoustic solutions', link: '/services/speech-privacy', isActive: true },
       { name: 'Counter-Surveillance', description: 'Protection against unwanted monitoring', link: '/installations/counter-surveillance', isActive: false },
       { name: 'Network Infrastructure', description: 'Secure network design and deployment', link: '/installations/network-infrastructure', isActive: false }
     ]
