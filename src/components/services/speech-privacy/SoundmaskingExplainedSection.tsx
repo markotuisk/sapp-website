@@ -112,12 +112,14 @@ const SoundmaskingExplainedSection = () => {
       </div>
       
       {/* CSS for animations */}
-      <style jsx global>{`
+      <style>
+        {`
         @keyframes soundBars {
           from { height: 10%; }
           to { height: 100%; }
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };

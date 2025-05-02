@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Animated } from '@/components/ui/AnimatedElements';
-import { ContactFormDialog } from '@/components/ui/ContactFormDialog';
+import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import { useDebugContext } from '@/contexts/DebugContext';
 import { DebugInfo } from '@/components/debug';
 import QuoteCard from '@/components/ui/QuoteCard';
@@ -226,7 +226,8 @@ const SpeechPrivacy = () => {
       <ContactFormDialog 
         open={showContactForm} 
         onOpenChange={setShowContactForm}
-        defaultService="Speech Privacy & Soundmasking"
+        defaultMessage="I'm interested in learning more about Speech Privacy & Soundmasking solutions."
+        serviceName="Speech Privacy & Soundmasking"
       />
       
       <Footer />

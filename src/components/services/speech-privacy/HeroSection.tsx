@@ -90,7 +90,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
       </div>
       
       {/* CSS for animations */}
-      <style jsx global>{`
+      <style>
+        {`
         @keyframes pulse {
           0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
           50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
@@ -112,7 +113,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
             background-position: 200% center;
           }
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
