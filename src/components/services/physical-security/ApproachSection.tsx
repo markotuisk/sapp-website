@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Shield, Lock, Search, FileCheck, Building, Key, Radar, Security } from 'lucide-react';
+import { Shield, Lock, Search, FileCheck, Building, Key, Radar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Animated } from '@/components/ui/AnimatedElements';
 
@@ -127,7 +126,7 @@ const ApproachSection: React.FC = () => {
                       transition={{ duration: 1 }}
                       viewport={{ once: true }}
                     >
-                      {[Building, Security, Radar, Key].map((Icon, index) => (
+                      {[Building, Shield, Radar, Key].map((Icon, index) => (
                         <motion.div
                           key={index}
                           className="absolute"
