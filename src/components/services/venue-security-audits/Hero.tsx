@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FileText, Shield, Check, Clock } from 'lucide-react';
+import { FileText, Shield, Check, Clock, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Animated, AnimatedCount } from '@/components/ui/AnimatedElements';
 

@@ -17,7 +17,7 @@ const NavigationButtons: React.FC = () => {
           viewport={{ once: true }}
         >
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <Link to="/event-security" className="w-full sm:w-auto">
+            <Link to="/services/event-security" className="w-full sm:w-auto">
               <Button 
                 variant="outline" 
                 className="group w-full sm:w-auto flex items-center gap-3 border-gray-200 hover:bg-slate-50 transition-all duration-300"
