@@ -27,6 +27,7 @@ import AcronymDetail from "./pages/AcronymDetail";
 import CloseProtection from "./pages/services/CloseProtection";
 import SpeechPrivacy from "./pages/services/SpeechPrivacy";
 import PhysicalSecurityAssessments from "./pages/services/PhysicalSecurityAssessments";
+import VenueSecurityAudits from "./pages/services/VenueSecurityAudits";
 
 // Create a wrapper component for handling legacy redirects
 const LegacyAcronymRedirect = () => {
@@ -91,6 +92,7 @@ const App = () => {
                       <Route path="/services/close-protection" element={<CloseProtection />} />
                       <Route path="/services/speech-privacy" element={<SpeechPrivacy />} />
                       <Route path="/services/physical-security-assessments" element={<PhysicalSecurityAssessments />} />
+                      <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
                       
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />

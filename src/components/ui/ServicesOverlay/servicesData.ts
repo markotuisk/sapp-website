@@ -15,7 +15,7 @@ export const services: ServiceCategory[] = [
   {
     category: 'Event Security',
     items: [
-      { name: 'Venue Security Audits', description: 'Pre-event security assessment and planning', link: '/services/venue-security-audits', isActive: false },
+      { name: 'Venue Security Audits', description: 'Pre-event security assessment and planning', link: '/services/venue-security-audits', isActive: true },
       { name: 'Event Monitoring', description: 'Real-time surveillance during high-profile events', link: '/services/event-monitoring', isActive: false },
       { name: 'Secure Technology', description: 'Secure communications for event organizers', link: '/services/secure-technology', isActive: false },
       { name: 'Close Protection', description: 'Personalized protection for individuals facing modern threats, from online harassment to physical security concerns.', link: '/services/close-protection', isActive: true }
