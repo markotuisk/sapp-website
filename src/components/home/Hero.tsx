@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
   const [ref, inView] = useInView({
@@ -11,6 +12,7 @@ const Hero = () => {
     threshold: 0.1,
   });
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleNavigateToServices = () => {
     navigate('/service-navigator');
@@ -28,7 +30,7 @@ const Hero = () => {
             )}
             ref={ref}
           >
-            Your <span className="text-sapp-blue">trusted</span> technical <span className="text-sapp-blue">security</span><br className="hidden md:block" />
+            Your <span className="text-sapp-blue">trusted</span> technical <span className="text-sapp-blue">security</span>{isMobile && ' '}<br className="hidden md:block" />
             and privacy <span className="text-sapp-blue">partner</span>
           </h1>
           
