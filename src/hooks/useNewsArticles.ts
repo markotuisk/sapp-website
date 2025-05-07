@@ -35,7 +35,7 @@ export const fetchNewsArticlesCount = async (params?: NewsQueryParams): Promise<
 
     let query = supabase
       .from("news_articles")
-      .select("id", { count: "exact" })
+      .select("id", { count: "exact", head: true }) // Using head: true to only count and not return data
       .eq("published", true);
 
     if (category) {
@@ -99,7 +99,7 @@ export const fetchNewsArticles = async (params?: NewsQueryParams): Promise<NewsA
 
     let query = supabase
       .from("news_articles")
-      .select("*")
+      .select("id, title, slug, summary, content, cover_image, category, author, author_title, published, published_at, created_at, updated_at, featured, tags")
       .eq("published", true)
       .order("published_at", { ascending: false });
 
