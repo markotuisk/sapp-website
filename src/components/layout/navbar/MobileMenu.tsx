@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { useLocation } from 'react-router-dom';
 import { mainNavLinks } from './NavLinks';
@@ -42,11 +42,17 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-white z-[100] md:hidden overflow-auto flex flex-col"
+      className="fixed inset-0 bg-white z-[100] md:hidden overflow-auto"
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
-      style={{ display: 'flex' }}
+      style={{ 
+        display: 'flex',
+        flexDirection: 'column',
+        opacity: 1,
+        visibility: 'visible', 
+        pointerEvents: 'auto' 
+      }}
     >
       <div className="flex justify-end p-4">
         <button
