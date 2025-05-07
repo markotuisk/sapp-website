@@ -35,9 +35,10 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
   return (
     <div
       className={cn(
-        "fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out md:hidden overflow-auto",
+        "fixed inset-0 bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden overflow-auto",
         isOpen ? "translate-x-0" : "translate-x-full"
       )}
+      style={{ display: isOpen ? 'block' : 'none' }}
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
