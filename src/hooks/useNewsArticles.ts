@@ -89,7 +89,6 @@ export const useNewsArticles = (params?: NewsQueryParams) => {
   return useQuery({
     queryKey: ["news-articles", params],
     queryFn: () => fetchNewsArticles(params),
-    keepPreviousData: true,
   });
 };
 

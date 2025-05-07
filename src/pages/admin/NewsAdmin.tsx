@@ -19,6 +19,7 @@ const NewsAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [article, setArticle] = useState({
     title: "",
+    slug: "", // Added slug field
     summary: "",
     content: "",
     cover_image: "",
@@ -42,6 +43,17 @@ const NewsAdmin = () => {
     "Tutorials",
     "Case Studies"
   ];
+
+  // Generate slug from title
+  useEffect(() => {
+    if (article.title) {
+      const slug = article.title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-');
+      setArticle(prev => ({ ...prev, slug }));
+    }
+  }, [article.title]);
 
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -88,7 +100,7 @@ const NewsAdmin = () => {
     setLoading(true);
 
     try {
-      // Prepare article data
+      // Prepare article data with slug included
       const articleData = {
         ...article,
         published_at: article.published ? new Date().toISOString() : null,
@@ -97,7 +109,7 @@ const NewsAdmin = () => {
       // Submit to Supabase
       const { data, error } = await supabase
         .from("news_articles")
-        .insert([articleData])
+        .insert(articleData)
         .select("id, slug")
         .single();
 
@@ -117,6 +129,7 @@ const NewsAdmin = () => {
         // Reset the form
         setArticle({
           title: "",
+          slug: "",
           summary: "",
           content: "",
           cover_image: "",
@@ -169,6 +182,25 @@ const NewsAdmin = () => {
                     required
                     className="text-lg"
                   />
+                </div>
+
+                {/* Slug - Auto-generated but can be customized */}
+                <div className="space-y-2">
+                  <Label htmlFor="slug" className="text-base">
+                    Slug <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="slug"
+                    name="slug"
+                    value={article.slug}
+                    onChange={handleChange}
+                    placeholder="URL-friendly slug (auto-generated from title)"
+                    required
+                    className="font-mono text-sm"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    This will be used in the URL: /news/your-slug
+                  </p>
                 </div>
 
                 {/* Summary */}
@@ -230,6 +262,7 @@ const NewsAdmin = () => {
                   )}
                 </div>
 
+                {/* Category & Author */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Category */}
                   <div className="space-y-2">

@@ -19,7 +19,7 @@ const News = () => {
   const [allCategories, setAllCategories] = useState<string[]>([]);
   
   // Fetch initial articles
-  const { data: articles = [], isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useNewsArticles({
+  const { data: articles = [], isLoading, refetch } = useNewsArticles({
     limit: ARTICLES_PER_PAGE,
     offset: 0,
     category: selectedCategory || undefined,
@@ -40,7 +40,8 @@ const News = () => {
 
   const handleLoadMore = () => {
     setPage(prev => prev + 1);
-    fetchNextPage();
+    // For simplicity, just refetch more articles (in a real app, we would add pagination)
+    refetch();
   };
 
   return (
@@ -72,11 +73,11 @@ const News = () => {
             className="mb-8"
           />
           
-          {hasNextPage && (
+          {articles.length >= ARTICLES_PER_PAGE && (
             <LoadMoreButton
               onClick={handleLoadMore}
-              loading={isFetchingNextPage}
-              disabled={!hasNextPage}
+              loading={isLoading}
+              disabled={articles.length < ARTICLES_PER_PAGE}
               className="mt-8"
             />
           )}

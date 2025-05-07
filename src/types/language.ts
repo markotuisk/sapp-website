@@ -1,3 +1,4 @@
+
 export type TranslationKey = 
   | 'home'
   | 'about'
@@ -36,7 +37,14 @@ export type TranslationKey =
   | 'globalExpertise'
   | 'globalExpertiseDescription'
   | 'aboutSappTitle'
-  | 'aboutSappDescription';
+  | 'aboutSappDescription'
+  | 'news'
+  | 'latestNews'
+  | 'newsIntro'
+  | 'publishedOn'
+  | 'by'
+  | 'backToNews'
+  | 'shareOn';
 
 export type Language = {
   code: string;
