@@ -9,6 +9,7 @@ export const mainNavLinks = [
   { key: 'eventSecurity' as const, href: '/event-security' },
   { key: 'installations' as const, href: '/installations' },
   { key: 'cyberSecurity' as const, href: '/cyber-security' },
+  { key: 'news' as const, href: '/news' },
   { key: 'about' as const, href: '/about' },
 ];
 
