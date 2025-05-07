@@ -41,6 +41,10 @@ const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <header
       className={cn(
@@ -65,7 +69,7 @@ const Navbar = () => {
             </div>
 
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={toggleMobileMenu}
               className="md:hidden flex items-center justify-center h-10 w-10 rounded-md text-sapp-dark hover:bg-gray-100"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}

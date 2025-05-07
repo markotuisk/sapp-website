@@ -6,6 +6,7 @@ import { mainNavLinks } from './NavLinks';
 import TranslatedText from '@/components/ui/TranslatedText';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
 
 export interface MobileMenuProps {
   isOpen: boolean;
@@ -32,13 +33,14 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
     window.scrollTo(0, 0);
   };
 
+  // If the menu is not open, don't render it at all
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div
-      className={cn(
-        "fixed inset-0 bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden overflow-auto",
-        isOpen ? "translate-x-0" : "translate-x-full"
-      )}
-      style={{ display: isOpen ? 'block' : 'none' }}
+      className="fixed inset-0 bg-white z-50 md:hidden overflow-auto"
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
@@ -50,10 +52,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             className="p-2 rounded-md text-sapp-dark hover:bg-gray-100"
             aria-label="Close menu"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 6 6 18"></path>
-              <path d="m6 6 12 12"></path>
-            </svg>
+            <X className="h-6 w-6" />
           </button>
         </div>
 
