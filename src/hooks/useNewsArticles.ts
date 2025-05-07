@@ -47,41 +47,46 @@ export const fetchNewsArticleBySlug = async (slug: string): Promise<NewsArticle 
 
 // Function to fetch news articles with filters
 export const fetchNewsArticles = async (params?: NewsQueryParams): Promise<NewsArticle[]> => {
-  const { 
-    limit = 9, 
-    offset = 0, 
-    category, 
-    featured,
-    searchTerm
-  } = params || {};
+  try {
+    const { 
+      limit = 9, 
+      offset = 0, 
+      category, 
+      featured,
+      searchTerm
+    } = params || {};
 
-  let query = supabase
-    .from("news_articles")
-    .select("*")
-    .eq("published", true)
-    .order("published_at", { ascending: false });
+    let query = supabase
+      .from("news_articles")
+      .select("*")
+      .eq("published", true)
+      .order("published_at", { ascending: false });
 
-  if (category) {
-    query = query.eq("category", category);
-  }
+    if (category) {
+      query = query.eq("category", category);
+    }
 
-  if (featured !== undefined) {
-    query = query.eq("featured", featured);
-  }
+    if (featured !== undefined) {
+      query = query.eq("featured", featured);
+    }
 
-  if (searchTerm) {
-    query = query.ilike("title", `%${searchTerm}%`);
-  }
+    if (searchTerm) {
+      query = query.ilike("title", `%${searchTerm}%`);
+    }
 
-  const { data, error } = await query
-    .range(offset, offset + limit - 1);
+    const { data, error } = await query
+      .range(offset, offset + limit - 1);
 
-  if (error) {
-    console.error("Error fetching news articles:", error);
+    if (error) {
+      console.error("Error fetching news articles:", error);
+      throw error;
+    }
+
+    return data as NewsArticle[];
+  } catch (error) {
+    console.error("Error in fetchNewsArticles:", error);
     throw error;
   }
-
-  return data as NewsArticle[];
 };
 
 // Hook to fetch news articles

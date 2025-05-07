@@ -28,7 +28,7 @@ const NewsCard = ({ article, className, featured = false }: NewsCardProps) => {
 
   const formattedDate = published_at 
     ? format(new Date(published_at), "d MMMM yyyy") 
-    : null;
+    : format(new Date(article.created_at), "d MMMM yyyy");
 
   return (
     <Card 

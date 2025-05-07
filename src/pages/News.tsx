@@ -18,38 +18,50 @@ const News = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [page, setPage] = useState(1);
+  const [displayedArticles, setDisplayedArticles] = useState<any[]>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
+  const [hasMore, setHasMore] = useState(true);
   
-  // Fetch initial articles
+  // Fetch articles with current filters
   const { data: articles = [], isLoading, refetch } = useNewsArticles({
-    limit: ARTICLES_PER_PAGE,
+    limit: ARTICLES_PER_PAGE * page,
     offset: 0,
     category: selectedCategory || undefined,
     searchTerm: searchTerm || undefined,
   });
 
-  // Extract unique categories from articles
+  // Update displayed articles when data changes
   useEffect(() => {
     if (articles && articles.length > 0) {
+      setDisplayedArticles(articles);
+      
+      // Check if we still have more articles to load
+      setHasMore(articles.length >= ARTICLES_PER_PAGE * page);
+      
+      // Extract unique categories from all articles
       const categories = [...new Set(articles.map(article => article.category))];
       setAllCategories(categories);
+    } else {
+      setDisplayedArticles([]);
+      setHasMore(false);
     }
-  }, [articles]);
+  }, [articles, page]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [selectedCategory, searchTerm]);
 
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
-    setPage(1);
   };
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    setPage(1);
   };
 
   const handleLoadMore = () => {
     setPage(prev => prev + 1);
-    // For simplicity, just refetch more articles (in a real app, we would add pagination)
-    refetch();
   };
 
   return (
@@ -84,18 +96,25 @@ const News = () => {
           </div>
           
           <NewsGrid
-            articles={articles}
+            articles={displayedArticles}
             loading={isLoading}
             className="mb-8"
           />
           
-          {articles.length >= ARTICLES_PER_PAGE && (
+          {hasMore && displayedArticles.length > 0 && (
             <LoadMoreButton
               onClick={handleLoadMore}
               loading={isLoading}
-              disabled={articles.length < ARTICLES_PER_PAGE}
+              disabled={!hasMore || isLoading}
               className="mt-8"
             />
+          )}
+
+          {displayedArticles.length === 0 && !isLoading && (
+            <div className="text-center py-8">
+              <h3 className="text-lg font-medium text-gray-900">No articles found</h3>
+              <p className="mt-2 text-gray-600">Try adjusting your search or filter criteria</p>
+            </div>
           )}
         </section>
       </main>
