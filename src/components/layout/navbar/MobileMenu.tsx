@@ -42,19 +42,27 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-white z-[100] md:hidden overflow-auto"
+      className="fixed inset-0 bg-white z-[9999] md:hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
       style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         display: 'flex',
         flexDirection: 'column',
         opacity: 1,
-        visibility: 'visible', 
-        pointerEvents: 'auto' 
+        visibility: 'visible',
+        pointerEvents: 'auto',
+        height: '100vh',
+        width: '100vw',
+        overflowY: 'auto'
       }}
     >
-      <div className="flex justify-end p-4">
+      <div className="flex justify-end p-4 sticky top-0 bg-white z-10">
         <button
           onClick={onClose}
           className="p-2 rounded-md text-sapp-dark hover:bg-gray-100"
@@ -64,7 +72,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
         </button>
       </div>
 
-      <nav className="flex-1 px-6 pb-6 overflow-y-auto mt-4" aria-label="Mobile navigation">
+      <nav className="flex-1 px-6 pb-6 overflow-y-auto" aria-label="Mobile navigation">
         <div className="space-y-6">
           {mainNavLinks.map((link, index) => {
             const active = location.pathname === link.href;
