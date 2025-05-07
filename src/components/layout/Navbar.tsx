@@ -47,12 +47,12 @@ const Navbar = () => {
         'fixed top-0 w-full z-50 transition-all duration-300',
         isScrolled 
           ? 'bg-white shadow-sm border-b border-gray-200/50'
-          : 'bg-white/80 backdrop-blur-md' // Changed from 'bg-transparent' to maintain slight opacity
+          : 'bg-white/80 backdrop-blur-md'
       )}
       role="banner"
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-24 md:h-28">
+        <div className="flex items-center justify-between h-16 md:h-28">
           <Logo />
 
           <nav className="hidden md:block" aria-label="Main Navigation">
@@ -60,7 +60,9 @@ const Navbar = () => {
           </nav>
 
           <div className="flex items-center">
-            <NavActions />
+            <div className="hidden md:block">
+              <NavActions />
+            </div>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -69,11 +71,7 @@ const Navbar = () => {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              )}
+              <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
         </div>
