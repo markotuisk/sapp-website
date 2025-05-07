@@ -42,8 +42,8 @@ const Navbar = () => {
   }, [mobileMenuOpen]);
 
   const toggleMobileMenu = () => {
+    console.log("Mobile menu toggled, current state:", mobileMenuOpen);
     setMobileMenuOpen(!mobileMenuOpen);
-    console.log("Mobile menu toggled:", !mobileMenuOpen);
   };
 
   return (
@@ -71,7 +71,7 @@ const Navbar = () => {
 
             <button
               onClick={toggleMobileMenu}
-              className="md:hidden flex items-center justify-center h-10 w-10 rounded-md text-sapp-dark hover:bg-gray-100"
+              className="md:hidden flex items-center justify-center h-10 w-10 rounded-md text-sapp-dark hover:bg-gray-100 z-50"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
@@ -84,7 +84,10 @@ const Navbar = () => {
 
       <MobileMenu 
         isOpen={mobileMenuOpen}
-        onClose={() => setMobileMenuOpen(false)}
+        onClose={() => {
+          console.log("Closing mobile menu from onClose");
+          setMobileMenuOpen(false);
+        }}
       />
     </header>
   );

@@ -19,7 +19,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-white to-slate-50 z-0">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center justify-center text-center">
           <h1 
