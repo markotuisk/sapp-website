@@ -66,19 +66,24 @@ export const fetchNewsArticlesCount = async (params?: NewsQueryParams): Promise<
 
 // Function to fetch a single news article by slug
 export const fetchNewsArticleBySlug = async (slug: string): Promise<NewsArticle | null> => {
-  const { data, error } = await supabase
-    .from("news_articles")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
+  try {
+    const { data, error } = await supabase
+      .from("news_articles")
+      .select("*")
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle();
 
-  if (error) {
-    console.error("Error fetching news article:", error);
+    if (error) {
+      console.error("Error fetching news article:", error);
+      throw error;
+    }
+
+    return data as NewsArticle | null;
+  } catch (error) {
+    console.error("Error in fetchNewsArticleBySlug:", error);
     throw error;
   }
-
-  return data as NewsArticle | null;
 };
 
 // Function to fetch news articles with filters
