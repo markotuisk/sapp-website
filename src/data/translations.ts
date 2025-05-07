@@ -1,3 +1,4 @@
+
 import { Language, Translations } from '@/types/language';
 
 export const languages: Language[] = [
@@ -49,12 +50,11 @@ export const translations: Translations = {
     aboutSappDescription: 'Founded by security professionals with extensive experience in both physical and digital security, SAPP Security combines technical expertise with a deep understanding of the evolving security landscape to protect your most valuable assets.',
     news: 'News',
     latestNews: 'Latest News',
-    readMore: 'Read More',
+    newsIntro: 'Stay updated with the latest security industry insights, company news, and expert advice.',
     publishedOn: 'Published on',
     by: 'by',
     backToNews: 'Back to News',
     shareOn: 'Share on',
-    newsIntro: 'Stay updated with the latest security industry insights, company news, and expert advice.',
   },
   de: {
     home: 'Startseite',
@@ -97,12 +97,11 @@ export const translations: Translations = {
     aboutSappDescription: 'SAPP Security wurde von Sicherheitsexperten mit umfangreicher Erfahrung in physischer und digitaler Sicherheit gegründet und kombiniert technisches Know-how mit einem tiefen Verständnis der sich entwickelnden Sicherheitslandschaft, um Ihre wertvollsten Vermögenswerte zu schützen.',
     news: 'Neuigkeiten',
     latestNews: 'Neueste Meldungen',
-    readMore: 'Weiterlesen',
+    newsIntro: 'Bleiben Sie auf dem Laufenden mit den neuesten Einblicken in die Sicherheitsbranche, Unternehmensnachrichten und Expertenratschlägen.',
     publishedOn: 'Veröffentlicht am',
     by: 'von',
     backToNews: 'Zurück zu Neuigkeiten',
     shareOn: 'Teilen auf',
-    newsIntro: 'Bleiben Sie auf dem Laufenden mit den neuesten Einblicken in die Sicherheitsbranche, Unternehmensnachrichten und Expertenratschlägen.',
   },
   nl: {
     home: 'Home',
@@ -145,12 +144,11 @@ export const translations: Translations = {
     aboutSappDescription: 'SAPP Security is opgericht door beveiligingsprofessionals met uitgebreide ervaring in zowel fysieke als digitale beveiliging en combineert technische expertise met een diepgaand begrip van het evoluerende beveiligingslandschap om uw meest waardevolle bezittingen te beschermen.',
     news: 'Nieuws',
     latestNews: 'Laatste Nieuws',
-    readMore: 'Lees Meer',
+    newsIntro: 'Blijf op de hoogte van de nieuwste inzichten uit de beveiligingsbranche, bedrijfsnieuws en deskundig advies.',
     publishedOn: 'Gepubliceerd op',
     by: 'door',
     backToNews: 'Terug naar Nieuws',
     shareOn: 'Delen op',
-    newsIntro: 'Blijf op de hoogte van de nieuwste inzichten uit de beveiligingsbranche, bedrijfsnieuws en deskundig advies.',
   },
   fr: {
     home: 'Accueil',
@@ -193,11 +191,10 @@ export const translations: Translations = {
     aboutSappDescription: 'Fondée par des professionnels de la sécurité ayant une vaste expérience tant dans la sécurité physique que numérique, SAPP Security combine expertise technique et compréhension approfondie du paysage de sécurité en évolution pour protéger vos actifs les plus précieux.',
     news: 'Actualités',
     latestNews: 'Dernières Actualités',
-    readMore: 'Lire Plus',
+    newsIntro: 'Restez informé des dernières perspectives de l\'industrie de la sécurité, des actualités de l\'entreprise et des conseils d\'experts.',
     publishedOn: 'Publié le',
     by: 'par',
     backToNews: 'Retour aux Actualités',
     shareOn: 'Partager sur',
-    newsIntro: 'Restez informé des dernières perspectives de l\'industrie de la sécurité, des actualités de l\'entreprise et des conseils d\'experts.',
   },
 };
