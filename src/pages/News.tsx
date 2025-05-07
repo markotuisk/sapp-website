@@ -7,6 +7,7 @@ import NewsHero from "@/components/news/NewsHero";
 import NewsGrid from "@/components/news/NewsGrid";
 import CategoryFilter from "@/components/news/CategoryFilter";
 import LoadMoreButton from "@/components/news/LoadMoreButton";
+import SearchBar from "@/components/news/SearchBar";
 import { useNewsArticles } from "@/hooks/useNewsArticles";
 import { useLanguage } from "@/hooks/useLanguage";
 
@@ -15,6 +16,7 @@ const ARTICLES_PER_PAGE = 9;
 const News = () => {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [page, setPage] = useState(1);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   
@@ -23,6 +25,7 @@ const News = () => {
     limit: ARTICLES_PER_PAGE,
     offset: 0,
     category: selectedCategory || undefined,
+    searchTerm: searchTerm || undefined,
   });
 
   // Extract unique categories from articles
@@ -35,6 +38,11 @@ const News = () => {
 
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
+    setPage(1);
+  };
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
     setPage(1);
   };
 
@@ -60,12 +68,20 @@ const News = () => {
         <NewsHero />
         
         <section className="container mx-auto px-4 py-12">
-          <CategoryFilter
-            categories={allCategories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={handleCategoryChange}
-            className="mb-8"
-          />
+          <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
+            <CategoryFilter
+              categories={allCategories}
+              selectedCategory={selectedCategory}
+              onSelectCategory={handleCategoryChange}
+              className="w-full md:w-auto"
+            />
+            
+            <SearchBar 
+              onSearch={handleSearch}
+              initialValue={searchTerm}
+              className="w-full md:w-auto"
+            />
+          </div>
           
           <NewsGrid
             articles={articles}

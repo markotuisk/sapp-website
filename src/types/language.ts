@@ -1,4 +1,3 @@
-
 export type TranslationKey = 
   | 'home'
   | 'about'
@@ -44,7 +43,8 @@ export type TranslationKey =
   | 'publishedOn'
   | 'by'
   | 'backToNews'
-  | 'shareOn';
+  | 'shareOn'
+  | 'searchNews';
 
 export type Language = {
   code: string;

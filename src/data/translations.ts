@@ -55,6 +55,8 @@ export const translations: Translations = {
     by: 'by',
     backToNews: 'Back to News',
     shareOn: 'Share on',
+    readMore: 'Read More',
+    searchNews: 'Search news articles...',
   },
   de: {
     home: 'Startseite',
@@ -102,6 +104,8 @@ export const translations: Translations = {
     by: 'von',
     backToNews: 'Zurück zu Neuigkeiten',
     shareOn: 'Teilen auf',
+    readMore: 'Mehr lesen',
+    searchNews: 'Nachrichtenartikel durchsuchen...',
   },
   nl: {
     home: 'Home',
@@ -149,6 +153,8 @@ export const translations: Translations = {
     by: 'door',
     backToNews: 'Terug naar Nieuws',
     shareOn: 'Delen op',
+    readMore: 'Meer lezen',
+    searchNews: 'Nieuwsartikelen zoeken...',
   },
   fr: {
     home: 'Accueil',
@@ -196,5 +202,7 @@ export const translations: Translations = {
     by: 'par',
     backToNews: 'Retour aux Actualités',
     shareOn: 'Partager sur',
+    readMore: 'En savoir plus',
+    searchNews: 'Rechercher des articles...',
   },
 };
