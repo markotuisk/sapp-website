@@ -8,44 +8,66 @@ import NewsGrid from "@/components/news/NewsGrid";
 import CategoryFilter from "@/components/news/CategoryFilter";
 import LoadMoreButton from "@/components/news/LoadMoreButton";
 import SearchBar from "@/components/news/SearchBar";
-import { useNewsArticles } from "@/hooks/useNewsArticles";
+import { useNewsArticles, useNewsArticlesCount } from "@/hooks/useNewsArticles";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useToast } from "@/components/ui/use-toast";
 
 const ARTICLES_PER_PAGE = 9;
 
 const News = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [page, setPage] = useState(1);
   const [displayedArticles, setDisplayedArticles] = useState<any[]>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
-  const [hasMore, setHasMore] = useState(true);
   
   // Fetch articles with current filters
-  const { data: articles = [], isLoading, refetch } = useNewsArticles({
+  const { 
+    data: articles = [], 
+    isLoading, 
+    isError, 
+    error 
+  } = useNewsArticles({
     limit: ARTICLES_PER_PAGE * page,
     offset: 0,
     category: selectedCategory || undefined,
     searchTerm: searchTerm || undefined,
   });
 
+  // Get total count for pagination
+  const { 
+    data: totalCount = 0
+  } = useNewsArticlesCount({
+    category: selectedCategory || undefined,
+    searchTerm: searchTerm || undefined,
+  });
+
+  // Show error toast if fetching fails
+  useEffect(() => {
+    if (isError && error) {
+      toast({
+        title: "Error loading news articles",
+        description: "There was a problem fetching the news articles. Please try again later.",
+        variant: "destructive",
+      });
+      console.error("News fetch error:", error);
+    }
+  }, [isError, error, toast]);
+
   // Update displayed articles when data changes
   useEffect(() => {
     if (articles && articles.length > 0) {
       setDisplayedArticles(articles);
-      
-      // Check if we still have more articles to load
-      setHasMore(articles.length >= ARTICLES_PER_PAGE * page);
       
       // Extract unique categories from all articles
       const categories = [...new Set(articles.map(article => article.category))];
       setAllCategories(categories);
     } else {
       setDisplayedArticles([]);
-      setHasMore(false);
     }
-  }, [articles, page]);
+  }, [articles]);
 
   // Reset page when filters change
   useEffect(() => {
@@ -63,6 +85,9 @@ const News = () => {
   const handleLoadMore = () => {
     setPage(prev => prev + 1);
   };
+
+  // Check if we have more articles to load
+  const hasMore = totalCount > displayedArticles.length;
 
   return (
     <>

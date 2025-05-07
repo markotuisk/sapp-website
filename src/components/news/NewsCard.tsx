@@ -86,7 +86,7 @@ const NewsCard = ({ article, className, featured = false }: NewsCardProps) => {
             to={`/news/${slug}`}
             className="text-sapp-blue hover:underline text-sm font-medium"
           >
-            <TranslatedText textKey="readMore" />
+            Read More
           </Link>
         </CardFooter>
       </div>
