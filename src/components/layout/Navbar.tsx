@@ -43,6 +43,7 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+    console.log("Mobile menu toggled:", !mobileMenuOpen);
   };
 
   return (
