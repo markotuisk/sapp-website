@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,6 +32,7 @@ import ComplianceAudits from "./pages/services/ComplianceAudits";
 import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 import NewsAdmin from "./pages/admin/NewsAdmin";
+import EventMonitoring from "./pages/services/EventMonitoring";
 
 // Create a wrapper component for handling legacy redirects
 const LegacyAcronymRedirect = () => {
@@ -103,6 +103,7 @@ const App = () => {
                       <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
                       <Route path="/services/penetration-testing" element={<PenetrationTesting />} />
                       <Route path="/services/compliance-audits" element={<ComplianceAudits />} />
+                      <Route path="/services/event-monitoring" element={<EventMonitoring />} />
                       
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />
