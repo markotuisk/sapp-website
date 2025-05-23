@@ -101,6 +101,7 @@ const App = () => {
                       <Route path="/services/physical-security-assessments" element={<PhysicalSecurityAssessments />} />
                       <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
                       <Route path="/services/penetration-testing" element={<PenetrationTesting />} />
+                      <Route path="/services/compliance-audits" element={<ComplianceAudits />} />
                       
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />
