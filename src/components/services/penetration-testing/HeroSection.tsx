@@ -17,7 +17,7 @@ const HeroSection: React.FC<HeroProps> = ({ onRequestService }) => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+    <section className="pt-28 md:pt-36 pb-16 md:pb-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         {[...Array(6)].map((_, i) => (
           <div
