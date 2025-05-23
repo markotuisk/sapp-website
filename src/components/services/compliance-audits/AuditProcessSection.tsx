@@ -94,25 +94,28 @@ const AuditProcessSection: React.FC = () => {
 
         <div className="mb-12">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-4 mb-8">
-            {auditStages.map((stage, index) => (
-              <motion.button
-                key={index}
-                onClick={() => setActiveStage(index)}
-                className={`flex items-center gap-3 px-6 py-4 rounded-xl transition-all duration-300 ${
-                  activeStage === index
-                    ? 'bg-sapp-blue text-white shadow-lg'
-                    : 'bg-slate-100 text-sapp-gray hover:bg-slate-200'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <stage.icon className="h-5 w-5" />
-                <div className="text-left">
-                  <div className="font-semibold text-sm">{stage.stage}</div>
-                  <div className="text-xs opacity-80">{stage.title}</div>
-                </div>
-              </motion.button>
-            ))}
+            {auditStages.map((stage, index) => {
+              const StageIcon = stage.icon;
+              return (
+                <motion.button
+                  key={index}
+                  onClick={() => setActiveStage(index)}
+                  className={`flex items-center gap-3 px-6 py-4 rounded-xl transition-all duration-300 ${
+                    activeStage === index
+                      ? 'bg-sapp-blue text-white shadow-lg'
+                      : 'bg-slate-100 text-sapp-gray hover:bg-slate-200'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <StageIcon className="h-5 w-5" />
+                  <div className="text-left">
+                    <div className="font-semibold text-sm">{stage.stage}</div>
+                    <div className="text-xs opacity-80">{stage.title}</div>
+                  </div>
+                </motion.button>
+              );
+            })}
           </div>
 
           <motion.div
@@ -126,7 +129,7 @@ const AuditProcessSection: React.FC = () => {
               <div>
                 <div className="flex items-center gap-4 mb-4">
                   <div className={`rounded-full p-3 ${getColorClasses(auditStages[activeStage].color, true)}`}>
-                    <auditStages[activeStage].icon className="h-6 w-6" />
+                    {React.createElement(auditStages[activeStage].icon, { className: "h-6 w-6" })}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-sapp-dark">{auditStages[activeStage].title}</h3>
