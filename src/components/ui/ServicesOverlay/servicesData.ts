@@ -27,7 +27,7 @@ export const services: ServiceCategory[] = [
       { name: 'Physical Security Assessments', description: 'Comprehensive evaluation of physical security measures and vulnerabilities.', link: '/services/physical-security-assessments', isActive: true },
       { name: 'Compliance Audits', description: 'ISO27001 and regulatory compliance checks', link: '/security-audits#compliance', isActive: false },
       { name: 'TSCM Inspections', description: 'Technical surveillance countermeasures to detect and prevent eavesdropping.', link: '/tscm', isActive: true },
-      { name: 'Penetration Tests', description: 'Identifying vulnerabilities in your security', link: '/security-audits#penetration', isActive: false }
+      { name: 'Penetration Tests', description: 'Identifying vulnerabilities in your security', link: '/services/penetration-testing', isActive: true }
     ]
   },
   {
