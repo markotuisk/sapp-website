@@ -45,7 +45,7 @@ const HeroSection = () => {
               )}
               ref={ref}
             >
-              ISO27001 Certified
+              CERTIFIED
             </h3>
             
             <h1 
