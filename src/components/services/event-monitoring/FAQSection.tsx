@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus, Shield, Clock, Users, Pound } from 'lucide-react';
+import { Plus, Minus, Shield, Clock, Users, PoundSterling } from 'lucide-react';
 import { Animated } from '@/components/ui/AnimatedElements';
 
 const FAQSection: React.FC = () => {
@@ -63,7 +63,7 @@ const FAQSection: React.FC = () => {
       ]
     },
     {
-      icon: Pound,
+      icon: PoundSterling,
       title: "Investment & Value",
       faqs: [
         {
