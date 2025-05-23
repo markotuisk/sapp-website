@@ -29,6 +29,7 @@ import SpeechPrivacy from "./pages/services/SpeechPrivacy";
 import PhysicalSecurityAssessments from "./pages/services/PhysicalSecurityAssessments";
 import VenueSecurityAudits from "./pages/services/VenueSecurityAudits";
 import PenetrationTesting from "./pages/services/PenetrationTesting";
+import ComplianceAudits from "./pages/services/ComplianceAudits";
 import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 import NewsAdmin from "./pages/admin/NewsAdmin";
