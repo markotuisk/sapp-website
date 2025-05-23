@@ -15,6 +15,7 @@ export type TranslationKey =
   | 'eventSecurity'
   | 'audits'
   | 'securityAudits'
+  | 'penetrationTesting'
   | 'installations'
   | 'cyberSecurity'
   | 'clientArea'

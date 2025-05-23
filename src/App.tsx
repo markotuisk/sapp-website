@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +28,7 @@ import CloseProtection from "./pages/services/CloseProtection";
 import SpeechPrivacy from "./pages/services/SpeechPrivacy";
 import PhysicalSecurityAssessments from "./pages/services/PhysicalSecurityAssessments";
 import VenueSecurityAudits from "./pages/services/VenueSecurityAudits";
+import PenetrationTesting from "./pages/services/PenetrationTesting";
 import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 import NewsAdmin from "./pages/admin/NewsAdmin";
@@ -98,6 +100,7 @@ const App = () => {
                       <Route path="/services/speech-privacy" element={<SpeechPrivacy />} />
                       <Route path="/services/physical-security-assessments" element={<PhysicalSecurityAssessments />} />
                       <Route path="/services/venue-security-audits" element={<VenueSecurityAudits />} />
+                      <Route path="/services/penetration-testing" element={<PenetrationTesting />} />
                       
                       <Route path="/tscm" element={<TSCM />} />
                       <Route path="/acronyms/what-is-:slug" element={<AcronymDetail />} />
