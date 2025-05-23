@@ -92,7 +92,6 @@ const AuditProcessSection: React.FC = () => {
           </p>
         </Animated>
 
-        {/* Interactive Timeline */}
         <div className="mb-12">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-4 mb-8">
             {auditStages.map((stage, index) => (
@@ -116,7 +115,6 @@ const AuditProcessSection: React.FC = () => {
             ))}
           </div>
 
-          {/* Active Stage Details */}
           <motion.div
             key={activeStage}
             initial={{ opacity: 0, y: 20 }}
@@ -167,7 +165,6 @@ const AuditProcessSection: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Process Benefits */}
         <Animated animation="fade-up" delay={400}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border border-gray-200 rounded-xl p-6 text-center">
