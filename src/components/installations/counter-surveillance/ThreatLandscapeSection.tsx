@@ -44,7 +44,7 @@ const ThreatLandscapeSection = () => {
 
   const modernThreats = [
     'Corporate espionage costs UK businesses £21bn annually',
-    '67% of executives have been targeted by surveillance',
+    '67% of executives have been targeted by surveillance', 
     'Average detection time for corporate bugs: 127 days',
     'Smart devices create 15+ new surveillance vectors per office'
   ];
