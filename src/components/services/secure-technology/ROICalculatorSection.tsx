@@ -21,23 +21,23 @@ const ROICalculatorSection: React.FC = () => {
     healthcare: { riskMultiplier: 2.0, baseValue: 300000, name: 'Healthcare/Pharma' }
   };
 
-  // Risk level configurations
+  // Updated risk level configurations with higher cost differences
   const riskConfigurations = {
     low: { 
-      multiplier: 0.08, 
-      baseCostPerPerson: 12, 
+      multiplier: 0.05, 
+      baseCostPerPerson: 15, 
       name: 'Low Risk',
       description: 'Standard business meetings, public conferences'
     },
     medium: { 
-      multiplier: 0.25, 
-      baseCostPerPerson: 28, 
+      multiplier: 0.15, 
+      baseCostPerPerson: 45, 
       name: 'Medium Risk',
       description: 'Confidential business, competitive intelligence value'
     },
     high: { 
-      multiplier: 0.45, 
-      baseCostPerPerson: 55, 
+      multiplier: 0.35, 
+      baseCostPerPerson: 125, 
       name: 'High Risk',
       description: 'Highly sensitive, national security, celebrity events'
     }
@@ -51,14 +51,14 @@ const ROICalculatorSection: React.FC = () => {
     // Base calculation considering event value and industry risk
     let baseLoss = eventValue * risk.multiplier * industry.riskMultiplier;
     
-    // Event size factor (economies of scale for smaller events, increased complexity for larger)
-    const sizeMultiplier = eventSize <= 50 ? 1.2 : 
-                          eventSize <= 200 ? 1.0 :
-                          eventSize <= 500 ? 1.3 :
-                          eventSize <= 750 ? 1.6 : 2.0;
+    // Event size factor - linear scaling with slight economies of scale for very large events
+    const sizeMultiplier = eventSize <= 100 ? 1.0 : 
+                          eventSize <= 300 ? 1.1 :
+                          eventSize <= 500 ? 1.2 :
+                          eventSize <= 750 ? 1.3 : 1.4;
     
-    // Duration multiplier (longer events = higher risk)
-    const durationMultiplier = 1 + (eventDuration - 1) * 0.3;
+    // Duration multiplier - significant increase for longer events
+    const durationMultiplier = 1 + (eventDuration - 1) * 0.4;
     
     // Regulatory and reputational damage multiplier based on industry
     const complianceMultiplier = industryType === 'finance' || industryType === 'healthcare' ? 1.5 :
@@ -73,36 +73,39 @@ const ROICalculatorSection: React.FC = () => {
     const risk = riskConfigurations[riskLevel as keyof typeof riskConfigurations];
     const industry = industryFactors[industryType as keyof typeof industryFactors];
     
-    // Base cost calculation
+    // Base cost calculation - attendees are the primary cost driver
     let baseCost = eventSize * risk.baseCostPerPerson;
     
-    // Industry premium
-    const industryPremium = industry.riskMultiplier > 1.5 ? 1.4 : 
-                           industry.riskMultiplier > 1.2 ? 1.2 : 1.0;
+    // Event value impact - minimal but present (security scales slightly with value)
+    const valueMultiplier = 1 + Math.log10(eventValue / 50000) * 0.05;
     
-    // Duration costs (setup, equipment rental, personnel)
-    const durationCost = eventDuration > 1 ? baseCost * (eventDuration - 1) * 0.6 : 0;
+    // Duration has significant impact - each additional day adds substantial costs
+    const durationMultiplier = 1 + (eventDuration - 1) * 0.8;
+    
+    // Industry premium for specialised requirements
+    const industryPremium = industry.riskMultiplier > 1.5 ? 1.3 : 
+                           industry.riskMultiplier > 1.2 ? 1.15 : 1.0;
     
     // Setup and deployment costs based on event size and complexity
-    const setupCost = eventSize <= 50 ? 1500 :
-                     eventSize <= 200 ? 3000 :
-                     eventSize <= 500 ? 6000 :
-                     eventSize <= 750 ? 9000 : 15000;
+    const setupCost = eventSize <= 50 ? 2000 :
+                     eventSize <= 200 ? 4000 :
+                     eventSize <= 500 ? 8000 :
+                     eventSize <= 750 ? 12000 : 18000;
     
-    // Equipment and technology costs
-    const equipmentCost = riskLevel === 'high' ? setupCost * 1.8 :
-                         riskLevel === 'medium' ? setupCost * 1.3 : setupCost;
+    // Equipment costs scale with risk level significantly
+    const equipmentMultiplier = riskLevel === 'high' ? 2.5 :
+                               riskLevel === 'medium' ? 1.8 : 1.0;
     
-    // Calculate total before minimum enforcement
-    let totalCost = (baseCost + durationCost + equipmentCost) * industryPremium;
+    // Calculate total cost
+    let totalCost = (baseCost * durationMultiplier * valueMultiplier * industryPremium) + (setupCost * equipmentMultiplier);
     
     // Advanced security premium for high-risk industries
     if (industryType === 'government' || industryType === 'finance') {
-      totalCost *= 1.3;
+      totalCost *= 1.2;
     }
     
     // Minimum service fee enforcement
-    const minimumFee = 5500; // Updated to £5,500 as requested
+    const minimumFee = 5500;
     
     return Math.round(Math.max(totalCost, minimumFee));
   };
