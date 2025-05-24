@@ -387,7 +387,7 @@ const ROICalculatorSection: React.FC = () => {
                       <p><strong>Industry:</strong> {industryFactors[industryType as keyof typeof industryFactors].name}</p>
                       <p><strong>Risk Profile:</strong> {riskConfigurations[riskLevel as keyof typeof riskConfigurations].name}</p>
                       <p><strong>Event Scale:</strong> {eventSize} attendees, {eventDuration} day{eventDuration > 1 ? 's' : ''}</p>
-                      <p><strong>Security Coverage:</strong> {riskLevel === 'high' ? '99%' : riskLevel === 'medium' ? '90%' : '65%} threat prevention</p>
+                      <p><strong>Security Coverage:</strong> {riskLevel === 'high' ? '99%' : riskLevel === 'medium' ? '90%' : '65%'} threat prevention</p>
                     </div>
                   </motion.div>
                 </div>
