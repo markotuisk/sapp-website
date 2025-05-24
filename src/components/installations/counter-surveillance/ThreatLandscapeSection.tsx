@@ -42,11 +42,23 @@ const ThreatLandscapeSection = () => {
     }
   ];
 
-  const modernThreats = [
-    { stat: '£21bn', description: 'Corporate espionage costs UK businesses annually' },
-    { stat: '67%', description: 'of executives have been targeted by surveillance' },
-    { stat: '127', description: 'Average detection time for corporate bugs (days)' },
-    { stat: '15+', description: 'new surveillance vectors per smart office' }
+  const statisticsData = [
+    { 
+      number: '£21bn', 
+      text: 'Corporate espionage costs UK businesses annually' 
+    },
+    { 
+      number: '67%', 
+      text: 'of executives have been targeted by surveillance' 
+    },
+    { 
+      number: '127', 
+      text: 'Average detection time for corporate bugs (days)' 
+    },
+    { 
+      number: '15+', 
+      text: 'new surveillance vectors per smart office' 
+    }
   ];
 
   return (
@@ -73,7 +85,7 @@ const ThreatLandscapeSection = () => {
 
           {/* Threat Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {modernThreats.map((threat, index) => (
+            {statisticsData.map((item, index) => (
               <motion.div
                 key={index}
                 className="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-xl border border-red-100"
@@ -83,10 +95,10 @@ const ThreatLandscapeSection = () => {
                 transition={{ delay: index * 0.1 }}
               >
                 <div className="text-2xl font-bold text-red-600 mb-2">
-                  {threat.stat}
+                  {item.number}
                 </div>
                 <p className="text-sm text-sapp-gray">
-                  {threat.description}
+                  {item.text}
                 </p>
               </motion.div>
             ))}
