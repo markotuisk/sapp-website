@@ -35,7 +35,7 @@ export interface ResourceCategory {
 
 // Raw services data for internal use
 export const rawServices: ServiceItem[] = [
-  // Event Security Services - removed the redundant "Event Security" entry
+  // Event Security Services
   {
     title: "Venue Security Audits",
     description: "Pre-event security assessment and planning",
