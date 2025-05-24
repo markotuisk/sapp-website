@@ -6,6 +6,16 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 const CCTVCTASection = () => {
+  const handleScheduleConsultation = () => {
+    // Add consultation scheduling logic here
+    console.log('Schedule consultation clicked');
+  };
+
+  const handleRequestQuote = () => {
+    // Add quote request logic here
+    console.log('Request quote clicked');
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-sapp-dark via-slate-800 to-sapp-blue">
       <div className="container mx-auto px-4">
@@ -59,6 +69,7 @@ const CCTVCTASection = () => {
                     </li>
                   </ul>
                   <Button 
+                    onClick={handleScheduleConsultation}
                     className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3"
                   >
                     Book Free Consultation
@@ -98,6 +109,7 @@ const CCTVCTASection = () => {
                     </li>
                   </ul>
                   <Button 
+                    onClick={handleRequestQuote}
                     className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3"
                   >
                     Request Detailed Quote
@@ -174,6 +186,35 @@ const CCTVCTASection = () => {
                   <div className="text-sm text-white/70">{label}</div>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Bottom CTA Section */}
+          <motion.div 
+            className="mt-16 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <div className="bg-gradient-to-r from-sapp-blue to-blue-600 rounded-2xl p-8 text-white max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold mb-4">Ready to Make Your Decision?</h3>
+              <p className="text-blue-100 mb-6">
+                As certified installers for both platforms, we can help you choose and deploy the perfect solution for your needs.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  onClick={handleScheduleConsultation}
+                  className="bg-white text-sapp-blue hover:bg-gray-100 font-semibold px-8 py-3 transition-all duration-300"
+                >
+                  Schedule Consultation
+                </Button>
+                <Button 
+                  onClick={handleRequestQuote}
+                  className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-sapp-blue font-semibold px-8 py-3 transition-all duration-300"
+                >
+                  Request Quote
+                </Button>
+              </div>
             </div>
           </motion.div>
         </div>
