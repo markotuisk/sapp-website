@@ -277,12 +277,17 @@ export const resources: ResourceCategory[] = [
   }
 ];
 
-export const filterItems = (items: (ServiceItem | ResourceItem)[], query: string) => {
-  if (!query.trim()) return items;
+// Filter function that works with categorized data
+export const filterItems = (categories: (ServiceCategory | ResourceCategory)[], query: string) => {
+  if (!query.trim()) return categories;
   
   const searchTerm = query.toLowerCase();
-  return items.filter(item => 
-    item.title.toLowerCase().includes(searchTerm) ||
-    item.description.toLowerCase().includes(searchTerm)
-  );
+  
+  return categories.map(category => ({
+    ...category,
+    items: category.items.filter(item => 
+      item.name.toLowerCase().includes(searchTerm) ||
+      item.description.toLowerCase().includes(searchTerm)
+    )
+  })).filter(category => category.items.length > 0);
 };
