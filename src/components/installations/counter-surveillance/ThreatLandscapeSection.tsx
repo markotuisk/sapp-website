@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Radio, Wifi, Bluetooth, Camera, Mic, Shield, Smartphone, Monitor } from 'lucide-react';
+import { Radio, Wifi, Bluetooth, Camera, Mic, Shield, Smartphone, Monitor, Clock, TrendingUp } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 const ThreatLandscapeSection = () => {
@@ -14,7 +14,8 @@ const ThreatLandscapeSection = () => {
       description: 'Hidden microphones and recording devices',
       details: 'Modern audio bugs are smaller than a coin and can transmit for months. They can be hidden in everyday objects, walls, or furniture.',
       impact: 'Board meetings, strategy discussions, and confidential calls are at risk',
-      color: 'from-red-500 to-pink-500'
+      color: 'from-red-500 to-pink-500',
+      evolution: 'From bulky wire-based devices to wireless nano-transmitters'
     },
     {
       icon: Camera,
@@ -22,7 +23,8 @@ const ThreatLandscapeSection = () => {
       description: 'Covert cameras and visual recording systems',
       details: 'Pinhole cameras, modified objects, and remote viewing systems can capture visual information without detection.',
       impact: 'Document theft, gesture analysis, and visual intelligence gathering',
-      color: 'from-orange-500 to-red-500'
+      color: 'from-orange-500 to-red-500',
+      evolution: 'High-definition recording in devices smaller than a button'
     },
     {
       icon: Radio,
@@ -30,7 +32,8 @@ const ThreatLandscapeSection = () => {
       description: 'Wireless signal interception and monitoring',
       details: 'Radio frequency monitoring can intercept wireless communications, track devices, and detect electronic signatures.',
       impact: 'Communication interception, device tracking, and electronic profiling',
-      color: 'from-purple-500 to-blue-500'
+      color: 'from-purple-500 to-blue-500',
+      evolution: 'Software-defined radios enable broad spectrum monitoring'
     },
     {
       icon: Smartphone,
@@ -38,26 +41,35 @@ const ThreatLandscapeSection = () => {
       description: 'Smartphone and device compromise',
       details: 'Mobile devices can be remotely activated to record audio/video, track location, and access sensitive data.',
       impact: 'Complete privacy breach through personal devices',
-      color: 'from-blue-500 to-cyan-500'
+      color: 'from-blue-500 to-cyan-500',
+      evolution: 'Sophisticated malware targeting business communications'
     }
   ];
 
-  const statisticsData = [
-    { 
-      number: '£21bn', 
-      text: 'Corporate espionage costs UK businesses annually' 
+  const evolutionTimeline = [
+    {
+      era: '1960s-1980s',
+      title: 'Analogue Era',
+      description: 'Large, wired devices requiring physical installation',
+      icon: Monitor
     },
-    { 
-      number: '67%', 
-      text: 'of executives have been targeted by surveillance' 
+    {
+      era: '1990s-2000s',
+      title: 'Digital Transition',
+      description: 'Miniaturisation and wireless transmission capabilities',
+      icon: Radio
     },
-    { 
-      number: '127', 
-      text: 'Average detection time for corporate bugs (days)' 
+    {
+      era: '2010s-Present',
+      title: 'Smart Surveillance',
+      description: 'AI-powered analysis and ubiquitous connectivity',
+      icon: Smartphone
     },
-    { 
-      number: '15+', 
-      text: 'new surveillance vectors per smart office' 
+    {
+      era: 'Future',
+      title: 'Invisible Monitoring',
+      description: 'Nano-scale devices and ambient intelligence',
+      icon: TrendingUp
     }
   ];
 
@@ -83,30 +95,42 @@ const ThreatLandscapeSection = () => {
             </p>
           </motion.div>
 
-          {/* Threat Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {statisticsData.map((item, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-xl border border-red-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="text-2xl font-bold text-red-600 mb-2">
-                  {item.number}
-                </div>
-                <p className="text-sm text-sapp-gray">
-                  {item.text}
-                </p>
-              </motion.div>
-            ))}
+          {/* Threat Evolution Timeline */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-sapp-dark text-center mb-8">Evolution of Surveillance Threats</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {evolutionTimeline.map((period, index) => {
+                const PeriodIcon = period.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    className="relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <div className="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border border-slate-200 h-full">
+                      <div className="flex items-center mb-4">
+                        <PeriodIcon className="h-6 w-6 text-sapp-blue mr-2" />
+                        <span className="text-sm font-semibold text-sapp-blue">{period.era}</span>
+                      </div>
+                      <h4 className="font-bold text-sapp-dark mb-2">{period.title}</h4>
+                      <p className="text-sm text-sapp-gray">{period.description}</p>
+                    </div>
+                    {index < evolutionTimeline.length - 1 && (
+                      <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-sapp-blue to-transparent"></div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Interactive Threat Showcase */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-sapp-dark mb-6">Modern Threat Vectors</h3>
               {threats.map((threat, index) => {
                 const ThreatIcon = threat.icon;
                 return (
@@ -171,6 +195,13 @@ const ThreatLandscapeSection = () => {
                     {threats[selectedThreat].impact}
                   </p>
                 </div>
+
+                <div>
+                  <h4 className="font-semibold text-sapp-dark mb-2">Technology Evolution:</h4>
+                  <p className="text-sapp-gray">
+                    {threats[selectedThreat].evolution}
+                  </p>
+                </div>
               </div>
 
               <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
@@ -185,7 +216,7 @@ const ThreatLandscapeSection = () => {
             </motion.div>
           </div>
 
-          {/* Call to Action */}
+          {/* Educational Focus Section */}
           <motion.div 
             className="text-center mt-16"
             initial={{ opacity: 0, y: 20 }}
