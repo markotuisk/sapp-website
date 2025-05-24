@@ -11,6 +11,13 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative py-16 md:py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-sapp-blue overflow-hidden">
       <FloatingSecurityElements />
@@ -65,7 +72,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
           >
             <Button 
               size="lg" 
-              className="bg-white text-sapp-blue hover:bg-white/90 shadow-xl hover:scale-105 transition-all duration-200 font-semibold px-8 py-3"
+              className="bg-sapp-blue text-white hover:bg-sapp-blue/90 shadow-xl hover:scale-105 transition-all duration-200 font-semibold px-8 py-3 border-2 border-sapp-blue"
               onClick={onContactClick}
             >
               <Shield className="mr-2 h-5 w-5" />
@@ -75,7 +82,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onContactClick }) => {
             <Button 
               size="lg" 
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm hover:scale-105 transition-all duration-200 px-8 py-3"
+              className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-sapp-blue backdrop-blur-sm hover:scale-105 transition-all duration-200 px-8 py-3 font-semibold"
+              onClick={() => scrollToSection('security-levels')}
             >
               <Zap className="mr-2 h-5 w-5" />
               View Protection Levels

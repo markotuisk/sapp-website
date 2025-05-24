@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Check, Shield, Eye, Users, Star } from 'lucide-react';
 import { Animated } from '@/components/ui/AnimatedElements';
@@ -96,7 +95,7 @@ const SecurityLevelSelector: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-slate-50">
+    <section id="security-levels" className="py-16 bg-gradient-to-b from-white to-slate-50">
       <div className="container mx-auto px-4">
         <Animated animation="fade-up" className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
