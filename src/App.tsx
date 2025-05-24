@@ -35,6 +35,7 @@ import NewsAdmin from "./pages/admin/NewsAdmin";
 import EventMonitoring from "./pages/services/EventMonitoring";
 import SecureTechnology from "./pages/services/SecureTechnology";
 import CCTVAccess from "./pages/installations/CCTVAccess";
+import CounterSurveillance from "./pages/installations/CounterSurveillance";
 
 // Create a wrapper component for handling legacy redirects
 const LegacyAcronymRedirect = () => {
@@ -86,6 +87,7 @@ const App = () => {
                       <Route path="/security-audits" element={<SecurityAudits />} />
                       <Route path="/installations" element={<Installations />} />
                       <Route path="/installations/cctv-access" element={<CCTVAccess />} />
+                      <Route path="/installations/counter-surveillance" element={<CounterSurveillance />} />
                       <Route path="/cyber-security" element={<CyberSecurity />} />
                       <Route path="/news" element={<News />} />
                       <Route path="/news/:slug" element={<NewsDetail />} />
