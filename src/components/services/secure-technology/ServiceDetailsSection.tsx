@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Wifi, Radio, FileShredder, Search, Shield, Truck, Users } from 'lucide-react';
+import { Wifi, Radio, Trash2, Search, Shield, Truck, Users } from 'lucide-react';
 import { Animated } from '@/components/ui/AnimatedElements';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -41,7 +41,7 @@ const ServiceDetailsSection: React.FC = () => {
     {
       id: 'files',
       title: 'Secure File Handling',
-      icon: FileShredder,
+      icon: Trash2,
       description: 'Complete protection for both physical and digital documents',
       features: [
         'On-site document shredding',
