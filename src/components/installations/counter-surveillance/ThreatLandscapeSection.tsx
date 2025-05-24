@@ -43,10 +43,10 @@ const ThreatLandscapeSection = () => {
   ];
 
   const modernThreats = [
-    'Corporate espionage costs UK businesses £21bn annually',
-    '67% of executives have been targeted by surveillance', 
-    'Average detection time for corporate bugs: 127 days',
-    'Smart devices create 15+ new surveillance vectors per office'
+    { stat: '£21bn', description: 'Corporate espionage costs UK businesses annually' },
+    { stat: '67%', description: 'of executives have been targeted by surveillance' },
+    { stat: '127', description: 'Average detection time for corporate bugs (days)' },
+    { stat: '15+', description: 'new surveillance vectors per smart office' }
   ];
 
   return (
@@ -83,13 +83,10 @@ const ThreatLandscapeSection = () => {
                 transition={{ delay: index * 0.1 }}
               >
                 <div className="text-2xl font-bold text-red-600 mb-2">
-                  {threat.includes('£21bn') && '£21bn'}
-                  {threat.includes('67%') && '67%'}
-                  {threat.includes('127') && '127'}
-                  {threat.includes('15+') && '15+'}
+                  {threat.stat}
                 </div>
                 <p className="text-sm text-sapp-gray">
-                  {threat.replace(/£21bn|67%|127|15\+/, '').trim()}
+                  {threat.description}
                 </p>
               </motion.div>
             ))}
