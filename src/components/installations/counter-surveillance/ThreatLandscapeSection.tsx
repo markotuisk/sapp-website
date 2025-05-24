@@ -176,9 +176,9 @@ const ThreatLandscapeSection = () => {
             viewport={{ once: true }}
           >
             <div className="bg-gradient-to-r from-sapp-dark to-slate-800 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">The question isn&apos;t &quot;Why would someone listen in?&quot;</h3>
+              <h3 className="text-2xl font-bold mb-4">{"The question isn't \"Why would someone listen in?\""}</h3>
               <p className="text-xl text-gray-300 mb-6">
-                It&apos;s &quot;What are you doing to stop them?&quot;
+                {"It's \"What are you doing to stop them?\""}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-white text-sapp-dark hover:bg-gray-100 font-semibold px-8 py-3 rounded-lg transition-all duration-300">
