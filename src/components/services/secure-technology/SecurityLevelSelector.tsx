@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Check, Shield, Eye, Users } from 'lucide-react';
+import { Check, Shield, Eye, Users, Star } from 'lucide-react';
 import { Animated } from '@/components/ui/AnimatedElements';
 import { motion } from 'framer-motion';
 
@@ -10,61 +10,69 @@ const SecurityLevelSelector: React.FC = () => {
   const securityLevels = [
     {
       id: 'basic',
-      name: 'Basic Security',
+      name: 'Essential Protection',
       icon: Shield,
-      price: 'From £500/day',
-      description: 'Essential protection for low-risk events',
+      subtitle: 'Foundation-level security',
+      description: 'Core protection for straightforward events',
       features: [
-        'Password-protected devices',
-        'Basic network security',
-        'Standard file encryption',
-        'Email support'
+        'Password-protected communication devices',
+        'Basic network encryption',
+        'Standard file handling protocols',
+        'Remote technical support',
+        'Basic equipment auditing'
       ],
-      bestFor: 'Small meetings, community events, private gatherings',
-      color: 'blue'
+      bestFor: 'Small meetings, community events, private gatherings under 100 attendees',
+      color: 'blue',
+      protection: '65%'
     },
     {
       id: 'standard',
-      name: 'Standard Security',
+      name: 'Comprehensive Security',
       icon: Eye,
-      price: 'From £1,500/day',
-      description: 'Comprehensive security for corporate events',
+      subtitle: 'Professional-grade protection',
+      description: 'Advanced security for corporate and commercial events',
       features: [
-        'Encrypted radio communications',
-        'Secure file transfer protocols',
-        'Network monitoring',
-        'Equipment auditing',
-        'On-site technical support'
+        'Military-grade encrypted radio communications',
+        'Secure isolated network infrastructure',
+        'Advanced file transfer protocols',
+        'Real-time network monitoring',
+        'On-site technical support team',
+        'Equipment security certification',
+        'Secure document disposal'
       ],
-      bestFor: 'Corporate conferences, trade shows, product launches',
+      bestFor: 'Corporate conferences, trade shows, product launches, events 100-500 attendees',
       color: 'green',
-      popular: true
+      popular: true,
+      protection: '90%'
     },
     {
       id: 'high',
-      name: 'High Security',
+      name: 'Maximum Security',
       icon: Users,
-      price: 'From £3,000/day',
-      description: 'Maximum protection for high-profile events',
+      subtitle: 'Elite-level protection',
+      description: 'Ultimate protection for high-stakes events',
       features: [
-        'Isolated secure networks',
-        'Advanced encryption protocols',
-        'TSCM surveillance sweeps',
-        'Secure document disposal',
-        'Close protection integration',
-        'Real-time threat monitoring',
-        '24/7 security personnel'
+        'Completely isolated secure networks',
+        'Advanced military-grade encryption',
+        'TSCM surveillance detection sweeps',
+        'Secure document shredding on-site',
+        'Close protection integration available',
+        'Continuous threat monitoring',
+        '24/7 dedicated security personnel',
+        'Emergency response protocols',
+        'Post-event forensic cleanup'
       ],
-      bestFor: 'VIP events, political gatherings, celebrity appearances',
-      color: 'purple'
+      bestFor: 'VIP events, political gatherings, celebrity appearances, sensitive corporate meetings',
+      color: 'purple',
+      protection: '99%'
     }
   ];
 
   const getColorClasses = (color: string, isSelected: boolean) => {
     const colors = {
-      blue: isSelected ? 'bg-blue-600 text-white border-blue-600' : 'bg-white hover:bg-blue-50 border-gray-200',
-      green: isSelected ? 'bg-green-600 text-white border-green-600' : 'bg-white hover:bg-green-50 border-gray-200',
-      purple: isSelected ? 'bg-purple-600 text-white border-purple-600' : 'bg-white hover:bg-purple-50 border-gray-200'
+      blue: isSelected ? 'bg-blue-600 text-white border-blue-600 shadow-2xl shadow-blue-600/30' : 'bg-white hover:bg-blue-50 border-gray-200 hover:border-blue-300',
+      green: isSelected ? 'bg-green-600 text-white border-green-600 shadow-2xl shadow-green-600/30' : 'bg-white hover:bg-green-50 border-gray-200 hover:border-green-300',
+      purple: isSelected ? 'bg-purple-600 text-white border-purple-600 shadow-2xl shadow-purple-600/30' : 'bg-white hover:bg-purple-50 border-gray-200 hover:border-purple-300'
     };
     return colors[color as keyof typeof colors];
   };
@@ -78,18 +86,27 @@ const SecurityLevelSelector: React.FC = () => {
     return colors[color as keyof typeof colors];
   };
 
+  const getProtectionColor = (color: string) => {
+    const colors = {
+      blue: 'text-blue-500',
+      green: 'text-green-500',
+      purple: 'text-purple-500'
+    };
+    return colors[color as keyof typeof colors];
+  };
+
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-16 bg-gradient-to-b from-white to-slate-50">
       <div className="container mx-auto px-4">
         <Animated animation="fade-up" className="text-center mb-12">
           <div className="inline-block bg-sapp-blue/10 rounded-full px-4 py-1.5 mb-4">
-            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">SECURITY LEVELS</h3>
+            <h3 className="text-sm font-medium text-sapp-blue tracking-wider">PROTECTION LEVELS</h3>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-sapp-dark mb-6">
-            Choose Your Level of Protection
+            Choose Your Security Framework
           </h2>
           <p className="text-sapp-gray max-w-3xl mx-auto text-lg">
-            We offer three tiers of communication security, each designed to match your event's risk profile and requirements.
+            Three tiers of communication security, each designed to match your event's specific risk profile and operational requirements.
           </p>
         </Animated>
 
@@ -101,48 +118,68 @@ const SecurityLevelSelector: React.FC = () => {
             return (
               <Animated key={level.id} animation="fade-up" delay={100 * (index + 1)}>
                 <motion.div
-                  className={`relative rounded-xl p-6 border-2 transition-all duration-300 cursor-pointer ${getColorClasses(level.color, isSelected)}`}
+                  className={`relative rounded-xl p-6 border-2 transition-all duration-500 cursor-pointer ${getColorClasses(level.color, isSelected)}`}
                   onClick={() => setSelectedLevel(level.id)}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
                   whileTap={{ scale: 0.98 }}
+                  layout
                 >
                   {level.popular && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-orange-500 text-white px-4 py-1 rounded-full text-xs font-medium">
+                    <motion.div 
+                      className="absolute -top-3 left-1/2 transform -translate-x-1/2"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.3, type: "spring" }}
+                    >
+                      <div className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-4 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                        <Star className="h-3 w-3" />
                         Most Popular
                       </div>
-                    </div>
+                    </motion.div>
                   )}
                   
                   <div className="text-center mb-6">
-                    <div className={`inline-flex p-3 rounded-lg mb-4 ${isSelected ? 'bg-white/20' : 'bg-gray-100'}`}>
+                    <motion.div 
+                      className={`inline-flex p-3 rounded-lg mb-4 ${isSelected ? 'bg-white/20' : 'bg-gray-100'}`}
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                    >
                       <LevelIcon className={`h-8 w-8 ${isSelected ? 'text-white' : getIconColor(level.color)}`} />
-                    </div>
-                    <h3 className={`text-xl font-bold mb-2 ${isSelected ? 'text-white' : 'text-sapp-dark'}`}>
+                    </motion.div>
+                    
+                    <h3 className={`text-xl font-bold mb-1 ${isSelected ? 'text-white' : 'text-sapp-dark'}`}>
                       {level.name}
                     </h3>
+                    
                     <p className={`text-sm mb-3 ${isSelected ? 'text-white/90' : 'text-sapp-gray'}`}>
-                      {level.description}
+                      {level.subtitle}
                     </p>
-                    <div className={`text-2xl font-bold ${isSelected ? 'text-white' : getIconColor(level.color)}`}>
-                      {level.price}
+                    
+                    <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${isSelected ? 'bg-white/20 text-white' : `bg-${level.color}-50 ${getProtectionColor(level.color)}`}`}>
+                      {level.protection} Protection Coverage
                     </div>
                   </div>
 
                   <div className="space-y-3 mb-6">
                     {level.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center gap-3">
+                      <motion.div 
+                        key={featureIndex} 
+                        className="flex items-center gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: featureIndex * 0.1 }}
+                      >
                         <Check className={`h-4 w-4 flex-shrink-0 ${isSelected ? 'text-white' : getIconColor(level.color)}`} />
                         <span className={`text-sm ${isSelected ? 'text-white' : 'text-sapp-gray'}`}>
                           {feature}
                         </span>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
 
                   <div className={`p-3 rounded-lg ${isSelected ? 'bg-white/10' : 'bg-gray-50'}`}>
                     <p className={`text-xs font-medium mb-1 ${isSelected ? 'text-white' : 'text-sapp-dark'}`}>
-                      Best for:
+                      Recommended for:
                     </p>
                     <p className={`text-xs ${isSelected ? 'text-white/90' : 'text-sapp-gray'}`}>
                       {level.bestFor}
@@ -155,12 +192,17 @@ const SecurityLevelSelector: React.FC = () => {
         </div>
 
         <Animated animation="fade-up" delay={500} className="text-center mt-12">
-          <p className="text-sapp-gray mb-6">
-            Not sure which level is right for you? Our experts will assess your needs and recommend the perfect solution.
-          </p>
-          <button className="bg-sapp-blue hover:bg-sapp-blue/90 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-            Get Free Security Assessment
-          </button>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-6 text-white max-w-2xl mx-auto"
+          >
+            <p className="text-white/90 mb-4">
+              Need guidance on which protection level suits your event? Our security experts will assess your requirements and recommend the optimal solution.
+            </p>
+            <button className="bg-sapp-blue hover:bg-sapp-blue/90 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105">
+              Get Free Security Assessment
+            </button>
+          </motion.div>
         </Animated>
       </div>
     </section>
