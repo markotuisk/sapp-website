@@ -1,19 +1,11 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Eye, EyeOff, Smartphone, Camera, Mic } from 'lucide-react';
+import { Shield, Eye, EyeOff, Smartphone, Camera, Mic, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const CounterSurveillanceHero = () => {
-  const [exposureCount, setExposureCount] = useState(847293);
   const [isWatching, setIsWatching] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setExposureCount(prev => prev + Math.floor(Math.random() * 5) + 1);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   const threats = [
     { icon: Camera, label: 'Hidden Cameras', x: '20%', y: '30%' },
@@ -72,7 +64,7 @@ const CounterSurveillanceHero = () => {
 
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 border border-white/20">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-white/80">Global Surveillance Exposures Today:</span>
+                  <span className="text-white/80">Privacy Awareness Alert:</span>
                   <button
                     onClick={() => setIsWatching(!isWatching)}
                     className="text-white/60 hover:text-white transition-colors"
@@ -80,16 +72,17 @@ const CounterSurveillanceHero = () => {
                     {isWatching ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
                   </button>
                 </div>
-                <motion.div
-                  className="text-3xl font-bold text-red-400"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  {exposureCount.toLocaleString()}
-                </motion.div>
-                <p className="text-sm text-white/60 mt-2">
-                  And counting... Every conversation you have could be monitored.
-                </p>
+                <div className="flex items-center space-x-3">
+                  <AlertTriangle className="h-6 w-6 text-amber-400" />
+                  <div>
+                    <div className="text-lg font-semibold text-amber-400">
+                      Surveillance Technology is Everywhere
+                    </div>
+                    <p className="text-sm text-white/70 mt-1">
+                      From smartphones to smart buildings, every device is a potential surveillance tool. Your privacy needs active protection.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
