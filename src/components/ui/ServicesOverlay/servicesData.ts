@@ -1,5 +1,3 @@
-
-
 export interface ServiceItem {
   title: string;
   description: string;
@@ -37,13 +35,7 @@ export interface ResourceCategory {
 
 // Raw services data for internal use
 export const rawServices: ServiceItem[] = [
-  // Event Security Services
-  {
-    title: "Event Security",
-    description: "Comprehensive security solutions for events of all sizes",
-    href: "/event-security",
-    category: "event-security"
-  },
+  // Event Security Services - removed the redundant "Event Security" entry
   {
     title: "Venue Security Audits",
     description: "Pre-event security assessment and planning",
@@ -105,7 +97,7 @@ export const rawServices: ServiceItem[] = [
   {
     title: "Speech Privacy & Soundmasking",
     description: "Protecting sensitive conversations from eavesdropping through advanced acoustic solutions",
-    href: "/installations/speech-privacy",
+    href: "/services/speech-privacy",
     category: "installations"
   },
   {
@@ -291,4 +283,3 @@ export const filterItems = (categories: (ServiceCategory | ResourceCategory)[], 
     )
   })).filter(category => category.items.length > 0);
 };
-
