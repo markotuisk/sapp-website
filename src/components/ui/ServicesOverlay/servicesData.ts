@@ -13,7 +13,29 @@ export interface ResourceItem {
   type: 'guide' | 'tool' | 'documentation' | 'resource';
 }
 
-export const services: ServiceItem[] = [
+// Types expected by the existing components
+export interface ServiceCategory {
+  category: string;
+  items: {
+    name: string;
+    description: string;
+    link: string;
+    isActive?: boolean;
+  }[];
+}
+
+export interface ResourceCategory {
+  category: string;
+  items: {
+    name: string;
+    description: string;
+    link: string;
+    isActive?: boolean;
+  }[];
+}
+
+// Raw services data for internal use
+export const rawServices: ServiceItem[] = [
   // Event Security Services
   {
     title: "Event Security",
@@ -115,7 +137,7 @@ export const services: ServiceItem[] = [
   }
 ];
 
-export const resources: ResourceItem[] = [
+export const rawResources: ResourceItem[] = [
   {
     title: "Security Planning Guide",
     description: "Comprehensive guide for planning security measures",
@@ -145,6 +167,113 @@ export const resources: ResourceItem[] = [
     description: "Standard operating procedures for security incidents",
     href: "/resources/emergency-response",
     type: "documentation"
+  }
+];
+
+// Transform raw services into grouped categories for components
+export const services: ServiceCategory[] = [
+  {
+    category: "Event Security",
+    items: rawServices
+      .filter(service => service.category === "event-security")
+      .map(service => ({
+        name: service.title,
+        description: service.description,
+        link: service.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Physical Security",
+    items: rawServices
+      .filter(service => service.category === "physical-security")
+      .map(service => ({
+        name: service.title,
+        description: service.description,
+        link: service.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Technical Security",
+    items: rawServices
+      .filter(service => service.category === "technical-security")
+      .map(service => ({
+        name: service.title,
+        description: service.description,
+        link: service.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Cyber Security",
+    items: rawServices
+      .filter(service => service.category === "cyber-security")
+      .map(service => ({
+        name: service.title,
+        description: service.description,
+        link: service.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Installations",
+    items: rawServices
+      .filter(service => service.category === "installations")
+      .map(service => ({
+        name: service.title,
+        description: service.description,
+        link: service.href,
+        isActive: true
+      }))
+  }
+];
+
+// Transform raw resources into grouped categories for components
+export const resources: ResourceCategory[] = [
+  {
+    category: "Guides",
+    items: rawResources
+      .filter(resource => resource.type === "guide")
+      .map(resource => ({
+        name: resource.title,
+        description: resource.description,
+        link: resource.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Tools",
+    items: rawResources
+      .filter(resource => resource.type === "tool")
+      .map(resource => ({
+        name: resource.title,
+        description: resource.description,
+        link: resource.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Documentation",
+    items: rawResources
+      .filter(resource => resource.type === "documentation")
+      .map(resource => ({
+        name: resource.title,
+        description: resource.description,
+        link: resource.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Resources",
+    items: rawResources
+      .filter(resource => resource.type === "resource")
+      .map(resource => ({
+        name: resource.title,
+        description: resource.description,
+        link: resource.href,
+        isActive: true
+      }))
   }
 ];
 
