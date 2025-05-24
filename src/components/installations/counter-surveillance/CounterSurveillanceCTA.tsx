@@ -3,8 +3,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const CounterSurveillanceCTA = () => {
+  const { toast } = useToast();
+
   const contactMethods = [
     {
       icon: Phone,
@@ -28,6 +31,46 @@ const CounterSurveillanceCTA = () => {
       urgent: false
     }
   ];
+
+  const handleEmergencyCall = () => {
+    toast({
+      title: "Emergency Response Activated",
+      description: "Our 24/7 response team will contact you immediately for urgent threat assessment.",
+    });
+  };
+
+  const handleGetQuote = () => {
+    toast({
+      title: "Quote Request Submitted",
+      description: "Our specialists will provide a comprehensive security evaluation quote within 24 hours.",
+    });
+  };
+
+  const handleSchedule = () => {
+    toast({
+      title: "Assessment Scheduled",
+      description: "We'll arrange regular security audits and updates according to your schedule.",
+    });
+  };
+
+  const handleContactMethod = (method: typeof contactMethods[0]) => {
+    switch (method.title) {
+      case 'Emergency Response':
+        handleEmergencyCall();
+        break;
+      case 'Consultation Request':
+        handleGetQuote();
+        break;
+      case 'Scheduled Assessment':
+        handleSchedule();
+        break;
+      default:
+        toast({
+          title: "Contact Request",
+          description: "We'll get back to you shortly regarding your security needs.",
+        });
+    }
+  };
 
   return (
     <section className="py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800">
@@ -82,6 +125,7 @@ const CounterSurveillanceCTA = () => {
                     {method.description}
                   </p>
                   <Button 
+                    onClick={() => handleContactMethod(method)}
                     className={`w-full ${
                       method.urgent 
                         ? 'bg-yellow-500 hover:bg-yellow-400 text-red-700 font-bold' 

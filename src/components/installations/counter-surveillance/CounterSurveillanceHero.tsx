@@ -1,11 +1,12 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Eye, EyeOff, Smartphone, Camera, Mic, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const CounterSurveillanceHero = () => {
   const [isWatching, setIsWatching] = useState(true);
+  const { toast } = useToast();
 
   const threats = [
     { icon: Camera, label: 'Hidden Cameras', x: '20%', y: '30%' },
@@ -13,6 +14,20 @@ const CounterSurveillanceHero = () => {
     { icon: Smartphone, label: 'Device Tracking', x: '45%', y: '60%' },
     { icon: Eye, label: 'Visual Surveillance', x: '80%', y: '70%' }
   ];
+
+  const handleProtectPrivacy = () => {
+    toast({
+      title: "Privacy Protection Request",
+      description: "We'll contact you within 24 hours to discuss your counter-surveillance needs.",
+    });
+  };
+
+  const handleAssessment = () => {
+    toast({
+      title: "Assessment Scheduled",
+      description: "A TSCM specialist will conduct a comprehensive security evaluation.",
+    });
+  };
 
   return (
     <section className="relative py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-sapp-dark overflow-hidden">
@@ -88,6 +103,7 @@ const CounterSurveillanceHero = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg"
+                  onClick={handleProtectPrivacy}
                   className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold px-8 py-4"
                 >
                   Protect Your Privacy Now
@@ -95,6 +111,7 @@ const CounterSurveillanceHero = () => {
                 <Button 
                   variant="outline" 
                   size="lg"
+                  onClick={handleAssessment}
                   className="border-white/30 text-white hover:bg-white/10 font-semibold px-8 py-4"
                 >
                   Assessment Required

@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Radio, Wifi, Bluetooth, Camera, Mic, Shield, Smartphone, Monitor, Clock, TrendingUp } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
 
 const ThreatLandscapeSection = () => {
   const [selectedThreat, setSelectedThreat] = useState(0);
+  const { toast } = useToast();
 
   const threats = [
     {
@@ -72,6 +74,20 @@ const ThreatLandscapeSection = () => {
       icon: TrendingUp
     }
   ];
+
+  const handleThreatAssessment = () => {
+    toast({
+      title: "Threat Assessment Requested",
+      description: "Our security experts will evaluate your specific threat landscape within 24 hours.",
+    });
+  };
+
+  const handleViewProtection = () => {
+    toast({
+      title: "Protection Solutions",
+      description: "Explore our comprehensive counter-surveillance protection packages.",
+    });
+  };
 
   return (
     <section className="py-20 bg-white">
@@ -229,10 +245,16 @@ const ThreatLandscapeSection = () => {
                 It is what are you doing to stop them
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white text-sapp-dark hover:bg-gray-100 font-semibold px-8 py-3 rounded-lg transition-all duration-300">
+                <button 
+                  onClick={handleThreatAssessment}
+                  className="bg-white text-sapp-dark hover:bg-gray-100 font-semibold px-8 py-3 rounded-lg transition-all duration-300"
+                >
                   Get Threat Assessment
                 </button>
-                <button className="border-2 border-white text-white hover:bg-white hover:text-sapp-dark font-semibold px-8 py-3 rounded-lg transition-all duration-300">
+                <button 
+                  onClick={handleViewProtection}
+                  className="border-2 border-white text-white hover:bg-white hover:text-sapp-dark font-semibold px-8 py-3 rounded-lg transition-all duration-300"
+                >
                   View Protection Solutions
                 </button>
               </div>
