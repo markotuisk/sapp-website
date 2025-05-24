@@ -134,7 +134,7 @@ const VerkadaUbiquitiComparison = () => {
     support: 5
   });
 
-  const calculateWeightedScore = (platform) => {
+  const calculateWeightedScore = (platform: string): number => {
     const scores = {
       verkada: { cost: 6, features: 9.5, ease: 10, support: 10 },
       ubiquiti: { cost: 9, features: 7.5, ease: 6, support: 5 }
@@ -145,8 +145,10 @@ const VerkadaUbiquitiComparison = () => {
       return sum + (scores[platform][key] * weight);
     }, 0);
     
-    return (weightedScore / totalWeight).toFixed(1);
+    return weightedScore / totalWeight;
   };
+
+  const formatScore = (score: number): string => score.toFixed(1);
 
   return (
     <section id="comparison" className="py-20 bg-gradient-to-b from-white to-slate-50">
@@ -435,7 +437,7 @@ const VerkadaUbiquitiComparison = () => {
                       <div className="flex items-center justify-between mb-3">
                         <h5 className="text-lg font-bold text-blue-800">Verkada</h5>
                         <div className="text-2xl font-bold text-blue-700">
-                          {calculateWeightedScore('verkada')}/10
+                          {formatScore(calculateWeightedScore('verkada'))}/10
                         </div>
                       </div>
                       <div className="w-full bg-blue-200 rounded-full h-3">
@@ -450,7 +452,7 @@ const VerkadaUbiquitiComparison = () => {
                       <div className="flex items-center justify-between mb-3">
                         <h5 className="text-lg font-bold text-green-800">Ubiquiti UniFi</h5>
                         <div className="text-2xl font-bold text-green-700">
-                          {calculateWeightedScore('ubiquiti')}/10
+                          {formatScore(calculateWeightedScore('ubiquiti'))}/10
                         </div>
                       </div>
                       <div className="w-full bg-green-200 rounded-full h-3">
