@@ -1,4 +1,5 @@
 
+
 export interface ServiceItem {
   title: string;
   description: string;
@@ -44,96 +45,106 @@ export const rawServices: ServiceItem[] = [
     category: "event-security"
   },
   {
+    title: "Venue Security Audits",
+    description: "Pre-event security assessment and planning",
+    href: "/services/venue-security-audits",
+    category: "event-security"
+  },
+  {
     title: "Event Monitoring",
-    description: "Real-time monitoring and threat detection for live events",
+    description: "Real-time surveillance and protection with advanced threat detection and device isolation capabilities",
     href: "/services/event-monitoring",
     category: "event-security"
   },
-  
-  // Physical Security Services
+  {
+    title: "Secure Technology",
+    description: "Encrypted communications, secure networks, and comprehensive technology protection for sensitive events",
+    href: "/services/secure-technology",
+    category: "event-security"
+  },
   {
     title: "Close Protection",
-    description: "Personal protection services for high-profile individuals",
+    description: "Personalised protection for individuals facing modern threats, from online harassment to physical security concerns",
     href: "/services/close-protection",
-    category: "physical-security"
-  },
-  {
-    title: "Physical Security Assessments",
-    description: "Comprehensive evaluation of physical security measures",
-    href: "/services/physical-security-assessments",
-    category: "physical-security"
-  },
-  {
-    title: "Venue Security Audits",
-    description: "Detailed security assessments for venues and facilities",
-    href: "/services/venue-security-audits",
-    category: "physical-security"
+    category: "event-security"
   },
   
-  // Technical Security Services
+  // Security Audits Services
   {
-    title: "TSCM Inspections",
-    description: "Technical Surveillance Countermeasures and bug sweeping",
-    href: "/tscm",
-    category: "technical-security"
-  },
-  {
-    title: "Security Audits",
-    description: "Comprehensive security assessments and vulnerability testing",
-    href: "/security-audits",
-    category: "technical-security"
-  },
-  {
-    title: "Penetration Testing",
-    description: "Ethical hacking and vulnerability assessment services",
-    href: "/services/penetration-testing",
-    category: "technical-security"
+    title: "Physical Security Assessments",
+    description: "Comprehensive evaluation of physical security measures and vulnerabilities",
+    href: "/services/physical-security-assessments",
+    category: "security-audits"
   },
   {
     title: "Compliance Audits",
-    description: "Regulatory compliance assessment and certification support",
+    description: "ISO27001 certified compliance audits to measure your organization's adherence to industry standards and regulatory requirements",
     href: "/services/compliance-audits",
-    category: "technical-security"
+    category: "security-audits"
+  },
+  {
+    title: "TSCM Inspections",
+    description: "Technical surveillance countermeasures to detect and prevent eavesdropping",
+    href: "/tscm",
+    category: "security-audits"
+  },
+  {
+    title: "Penetration Tests",
+    description: "Identifying vulnerabilities in your security infrastructure through ethical hacking and comprehensive testing",
+    href: "/services/penetration-testing",
+    category: "security-audits"
   },
   
-  // Cyber Security Services
-  {
-    title: "Cyber Security",
-    description: "Digital security solutions and threat protection",
-    href: "/cyber-security",
-    category: "cyber-security"
-  },
-  {
-    title: "Secure Technology",
-    description: "Implementation of secure technology solutions",
-    href: "/services/secure-technology",
-    category: "cyber-security"
-  },
-  
-  // Installation Services
-  {
-    title: "Security Installations",
-    description: "Professional installation of security systems and equipment",
-    href: "/installations",
-    category: "installations"
-  },
+  // Installations Services
   {
     title: "CCTV & Access Control",
-    description: "Installation and configuration of surveillance and access systems",
+    description: "Modern surveillance and access systems",
     href: "/installations/cctv-access",
     category: "installations"
   },
   {
-    title: "Speech Privacy Systems",
-    description: "Sound masking and speech privacy installation services",
+    title: "Speech Privacy & Soundmasking",
+    description: "Protecting sensitive conversations from eavesdropping through advanced acoustic solutions",
     href: "/installations/speech-privacy",
     category: "installations"
   },
   {
-    title: "Counter Surveillance",
-    description: "Advanced counter-surveillance systems and privacy protection solutions",
+    title: "Counter-Surveillance",
+    description: "Protection against unwanted monitoring",
     href: "/installations/counter-surveillance",
     category: "installations"
+  },
+  {
+    title: "Network Infrastructure",
+    description: "Secure network design and deployment",
+    href: "/installations/network-infrastructure",
+    category: "installations"
+  },
+  
+  // Cyber Security Services
+  {
+    title: "Threat Detection",
+    description: "Identification of digital security risks",
+    href: "/cyber-security/threat-detection",
+    category: "cyber-security"
+  },
+  {
+    title: "Network Security",
+    description: "Protection for your digital infrastructure",
+    href: "/cyber-security/network-security",
+    category: "cyber-security"
+  },
+  {
+    title: "IoT Device Protection",
+    description: "Securing connected devices",
+    href: "/cyber-security/iot-protection",
+    category: "cyber-security"
+  },
+  {
+    title: "Data Protection",
+    description: "Safeguarding sensitive information",
+    href: "/cyber-security/data-protection",
+    category: "cyber-security"
   }
 ];
 
@@ -184,31 +195,9 @@ export const services: ServiceCategory[] = [
       }))
   },
   {
-    category: "Physical Security",
+    category: "Security Audits",
     items: rawServices
-      .filter(service => service.category === "physical-security")
-      .map(service => ({
-        name: service.title,
-        description: service.description,
-        link: service.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Technical Security",
-    items: rawServices
-      .filter(service => service.category === "technical-security")
-      .map(service => ({
-        name: service.title,
-        description: service.description,
-        link: service.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Cyber Security",
-    items: rawServices
-      .filter(service => service.category === "cyber-security")
+      .filter(service => service.category === "security-audits")
       .map(service => ({
         name: service.title,
         description: service.description,
@@ -220,6 +209,17 @@ export const services: ServiceCategory[] = [
     category: "Installations",
     items: rawServices
       .filter(service => service.category === "installations")
+      .map(service => ({
+        name: service.title,
+        description: service.description,
+        link: service.href,
+        isActive: true
+      }))
+  },
+  {
+    category: "Cyber Security",
+    items: rawServices
+      .filter(service => service.category === "cyber-security")
       .map(service => ({
         name: service.title,
         description: service.description,
@@ -291,3 +291,4 @@ export const filterItems = (categories: (ServiceCategory | ResourceCategory)[], 
     )
   })).filter(category => category.items.length > 0);
 };
+
