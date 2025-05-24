@@ -107,31 +107,34 @@ const ThreatLandscapeSection = () => {
           {/* Interactive Threat Showcase */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-4">
-              {threats.map((threat, index) => (
-                <motion.div
-                  key={index}
-                  className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${
-                    selectedThreat === index 
-                      ? 'bg-gradient-to-r ' + threat.color + ' text-white shadow-xl scale-105' 
-                      : 'bg-gray-50 hover:bg-gray-100'
-                  }`}
-                  onClick={() => setSelectedThreat(index)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="flex items-center space-x-4">
-                    <threat.icon className={`h-8 w-8 ${selectedThreat === index ? 'text-white' : 'text-sapp-blue'}`} />
-                    <div>
-                      <h3 className={`text-lg font-semibold ${selectedThreat === index ? 'text-white' : 'text-sapp-dark'}`}>
-                        {threat.title}
-                      </h3>
-                      <p className={`text-sm ${selectedThreat === index ? 'text-white/90' : 'text-sapp-gray'}`}>
-                        {threat.description}
-                      </p>
+              {threats.map((threat, index) => {
+                const ThreatIcon = threat.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${
+                      selectedThreat === index 
+                        ? 'bg-gradient-to-r ' + threat.color + ' text-white shadow-xl scale-105' 
+                        : 'bg-gray-50 hover:bg-gray-100'
+                    }`}
+                    onClick={() => setSelectedThreat(index)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <ThreatIcon className={`h-8 w-8 ${selectedThreat === index ? 'text-white' : 'text-sapp-blue'}`} />
+                      <div>
+                        <h3 className={`text-lg font-semibold ${selectedThreat === index ? 'text-white' : 'text-sapp-dark'}`}>
+                          {threat.title}
+                        </h3>
+                        <p className={`text-sm ${selectedThreat === index ? 'text-white/90' : 'text-sapp-gray'}`}>
+                          {threat.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
 
             <motion.div
@@ -141,9 +144,14 @@ const ThreatLandscapeSection = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${threats[selectedThreat].color} flex items-center justify-center mb-6`}>
-                <threats[selectedThreat].icon className="h-8 w-8 text-white" />
-              </div>
+              {(() => {
+                const IconComponent = threats[selectedThreat].icon;
+                return (
+                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${threats[selectedThreat].color} flex items-center justify-center mb-6`}>
+                    <IconComponent className="h-8 w-8 text-white" />
+                  </div>
+                );
+              })()}
               
               <h3 className="text-2xl font-bold text-sapp-dark mb-4">
                 {threats[selectedThreat].title}
