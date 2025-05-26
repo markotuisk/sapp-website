@@ -1,285 +1,111 @@
-export interface ServiceItem {
-  title: string;
-  description: string;
-  href: string;
-  category?: string;
-}
+import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 
-export interface ResourceItem {
-  title: string;
-  description: string;
-  href: string;
-  type: 'guide' | 'tool' | 'documentation' | 'resource';
-}
-
-// Types expected by the existing components
-export interface ServiceCategory {
-  category: string;
-  items: {
-    name: string;
-    description: string;
-    link: string;
-    isActive?: boolean;
-  }[];
-}
-
-export interface ResourceCategory {
-  category: string;
-  items: {
-    name: string;
-    description: string;
-    link: string;
-    isActive?: boolean;
-  }[];
-}
-
-// Raw services data for internal use
-export const rawServices: ServiceItem[] = [
-  // Event Security Services
-  {
-    title: "Venue Security Audits",
-    description: "Pre-event security assessment and planning",
-    href: "/services/venue-security-audits",
-    category: "event-security"
+export const servicesData = {
+  installations: {
+    title: "Installations & Technology",
+    description: "Physical security installations and technology integration",
+    services: [
+      {
+        title: "CCTV & Access Control",
+        path: "/installations/cctv-access",
+        description: "Professional installation of surveillance and access control systems"
+      },
+      {
+        title: "Counter-Surveillance Systems",
+        path: "/installations/counter-surveillance", 
+        description: "Advanced counter-surveillance and privacy protection technology"
+      },
+      {
+        title: "Network Infrastructure",
+        path: "/installations/network-infrastructure",
+        description: "Secure network design and installation for small offices and integration projects"
+      },
+      {
+        title: "Speech Privacy & Soundmasking",
+        path: "/services/speech-privacy",
+        description: "Sound masking and speech privacy solutions for confidential environments"
+      }
+    ]
   },
-  {
-    title: "Event Monitoring",
-    description: "Real-time surveillance and protection with advanced threat detection and device isolation capabilities",
-    href: "/services/event-monitoring",
-    category: "event-security"
+  security: {
+    title: "Security Services",
+    description: "Comprehensive security solutions for all environments",
+    services: [
+      {
+        title: "Event Security",
+        path: "/event-security",
+        description: "Real-time protection for high-profile confidential meetings and events"
+      },
+      {
+        title: "Security Audits",
+        path: "/security-audits",
+        description: "Certified ISO27001 physical security audits to identify security gaps"
+      },
+      {
+        title: "Close Protection",
+        path: "/services/close-protection",
+        description: "Executive protection and personal security services"
+      },
+      {
+        title: "Physical Security Assessments",
+        path: "/services/physical-security-assessments",
+        description: "On-site security evaluations and risk assessments"
+      },
+      {
+        title: "Venue Security Audits",
+        path: "/services/venue-security-audits",
+        description: "Specialized security audits for venues and public spaces"
+      },
+      {
+        title: "Event Monitoring",
+        path: "/services/event-monitoring",
+        description: "Real-time monitoring and security management for events"
+      }
+    ]
   },
-  {
-    title: "Secure Technology",
-    description: "Encrypted communications, secure networks, and comprehensive technology protection for sensitive events",
-    href: "/services/secure-technology",
-    category: "event-security"
+  cyber: {
+    title: "Cyber Security",
+    description: "Enterprise-grade cyber security services protecting digital assets",
+    services: [
+      {
+        title: "Penetration Testing",
+        path: "/services/penetration-testing",
+        description: "Ethical hacking and vulnerability assessments"
+      },
+      {
+        title: "Compliance Audits",
+        path: "/services/compliance-audits",
+        description: "Compliance audits to meet regulatory requirements"
+      },
+    ]
   },
-  {
-    title: "Close Protection",
-    description: "Personalised protection for individuals facing modern threats, from online harassment to physical security concerns",
-    href: "/services/close-protection",
-    category: "event-security"
+  tscm: {
+    title: "TSCM Services",
+    description: "Technical Surveillance Counter-Measures",
+    services: [
+      {
+        title: "TSCM",
+        path: "/tscm",
+        description: "Technical Surveillance Counter-Measures"
+      },
+    ]
   },
-  
-  // Security Audits Services
-  {
-    title: "Physical Security Assessments",
-    description: "Comprehensive evaluation of physical security measures and vulnerabilities",
-    href: "/services/physical-security-assessments",
-    category: "security-audits"
-  },
-  {
-    title: "Compliance Audits",
-    description: "ISO27001 certified compliance audits to measure your organization's adherence to industry standards and regulatory requirements",
-    href: "/services/compliance-audits",
-    category: "security-audits"
-  },
-  {
-    title: "TSCM Inspections",
-    description: "Technical surveillance countermeasures to detect and prevent eavesdropping",
-    href: "/tscm",
-    category: "security-audits"
-  },
-  {
-    title: "Penetration Tests",
-    description: "Identifying vulnerabilities in your security infrastructure through ethical hacking and comprehensive testing",
-    href: "/services/penetration-testing",
-    category: "security-audits"
-  },
-  
-  // Installations Services
-  {
-    title: "CCTV & Access Control",
-    description: "Modern surveillance and access systems",
-    href: "/installations/cctv-access",
-    category: "installations"
-  },
-  {
-    title: "Speech Privacy & Soundmasking",
-    description: "Protecting sensitive conversations from eavesdropping through advanced acoustic solutions",
-    href: "/services/speech-privacy",
-    category: "installations"
-  },
-  {
-    title: "Counter-Surveillance",
-    description: "Protection against unwanted monitoring",
-    href: "/installations/counter-surveillance",
-    category: "installations"
-  },
-  {
-    title: "Network Infrastructure",
-    description: "Secure network design and deployment",
-    href: "/installations/network-infrastructure",
-    category: "installations"
-  },
-  
-  // Cyber Security Services
-  {
-    title: "Threat Detection",
-    description: "Identification of digital security risks",
-    href: "/cyber-security/threat-detection",
-    category: "cyber-security"
-  },
-  {
-    title: "Network Security",
-    description: "Protection for your digital infrastructure",
-    href: "/cyber-security/network-security",
-    category: "cyber-security"
-  },
-  {
-    title: "IoT Device Protection",
-    description: "Securing connected devices",
-    href: "/cyber-security/iot-protection",
-    category: "cyber-security"
-  },
-  {
-    title: "Data Protection",
-    description: "Safeguarding sensitive information",
-    href: "/cyber-security/data-protection",
-    category: "cyber-security"
-  }
-];
-
-export const rawResources: ResourceItem[] = [
-  {
-    title: "Security Planning Guide",
-    description: "Comprehensive guide for planning security measures",
-    href: "/resources/security-planning-guide",
-    type: "guide"
-  },
-  {
-    title: "Threat Assessment Tool",
-    description: "Interactive tool for assessing security threats",
-    href: "/resources/threat-assessment-tool",
-    type: "tool"
-  },
-  {
-    title: "Security Acronyms Database",
-    description: "Comprehensive database of security industry acronyms",
-    href: "/service-navigator/acronyms",
-    type: "resource"
-  },
-  {
-    title: "Compliance Checklist",
-    description: "Regulatory compliance verification checklist",
-    href: "/resources/compliance-checklist",
-    type: "documentation"
-  },
-  {
-    title: "Emergency Response Procedures",
-    description: "Standard operating procedures for security incidents",
-    href: "/resources/emergency-response",
-    type: "documentation"
-  }
-];
-
-// Transform raw services into grouped categories for components
-export const services: ServiceCategory[] = [
-  {
-    category: "Event Security",
-    items: rawServices
-      .filter(service => service.category === "event-security")
-      .map(service => ({
-        name: service.title,
-        description: service.description,
-        link: service.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Security Audits",
-    items: rawServices
-      .filter(service => service.category === "security-audits")
-      .map(service => ({
-        name: service.title,
-        description: service.description,
-        link: service.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Installations",
-    items: rawServices
-      .filter(service => service.category === "installations")
-      .map(service => ({
-        name: service.title,
-        description: service.description,
-        link: service.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Cyber Security",
-    items: rawServices
-      .filter(service => service.category === "cyber-security")
-      .map(service => ({
-        name: service.title,
-        description: service.description,
-        link: service.href,
-        isActive: true
-      }))
-  }
-];
-
-// Transform raw resources into grouped categories for components
-export const resources: ResourceCategory[] = [
-  {
-    category: "Guides",
-    items: rawResources
-      .filter(resource => resource.type === "guide")
-      .map(resource => ({
-        name: resource.title,
-        description: resource.description,
-        link: resource.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Tools",
-    items: rawResources
-      .filter(resource => resource.type === "tool")
-      .map(resource => ({
-        name: resource.title,
-        description: resource.description,
-        link: resource.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Documentation",
-    items: rawResources
-      .filter(resource => resource.type === "documentation")
-      .map(resource => ({
-        name: resource.title,
-        description: resource.description,
-        link: resource.href,
-        isActive: true
-      }))
-  },
-  {
-    category: "Resources",
-    items: rawResources
-      .filter(resource => resource.type === "resource")
-      .map(resource => ({
-        name: resource.title,
-        description: resource.description,
-        link: resource.href,
-        isActive: true
-      }))
-  }
-];
-
-// Filter function that works with categorized data
-export const filterItems = (categories: (ServiceCategory | ResourceCategory)[], query: string) => {
-  if (!query.trim()) return categories;
-  
-  const searchTerm = query.toLowerCase();
-  
-  return categories.map(category => ({
-    ...category,
-    items: category.items.filter(item => 
-      item.name.toLowerCase().includes(searchTerm) ||
-      item.description.toLowerCase().includes(searchTerm)
-    )
-  })).filter(category => category.items.length > 0);
 };
+
+export const resourcesData = [
+  {
+    title: "News",
+    path: "/news",
+    description: "Stay up-to-date with the latest security news and insights"
+  },
+  {
+    title: "Acronyms",
+    path: "/service-navigator/acronyms",
+    description: "Learn about common security acronyms and terms"
+  },
+  {
+    title: "Version Info",
+    path: "/version-info",
+    description: "See what's new in the latest version of our platform"
+  }
+];
