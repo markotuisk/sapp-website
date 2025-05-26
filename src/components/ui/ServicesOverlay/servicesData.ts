@@ -1,4 +1,5 @@
 
+
 import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 
 export const servicesData = {
@@ -9,22 +10,22 @@ export const servicesData = {
       {
         title: "CCTV & Access Control",
         path: "/installations/cctv-access",
-        description: "Professional installation of surveillance and access control systems"
-      },
-      {
-        title: "Counter-Surveillance Systems",
-        path: "/installations/counter-surveillance", 
-        description: "Advanced counter-surveillance and privacy protection technology"
-      },
-      {
-        title: "Network Infrastructure",
-        path: "/installations/network-infrastructure",
-        description: "Secure network design and installation for small offices and integration projects"
+        description: "Modern surveillance and access systems"
       },
       {
         title: "Speech Privacy & Soundmasking",
         path: "/services/speech-privacy",
-        description: "Sound masking and speech privacy solutions for confidential environments"
+        description: "Protecting sensitive conversations from eavesdropping through advanced acoustic solutions"
+      },
+      {
+        title: "Counter-Surveillance",
+        path: "/installations/counter-surveillance", 
+        description: "Protection against unwanted monitoring"
+      },
+      {
+        title: "Network Infrastructure",
+        path: "/installations/network-infrastructure",
+        description: "Secure network design and deployment for small to medium offices and home network infrastructure installation support and management"
       }
     ]
   },
@@ -38,14 +39,29 @@ export const servicesData = {
         description: "Real-time protection for high-profile confidential meetings and events"
       },
       {
-        title: "Security Audits",
-        path: "/security-audits",
-        description: "Certified ISO27001 physical security audits to identify security gaps"
+        title: "Venue Security Audits",
+        path: "/services/venue-security-audits",
+        description: "Pre-event security assessment and planning"
+      },
+      {
+        title: "Event Monitoring",
+        path: "/services/event-monitoring",
+        description: "Real-time surveillance and protection with advanced threat detection and device isolation capabilities"
+      },
+      {
+        title: "Secure Technology",
+        path: "/services/secure-technology",
+        description: "Encrypted communications, secure networks, and comprehensive technology protection for sensitive events"
       },
       {
         title: "Close Protection",
         path: "/services/close-protection",
-        description: "Executive protection and personal security services"
+        description: "Personalised protection for individuals facing modern threats, from online harassment to physical security"
+      },
+      {
+        title: "Security Audits",
+        path: "/security-audits",
+        description: "Comprehensive evaluation of physical security measures and vulnerabilities"
       },
       {
         title: "Physical Security Assessments",
@@ -53,14 +69,19 @@ export const servicesData = {
         description: "On-site security evaluations and risk assessments"
       },
       {
-        title: "Venue Security Audits",
-        path: "/services/venue-security-audits",
-        description: "Specialized security audits for venues and public spaces"
+        title: "Compliance Audits",
+        path: "/services/compliance-audits",
+        description: "ISO27001 certified compliance audits to measure your organization's adherence to industry standards and regulations"
       },
       {
-        title: "Event Monitoring",
-        path: "/services/event-monitoring",
-        description: "Real-time monitoring and security management for events"
+        title: "TSCM Inspections",
+        path: "/tscm",
+        description: "Technical surveillance countermeasures to detect and prevent eavesdropping"
+      },
+      {
+        title: "Penetration Tests",
+        path: "/services/penetration-testing",
+        description: "Identifying vulnerabilities in your security"
       }
     ]
   },
@@ -69,28 +90,27 @@ export const servicesData = {
     description: "Enterprise-grade cyber security services protecting digital assets",
     services: [
       {
-        title: "Penetration Testing",
-        path: "/services/penetration-testing",
-        description: "Ethical hacking and vulnerability assessments"
+        title: "Threat Detection",
+        path: "/cyber-security",
+        description: "Identification of digital security risks"
       },
       {
-        title: "Compliance Audits",
-        path: "/services/compliance-audits",
-        description: "Compliance audits to meet regulatory requirements"
+        title: "Network Security",
+        path: "/cyber-security",
+        description: "Protection for your digital infrastructure"
       },
-    ]
-  },
-  tscm: {
-    title: "TSCM Services",
-    description: "Technical Surveillance Counter-Measures",
-    services: [
       {
-        title: "TSCM",
-        path: "/tscm",
-        description: "Technical Surveillance Counter-Measures"
+        title: "IoT Device Protection",
+        path: "/cyber-security",
+        description: "Securing connected devices"
       },
+      {
+        title: "Data Protection",
+        path: "/cyber-security",
+        description: "Safeguarding sensitive information"
+      }
     ]
-  },
+  }
 };
 
 export const resourcesData = [
@@ -145,3 +165,4 @@ export const filterItems = (items: any[], searchQuery: string) => {
     )
   })).filter(category => category.items.length > 0);
 };
+
