@@ -117,7 +117,8 @@ export const services = Object.values(servicesData).map(category => ({
   items: category.services.map(service => ({
     name: service.title,
     description: service.description,
-    link: service.path
+    link: service.path,
+    isActive: true // Mark all services as active
   }))
 }));
 
@@ -127,7 +128,8 @@ export const resources = [{
   items: resourcesData.map(resource => ({
     name: resource.title,
     description: resource.description,
-    link: resource.path
+    link: resource.path,
+    isActive: true // Mark all resources as active
   }))
 }];
 
