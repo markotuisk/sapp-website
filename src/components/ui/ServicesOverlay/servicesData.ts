@@ -1,3 +1,4 @@
+
 import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 
 export const servicesData = {
@@ -91,7 +92,7 @@ export const servicesData = {
       {
         title: "Network Security",
         path: "/cyber-security",
-        description: "Protection for your digital infrastructure"
+        description: "Tailored network protection for small and medium-sized organisations and private residences"
       },
       {
         title: "IoT Device Protection",
