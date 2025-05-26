@@ -1,3 +1,4 @@
+
 import { Shield, AlertTriangle, MonitorCheck, Wifi, Lock, Server, Database } from 'lucide-react';
 
 export const servicesData = {
@@ -109,3 +110,36 @@ export const resourcesData = [
     description: "See what's new in the latest version of our platform"
   }
 ];
+
+// Transform servicesData into the format expected by other components
+export const services = Object.values(servicesData).map(category => ({
+  category: category.title,
+  items: category.services.map(service => ({
+    name: service.title,
+    description: service.description,
+    link: service.path
+  }))
+}));
+
+// Transform resourcesData into the format expected by other components
+export const resources = [{
+  category: "Resources",
+  items: resourcesData.map(resource => ({
+    name: resource.title,
+    description: resource.description,
+    link: resource.path
+  }))
+}];
+
+// Filter function expected by other components
+export const filterItems = (items: any[], searchQuery: string) => {
+  if (!searchQuery) return items;
+  
+  return items.map(category => ({
+    ...category,
+    items: category.items.filter((item: any) => 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  })).filter(category => category.items.length > 0);
+};
