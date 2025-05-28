@@ -3,3 +3,9 @@ project_id = "zxgsqsdhnwbldytzvwsq"
 
 [functions.update-component-version]
 verify_jwt = false
+
+[functions.send-contact-confirmation]
+verify_jwt = false
+
+[functions.send-auth-email]
+verify_jwt = false
