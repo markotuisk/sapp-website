@@ -78,14 +78,16 @@ export const OTPDialog: React.FC<OTPDialogProps> = ({
                 value={otpValue}
                 onChange={(value) => setOtpValue(value)}
                 disabled={!isOnline || isSubmitting}
-                render={({ slots }) => (
-                  <InputOTPGroup>
-                    {slots.map((slot, index) => (
-                      <InputOTPSlot key={index} index={index} {...slot} />
-                    ))}
-                  </InputOTPGroup>
-                )}
-              />
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
             </div>
           </div>
           <Button
