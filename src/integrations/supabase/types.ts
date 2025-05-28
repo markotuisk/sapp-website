@@ -84,6 +84,50 @@ export type Database = {
         }
         Relationships: []
       }
+      client_data: {
+        Row: {
+          account_status: string | null
+          company_name: string | null
+          company_size: string | null
+          created_at: string
+          id: string
+          industry: string | null
+          subscription_tier: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_status?: string | null
+          company_name?: string | null
+          company_size?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_status?: string | null
+          company_name?: string | null
+          company_size?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_data_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -204,6 +248,39 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          organization: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          organization?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          organization?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       technical_acronyms: {
         Row: {
           acronym: string
@@ -303,6 +380,45 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          assigned_at: string
+          assigned_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -358,6 +474,10 @@ export type Database = {
           title: string
           updated_at: string
         }
+      }
+      assign_admin_role: {
+        Args: { _email: string }
+        Returns: undefined
       }
       get_all_page_versions: {
         Args: Record<PropertyKey, never>
@@ -432,6 +552,17 @@ export type Database = {
           first_attempt: string
           last_attempt: string
         }[]
+      }
+      get_user_roles: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"][]
+      }
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
       }
       increment_acronym_dislikes: {
         Args: { acronym_id: string }
@@ -511,6 +642,7 @@ export type Database = {
       }
     }
     Enums: {
+      app_role: "admin" | "client" | "manager" | "support"
       ticket_state:
         | "found"
         | "accepted"
@@ -633,6 +765,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "client", "manager", "support"],
       ticket_state: [
         "found",
         "accepted",

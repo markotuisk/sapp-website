@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -13,11 +12,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { useRole } from '@/hooks/useRole';
+import { AdminGuard } from '@/components/auth/AdminGuard';
 
 const ClientArea = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, signIn, verifyOTP, signOut, isOnline } = useAuth();
+  const { userRoles, userProfile, clientData, isLoading: roleLoading, isAdmin, isClient } = useRole();
   const [loginEmail, setLoginEmail] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -141,7 +143,23 @@ const ClientArea = () => {
                 <div className="text-center md:text-left">
                   <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Client Area</h1>
                   {user ? (
-                    <p className="text-blue-100 text-lg">Welcome back, {user.email}</p>
+                    <div className="text-blue-100">
+                      <p className="text-lg">Welcome back, {userProfile?.first_name || user.email}</p>
+                      {roleLoading ? (
+                        <p className="text-sm">Loading roles...</p>
+                      ) : (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {userRoles.map(role => (
+                            <span
+                              key={role}
+                              className="px-2 py-1 bg-blue-200 text-blue-800 text-xs rounded-full capitalize"
+                            >
+                              {role}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <p className="text-blue-100 text-lg">Secure Access Portal</p>
                   )}
@@ -166,31 +184,67 @@ const ClientArea = () => {
                     <div className="flex items-center justify-center gap-2 text-sapp-gray mb-6">
                       <Mail className="h-5 w-5 text-sapp-blue" />
                       <span>{user.email}</span>
+                      {clientData?.company_name && (
+                        <>
+                          <span className="mx-2">|</span>
+                          <span>{clientData.company_name}</span>
+                        </>
+                      )}
                     </div>
                     <p className="text-sapp-gray mb-8">
                       You have successfully authenticated to your secure client portal. Here you can access confidential information and communicate with our team.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                      <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
-                        <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Your Services</h3>
-                        <p className="text-sm text-slate-600">View your active services and subscriptions</p>
-                      </div>
-                      
-                      <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
-                        <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Documents</h3>
-                        <p className="text-sm text-slate-600">Access your reports and confidential documents</p>
-                      </div>
-                      
-                      <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
-                        <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Schedule Meeting</h3>
-                        <p className="text-sm text-slate-600">Book an appointment with our team</p>
-                      </div>
-                      
-                      <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
-                        <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Support</h3>
-                        <p className="text-sm text-slate-600">Contact our support team for assistance</p>
-                      </div>
+                      {/* Client Services */}
+                      {isClient && (
+                        <>
+                          <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
+                            <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Your Services</h3>
+                            <p className="text-sm text-slate-600">View your active services and subscriptions</p>
+                            {clientData && (
+                              <div className="mt-2 text-xs text-gray-500">
+                                Tier: {clientData.subscription_tier} | Status: {clientData.account_status}
+                              </div>
+                            )}
+                          </div>
+                          
+                          <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
+                            <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Documents</h3>
+                            <p className="text-sm text-slate-600">Access your reports and confidential documents</p>
+                          </div>
+                          
+                          <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
+                            <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Schedule Meeting</h3>
+                            <p className="text-sm text-slate-600">Book an appointment with our team</p>
+                          </div>
+                          
+                          <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
+                            <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Support</h3>
+                            <p className="text-sm text-slate-600">Contact our support team for assistance</p>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Admin Panel */}
+                      <AdminGuard>
+                        <div className="md:col-span-2 p-6 border border-red-200 rounded-lg bg-red-50">
+                          <h3 className="font-semibold text-lg mb-2 text-red-800">Admin Panel</h3>
+                          <p className="text-sm text-red-600">Manage users, roles, and system settings</p>
+                        </div>
+                      </AdminGuard>
+
+                      {/* Manager/Support Tools */}
+                      {(userRoles.includes('manager') || userRoles.includes('support')) && (
+                        <div className="md:col-span-2 p-6 border border-blue-200 rounded-lg bg-blue-50">
+                          <h3 className="font-semibold text-lg mb-2 text-blue-800">
+                            {userRoles.includes('manager') ? 'Management' : 'Support'} Tools
+                          </h3>
+                          <p className="text-sm text-blue-600">
+                            Access client management and support tools
+                          </p>
+                        </div>
+                      )}
                     </div>
                     
                     <Button
