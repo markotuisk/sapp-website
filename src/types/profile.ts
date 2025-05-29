@@ -1,0 +1,41 @@
+
+export interface UserPreferences {
+  id: string;
+  user_id: string;
+  email_notifications: boolean;
+  document_notifications: boolean;
+  theme: string;
+  language: string;
+  timezone: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DocumentCategory {
+  id: string;
+  name: string;
+  description?: string;
+  color: string;
+  icon: string;
+  created_at: string;
+}
+
+export interface ClientDocument {
+  id: string;
+  user_id: string;
+  category_id?: string;
+  file_name: string;
+  original_name: string;
+  file_path: string;
+  file_size: number;
+  mime_type: string;
+  description?: string;
+  tags?: string[];
+  is_confidential: boolean;
+  download_count: number;
+  last_downloaded_at?: string;
+  uploaded_by?: string;
+  created_at: string;
+  updated_at: string;
+  category?: DocumentCategory;
+}

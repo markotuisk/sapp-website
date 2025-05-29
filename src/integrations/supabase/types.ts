@@ -128,6 +128,85 @@ export type Database = {
           },
         ]
       }
+      client_documents: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          description: string | null
+          download_count: number | null
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          is_confidential: boolean | null
+          last_downloaded_at: string | null
+          mime_type: string
+          original_name: string
+          tags: string[] | null
+          updated_at: string
+          uploaded_by: string | null
+          user_id: string
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          download_count?: number | null
+          file_name: string
+          file_path: string
+          file_size: number
+          id?: string
+          is_confidential?: boolean | null
+          last_downloaded_at?: string | null
+          mime_type: string
+          original_name: string
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by?: string | null
+          user_id: string
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          download_count?: number | null
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          id?: string
+          is_confidential?: boolean | null
+          last_downloaded_at?: string | null
+          mime_type?: string
+          original_name?: string
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_documents_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "document_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_documents_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_documents_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -158,6 +237,33 @@ export type Database = {
           name?: string
           organization?: string | null
           pages_visited?: Json | null
+        }
+        Relationships: []
+      }
+      document_categories: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
         }
         Relationships: []
       }
@@ -250,6 +356,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           email: string
           first_name: string | null
@@ -260,6 +367,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           email: string
           first_name?: string | null
@@ -270,6 +378,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           email?: string
           first_name?: string | null
@@ -379,6 +488,50 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          created_at: string
+          document_notifications: boolean | null
+          email_notifications: boolean | null
+          id: string
+          language: string | null
+          theme: string | null
+          timezone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          document_notifications?: boolean | null
+          email_notifications?: boolean | null
+          id?: string
+          language?: string | null
+          theme?: string | null
+          timezone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          document_notifications?: boolean | null
+          email_notifications?: boolean | null
+          id?: string
+          language?: string | null
+          theme?: string | null
+          timezone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_preferences_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

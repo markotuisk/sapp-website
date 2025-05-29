@@ -1,18 +1,33 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mail } from 'lucide-react';
+import { Mail, User, FileText, Settings } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
+import { useDocuments } from '@/hooks/useDocuments';
 import { AdminGuard } from '@/components/auth/AdminGuard';
+import { ProfileManagement } from './ProfileManagement';
+import { DocumentManagement } from './DocumentManagement';
 
 interface ClientDashboardProps {
   onSignOut: () => void;
 }
 
+type View = 'dashboard' | 'profile' | 'documents';
+
 export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onSignOut }) => {
   const { user } = useAuth();
   const { userRoles, userProfile, clientData, isLoading: roleLoading, isClient } = useRole();
+  const { documents } = useDocuments();
+  const [currentView, setCurrentView] = useState<View>('dashboard');
+
+  if (currentView === 'profile') {
+    return <ProfileManagement onBack={() => setCurrentView('dashboard')} />;
+  }
+
+  if (currentView === 'documents') {
+    return <DocumentManagement onBack={() => setCurrentView('dashboard')} />;
+  }
 
   return (
     <div className="flex flex-col items-center gap-8 mb-8">
@@ -35,6 +50,36 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onSignOut }) =
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {/* Profile Management */}
+          <div 
+            className="p-6 border border-gray-200 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors"
+            onClick={() => setCurrentView('profile')}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <User className="h-6 w-6 text-sapp-blue" />
+              <h3 className="font-semibold text-lg text-sapp-dark">Profile Management</h3>
+            </div>
+            <p className="text-sm text-slate-600">Update your profile information and preferences</p>
+            <div className="mt-2 text-xs text-gray-500">
+              {userProfile?.first_name ? `${userProfile.first_name} ${userProfile.last_name}` : 'Complete your profile'}
+            </div>
+          </div>
+
+          {/* Document Management */}
+          <div 
+            className="p-6 border border-gray-200 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors"
+            onClick={() => setCurrentView('documents')}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <FileText className="h-6 w-6 text-sapp-blue" />
+              <h3 className="font-semibold text-lg text-sapp-dark">Documents</h3>
+            </div>
+            <p className="text-sm text-slate-600">Access your reports and confidential documents</p>
+            <div className="mt-2 text-xs text-gray-500">
+              {documents.length} document{documents.length !== 1 ? 's' : ''} available
+            </div>
+          </div>
+          
           {/* Client Services */}
           {isClient && (
             <>
@@ -46,11 +91,6 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onSignOut }) =
                     Tier: {clientData.subscription_tier} | Status: {clientData.account_status}
                   </div>
                 )}
-              </div>
-              
-              <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
-                <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Documents</h3>
-                <p className="text-sm text-slate-600">Access your reports and confidential documents</p>
               </div>
               
               <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
