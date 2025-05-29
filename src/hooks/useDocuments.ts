@@ -138,13 +138,13 @@ export const useDocuments = () => {
     if (!user) return false;
 
     try {
-      const document = documents.find(d => d.id === documentId);
-      if (!document) return false;
+      const doc = documents.find(d => d.id === documentId);
+      if (!doc) return false;
 
       // Delete from storage
       const { error: storageError } = await supabase.storage
         .from('client-documents')
-        .remove([document.file_path]);
+        .remove([doc.file_path]);
 
       if (storageError) {
         console.error('Storage deletion error:', storageError);
@@ -182,11 +182,11 @@ export const useDocuments = () => {
     }
   };
 
-  const downloadDocument = async (document: ClientDocument) => {
+  const downloadDocument = async (doc: ClientDocument) => {
     try {
       const { data, error } = await supabase.storage
         .from('client-documents')
-        .download(document.file_path);
+        .download(doc.file_path);
 
       if (error) {
         toast({
@@ -201,16 +201,16 @@ export const useDocuments = () => {
       await supabase
         .from('client_documents')
         .update({
-          download_count: document.download_count + 1,
+          download_count: doc.download_count + 1,
           last_downloaded_at: new Date().toISOString(),
         })
-        .eq('id', document.id);
+        .eq('id', doc.id);
 
       // Create download link
       const url = URL.createObjectURL(data);
       const link = document.createElement('a');
       link.href = url;
-      link.download = document.original_name;
+      link.download = doc.original_name;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -219,7 +219,7 @@ export const useDocuments = () => {
       // Update local state
       setDocuments(prev =>
         prev.map(d =>
-          d.id === document.id
+          d.id === doc.id
             ? { ...d, download_count: d.download_count + 1 }
             : d
         )
