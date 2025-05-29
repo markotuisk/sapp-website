@@ -20,6 +20,36 @@ export interface DocumentCategory {
   created_at: string;
 }
 
+export interface DocumentPermission {
+  id: string;
+  document_id: string;
+  user_id: string;
+  permission_type: 'view' | 'download';
+  granted_by: string;
+  created_at: string;
+  user?: {
+    id: string;
+    first_name?: string;
+    last_name?: string;
+    email: string;
+  };
+}
+
+export interface DocumentActivity {
+  id: string;
+  document_id: string;
+  user_id: string;
+  activity_type: 'view' | 'download' | 'share' | 'unshare';
+  created_at: string;
+  metadata?: any;
+  user?: {
+    id: string;
+    first_name?: string;
+    last_name?: string;
+    email: string;
+  };
+}
+
 export interface ClientDocument {
   id: string;
   user_id: string;
@@ -38,4 +68,9 @@ export interface ClientDocument {
   created_at: string;
   updated_at: string;
   category?: DocumentCategory;
+  custom_name?: string;
+  document_type: 'file' | 'link';
+  external_url?: string;
+  permissions?: DocumentPermission[];
+  activity?: DocumentActivity[];
 }

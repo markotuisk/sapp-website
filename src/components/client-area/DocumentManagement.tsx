@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Upload, 
   FileText, 
@@ -15,11 +16,15 @@ import {
   Trash2, 
   Search, 
   ArrowLeft,
-  Eye,
   Filter,
-  Plus
+  Plus,
+  Link,
+  Users,
+  ExternalLink,
+  Eye
 } from 'lucide-react';
 import { useDocuments } from '@/hooks/useDocuments';
+import { DocumentSharingDialog } from './DocumentSharingDialog';
 import { format } from 'date-fns';
 
 interface DocumentManagementProps {
@@ -27,20 +32,26 @@ interface DocumentManagementProps {
 }
 
 export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }) => {
-  const { documents, categories, isLoading, uploadDocument, deleteDocument, downloadDocument } = useDocuments();
+  const { documents, categories, isLoading, uploadDocument, addLinkDocument, deleteDocument, downloadDocument } = useDocuments();
   const [showUpload, setShowUpload] = useState(false);
+  const [uploadType, setUploadType] = useState<'file' | 'link'>('file');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+  const [showSharingDialog, setShowSharingDialog] = useState(false);
   const [uploadForm, setUploadForm] = useState({
     categoryId: '',
     description: '',
     tags: '',
     isConfidential: false,
+    customName: '',
+    linkUrl: '',
   });
   const [dragActive, setDragActive] = useState(false);
 
   const filteredDocuments = documents.filter(doc => {
-    const matchesSearch = doc.original_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const displayName = doc.custom_name || doc.original_name;
+    const matchesSearch = displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doc.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || doc.category_id === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -50,8 +61,33 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
     if (!files || files.length === 0) return;
 
     const file = files[0];
+    
+    // Check file size (50MB limit)
+    if (file.size > 50 * 1024 * 1024) {
+      return;
+    }
+
     const success = await uploadDocument(
       file,
+      uploadForm.categoryId || undefined,
+      uploadForm.description || undefined,
+      uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()) : undefined,
+      uploadForm.isConfidential,
+      uploadForm.customName || undefined
+    );
+
+    if (success) {
+      setShowUpload(false);
+      resetForm();
+    }
+  };
+
+  const handleLinkAdd = async () => {
+    if (!uploadForm.linkUrl || !uploadForm.customName) return;
+
+    const success = await addLinkDocument(
+      uploadForm.linkUrl,
+      uploadForm.customName,
       uploadForm.categoryId || undefined,
       uploadForm.description || undefined,
       uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()) : undefined,
@@ -60,13 +96,19 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
 
     if (success) {
       setShowUpload(false);
-      setUploadForm({
-        categoryId: '',
-        description: '',
-        tags: '',
-        isConfidential: false,
-      });
+      resetForm();
     }
+  };
+
+  const resetForm = () => {
+    setUploadForm({
+      categoryId: '',
+      description: '',
+      tags: '',
+      isConfidential: false,
+      customName: '',
+      linkUrl: '',
+    });
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -101,12 +143,18 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
     return category?.color || '#6B7280';
   };
 
+  const handleShareDocument = (document: any) => {
+    setSelectedDocument(document);
+    setShowSharingDialog(true);
+  };
+
   if (isLoading) {
     return <div className="flex items-center justify-center p-8">Loading documents...</div>;
   }
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <Button
           onClick={onBack}
@@ -122,7 +170,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
           className="flex items-center gap-2"
         >
           <Plus className="h-4 w-4" />
-          Upload Document
+          Add Document
         </Button>
       </div>
 
@@ -132,43 +180,92 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Upload className="h-5 w-5" />
-              Upload Document
+              Add Document
             </CardTitle>
             <CardDescription>
-              Add a new document to your secure file storage
+              Upload a file or add a link to your secure document storage
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Drag and Drop Area */}
-            <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
-              }`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-            >
-              <Upload className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-              <p className="text-lg font-medium mb-2">Drop files here or click to browse</p>
-              <p className="text-sm text-gray-500 mb-4">
-                Maximum file size: 50MB. Supported formats: PDF, Images, Documents
-              </p>
-              <input
-                type="file"
-                onChange={(e) => handleFileUpload(e.target.files)}
-                className="hidden"
-                id="file-upload"
-                accept=".pdf,.jpg,.jpeg,.png,.gif,.txt,.doc,.docx,.xls,.xlsx"
+            <Tabs value={uploadType} onValueChange={(value: 'file' | 'link') => setUploadType(value)}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="file" className="flex items-center gap-2">
+                  <Upload className="h-4 w-4" />
+                  Upload File
+                </TabsTrigger>
+                <TabsTrigger value="link" className="flex items-center gap-2">
+                  <Link className="h-4 w-4" />
+                  Add Link
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="file" className="space-y-4">
+                {/* Drag and Drop Area */}
+                <div
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                    dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+                  }`}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                >
+                  <Upload className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                  <p className="text-lg font-medium mb-2">Drop files here or click to browse</p>
+                  <p className="text-sm text-gray-500 mb-4">
+                    Maximum file size: 50MB. Supported formats: PDF, Images, Documents
+                  </p>
+                  <input
+                    type="file"
+                    onChange={(e) => handleFileUpload(e.target.files)}
+                    className="hidden"
+                    id="file-upload"
+                    accept=".pdf,.jpg,.jpeg,.png,.gif,.txt,.doc,.docx,.xls,.xlsx"
+                  />
+                  <Button asChild variant="outline">
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      Choose File
+                    </label>
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="link" className="space-y-4">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="link-url">Document URL</Label>
+                    <Input
+                      id="link-url"
+                      type="url"
+                      value={uploadForm.linkUrl}
+                      onChange={(e) => setUploadForm(prev => ({ ...prev, linkUrl: e.target.value }))}
+                      placeholder="https://example.com/document.pdf"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="link-name">Document Name *</Label>
+                    <Input
+                      id="link-name"
+                      value={uploadForm.customName}
+                      onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
+                      placeholder="e.g., Important Contract"
+                    />
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+
+            {/* Common Form Fields */}
+            <div>
+              <Label htmlFor="custom-name">Custom Name {uploadType === 'file' && '(optional)'}</Label>
+              <Input
+                id="custom-name"
+                value={uploadForm.customName}
+                onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
+                placeholder={uploadType === 'file' ? "Custom display name (optional)" : "Document name"}
               />
-              <Button asChild variant="outline">
-                <label htmlFor="file-upload" className="cursor-pointer">
-                  Choose File
-                </label>
-              </Button>
             </div>
 
-            {/* Upload Form */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="category">Category</Label>
@@ -219,12 +316,22 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                 />
                 <Label htmlFor="confidential">Mark as confidential</Label>
               </div>
-              <Button
-                onClick={() => setShowUpload(false)}
-                variant="outline"
-              >
-                Cancel
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => setShowUpload(false)}
+                  variant="outline"
+                >
+                  Cancel
+                </Button>
+                {uploadType === 'link' && (
+                  <Button
+                    onClick={handleLinkAdd}
+                    disabled={!uploadForm.linkUrl || !uploadForm.customName}
+                  >
+                    Add Link
+                  </Button>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -270,7 +377,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
         <CardHeader>
           <CardTitle>Your Documents ({filteredDocuments.length})</CardTitle>
           <CardDescription>
-            Manage your uploaded documents and files
+            Manage your uploaded documents and links
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -280,7 +387,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
               <p className="text-lg font-medium mb-2">No documents found</p>
               <p className="text-gray-500">
                 {documents.length === 0 
-                  ? "Upload your first document to get started"
+                  ? "Add your first document to get started"
                   : "Try adjusting your search or filter criteria"
                 }
               </p>
@@ -293,10 +400,23 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                   className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-4 flex-1 min-w-0">
-                    <FileText className="h-8 w-8 text-gray-400 flex-shrink-0" />
+                    <div className="flex-shrink-0">
+                      {document.document_type === 'link' ? (
+                        <ExternalLink className="h-8 w-8 text-blue-500" />
+                      ) : (
+                        <FileText className="h-8 w-8 text-gray-400" />
+                      )}
+                    </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-medium truncate">{document.original_name}</h4>
+                        <h4 className="font-medium truncate">
+                          {document.custom_name || document.original_name}
+                        </h4>
+                        {document.document_type === 'link' && (
+                          <Badge variant="outline" className="text-xs">
+                            Link
+                          </Badge>
+                        )}
                         {document.is_confidential && (
                           <Badge variant="destructive" className="text-xs">
                             Confidential
@@ -313,9 +433,18 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                         )}
                       </div>
                       <p className="text-sm text-gray-500 truncate">
-                        {formatFileSize(document.file_size)} • 
-                        Uploaded {format(new Date(document.created_at), 'MMM d, yyyy')} • 
-                        Downloaded {document.download_count} times
+                        {document.document_type === 'file' ? (
+                          <>
+                            {formatFileSize(document.file_size)} • 
+                            Uploaded {format(new Date(document.created_at), 'MMM d, yyyy')} • 
+                            Downloaded {document.download_count} times
+                          </>
+                        ) : (
+                          <>
+                            Added {format(new Date(document.created_at), 'MMM d, yyyy')} • 
+                            Viewed {document.download_count} times
+                          </>
+                        )}
                       </p>
                       {document.description && (
                         <p className="text-sm text-gray-600 mt-1 truncate">
@@ -335,11 +464,24 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <Button
+                      onClick={() => handleShareDocument(document)}
+                      size="sm"
+                      variant="outline"
+                      title="Share document"
+                    >
+                      <Users className="h-4 w-4" />
+                    </Button>
+                    <Button
                       onClick={() => downloadDocument(document)}
                       size="sm"
                       variant="outline"
+                      title={document.document_type === 'link' ? 'Open link' : 'Download'}
                     >
-                      <Download className="h-4 w-4" />
+                      {document.document_type === 'link' ? (
+                        <Eye className="h-4 w-4" />
+                      ) : (
+                        <Download className="h-4 w-4" />
+                      )}
                     </Button>
                     <Button
                       onClick={() => deleteDocument(document.id)}
@@ -356,6 +498,12 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
           )}
         </CardContent>
       </Card>
+
+      <DocumentSharingDialog
+        isOpen={showSharingDialog}
+        onClose={() => setShowSharingDialog(false)}
+        document={selectedDocument}
+      />
     </div>
   );
 };
