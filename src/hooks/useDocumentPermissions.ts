@@ -21,7 +21,8 @@ export const useDocumentPermissions = (documentId?: string) => {
 
     const fetchPermissions = async () => {
       try {
-        const { data, error } = await supabase
+        // Use type assertion to work around missing types
+        const { data, error } = await (supabase as any)
           .from('document_permissions')
           .select(`
             *,
@@ -79,7 +80,7 @@ export const useDocumentPermissions = (documentId?: string) => {
     if (!user || !documentId) return false;
 
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('document_permissions')
         .insert({
           document_id: documentId,
@@ -110,7 +111,7 @@ export const useDocumentPermissions = (documentId?: string) => {
       setPermissions(prev => [...prev, data]);
       
       // Log activity
-      await supabase
+      await (supabase as any)
         .from('document_activity')
         .insert({
           document_id: documentId,
@@ -139,7 +140,7 @@ export const useDocumentPermissions = (documentId?: string) => {
     if (!user || !documentId) return false;
 
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('document_permissions')
         .delete()
         .eq('id', permissionId);
@@ -156,7 +157,7 @@ export const useDocumentPermissions = (documentId?: string) => {
       setPermissions(prev => prev.filter(p => p.id !== permissionId));
       
       // Log activity
-      await supabase
+      await (supabase as any)
         .from('document_activity')
         .insert({
           document_id: documentId,

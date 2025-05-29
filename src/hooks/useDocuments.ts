@@ -256,8 +256,8 @@ export const useDocuments = () => {
         // Open link in new tab
         window.open(doc.external_url, '_blank');
         
-        // Log activity
-        await supabase
+        // Log activity using type assertion
+        await (supabase as any)
           .from('document_activity')
           .insert({
             document_id: doc.id,
@@ -290,8 +290,8 @@ export const useDocuments = () => {
         })
         .eq('id', doc.id);
 
-      // Log activity
-      await supabase
+      // Log activity using type assertion
+      await (supabase as any)
         .from('document_activity')
         .insert({
           document_id: doc.id,
