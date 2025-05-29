@@ -1,14 +1,15 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Camera, Save, ArrowLeft } from 'lucide-react';
+import { User, Camera, Save, ArrowLeft, Check } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
+import { useOrganizationTypes } from '@/hooks/useOrganizationTypes';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -16,25 +17,43 @@ interface UserProfileProps {
   onBack: () => void;
 }
 
+type SaveState = 'idle' | 'saving' | 'saved' | 'error';
+
 export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
   const { user } = useAuth();
   const { userProfile } = useRole();
+  const { organizationTypes, isLoading: orgTypesLoading } = useOrganizationTypes();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
+  const [saveState, setSaveState] = useState<SaveState>('idle');
   const [profileData, setProfileData] = useState({
-    first_name: userProfile?.first_name || '',
-    last_name: userProfile?.last_name || '',
-    phone: userProfile?.phone || '',
-    organization: userProfile?.organization || '',
-    organization_type: userProfile?.organization_type || '',
-    department: userProfile?.department || '',
-    job_title: userProfile?.job_title || '',
+    first_name: '',
+    last_name: '',
+    phone: '',
+    organization: '',
+    organization_type: '',
+    department: '',
+    job_title: '',
   });
+
+  // Pre-populate form with existing data
+  useEffect(() => {
+    if (userProfile) {
+      setProfileData({
+        first_name: userProfile.first_name || '',
+        last_name: userProfile.last_name || '',
+        phone: userProfile.phone || '',
+        organization: userProfile.organization || '',
+        organization_type: userProfile.organization_type || '',
+        department: userProfile.department || '',
+        job_title: userProfile.job_title || '',
+      });
+    }
+  }, [userProfile]);
 
   const handleProfileUpdate = async () => {
     if (!user) return;
 
-    setIsLoading(true);
+    setSaveState('saving');
     try {
       const { error } = await supabase
         .from('profiles')
@@ -42,26 +61,30 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
         .eq('id', user.id);
 
       if (error) {
+        setSaveState('error');
         toast({
           title: 'Error',
           description: error.message,
           variant: 'destructive',
         });
       } else {
+        setSaveState('saved');
         toast({
           title: 'Success',
           description: 'Profile updated successfully',
         });
+        
+        // Reset to idle after 2 seconds
+        setTimeout(() => setSaveState('idle'), 2000);
       }
     } catch (error) {
       console.error('Error updating profile:', error);
+      setSaveState('error');
       toast({
         title: 'Error',
         description: 'Failed to update profile',
         variant: 'destructive',
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -78,7 +101,6 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
       return;
     }
 
-    setIsLoading(true);
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/avatar.${fileExt}`;
@@ -124,8 +146,6 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
         description: 'Failed to upload avatar',
         variant: 'destructive',
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -133,6 +153,40 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
     const first = profileData.first_name || user?.email?.charAt(0) || '';
     const last = profileData.last_name?.charAt(0) || '';
     return (first + last).toUpperCase();
+  };
+
+  const getSaveButtonContent = () => {
+    switch (saveState) {
+      case 'saving':
+        return 'Saving...';
+      case 'saved':
+        return (
+          <>
+            <Check className="h-4 w-4 mr-2" />
+            Saved!
+          </>
+        );
+      case 'error':
+        return 'Try Again';
+      default:
+        return (
+          <>
+            <Save className="h-4 w-4 mr-2" />
+            Save Profile
+          </>
+        );
+    }
+  };
+
+  const getSaveButtonVariant = () => {
+    switch (saveState) {
+      case 'saved':
+        return 'default' as const;
+      case 'error':
+        return 'destructive' as const;
+      default:
+        return 'default' as const;
+    }
   };
 
   return (
@@ -240,18 +294,17 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
               <Select
                 value={profileData.organization_type}
                 onValueChange={(value) => setProfileData(prev => ({ ...prev, organization_type: value }))}
+                disabled={orgTypesLoading}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select organization type" />
+                  <SelectValue placeholder={orgTypesLoading ? "Loading..." : "Select organization type"} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="corporation">Corporation</SelectItem>
-                  <SelectItem value="government">Government</SelectItem>
-                  <SelectItem value="non-profit">Non-Profit</SelectItem>
-                  <SelectItem value="educational">Educational Institution</SelectItem>
-                  <SelectItem value="healthcare">Healthcare</SelectItem>
-                  <SelectItem value="military">Military</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
+                  {organizationTypes.map((type) => (
+                    <SelectItem key={type.id} value={type.name}>
+                      {type.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -280,11 +333,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
 
           <Button
             onClick={handleProfileUpdate}
-            disabled={isLoading}
-            className="w-full"
+            disabled={saveState === 'saving'}
+            variant={getSaveButtonVariant()}
+            className={`w-full ${saveState === 'saved' ? 'bg-green-600 hover:bg-green-700' : ''}`}
           >
-            <Save className="h-4 w-4 mr-2" />
-            {isLoading ? 'Saving...' : 'Save Profile'}
+            {getSaveButtonContent()}
           </Button>
         </CardContent>
       </Card>
