@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -46,6 +45,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
     isConfidential: false,
     customName: '',
     linkUrl: '',
+    linkName: '',
   });
   const [dragActive, setDragActive] = useState(false);
 
@@ -83,11 +83,11 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
   };
 
   const handleLinkAdd = async () => {
-    if (!uploadForm.linkUrl || !uploadForm.customName) return;
+    if (!uploadForm.linkUrl || !uploadForm.linkName) return;
 
     const success = await addLinkDocument(
       uploadForm.linkUrl,
-      uploadForm.customName,
+      uploadForm.linkName,
       uploadForm.categoryId || undefined,
       uploadForm.description || undefined,
       uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()) : undefined,
@@ -108,6 +108,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
       isConfidential: false,
       customName: '',
       linkUrl: '',
+      linkName: '',
     });
   };
 
@@ -228,12 +229,24 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                     </label>
                   </Button>
                 </div>
+                
+                {/* Custom Name for Files */}
+                <div>
+                  <Label htmlFor="file-custom-name">Custom Display Name (optional)</Label>
+                  <Input
+                    id="file-custom-name"
+                    value={uploadForm.customName}
+                    onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
+                    placeholder="e.g., Q4 Financial Report"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Leave empty to use the original filename</p>
+                </div>
               </TabsContent>
 
               <TabsContent value="link" className="space-y-4">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="link-url">Document URL</Label>
+                    <Label htmlFor="link-url">Document URL *</Label>
                     <Input
                       id="link-url"
                       type="url"
@@ -243,29 +256,20 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                     />
                   </div>
                   <div>
-                    <Label htmlFor="link-name">Document Name *</Label>
+                    <Label htmlFor="link-display-name">Document Name *</Label>
                     <Input
-                      id="link-name"
-                      value={uploadForm.customName}
-                      onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
+                      id="link-display-name"
+                      value={uploadForm.linkName}
+                      onChange={(e) => setUploadForm(prev => ({ ...prev, linkName: e.target.value }))}
                       placeholder="e.g., Important Contract"
                     />
+                    <p className="text-xs text-gray-500 mt-1">This name will be displayed in your document list</p>
                   </div>
                 </div>
               </TabsContent>
             </Tabs>
 
             {/* Common Form Fields */}
-            <div>
-              <Label htmlFor="custom-name">Custom Name {uploadType === 'file' && '(optional)'}</Label>
-              <Input
-                id="custom-name"
-                value={uploadForm.customName}
-                onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
-                placeholder={uploadType === 'file' ? "Custom display name (optional)" : "Document name"}
-              />
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="category">Category</Label>
@@ -326,7 +330,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
                 {uploadType === 'link' && (
                   <Button
                     onClick={handleLinkAdd}
-                    disabled={!uploadForm.linkUrl || !uploadForm.customName}
+                    disabled={!uploadForm.linkUrl || !uploadForm.linkName}
                   >
                     Add Link
                   </Button>

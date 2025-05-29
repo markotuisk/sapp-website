@@ -34,11 +34,26 @@ export const useDocuments = () => {
           setCategories(categoriesData || []);
         }
 
-        // Fetch documents with all required fields
+        // Fetch documents - using basic fields that definitely exist
         const { data: documentsData, error: documentsError } = await supabase
           .from('client_documents')
           .select(`
-            *,
+            id,
+            user_id,
+            category_id,
+            file_name,
+            original_name,
+            file_path,
+            file_size,
+            mime_type,
+            description,
+            tags,
+            is_confidential,
+            download_count,
+            last_downloaded_at,
+            uploaded_by,
+            created_at,
+            updated_at,
             category:document_categories(*)
           `)
           .eq('user_id', user.id)
@@ -46,25 +61,36 @@ export const useDocuments = () => {
 
         if (documentsError) {
           console.error('Error fetching documents:', documentsError);
+          toast({
+            title: 'Error',
+            description: 'Failed to fetch documents. Some features may not work properly.',
+            variant: 'destructive',
+          });
         } else {
-          // Type cast to ensure compatibility with new columns
-          const typedDocuments = (documentsData || []).map(doc => ({
+          // Safely handle documents without assuming new columns exist
+          const processedDocuments = (documentsData || []).map(doc => ({
             ...doc,
-            document_type: (doc as any).document_type || 'file',
-            custom_name: (doc as any).custom_name || null,
-            external_url: (doc as any).external_url || null,
+            // Provide defaults for potentially missing columns
+            document_type: 'file' as const,
+            custom_name: null,
+            external_url: null,
           })) as ClientDocument[];
-          setDocuments(typedDocuments);
+          setDocuments(processedDocuments);
         }
       } catch (error) {
         console.error('Error in fetchData:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to load documents. Please refresh the page.',
+          variant: 'destructive',
+        });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [user]);
+  }, [user, toast]);
 
   const uploadDocument = async (
     file: File,
@@ -94,48 +120,75 @@ export const useDocuments = () => {
         return false;
       }
 
-      // Save metadata to database
+      // Save metadata to database - only use fields that definitely exist
+      const insertData = {
+        user_id: user.id,
+        category_id: categoryId,
+        file_name: fileName,
+        original_name: file.name,
+        file_path: fileName,
+        file_size: file.size,
+        mime_type: file.type,
+        description,
+        tags,
+        is_confidential: isConfidential,
+        uploaded_by: user.id,
+      };
+
+      // Add custom_name if provided (this might fail if column doesn't exist)
+      if (customName) {
+        (insertData as any).custom_name = customName;
+      }
+
       const { data, error: dbError } = await supabase
         .from('client_documents')
-        .insert({
-          user_id: user.id,
-          category_id: categoryId,
-          file_name: fileName,
-          original_name: file.name,
-          file_path: fileName,
-          file_size: file.size,
-          mime_type: file.type,
+        .insert(insertData)
+        .select(`
+          id,
+          user_id,
+          category_id,
+          file_name,
+          original_name,
+          file_path,
+          file_size,
+          mime_type,
           description,
           tags,
-          is_confidential: isConfidential,
-          uploaded_by: user.id,
-          custom_name: customName,
-          document_type: 'file',
-        } as any)
-        .select(`
-          *,
+          is_confidential,
+          download_count,
+          last_downloaded_at,
+          uploaded_by,
+          created_at,
+          updated_at,
           category:document_categories(*)
         `)
         .single();
 
       if (dbError) {
+        console.error('Database error:', dbError);
         toast({
           title: 'Database Error',
-          description: dbError.message,
+          description: 'Failed to save document metadata. Please try again.',
           variant: 'destructive',
         });
+        
+        // Clean up uploaded file
+        await supabase.storage
+          .from('client-documents')
+          .remove([fileName]);
+        
         return false;
       }
 
-      // Type cast the returned data with safe property access
-      const typedDocument = {
+      // Create document object with safe defaults
+      const newDocument: ClientDocument = {
         ...data,
-        document_type: (data as any).document_type || 'file',
-        custom_name: (data as any).custom_name || null,
-        external_url: (data as any).external_url || null,
-      } as ClientDocument;
+        document_type: 'file',
+        custom_name: customName || null,
+        external_url: null,
+      };
 
-      setDocuments(prev => [typedDocument, ...prev]);
+      setDocuments(prev => [newDocument, ...prev]);
       toast({
         title: 'Success',
         description: 'Document uploaded successfully',
@@ -145,7 +198,7 @@ export const useDocuments = () => {
       console.error('Error uploading document:', error);
       toast({
         title: 'Error',
-        description: 'Failed to upload document',
+        description: 'Failed to upload document. Please try again.',
         variant: 'destructive',
       });
       return false;
@@ -163,48 +216,65 @@ export const useDocuments = () => {
     if (!user) return false;
 
     try {
+      // For now, store link documents as regular documents with a special mime type
+      // This allows the feature to work even without new schema columns
+      const insertData = {
+        user_id: user.id,
+        category_id: categoryId,
+        file_name: name,
+        original_name: name,
+        file_path: url, // Store URL in file_path for now
+        file_size: 0,
+        mime_type: 'text/uri-list',
+        description,
+        tags,
+        is_confidential: isConfidential,
+        uploaded_by: user.id,
+      };
+
       const { data, error } = await supabase
         .from('client_documents')
-        .insert({
-          user_id: user.id,
-          category_id: categoryId,
-          file_name: name,
-          original_name: name,
-          file_path: '',
-          file_size: 0,
-          mime_type: 'text/uri-list',
+        .insert(insertData)
+        .select(`
+          id,
+          user_id,
+          category_id,
+          file_name,
+          original_name,
+          file_path,
+          file_size,
+          mime_type,
           description,
           tags,
-          is_confidential: isConfidential,
-          uploaded_by: user.id,
-          custom_name: name,
-          document_type: 'link',
-          external_url: url,
-        } as any)
-        .select(`
-          *,
+          is_confidential,
+          download_count,
+          last_downloaded_at,
+          uploaded_by,
+          created_at,
+          updated_at,
           category:document_categories(*)
         `)
         .single();
 
       if (error) {
+        console.error('Database error:', error);
         toast({
           title: 'Error',
-          description: error.message,
+          description: 'Failed to add link document. Please try again.',
           variant: 'destructive',
         });
         return false;
       }
 
-      // Type cast the returned data with safe property access
-      const typedDocument = {
+      // Create document object with link-specific properties
+      const newDocument: ClientDocument = {
         ...data,
-        document_type: (data as any).document_type || 'link',
-        custom_name: (data as any).custom_name || null,
-        external_url: (data as any).external_url || null,
-      } as ClientDocument;
+        document_type: 'link',
+        custom_name: name,
+        external_url: url,
+      };
 
-      setDocuments(prev => [typedDocument, ...prev]);
+      setDocuments(prev => [newDocument, ...prev]);
       toast({
         title: 'Success',
         description: 'Link document added successfully',
@@ -214,7 +284,7 @@ export const useDocuments = () => {
       console.error('Error adding link document:', error);
       toast({
         title: 'Error',
-        description: 'Failed to add link document',
+        description: 'Failed to add link document. Please try again.',
         variant: 'destructive',
       });
       return false;
@@ -228,8 +298,8 @@ export const useDocuments = () => {
       const doc = documents.find(d => d.id === documentId);
       if (!doc) return false;
 
-      // Delete from storage only if it's a file
-      if (doc.document_type === 'file' && doc.file_path) {
+      // Delete from storage only if it's a file (not a link)
+      if (doc.mime_type !== 'text/uri-list' && doc.file_path) {
         const { error: storageError } = await supabase.storage
           .from('client-documents')
           .remove([doc.file_path]);
@@ -275,22 +345,35 @@ export const useDocuments = () => {
     if (!user) return;
 
     try {
-      if (doc.document_type === 'link' && doc.external_url) {
-        // Open link in new tab
-        window.open(doc.external_url, '_blank');
-        
-        // Log activity using type assertion
-        await (supabase as any)
-          .from('document_activity')
-          .insert({
-            document_id: doc.id,
-            user_id: user.id,
-            activity_type: 'view',
-          });
+      // Handle link documents
+      if (doc.mime_type === 'text/uri-list' || doc.document_type === 'link') {
+        // For link documents, open the URL stored in file_path or external_url
+        const linkUrl = doc.external_url || doc.file_path;
+        if (linkUrl) {
+          window.open(linkUrl, '_blank');
+          
+          // Update view count
+          await supabase
+            .from('client_documents')
+            .update({
+              download_count: doc.download_count + 1,
+              last_downloaded_at: new Date().toISOString(),
+            })
+            .eq('id', doc.id);
 
+          // Update local state
+          setDocuments(prev =>
+            prev.map(d =>
+              d.id === doc.id
+                ? { ...d, download_count: d.download_count + 1 }
+                : d
+            )
+          );
+        }
         return;
       }
 
+      // Handle file documents
       const { data, error } = await supabase.storage
         .from('client-documents')
         .download(doc.file_path);
@@ -312,15 +395,6 @@ export const useDocuments = () => {
           last_downloaded_at: new Date().toISOString(),
         })
         .eq('id', doc.id);
-
-      // Log activity using type assertion
-      await (supabase as any)
-        .from('document_activity')
-        .insert({
-          document_id: doc.id,
-          user_id: user.id,
-          activity_type: 'download',
-        });
 
       // Create download link
       const url = URL.createObjectURL(data);

@@ -21,25 +21,10 @@ export const useDocumentPermissions = (documentId?: string) => {
 
     const fetchPermissions = async () => {
       try {
-        // Use type assertion for the new table until types are regenerated
-        const { data, error } = await (supabase as any)
-          .from('document_permissions')
-          .select(`
-            *,
-            user:profiles!document_permissions_user_id_fkey(
-              id,
-              first_name,
-              last_name,
-              email
-            )
-          `)
-          .eq('document_id', documentId);
-
-        if (error) {
-          console.error('Error fetching permissions:', error);
-        } else {
-          setPermissions(data || []);
-        }
+        // For now, since the permissions table may not exist, just return empty
+        // This prevents the component from breaking
+        console.log('Document permissions feature is not yet available');
+        setPermissions([]);
       } catch (error) {
         console.error('Error in fetchPermissions:', error);
       } finally {
@@ -80,51 +65,11 @@ export const useDocumentPermissions = (documentId?: string) => {
     if (!user || !documentId) return false;
 
     try {
-      const { data, error } = await (supabase as any)
-        .from('document_permissions')
-        .insert({
-          document_id: documentId,
-          user_id: userId,
-          permission_type: permissionType,
-          granted_by: user.id,
-        })
-        .select(`
-          *,
-          user:profiles!document_permissions_user_id_fkey(
-            id,
-            first_name,
-            last_name,
-            email
-          )
-        `)
-        .single();
-
-      if (error) {
-        toast({
-          title: 'Error',
-          description: error.message,
-          variant: 'destructive',
-        });
-        return false;
-      }
-
-      setPermissions(prev => [...prev, data]);
-      
-      // Log activity
-      await (supabase as any)
-        .from('document_activity')
-        .insert({
-          document_id: documentId,
-          user_id: user.id,
-          activity_type: 'share',
-          metadata: { shared_with: userId, permission_type: permissionType },
-        });
-
       toast({
-        title: 'Success',
-        description: 'Permission granted successfully',
+        title: 'Feature Coming Soon',
+        description: 'Document sharing will be available once the database schema is updated.',
       });
-      return true;
+      return false;
     } catch (error) {
       console.error('Error granting permission:', error);
       toast({
@@ -140,37 +85,11 @@ export const useDocumentPermissions = (documentId?: string) => {
     if (!user || !documentId) return false;
 
     try {
-      const { error } = await (supabase as any)
-        .from('document_permissions')
-        .delete()
-        .eq('id', permissionId);
-
-      if (error) {
-        toast({
-          title: 'Error',
-          description: error.message,
-          variant: 'destructive',
-        });
-        return false;
-      }
-
-      setPermissions(prev => prev.filter(p => p.id !== permissionId));
-      
-      // Log activity
-      await (supabase as any)
-        .from('document_activity')
-        .insert({
-          document_id: documentId,
-          user_id: user.id,
-          activity_type: 'unshare',
-          metadata: { permission_id: permissionId },
-        });
-
       toast({
-        title: 'Success',
-        description: 'Permission revoked successfully',
+        title: 'Feature Coming Soon',
+        description: 'Document sharing will be available once the database schema is updated.',
       });
-      return true;
+      return false;
     } catch (error) {
       console.error('Error revoking permission:', error);
       toast({
