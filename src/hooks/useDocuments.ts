@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -46,12 +47,12 @@ export const useDocuments = () => {
         if (documentsError) {
           console.error('Error fetching documents:', documentsError);
         } else {
-          // Type cast the data to ensure compatibility
+          // Type cast the data to ensure compatibility with optional properties
           const typedDocuments = (documentsData || []).map(doc => ({
             ...doc,
-            document_type: doc.document_type || 'file',
-            custom_name: doc.custom_name || null,
-            external_url: doc.external_url || null,
+            document_type: (doc as any).document_type || 'file',
+            custom_name: (doc as any).custom_name || null,
+            external_url: (doc as any).external_url || null,
           })) as ClientDocument[];
           setDocuments(typedDocuments);
         }
@@ -110,7 +111,7 @@ export const useDocuments = () => {
           uploaded_by: user.id,
           custom_name: customName,
           document_type: 'file',
-        })
+        } as any)
         .select(`
           *,
           category:document_categories(*)
@@ -126,12 +127,12 @@ export const useDocuments = () => {
         return false;
       }
 
-      // Type cast the returned data
+      // Type cast the returned data with safe property access
       const typedDocument = {
         ...data,
-        document_type: data.document_type || 'file',
-        custom_name: data.custom_name || null,
-        external_url: data.external_url || null,
+        document_type: (data as any).document_type || 'file',
+        custom_name: (data as any).custom_name || null,
+        external_url: (data as any).external_url || null,
       } as ClientDocument;
 
       setDocuments(prev => [typedDocument, ...prev]);
@@ -179,7 +180,7 @@ export const useDocuments = () => {
           custom_name: name,
           document_type: 'link',
           external_url: url,
-        })
+        } as any)
         .select(`
           *,
           category:document_categories(*)
@@ -195,12 +196,12 @@ export const useDocuments = () => {
         return false;
       }
 
-      // Type cast the returned data
+      // Type cast the returned data with safe property access
       const typedDocument = {
         ...data,
-        document_type: data.document_type || 'link',
-        custom_name: data.custom_name || null,
-        external_url: data.external_url || null,
+        document_type: (data as any).document_type || 'link',
+        custom_name: (data as any).custom_name || null,
+        external_url: (data as any).external_url || null,
       } as ClientDocument;
 
       setDocuments(prev => [typedDocument, ...prev]);
