@@ -1,28 +1,33 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mail, User, FileText, Settings } from 'lucide-react';
+import { User, FileText, Settings, Building2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
 import { useDocuments } from '@/hooks/useDocuments';
 import { AdminGuard } from '@/components/auth/AdminGuard';
-import { ProfileManagement } from './ProfileManagement';
+import { UserProfile } from './UserProfile';
+import { UserSettings } from './UserSettings';
 import { DocumentManagement } from './DocumentManagement';
+import { UserProfileSection } from './UserProfileSection';
 
 interface ClientDashboardProps {
   onSignOut: () => void;
 }
 
-type View = 'dashboard' | 'profile' | 'documents';
+type View = 'dashboard' | 'profile' | 'settings' | 'documents';
 
 export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onSignOut }) => {
-  const { user } = useAuth();
-  const { userRoles, userProfile, clientData, isLoading: roleLoading, isClient } = useRole();
+  const { userRoles, clientData, isClient } = useRole();
   const { documents } = useDocuments();
   const [currentView, setCurrentView] = useState<View>('dashboard');
 
   if (currentView === 'profile') {
-    return <ProfileManagement onBack={() => setCurrentView('dashboard')} />;
+    return <UserProfile onBack={() => setCurrentView('dashboard')} />;
+  }
+
+  if (currentView === 'settings') {
+    return <UserSettings onBack={() => setCurrentView('dashboard')} />;
   }
 
   if (currentView === 'documents') {
@@ -30,39 +35,41 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onSignOut }) =
   }
 
   return (
-    <div className="flex flex-col items-center gap-8 mb-8">
+    <div className="space-y-8">
+      {/* User Profile Section */}
+      <UserProfileSection />
+
       <div className="text-center">
         <h2 className="text-2xl font-display font-bold text-sapp-dark mb-4">
           Welcome to Your Secure Client Portal
         </h2>
-        <div className="flex items-center justify-center gap-2 text-sapp-gray mb-6">
-          <Mail className="h-5 w-5 text-sapp-blue" />
-          <span>{user?.email}</span>
-          {clientData?.company_name && (
-            <>
-              <span className="mx-2">|</span>
-              <span>{clientData.company_name}</span>
-            </>
-          )}
-        </div>
         <p className="text-sapp-gray mb-8">
           You have successfully authenticated to your secure client portal. Here you can access confidential information and communicate with our team.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          {/* Profile Management */}
+          {/* User Profile */}
           <div 
             className="p-6 border border-gray-200 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors"
             onClick={() => setCurrentView('profile')}
           >
             <div className="flex items-center gap-3 mb-2">
               <User className="h-6 w-6 text-sapp-blue" />
-              <h3 className="font-semibold text-lg text-sapp-dark">Profile Management</h3>
+              <h3 className="font-semibold text-lg text-sapp-dark">User Profile</h3>
             </div>
-            <p className="text-sm text-slate-600">Update your profile information and preferences</p>
-            <div className="mt-2 text-xs text-gray-500">
-              {userProfile?.first_name ? `${userProfile.first_name} ${userProfile.last_name}` : 'Complete your profile'}
+            <p className="text-sm text-slate-600">Update your personal and professional information</p>
+          </div>
+
+          {/* Account Settings */}
+          <div 
+            className="p-6 border border-gray-200 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100 transition-colors"
+            onClick={() => setCurrentView('settings')}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <Settings className="h-6 w-6 text-sapp-blue" />
+              <h3 className="font-semibold text-lg text-sapp-dark">Settings</h3>
             </div>
+            <p className="text-sm text-slate-600">Manage notifications, theme, and preferences</p>
           </div>
 
           {/* Document Management */}
@@ -84,7 +91,10 @@ export const ClientDashboard: React.FC<ClientDashboardProps> = ({ onSignOut }) =
           {isClient && (
             <>
               <div className="p-6 border border-gray-200 rounded-lg bg-slate-50">
-                <h3 className="font-semibold text-lg mb-2 text-sapp-dark">Your Services</h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <Building2 className="h-6 w-6 text-sapp-blue" />
+                  <h3 className="font-semibold text-lg text-sapp-dark">Your Services</h3>
+                </div>
                 <p className="text-sm text-slate-600">View your active services and subscriptions</p>
                 {clientData && (
                   <div className="mt-2 text-xs text-gray-500">

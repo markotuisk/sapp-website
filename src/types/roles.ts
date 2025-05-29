@@ -8,6 +8,9 @@ export interface UserProfile {
   last_name?: string;
   phone?: string;
   organization?: string;
+  organization_type?: string;
+  department?: string;
+  job_title?: string;
   avatar_url?: string;
   created_at: string;
   updated_at: string;

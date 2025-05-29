@@ -50,7 +50,7 @@ const ClientArea = () => {
             </Alert>
           )}
           
-          <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
             <ClientAreaHeader />
             
             <div className="p-8">
@@ -64,17 +64,20 @@ const ClientArea = () => {
                 />
               )}
               
-              <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
-                <Button 
-                  onClick={handleClose}
-                  variant="outline"
-                  className="ml-auto flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-                  size="sm"
-                >
-                  Close
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
+              {/* Only show Close button for unauthenticated users */}
+              {!user && (
+                <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
+                  <Button 
+                    onClick={handleClose}
+                    variant="outline"
+                    className="ml-auto flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                    size="sm"
+                  >
+                    Close
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
