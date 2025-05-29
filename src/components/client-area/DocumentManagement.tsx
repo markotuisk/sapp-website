@@ -7,18 +7,22 @@ import { DocumentSharingDialog } from './DocumentSharingDialog';
 import { DocumentUploadForm } from './document-management/DocumentUploadForm';
 import { DocumentSearchFilter } from './document-management/DocumentSearchFilter';
 import { DocumentsList } from './document-management/DocumentsList';
+import { DocumentEditDialog } from './document-management/DocumentEditDialog';
+import type { ClientDocument } from '@/types/profile';
 
 interface DocumentManagementProps {
   onBack: () => void;
 }
 
 export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }) => {
-  const { documents, categories, isLoading, uploadDocument, addLinkDocument, deleteDocument, downloadDocument } = useDocuments();
+  const { documents, categories, isLoading, uploadDocument, addLinkDocument, deleteDocument, downloadDocument, updateDocument } = useDocuments();
   const [showUpload, setShowUpload] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+  const [selectedDocument, setSelectedDocument] = useState<ClientDocument | null>(null);
   const [showSharingDialog, setShowSharingDialog] = useState(false);
+  const [editingDocument, setEditingDocument] = useState<ClientDocument | null>(null);
+  const [showEditDialog, setShowEditDialog] = useState(false);
 
   const filteredDocuments = documents.filter(doc => {
     const displayName = doc.custom_name || doc.original_name;
@@ -58,9 +62,18 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
     return category?.color || '#6B7280';
   };
 
-  const handleShareDocument = (document: any) => {
+  const handleShareDocument = (document: ClientDocument) => {
     setSelectedDocument(document);
     setShowSharingDialog(true);
+  };
+
+  const handleEditDocument = (document: ClientDocument) => {
+    setEditingDocument(document);
+    setShowEditDialog(true);
+  };
+
+  const handleSaveDocument = async (documentId: string, updates: Partial<ClientDocument>) => {
+    await updateDocument(documentId, updates);
   };
 
   if (isLoading) {
@@ -113,6 +126,7 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
         onShare={handleShareDocument}
         onDownload={downloadDocument}
         onDelete={deleteDocument}
+        onEdit={handleEditDocument}
         getCategoryColor={getCategoryColor}
       />
 
@@ -120,6 +134,14 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
         isOpen={showSharingDialog}
         onClose={() => setShowSharingDialog(false)}
         document={selectedDocument}
+      />
+
+      <DocumentEditDialog
+        document={editingDocument}
+        isOpen={showEditDialog}
+        onClose={() => setShowEditDialog(false)}
+        categories={categories}
+        onSave={handleSaveDocument}
       />
     </div>
   );

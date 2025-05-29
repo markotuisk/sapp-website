@@ -10,6 +10,7 @@ interface DocumentsListProps {
   onShare: (document: ClientDocument) => void;
   onDownload: (document: ClientDocument) => void;
   onDelete: (documentId: string) => void;
+  onEdit: (document: ClientDocument) => void;
   getCategoryColor: (categoryId?: string) => string;
 }
 
@@ -18,6 +19,7 @@ export const DocumentsList: React.FC<DocumentsListProps> = ({
   onShare,
   onDownload,
   onDelete,
+  onEdit,
   getCategoryColor,
 }) => {
   return (
@@ -46,6 +48,7 @@ export const DocumentsList: React.FC<DocumentsListProps> = ({
                 onShare={onShare}
                 onDownload={onDownload}
                 onDelete={onDelete}
+                onEdit={onEdit}
                 getCategoryColor={getCategoryColor}
               />
             ))}

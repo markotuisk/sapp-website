@@ -8,7 +8,8 @@ import {
   Trash2, 
   Users,
   ExternalLink,
-  Eye
+  Eye,
+  Edit
 } from 'lucide-react';
 import { format } from 'date-fns';
 import type { ClientDocument } from '@/types/profile';
@@ -18,6 +19,7 @@ interface DocumentListItemProps {
   onShare: (document: ClientDocument) => void;
   onDownload: (document: ClientDocument) => void;
   onDelete: (documentId: string) => void;
+  onEdit: (document: ClientDocument) => void;
   getCategoryColor: (categoryId?: string) => string;
 }
 
@@ -26,6 +28,7 @@ export const DocumentListItem: React.FC<DocumentListItemProps> = ({
   onShare,
   onDownload,
   onDelete,
+  onEdit,
   getCategoryColor,
 }) => {
   const formatFileSize = (bytes: number) => {
@@ -121,6 +124,14 @@ export const DocumentListItem: React.FC<DocumentListItemProps> = ({
         </div>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">
+        <Button
+          onClick={() => onEdit(document)}
+          size="sm"
+          variant="outline"
+          title="Edit document"
+        >
+          <Edit className="h-4 w-4" />
+        </Button>
         <Button
           onClick={() => onShare(document)}
           size="sm"

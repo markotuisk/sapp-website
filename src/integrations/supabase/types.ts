@@ -132,8 +132,11 @@ export type Database = {
         Row: {
           category_id: string | null
           created_at: string
+          custom_name: string | null
           description: string | null
+          document_type: string | null
           download_count: number | null
+          external_url: string | null
           file_name: string
           file_path: string
           file_size: number
@@ -150,8 +153,11 @@ export type Database = {
         Insert: {
           category_id?: string | null
           created_at?: string
+          custom_name?: string | null
           description?: string | null
+          document_type?: string | null
           download_count?: number | null
+          external_url?: string | null
           file_name: string
           file_path: string
           file_size: number
@@ -168,8 +174,11 @@ export type Database = {
         Update: {
           category_id?: string | null
           created_at?: string
+          custom_name?: string | null
           description?: string | null
+          document_type?: string | null
           download_count?: number | null
+          external_url?: string | null
           file_name?: string
           file_path?: string
           file_size?: number

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Upload, Link, Plus } from 'lucide-react';
+import { useDocuments } from '@/hooks/useDocuments';
 import type { DocumentCategory } from '@/types/profile';
 
 interface DocumentUploadFormProps {
@@ -33,11 +34,11 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
   isVisible,
   onClose,
   categories,
-  onFileUpload,
-  onLinkAdd,
 }) => {
+  const { uploadDocument, addLinkDocument } = useDocuments();
   const [uploadType, setUploadType] = useState<'file' | 'link'>('file');
   const [dragActive, setDragActive] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadForm, setUploadForm] = useState<UploadFormData>({
     categoryId: '',
     description: '',
@@ -70,18 +71,69 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
     }
   };
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      onFileUpload(e.dataTransfer.files);
+      await handleFileUpload(e.dataTransfer.files);
+    }
+  };
+
+  const handleFileUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    
+    if (file.size > 50 * 1024 * 1024) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const tags = uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : undefined;
+      
+      const success = await uploadDocument(
+        file,
+        uploadForm.categoryId || undefined,
+        uploadForm.description || undefined,
+        tags,
+        uploadForm.isConfidential,
+        uploadForm.customName || undefined
+      );
+
+      if (success) {
+        resetForm();
+        onClose();
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleLinkSubmit = async () => {
-    await onLinkAdd();
-    resetForm();
+    if (!uploadForm.linkUrl || !uploadForm.linkName) return;
+
+    setIsSubmitting(true);
+    try {
+      const tags = uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : undefined;
+      
+      const success = await addLinkDocument(
+        uploadForm.linkUrl,
+        uploadForm.linkName,
+        uploadForm.categoryId || undefined,
+        uploadForm.description || undefined,
+        tags,
+        uploadForm.isConfidential
+      );
+
+      if (success) {
+        resetForm();
+        onClose();
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isVisible) return null;
@@ -127,12 +179,13 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
               </p>
               <input
                 type="file"
-                onChange={(e) => onFileUpload(e.target.files)}
+                onChange={(e) => handleFileUpload(e.target.files)}
                 className="hidden"
                 id="file-upload"
                 accept=".pdf,.jpg,.jpeg,.png,.gif,.txt,.doc,.docx,.xls,.xlsx"
+                disabled={isSubmitting}
               />
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" disabled={isSubmitting}>
                 <label htmlFor="file-upload" className="cursor-pointer">
                   Choose File
                 </label>
@@ -146,6 +199,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
                 value={uploadForm.customName}
                 onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
                 placeholder="e.g., Q4 Financial Report"
+                disabled={isSubmitting}
               />
               <p className="text-xs text-gray-500 mt-1">Leave empty to use the original filename</p>
             </div>
@@ -161,6 +215,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
                   value={uploadForm.linkUrl}
                   onChange={(e) => setUploadForm(prev => ({ ...prev, linkUrl: e.target.value }))}
                   placeholder="https://example.com/document.pdf"
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -170,6 +225,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
                   value={uploadForm.linkName}
                   onChange={(e) => setUploadForm(prev => ({ ...prev, linkName: e.target.value }))}
                   placeholder="e.g., Important Contract"
+                  disabled={isSubmitting}
                 />
                 <p className="text-xs text-gray-500 mt-1">This name will be displayed in your document list</p>
               </div>
@@ -183,6 +239,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
             <Select
               value={uploadForm.categoryId}
               onValueChange={(value) => setUploadForm(prev => ({ ...prev, categoryId: value }))}
+              disabled={isSubmitting}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select category" />
@@ -203,6 +260,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
               value={uploadForm.tags}
               onChange={(e) => setUploadForm(prev => ({ ...prev, tags: e.target.value }))}
               placeholder="urgent, contract, 2024"
+              disabled={isSubmitting}
             />
           </div>
         </div>
@@ -215,6 +273,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
             onChange={(e) => setUploadForm(prev => ({ ...prev, description: e.target.value }))}
             placeholder="Brief description of the document"
             rows={3}
+            disabled={isSubmitting}
           />
         </div>
 
@@ -224,20 +283,21 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
               id="confidential"
               checked={uploadForm.isConfidential}
               onCheckedChange={(checked) => setUploadForm(prev => ({ ...prev, isConfidential: checked }))}
+              disabled={isSubmitting}
             />
             <Label htmlFor="confidential">Mark as confidential</Label>
           </div>
           <div className="flex gap-2">
-            <Button onClick={onClose} variant="outline">
+            <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
               Cancel
             </Button>
             {uploadType === 'link' && (
               <Button
                 onClick={handleLinkSubmit}
-                disabled={!uploadForm.linkUrl || !uploadForm.linkName}
+                disabled={!uploadForm.linkUrl || !uploadForm.linkName || isSubmitting}
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Add Link
+                {isSubmitting ? 'Adding...' : 'Add Link'}
               </Button>
             )}
           </div>
