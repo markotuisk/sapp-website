@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -34,7 +33,7 @@ export const useDocuments = () => {
           setCategories(categoriesData || []);
         }
 
-        // Fetch documents
+        // Fetch documents with all required fields
         const { data: documentsData, error: documentsError } = await supabase
           .from('client_documents')
           .select(`
@@ -47,7 +46,14 @@ export const useDocuments = () => {
         if (documentsError) {
           console.error('Error fetching documents:', documentsError);
         } else {
-          setDocuments(documentsData || []);
+          // Type cast the data to ensure compatibility
+          const typedDocuments = (documentsData || []).map(doc => ({
+            ...doc,
+            document_type: doc.document_type || 'file',
+            custom_name: doc.custom_name || null,
+            external_url: doc.external_url || null,
+          })) as ClientDocument[];
+          setDocuments(typedDocuments);
         }
       } catch (error) {
         console.error('Error in fetchData:', error);
@@ -120,7 +126,15 @@ export const useDocuments = () => {
         return false;
       }
 
-      setDocuments(prev => [data, ...prev]);
+      // Type cast the returned data
+      const typedDocument = {
+        ...data,
+        document_type: data.document_type || 'file',
+        custom_name: data.custom_name || null,
+        external_url: data.external_url || null,
+      } as ClientDocument;
+
+      setDocuments(prev => [typedDocument, ...prev]);
       toast({
         title: 'Success',
         description: 'Document uploaded successfully',
@@ -181,7 +195,15 @@ export const useDocuments = () => {
         return false;
       }
 
-      setDocuments(prev => [data, ...prev]);
+      // Type cast the returned data
+      const typedDocument = {
+        ...data,
+        document_type: data.document_type || 'link',
+        custom_name: data.custom_name || null,
+        external_url: data.external_url || null,
+      } as ClientDocument;
+
+      setDocuments(prev => [typedDocument, ...prev]);
       toast({
         title: 'Success',
         description: 'Link document added successfully',
