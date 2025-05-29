@@ -47,14 +47,8 @@ export const useDocuments = () => {
         if (documentsError) {
           console.error('Error fetching documents:', documentsError);
         } else {
-          // Type cast the data to ensure compatibility with optional properties
-          const typedDocuments = (documentsData || []).map(doc => ({
-            ...doc,
-            document_type: (doc as any).document_type || 'file',
-            custom_name: (doc as any).custom_name || null,
-            external_url: (doc as any).external_url || null,
-          })) as ClientDocument[];
-          setDocuments(typedDocuments);
+          // Now the columns exist, so we can access them directly
+          setDocuments(documentsData || []);
         }
       } catch (error) {
         console.error('Error in fetchData:', error);
@@ -111,7 +105,7 @@ export const useDocuments = () => {
           uploaded_by: user.id,
           custom_name: customName,
           document_type: 'file',
-        } as any)
+        })
         .select(`
           *,
           category:document_categories(*)
@@ -127,15 +121,7 @@ export const useDocuments = () => {
         return false;
       }
 
-      // Type cast the returned data with safe property access
-      const typedDocument = {
-        ...data,
-        document_type: (data as any).document_type || 'file',
-        custom_name: (data as any).custom_name || null,
-        external_url: (data as any).external_url || null,
-      } as ClientDocument;
-
-      setDocuments(prev => [typedDocument, ...prev]);
+      setDocuments(prev => [data, ...prev]);
       toast({
         title: 'Success',
         description: 'Document uploaded successfully',
@@ -180,7 +166,7 @@ export const useDocuments = () => {
           custom_name: name,
           document_type: 'link',
           external_url: url,
-        } as any)
+        })
         .select(`
           *,
           category:document_categories(*)
@@ -196,15 +182,7 @@ export const useDocuments = () => {
         return false;
       }
 
-      // Type cast the returned data with safe property access
-      const typedDocument = {
-        ...data,
-        document_type: (data as any).document_type || 'link',
-        custom_name: (data as any).custom_name || null,
-        external_url: (data as any).external_url || null,
-      } as ClientDocument;
-
-      setDocuments(prev => [typedDocument, ...prev]);
+      setDocuments(prev => [data, ...prev]);
       toast({
         title: 'Success',
         description: 'Link document added successfully',
@@ -279,8 +257,8 @@ export const useDocuments = () => {
         // Open link in new tab
         window.open(doc.external_url, '_blank');
         
-        // Log activity using type assertion
-        await (supabase as any)
+        // Log activity
+        await supabase
           .from('document_activity')
           .insert({
             document_id: doc.id,
@@ -313,8 +291,8 @@ export const useDocuments = () => {
         })
         .eq('id', doc.id);
 
-      // Log activity using type assertion
-      await (supabase as any)
+      // Log activity
+      await supabase
         .from('document_activity')
         .insert({
           document_id: doc.id,
