@@ -36,11 +36,21 @@ export const DocumentListItem: React.FC<DocumentListItemProps> = ({
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
+  // Determine the display name
+  const displayName = document.custom_name || document.original_name || 'Untitled Document';
+  
+  // Determine if it's a link document
+  const isLinkDocument = document.document_type === 'link' || document.mime_type === 'text/uri-list';
+
+  const handleDocumentClick = () => {
+    onDownload(document);
+  };
+
   return (
     <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors">
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <div className="flex-shrink-0">
-          {document.document_type === 'link' ? (
+          {isLinkDocument ? (
             <ExternalLink className="h-8 w-8 text-blue-500" />
           ) : (
             <FileText className="h-8 w-8 text-gray-400" />
@@ -48,12 +58,21 @@ export const DocumentListItem: React.FC<DocumentListItemProps> = ({
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h4 className="font-medium truncate">
-              {document.custom_name || document.original_name}
-            </h4>
-            {document.document_type === 'link' && (
-              <Badge variant="outline" className="text-xs">
+            <button
+              onClick={handleDocumentClick}
+              className="font-medium truncate text-left hover:text-blue-600 hover:underline transition-colors cursor-pointer"
+              title={`Click to ${isLinkDocument ? 'open link' : 'download file'}`}
+            >
+              {displayName}
+            </button>
+            {isLinkDocument && (
+              <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
                 Link
+              </Badge>
+            )}
+            {!isLinkDocument && (
+              <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                File
               </Badge>
             )}
             {document.is_confidential && (
@@ -72,7 +91,7 @@ export const DocumentListItem: React.FC<DocumentListItemProps> = ({
             )}
           </div>
           <p className="text-sm text-gray-500 truncate">
-            {document.document_type === 'file' ? (
+            {!isLinkDocument ? (
               <>
                 {formatFileSize(document.file_size)} • 
                 Uploaded {format(new Date(document.created_at), 'MMM d, yyyy')} • 
@@ -114,9 +133,9 @@ export const DocumentListItem: React.FC<DocumentListItemProps> = ({
           onClick={() => onDownload(document)}
           size="sm"
           variant="outline"
-          title={document.document_type === 'link' ? 'Open link' : 'Download'}
+          title={isLinkDocument ? 'Open link' : 'Download file'}
         >
-          {document.document_type === 'link' ? (
+          {isLinkDocument ? (
             <Eye className="h-4 w-4" />
           ) : (
             <Download className="h-4 w-4" />
