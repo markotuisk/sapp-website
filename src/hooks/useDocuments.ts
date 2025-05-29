@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -70,7 +69,12 @@ export const useDocuments = () => {
             variant: 'destructive',
           });
         } else {
-          setDocuments(documentsData || []);
+          // Type assertion to ensure document_type is properly typed
+          const typedDocuments = (documentsData || []).map(doc => ({
+            ...doc,
+            document_type: (doc.document_type as 'file' | 'link') || 'file'
+          })) as ClientDocument[];
+          setDocuments(typedDocuments);
         }
       } catch (error) {
         console.error('Error in fetchData:', error);
@@ -176,7 +180,13 @@ export const useDocuments = () => {
         return false;
       }
 
-      setDocuments(prev => [data, ...prev]);
+      // Type assertion for the returned data
+      const typedDocument = {
+        ...data,
+        document_type: data.document_type as 'file' | 'link'
+      } as ClientDocument;
+
+      setDocuments(prev => [typedDocument, ...prev]);
       toast({
         title: 'Success',
         description: 'Document uploaded successfully',
@@ -258,7 +268,13 @@ export const useDocuments = () => {
         return false;
       }
 
-      setDocuments(prev => [data, ...prev]);
+      // Type assertion for the returned data
+      const typedDocument = {
+        ...data,
+        document_type: data.document_type as 'file' | 'link'
+      } as ClientDocument;
+
+      setDocuments(prev => [typedDocument, ...prev]);
       toast({
         title: 'Success',
         description: 'Link document added successfully',
@@ -318,8 +334,14 @@ export const useDocuments = () => {
         return false;
       }
 
+      // Type assertion for the returned data
+      const typedDocument = {
+        ...data,
+        document_type: data.document_type as 'file' | 'link'
+      } as ClientDocument;
+
       setDocuments(prev =>
-        prev.map(doc => doc.id === documentId ? data : doc)
+        prev.map(doc => doc.id === documentId ? typedDocument : doc)
       );
       
       toast({
