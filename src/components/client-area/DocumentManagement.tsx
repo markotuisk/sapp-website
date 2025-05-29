@@ -15,7 +15,7 @@ interface DocumentManagementProps {
 }
 
 export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }) => {
-  const { documents, categories, isLoading, uploadDocument, addLinkDocument, deleteDocument, downloadDocument, updateDocument } = useDocuments();
+  const { documents, categories, isLoading, deleteDocument, downloadDocument, updateDocument } = useDocuments();
   const [showUpload, setShowUpload] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -31,31 +31,6 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
     const matchesCategory = selectedCategory === 'all' || doc.category_id === selectedCategory;
     return matchesSearch && matchesCategory;
   });
-
-  const handleFileUpload = async (files: FileList | null) => {
-    if (!files || files.length === 0) return;
-
-    const file = files[0];
-    
-    if (file.size > 50 * 1024 * 1024) {
-      return;
-    }
-
-    const success = await uploadDocument(file);
-
-    if (success) {
-      setShowUpload(false);
-    }
-  };
-
-  const handleLinkAdd = async () => {
-    // This will be handled by the DocumentUploadForm component
-    const success = await addLinkDocument('', '');
-
-    if (success) {
-      setShowUpload(false);
-    }
-  };
 
   const getCategoryColor = (categoryId?: string) => {
     const category = categories.find(c => c.id === categoryId);
@@ -107,8 +82,8 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
         isVisible={showUpload}
         onClose={() => setShowUpload(false)}
         categories={categories}
-        onFileUpload={handleFileUpload}
-        onLinkAdd={handleLinkAdd}
+        onFileUpload={async () => {}} // Not used anymore - handled internally
+        onLinkAdd={async () => {}} // Not used anymore - handled internally
       />
 
       {/* Search and Filter */}

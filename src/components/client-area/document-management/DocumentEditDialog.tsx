@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -35,18 +35,20 @@ export const DocumentEditDialog: React.FC<DocumentEditDialogProps> = ({
     external_url: '',
   });
 
-  React.useEffect(() => {
-    if (document) {
+  // Initialize form when document changes
+  useEffect(() => {
+    if (document && isOpen) {
+      console.log('DocumentEditDialog: Initializing form with document:', document);
       setEditForm({
         custom_name: document.custom_name || '',
         description: document.description || '',
         category_id: document.category_id || '',
         tags: document.tags ? document.tags.join(', ') : '',
-        is_confidential: document.is_confidential,
+        is_confidential: document.is_confidential || false,
         external_url: document.external_url || '',
       });
     }
-  }, [document]);
+  }, [document, isOpen]);
 
   const handleSave = async () => {
     if (!document) return;
@@ -64,6 +66,7 @@ export const DocumentEditDialog: React.FC<DocumentEditDialogProps> = ({
       updates.external_url = editForm.external_url || null;
     }
 
+    console.log('DocumentEditDialog: Saving updates:', updates);
     await onSave(document.id, updates);
     onClose();
   };

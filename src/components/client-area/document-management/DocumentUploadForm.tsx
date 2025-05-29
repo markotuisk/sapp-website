@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Upload, Link, Plus } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Upload, Link, Plus, FileText } from 'lucide-react';
 import { useDocuments } from '@/hooks/useDocuments';
 import type { DocumentCategory } from '@/types/profile';
 
@@ -39,6 +40,8 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
   const [uploadType, setUploadType] = useState<'file' | 'link'>('file');
   const [dragActive, setDragActive] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadForm, setUploadForm] = useState<UploadFormData>({
     categoryId: '',
     description: '',
@@ -59,6 +62,8 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
       linkUrl: '',
       linkName: '',
     });
+    setSelectedFile(null);
+    setUploadProgress(0);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -76,25 +81,40 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      await handleFileUpload(e.dataTransfer.files);
+      handleFileSelection(e.dataTransfer.files[0]);
     }
   };
 
-  const handleFileUpload = async (files: FileList | null) => {
-    if (!files || files.length === 0) return;
-
-    const file = files[0];
-    
+  const handleFileSelection = (file: File) => {
     if (file.size > 50 * 1024 * 1024) {
+      // File too large - show error
       return;
     }
+    setSelectedFile(file);
+  };
+
+  const handleFileUpload = async () => {
+    if (!selectedFile) return;
 
     setIsSubmitting(true);
+    setUploadProgress(0);
+
     try {
       const tags = uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : undefined;
       
+      // Simulate progress (in real app, you'd get this from upload API)
+      const progressInterval = setInterval(() => {
+        setUploadProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + 10;
+        });
+      }, 200);
+
       const success = await uploadDocument(
-        file,
+        selectedFile,
         uploadForm.categoryId || undefined,
         uploadForm.description || undefined,
         tags,
@@ -102,9 +122,14 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
         uploadForm.customName || undefined
       );
 
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
       if (success) {
-        resetForm();
-        onClose();
+        setTimeout(() => {
+          resetForm();
+          onClose();
+        }, 500);
       }
     } finally {
       setIsSubmitting(false);
@@ -163,34 +188,66 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
           </TabsList>
 
           <TabsContent value="file" className="space-y-4">
-            <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
-              }`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-            >
-              <Upload className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-              <p className="text-lg font-medium mb-2">Drop files here or click to browse</p>
-              <p className="text-sm text-gray-500 mb-4">
-                Maximum file size: 50MB. Supported formats: PDF, Images, Documents
-              </p>
-              <input
-                type="file"
-                onChange={(e) => handleFileUpload(e.target.files)}
-                className="hidden"
-                id="file-upload"
-                accept=".pdf,.jpg,.jpeg,.png,.gif,.txt,.doc,.docx,.xls,.xlsx"
-                disabled={isSubmitting}
-              />
-              <Button asChild variant="outline" disabled={isSubmitting}>
-                <label htmlFor="file-upload" className="cursor-pointer">
-                  Choose File
-                </label>
-              </Button>
-            </div>
+            {!selectedFile ? (
+              <div
+                className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                  dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+                }`}
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+              >
+                <Upload className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                <p className="text-lg font-medium mb-2">Drop files here or click to browse</p>
+                <p className="text-sm text-gray-500 mb-4">
+                  Maximum file size: 50MB. Supported formats: PDF, Images, Documents
+                </p>
+                <input
+                  type="file"
+                  onChange={(e) => e.target.files && handleFileSelection(e.target.files[0])}
+                  className="hidden"
+                  id="file-upload"
+                  accept=".pdf,.jpg,.jpeg,.png,.gif,.txt,.doc,.docx,.xls,.xlsx"
+                  disabled={isSubmitting}
+                />
+                <Button asChild variant="outline" disabled={isSubmitting}>
+                  <label htmlFor="file-upload" className="cursor-pointer">
+                    Choose File
+                  </label>
+                </Button>
+              </div>
+            ) : (
+              <div className="border rounded-lg p-4 bg-gray-50">
+                <div className="flex items-center gap-3 mb-3">
+                  <FileText className="h-8 w-8 text-blue-500" />
+                  <div>
+                    <p className="font-medium">{selectedFile.name}</p>
+                    <p className="text-sm text-gray-500">
+                      {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setSelectedFile(null)}
+                    disabled={isSubmitting}
+                  >
+                    Remove
+                  </Button>
+                </div>
+                
+                {isSubmitting && (
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Uploading...</span>
+                      <span>{uploadProgress}%</span>
+                    </div>
+                    <Progress value={uploadProgress} className="w-full" />
+                  </div>
+                )}
+              </div>
+            )}
             
             <div>
               <Label htmlFor="file-custom-name">Custom Display Name (optional)</Label>
@@ -291,6 +348,15 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
             <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
               Cancel
             </Button>
+            {uploadType === 'file' && selectedFile && (
+              <Button
+                onClick={handleFileUpload}
+                disabled={isSubmitting}
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                {isSubmitting ? 'Uploading...' : 'Upload File'}
+              </Button>
+            )}
             {uploadType === 'link' && (
               <Button
                 onClick={handleLinkSubmit}
