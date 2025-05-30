@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -179,6 +178,24 @@ export const useUserManagement = () => {
     try {
       console.log(`useUserManagement: Attempting to assign role ${role} to user ${userId}`);
       
+      // First check if the role already exists to avoid conflicts
+      const { data: existingRole, error: checkError } = await supabase
+        .from('user_roles')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('role', role)
+        .maybeSingle();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking existing role:', checkError);
+        throw checkError;
+      }
+
+      if (existingRole) {
+        console.log(`Role ${role} already exists for user ${userId}, skipping assignment`);
+        return; // Role already exists, no need to assign again
+      }
+
       const { error } = await supabase.rpc('assign_user_role', {
         _user_id: userId,
         _role: role
@@ -186,16 +203,13 @@ export const useUserManagement = () => {
 
       if (error) {
         console.error('useUserManagement: RPC error:', error);
-        throw error;
+        throw new Error(`Failed to assign role ${role}: ${error.message}`);
       }
 
       console.log(`useUserManagement: Successfully assigned role ${role} to user ${userId}`);
       
-      // Don't show toast here, let the calling component handle it
-      // Don't refetch here, let the parent component handle it
     } catch (error) {
       console.error('useUserManagement: Error assigning role:', error);
-      // Re-throw so the calling function knows it failed
       throw error;
     }
   };
@@ -211,16 +225,13 @@ export const useUserManagement = () => {
 
       if (error) {
         console.error('useUserManagement: RPC error:', error);
-        throw error;
+        throw new Error(`Failed to remove role ${role}: ${error.message}`);
       }
 
       console.log(`useUserManagement: Successfully removed role ${role} from user ${userId}`);
       
-      // Don't show toast here, let the calling component handle it
-      // Don't refetch here, let the parent component handle it
     } catch (error) {
       console.error('useUserManagement: Error removing role:', error);
-      // Re-throw so the calling function knows it failed
       throw error;
     }
   };

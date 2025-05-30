@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -82,19 +83,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     console.log('Updating user organisation:', userId, 'to org:', organizationId);
     
     try {
-      // Start with ensuring client_data exists and is updated
-      const { data: existingClientData, error: fetchError } = await supabase
-        .from('client_data')
-        .select('*')
-        .eq('user_id', userId)
-        .maybeSingle();
-
-      if (fetchError) {
-        console.error('Error fetching client data:', fetchError);
-        throw fetchError;
-      }
-
-      // Upsert client_data first (this is the primary source)
+      // Update client_data first (this is the primary source for organization)
       const { error: clientDataError } = await supabase
         .from('client_data')
         .upsert({
@@ -106,7 +95,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
       if (clientDataError) {
         console.error('Error updating client data organisation:', clientDataError);
-        throw clientDataError;
+        throw new Error(`Client data update failed: ${clientDataError.message}`);
       }
 
       console.log('Successfully updated client_data organisation');
@@ -155,11 +144,11 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     console.log('Selected organisation:', selectedOrganization);
     
     try {
-      // Step 1: Update organisation first to ensure data consistency
+      // Step 1: Update organisation first
       console.log('Step 1: Updating organisation assignment...');
       await updateUserOrganisation(user.id, selectedOrganization);
 
-      // Step 2: Handle role changes
+      // Step 2: Handle role changes one by one with proper error handling
       console.log('Step 2: Processing role changes...');
       const currentRoles = user.roles || [];
       const rolesToAdd = pendingRoles.filter(role => !currentRoles.includes(role));
@@ -168,16 +157,28 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       console.log('Roles to add:', rolesToAdd);
       console.log('Roles to remove:', rolesToRemove);
 
-      // Add new roles
-      for (const role of rolesToAdd) {
-        console.log(`Assigning role ${role} to user ${user.id}`);
-        await assignUserRole(user.id, role);
+      // Remove roles first
+      for (const role of rolesToRemove) {
+        try {
+          console.log(`Removing role ${role} from user ${user.id}`);
+          await removeUserRole(user.id, role);
+          console.log(`Successfully removed role ${role}`);
+        } catch (error) {
+          console.error(`Failed to remove role ${role}:`, error);
+          throw new Error(`Failed to remove role ${role}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
       }
 
-      // Remove roles
-      for (const role of rolesToRemove) {
-        console.log(`Removing role ${role} from user ${user.id}`);
-        await removeUserRole(user.id, role);
+      // Add new roles
+      for (const role of rolesToAdd) {
+        try {
+          console.log(`Assigning role ${role} to user ${user.id}`);
+          await assignUserRole(user.id, role);
+          console.log(`Successfully assigned role ${role}`);
+        } catch (error) {
+          console.error(`Failed to assign role ${role}:`, error);
+          throw new Error(`Failed to assign role ${role}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
       }
 
       // Step 3: Refresh data to get updated information
