@@ -7,10 +7,14 @@ import { DocumentManagement } from './DocumentManagement';
 import { ProfileManagement } from './ProfileManagement';
 import { UserSettings } from './UserSettings';
 import { NewsManagement } from './NewsManagement';
-import { AdminGuard } from '@/components/auth/AdminGuard';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const ClientDashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<string>('dashboard');
+  const { user } = useAuth();
+
+  // Check if user is admin based on email domain
+  const isAdmin = user?.email?.endsWith('@sappsecurity.com') || user?.email?.endsWith('@sapp-security.com');
 
   if (currentView === 'documents') {
     return <DocumentManagement onBack={() => setCurrentView('dashboard')} />;
@@ -58,7 +62,7 @@ export const ClientDashboard: React.FC = () => {
         </Card>
 
         {/* News Management - Admin Only */}
-        <AdminGuard>
+        {isAdmin && (
           <Card className="cursor-pointer hover:shadow-md transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -78,7 +82,7 @@ export const ClientDashboard: React.FC = () => {
               </Button>
             </CardContent>
           </Card>
-        </AdminGuard>
+        )}
 
         {/* Profile Management */}
         <Card className="cursor-pointer hover:shadow-md transition-shadow">
@@ -140,6 +144,15 @@ export const ClientDashboard: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Debug info for admin users */}
+      {isAdmin && (
+        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-800">
+            ✓ Admin access detected for: {user?.email}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
