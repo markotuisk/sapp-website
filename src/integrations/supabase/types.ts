@@ -92,6 +92,7 @@ export type Database = {
           created_at: string
           id: string
           industry: string | null
+          organization_id: string | null
           subscription_tier: string | null
           updated_at: string
           user_id: string
@@ -103,6 +104,7 @@ export type Database = {
           created_at?: string
           id?: string
           industry?: string | null
+          organization_id?: string | null
           subscription_tier?: string | null
           updated_at?: string
           user_id: string
@@ -114,11 +116,19 @@ export type Database = {
           created_at?: string
           id?: string
           industry?: string | null
+          organization_id?: string | null
           subscription_tier?: string | null
           updated_at?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "client_data_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "client_data_user_id_fkey"
             columns: ["user_id"]
@@ -554,6 +564,51 @@ export type Database = {
         }
         Relationships: []
       }
+      organizations: {
+        Row: {
+          address: Json | null
+          created_at: string
+          description: string | null
+          id: string
+          industry: string | null
+          logo_url: string | null
+          name: string
+          phone: string | null
+          status: string | null
+          subscription_tier: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: Json | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          industry?: string | null
+          logo_url?: string | null
+          name: string
+          phone?: string | null
+          status?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: Json | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          industry?: string | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          status?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       page_versions: {
         Row: {
           change_log: Json | null
@@ -598,6 +653,7 @@ export type Database = {
           job_title: string | null
           last_name: string | null
           organization: string | null
+          organization_id: string | null
           organization_type: string | null
           phone: string | null
           updated_at: string
@@ -612,6 +668,7 @@ export type Database = {
           job_title?: string | null
           last_name?: string | null
           organization?: string | null
+          organization_id?: string | null
           organization_type?: string | null
           phone?: string | null
           updated_at?: string
@@ -626,11 +683,20 @@ export type Database = {
           job_title?: string | null
           last_name?: string | null
           organization?: string | null
+          organization_id?: string | null
           organization_type?: string | null
           phone?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       technical_acronyms: {
         Row: {
@@ -731,6 +797,92 @@ export type Database = {
         }
         Relationships: []
       }
+      user_activity_logs: {
+        Row: {
+          action: string
+          changes: Json | null
+          created_at: string
+          id: string
+          ip_address: string | null
+          performed_by: string | null
+          target_user_id: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          changes?: Json | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          performed_by?: string | null
+          target_user_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          changes?: Json | null
+          created_at?: string
+          id?: string
+          ip_address?: string | null
+          performed_by?: string | null
+          target_user_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_invitations: {
+        Row: {
+          accepted_at: string | null
+          created_at: string
+          email: string
+          expires_at: string | null
+          id: string
+          invitation_token: string
+          invited_by: string | null
+          organization_id: string | null
+          roles: Database["public"]["Enums"]["app_role"][] | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          created_at?: string
+          email: string
+          expires_at?: string | null
+          id?: string
+          invitation_token?: string
+          invited_by?: string | null
+          organization_id?: string | null
+          roles?: Database["public"]["Enums"]["app_role"][] | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          created_at?: string
+          email?: string
+          expires_at?: string | null
+          id?: string
+          invitation_token?: string
+          invited_by?: string | null
+          organization_id?: string | null
+          roles?: Database["public"]["Enums"]["app_role"][] | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_invitations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_preferences: {
         Row: {
           created_at: string
@@ -819,6 +971,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_invitation: {
+        Args: { _invitation_token: string; _user_id: string }
+        Returns: boolean
+      }
       add_ticket: {
         Args: {
           _title: string
@@ -872,6 +1028,14 @@ export type Database = {
       }
       assign_admin_role: {
         Args: { _email: string }
+        Returns: undefined
+      }
+      assign_user_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+          _assigned_by?: string
+        }
         Returns: undefined
       }
       create_newsletter_campaign: {
@@ -982,6 +1146,14 @@ export type Database = {
       }
       increment_acronym_likes: {
         Args: { acronym_id: string }
+        Returns: undefined
+      }
+      remove_user_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+          _removed_by?: string
+        }
         Returns: undefined
       }
       search_acronyms: {

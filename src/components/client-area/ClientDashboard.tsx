@@ -2,19 +2,19 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileText, Users, Settings, Shield, Newspaper } from 'lucide-react';
+import { FileText, Users, Settings, Shield, Newspaper, UserCog } from 'lucide-react';
 import { DocumentManagement } from './DocumentManagement';
 import { ProfileManagement } from './ProfileManagement';
 import { UserSettings } from './UserSettings';
 import { NewsManagement } from './NewsManagement';
+import { UserManagement } from './UserManagement';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRole } from '@/hooks/useRole';
 
 export const ClientDashboard: React.FC = () => {
   const [currentView, setCurrentView] = useState<string>('dashboard');
   const { user } = useAuth();
-
-  // Check if user is admin based on email domain
-  const isAdmin = user?.email?.endsWith('@sappsecurity.com') || user?.email?.endsWith('@sapp-security.com');
+  const { isAdmin } = useRole();
 
   if (currentView === 'documents') {
     return <DocumentManagement onBack={() => setCurrentView('dashboard')} />;
@@ -30,6 +30,10 @@ export const ClientDashboard: React.FC = () => {
 
   if (currentView === 'news') {
     return <NewsManagement onBack={() => setCurrentView('dashboard')} />;
+  }
+
+  if (currentView === 'users') {
+    return <UserManagement onBack={() => setCurrentView('dashboard')} />;
   }
 
   return (
@@ -60,6 +64,29 @@ export const ClientDashboard: React.FC = () => {
             </Button>
           </CardContent>
         </Card>
+
+        {/* User Management - Admin Only */}
+        {isAdmin && (
+          <Card className="cursor-pointer hover:shadow-md transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <UserCog className="h-5 w-5" />
+                User Management
+              </CardTitle>
+              <CardDescription>
+                Manage users, roles, organizations, and invitations
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                onClick={() => setCurrentView('users')} 
+                className="w-full"
+              >
+                Manage Users
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         {/* News Management - Admin Only */}
         {isAdmin && (
