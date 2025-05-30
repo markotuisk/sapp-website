@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Users, UserPlus, Building2, Shield, Activity } from 'lucide-react';
+import { ArrowLeft, Users, UserPlus, Building2, Shield, Activity, RefreshCw } from 'lucide-react';
 import { AdminGuard } from '@/components/auth/AdminGuard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UsersList } from './user-management/UsersList';
@@ -9,6 +9,7 @@ import { OrganizationManagement } from './user-management/OrganizationManagement
 import { UserInvitations } from './user-management/UserInvitations';
 import { AuthenticationLogs } from './user-management/AuthenticationLogs';
 import { UserActivityLogs } from './user-management/UserActivityLogs';
+import { DataMigrationUtility } from './user-management/DataMigrationUtility';
 
 interface UserManagementProps {
   onBack: () => void;
@@ -44,7 +45,7 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               Users
@@ -56,6 +57,10 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
             <TabsTrigger value="invitations" className="flex items-center gap-2">
               <UserPlus className="h-4 w-4" />
               Invitations
+            </TabsTrigger>
+            <TabsTrigger value="migration" className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4" />
+              Migration
             </TabsTrigger>
             <TabsTrigger value="auth-logs" className="flex items-center gap-2">
               <Shield className="h-4 w-4" />
@@ -77,6 +82,10 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
 
           <TabsContent value="invitations" className="space-y-6">
             <UserInvitations />
+          </TabsContent>
+
+          <TabsContent value="migration" className="space-y-6">
+            <DataMigrationUtility />
           </TabsContent>
 
           <TabsContent value="auth-logs" className="space-y-6">

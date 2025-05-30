@@ -61,12 +61,14 @@ export const useRole = () => {
 
         if (clientError && clientError.code !== 'PGRST116') {
           console.error('Error fetching client data:', clientError);
-        } else if (client) {
+        }
+
+        if (client) {
           console.log('useRole: Client data:', client);
           setClientData(client);
         } else {
-          // If no client data exists, create it
-          console.log('useRole: No client data found, creating...');
+          // If no client data exists, create it and sync organization from profile
+          console.log('useRole: No client data found, creating and syncing...');
           const orgId = profile?.organization_id || '00000000-0000-0000-0000-000000000001';
           
           const { data: newClientData, error: createError } = await supabase
@@ -81,8 +83,34 @@ export const useRole = () => {
           if (createError) {
             console.error('Error creating client data:', createError);
           } else {
-            console.log('useRole: Created client data:', newClientData);
+            console.log('useRole: Created and synced client data:', newClientData);
             setClientData(newClientData);
+          }
+        }
+
+        // Data consistency check: Sync organization between profile and client_data
+        if (profile && client) {
+          const profileOrgId = profile.organization_id;
+          const clientOrgId = client.organization_id;
+          
+          if (profileOrgId && clientOrgId && profileOrgId !== clientOrgId) {
+            console.log('useRole: Organization mismatch detected, syncing...');
+            // Prioritize client_data and update profile
+            await supabase
+              .from('profiles')
+              .update({ organization_id: clientOrgId })
+              .eq('id', user.id);
+            console.log('useRole: Synced profile organization to match client_data');
+          } else if (profileOrgId && !clientOrgId) {
+            console.log('useRole: Client data missing organization, syncing from profile...');
+            // Update client_data with profile organization
+            await supabase
+              .from('client_data')
+              .update({ organization_id: profileOrgId })
+              .eq('user_id', user.id);
+            console.log('useRole: Synced client_data organization from profile');
+            // Update local state
+            setClientData(prev => prev ? { ...prev, organization_id: profileOrgId } : null);
           }
         }
 

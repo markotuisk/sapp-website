@@ -33,11 +33,23 @@ export const UsersList: React.FC = () => {
     return matchesSearch && matchesRole;
   });
 
-  // Count users without organisations and guest users
-  const usersWithoutOrg = filteredUsers.filter(user => !user.clientData?.organization_id);
+  // Enhanced organization analysis
+  const usersWithoutOrg = filteredUsers.filter(user => {
+    const clientOrgId = user.clientData?.organization_id;
+    const profileOrgId = user.profile?.organization_id;
+    return !clientOrgId && !profileOrgId;
+  });
+  
   const guestUsers = filteredUsers.filter(user => 
-    user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001'
+    user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001' ||
+    user.profile?.organization_id === '00000000-0000-0000-0000-000000000001'
   );
+
+  const inconsistentUsers = filteredUsers.filter(user => {
+    const clientOrgId = user.clientData?.organization_id;
+    const profileOrgId = user.profile?.organization_id;
+    return profileOrgId && clientOrgId && profileOrgId !== clientOrgId;
+  });
 
   const getInitials = (user: UserWithProfile) => {
     const first = user.profile?.first_name?.charAt(0) || '';
@@ -62,8 +74,33 @@ export const UsersList: React.FC = () => {
     }
   };
 
+  const getOrganizationStatus = (user: UserWithProfile) => {
+    const clientOrgId = user.clientData?.organization_id;
+    const profileOrgId = user.profile?.organization_id;
+    
+    if (!clientOrgId && !profileOrgId) {
+      return { status: 'none', message: 'No organisation assigned' };
+    }
+    
+    if (clientOrgId === '00000000-0000-0000-0000-000000000001' || 
+        profileOrgId === '00000000-0000-0000-0000-000000000001') {
+      return { status: 'guest', message: 'Guest organisation' };
+    }
+    
+    if (profileOrgId && clientOrgId && profileOrgId !== clientOrgId) {
+      return { status: 'inconsistent', message: 'Data inconsistency detected' };
+    }
+    
+    if (clientOrgId || profileOrgId) {
+      return { status: 'assigned', message: 'Organisation assigned' };
+    }
+    
+    return { status: 'unknown', message: 'Unknown status' };
+  };
+
   const isGuestUser = (user: UserWithProfile) => {
-    return user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001';
+    return user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001' ||
+           user.profile?.organization_id === '00000000-0000-0000-0000-000000000001';
   };
 
   const handleManageUser = (user: UserWithProfile) => {
@@ -116,7 +153,17 @@ export const UsersList: React.FC = () => {
         </Button>
       </div>
 
-      {/* Security Warnings */}
+      {/* Enhanced Security Warnings */}
+      {inconsistentUsers.length > 0 && (
+        <Alert className="border-red-200 bg-red-50">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Data Inconsistency Alert:</strong> {inconsistentUsers.length} user(s) have mismatched organisation assignments between profile and client data. 
+            This can cause access issues. Please review and update these users.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {guestUsers.length > 0 && (
         <Alert className="border-amber-200 bg-amber-50">
           <Users className="h-4 w-4" />
@@ -174,17 +221,20 @@ export const UsersList: React.FC = () => {
       {/* Users Grid */}
       <div className="grid gap-4">
         {filteredUsers.map((user) => {
-          const hasOrganisation = !!user.clientData?.organization_id;
+          const orgStatus = getOrganizationStatus(user);
           const isGuest = isGuestUser(user);
           
+          let cardClassName = 'hover:shadow-md transition-shadow';
+          if (orgStatus.status === 'none') {
+            cardClassName += ' border-red-300 bg-red-50';
+          } else if (orgStatus.status === 'inconsistent') {
+            cardClassName += ' border-orange-300 bg-orange-50';
+          } else if (isGuest) {
+            cardClassName += ' border-amber-300 bg-amber-50';
+          }
+          
           return (
-            <Card 
-              key={user.id} 
-              className={`hover:shadow-md transition-shadow ${
-                !hasOrganisation ? 'border-red-300 bg-red-50' : 
-                isGuest ? 'border-amber-300 bg-amber-50' : ''
-              }`}
-            >
+            <Card key={user.id} className={cardClassName}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -198,9 +248,16 @@ export const UsersList: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold">{getDisplayName(user)}</h3>
-                        {!hasOrganisation && (
+                        
+                        {/* Status badges */}
+                        {orgStatus.status === 'none' && (
                           <Badge variant="destructive" className="text-xs">
                             No Organisation
+                          </Badge>
+                        )}
+                        {orgStatus.status === 'inconsistent' && (
+                          <Badge variant="outline" className="text-xs border-orange-400 text-orange-700">
+                            Data Mismatch
                           </Badge>
                         )}
                         {isGuest && (
@@ -208,6 +265,8 @@ export const UsersList: React.FC = () => {
                             Guest User
                           </Badge>
                         )}
+                        
+                        {/* Role badges */}
                         {user.roles.length > 0 ? (
                           user.roles.map(role => (
                             <Badge key={role} className={getRoleColor(role)}>
@@ -236,9 +295,16 @@ export const UsersList: React.FC = () => {
                         </div>
                       </div>
                       
-                      {!hasOrganisation && (
+                      {/* Status messages */}
+                      {orgStatus.status === 'none' && (
                         <div className="text-xs text-red-600 font-medium">
                           ⚠️ Cannot access secure areas - organisation assignment required
+                        </div>
+                      )}
+                      
+                      {orgStatus.status === 'inconsistent' && (
+                        <div className="text-xs text-orange-600 font-medium">
+                          ⚠️ Data inconsistency - profile and client data have different organisations
                         </div>
                       )}
                       

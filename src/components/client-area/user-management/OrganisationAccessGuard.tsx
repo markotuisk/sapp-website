@@ -38,15 +38,27 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
     );
   }
 
-  // Check if user has organisation assigned - check both sources
-  // clientData.organization_id is the primary source, userProfile doesn't have organization_id
-  const organizationId = clientData?.organization_id;
+  // Check organization assignment with improved fallback logic
+  // Priority: client_data.organization_id > profiles.organization_id
+  const clientOrgId = clientData?.organization_id;
+  const profileOrgId = userProfile?.organization_id;
+  const organizationId = clientOrgId || profileOrgId;
   const hasOrganisation = !!organizationId;
   const isGuestUser = organizationId === '00000000-0000-0000-0000-000000000001';
 
-  console.log('OrganisationAccessGuard - organizationId:', organizationId);
+  console.log('OrganisationAccessGuard - clientOrgId:', clientOrgId);
+  console.log('OrganisationAccessGuard - profileOrgId:', profileOrgId);
+  console.log('OrganisationAccessGuard - final organizationId:', organizationId);
   console.log('OrganisationAccessGuard - hasOrganisation:', hasOrganisation);
   console.log('OrganisationAccessGuard - isGuestUser:', isGuestUser);
+
+  // Data inconsistency warning for debugging
+  if (profileOrgId && clientOrgId && profileOrgId !== clientOrgId) {
+    console.warn('OrganisationAccessGuard - Data inconsistency detected:', {
+      profileOrgId,
+      clientOrgId
+    });
+  }
 
   // Special handling for guest users
   if (isGuestUser) {
