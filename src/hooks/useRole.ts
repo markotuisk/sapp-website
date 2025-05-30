@@ -23,6 +23,7 @@ export const useRole = () => {
     const fetchUserData = async () => {
       try {
         setIsLoading(true);
+        console.log('useRole: Fetching data for user:', user.id);
 
         // Fetch user profile
         const { data: profile, error: profileError } = await supabase
@@ -34,6 +35,7 @@ export const useRole = () => {
         if (profileError && profileError.code !== 'PGRST116') {
           console.error('Error fetching profile:', profileError);
         } else if (profile) {
+          console.log('useRole: Profile data:', profile);
           setUserProfile(profile);
         }
 
@@ -46,10 +48,11 @@ export const useRole = () => {
         if (rolesError) {
           console.error('Error fetching roles:', rolesError);
         } else {
+          console.log('useRole: User roles:', roles);
           setUserRoles(roles?.map(r => r.role) || []);
         }
 
-        // Fetch client data if user has client role
+        // Fetch client data
         const { data: client, error: clientError } = await supabase
           .from('client_data')
           .select('*')
@@ -59,7 +62,28 @@ export const useRole = () => {
         if (clientError && clientError.code !== 'PGRST116') {
           console.error('Error fetching client data:', clientError);
         } else if (client) {
+          console.log('useRole: Client data:', client);
           setClientData(client);
+        } else {
+          // If no client data exists, create it
+          console.log('useRole: No client data found, creating...');
+          const orgId = profile?.organization_id || '00000000-0000-0000-0000-000000000001';
+          
+          const { data: newClientData, error: createError } = await supabase
+            .from('client_data')
+            .insert({
+              user_id: user.id,
+              organization_id: orgId
+            })
+            .select()
+            .single();
+            
+          if (createError) {
+            console.error('Error creating client data:', createError);
+          } else {
+            console.log('useRole: Created client data:', newClientData);
+            setClientData(newClientData);
+          }
         }
 
       } catch (error) {
@@ -71,6 +95,42 @@ export const useRole = () => {
 
     fetchUserData();
   }, [user]);
+
+  // Function to refresh user data
+  const refreshUserData = async () => {
+    if (!user) return;
+    
+    console.log('useRole: Refreshing user data...');
+    setIsLoading(true);
+    
+    try {
+      // Re-fetch all data
+      const [profileResult, rolesResult, clientResult] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('user_roles').select('role').eq('user_id', user.id),
+        supabase.from('client_data').select('*').eq('user_id', user.id).single()
+      ]);
+
+      if (profileResult.data) {
+        console.log('useRole: Refreshed profile:', profileResult.data);
+        setUserProfile(profileResult.data);
+      }
+      
+      if (rolesResult.data) {
+        console.log('useRole: Refreshed roles:', rolesResult.data);
+        setUserRoles(rolesResult.data.map(r => r.role));
+      }
+      
+      if (clientResult.data) {
+        console.log('useRole: Refreshed client data:', clientResult.data);
+        setClientData(clientResult.data);
+      }
+    } catch (error) {
+      console.error('Error refreshing user data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const hasRole = (role: AppRole): boolean => {
     return userRoles.includes(role);
@@ -96,5 +156,6 @@ export const useRole = () => {
     isClient,
     isManager,
     isSupport,
+    refreshUserData,
   };
 };

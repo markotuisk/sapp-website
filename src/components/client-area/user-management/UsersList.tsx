@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,7 +12,7 @@ import type { UserWithProfile } from '@/types/roles';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export const UsersList: React.FC = () => {
-  const { users, isLoading } = useUserManagement();
+  const { users, isLoading, refetchData } = useUserManagement();
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [selectedUser, setSelectedUser] = useState<UserWithProfile | null>(null);
@@ -74,9 +73,11 @@ export const UsersList: React.FC = () => {
   };
 
   const handleCloseDialog = () => {
-    console.log('UsersList - Closing dialog');
+    console.log('UsersList - Closing dialog, refreshing data');
     setIsEditDialogOpen(false);
     setSelectedUser(null);
+    // Refresh data when dialog closes to show updated information
+    refetchData();
   };
 
   const handleAddUser = () => {

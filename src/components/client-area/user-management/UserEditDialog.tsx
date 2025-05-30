@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, AlertCircle, AlertTriangle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
+import { supabase } from '@/integrations/supabase/client';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -34,11 +35,8 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const [dialogError, setDialogError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Debug logging
   console.log('UserEditDialog render - user:', user);
   console.log('UserEditDialog render - isOpen:', isOpen);
-  console.log('UserEditDialog render - isLoading:', isLoading);
-  console.log('UserEditDialog render - organizations:', organizations);
 
   useEffect(() => {
     console.log('UserEditDialog useEffect triggered - user:', user, 'isOpen:', isOpen);
@@ -47,13 +45,12 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       try {
         setDialogError(null);
         
-        // Safely handle roles array - ensure it's always an array
         const userRoles = Array.isArray(user.roles) ? user.roles : [];
         setPendingRoles(userRoles);
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Get organization ID from client data
-        const orgId = user.clientData?.organization_id || '';
+        // Get organization ID from client data OR profile
+        const orgId = user.clientData?.organization_id || user.profile?.organization_id || '';
         setSelectedOrganization(orgId);
         console.log('UserEditDialog - Set organization ID:', orgId);
       } catch (error) {
@@ -61,7 +58,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         setDialogError('Failed to load user data');
       }
     } else {
-      // Reset state when dialog closes or user is null
       setPendingRoles([]);
       setSelectedOrganization('');
       setDialogError(null);
@@ -77,13 +73,48 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
-  const handleSaveRoles = async () => {
+  const updateUserOrganisation = async (userId: string, organizationId: string) => {
+    console.log('Updating user organisation:', userId, 'to org:', organizationId);
+    
+    try {
+      // Update both profiles and client_data tables
+      const [profileUpdate, clientDataUpdate] = await Promise.all([
+        supabase
+          .from('profiles')
+          .update({ organization_id: organizationId })
+          .eq('id', userId),
+        supabase
+          .from('client_data')
+          .upsert({
+            user_id: userId,
+            organization_id: organizationId
+          })
+      ]);
+
+      if (profileUpdate.error) {
+        console.error('Error updating profile organisation:', profileUpdate.error);
+        throw profileUpdate.error;
+      }
+
+      if (clientDataUpdate.error) {
+        console.error('Error updating client data organisation:', clientDataUpdate.error);
+        throw clientDataUpdate.error;
+      }
+
+      console.log('Successfully updated user organisation');
+      return true;
+    } catch (error) {
+      console.error('Failed to update user organisation:', error);
+      throw error;
+    }
+  };
+
+  const handleSaveChanges = async () => {
     if (!user) {
-      console.log('No user to save roles for');
+      console.log('No user to save changes for');
       return;
     }
 
-    // Check if organisation is assigned
     if (!selectedOrganization) {
       toast({
         title: 'Organisation Required',
@@ -94,12 +125,20 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
 
     setIsSubmitting(true);
+    console.log('Saving changes for user:', user.id);
+    console.log('Current roles:', user.roles);
+    console.log('Pending roles:', pendingRoles);
+    console.log('Selected organisation:', selectedOrganization);
+    
     try {
+      // Update organisation first
+      await updateUserOrganisation(user.id, selectedOrganization);
+
+      // Handle role changes
       const currentRoles = user.roles || [];
       const rolesToAdd = pendingRoles.filter(role => !currentRoles.includes(role));
       const rolesToRemove = currentRoles.filter(role => !pendingRoles.includes(role));
 
-      console.log('Current roles:', currentRoles);
       console.log('Roles to add:', rolesToAdd);
       console.log('Roles to remove:', rolesToRemove);
 
@@ -115,19 +154,20 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         await removeUserRole(user.id, role);
       }
 
+      // Refresh data to get updated information
       await refetchData();
       
       toast({
         title: 'Success',
-        description: 'User roles updated successfully',
+        description: 'User updated successfully',
       });
       
       onClose();
     } catch (error) {
-      console.error('Error updating roles:', error);
+      console.error('Error updating user:', error);
       toast({
         title: 'Error',
-        description: 'Failed to update user roles',
+        description: 'Failed to update user',
         variant: 'destructive',
       });
     } finally {
@@ -145,15 +185,11 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
-  // Early return if dialog is not open
   if (!isOpen) {
-    console.log('UserEditDialog - Not open, returning null');
     return null;
   }
 
-  // Show error state if there's a dialog error
   if (dialogError) {
-    console.log('UserEditDialog - Showing error state:', dialogError);
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent>
@@ -173,9 +209,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  // Show error state if user is null
   if (!user) {
-    console.log('UserEditDialog - No user provided');
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent>
@@ -195,13 +229,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  // Check if user has organisation assigned
-  const hasOrganisation = !!user.clientData?.organization_id;
+  const hasOrganisation = !!(user.clientData?.organization_id || user.profile?.organization_id);
   const selectedOrgName = selectedOrganization 
     ? organizations.find(org => org.id === selectedOrganization)?.name || 'Unknown Organisation'
     : 'No organisation assigned';
-
-  console.log('UserEditDialog - Rendering with user:', user.email);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -220,7 +251,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           </div>
         ) : (
           <div className="space-y-6">
-            {/* Security Warning for users without organisation */}
             {!hasOrganisation && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
@@ -295,14 +325,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                       </AlertDescription>
                     </Alert>
                   )}
-                  {!selectedOrganization && (
-                    <Alert variant="destructive">
-                      <AlertTriangle className="h-4 w-4" />
-                      <AlertDescription>
-                        This user cannot access secure areas without an organisation assignment. Please select an organisation above.
-                      </AlertDescription>
-                    </Alert>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -372,7 +394,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
             Cancel
           </Button>
           <Button 
-            onClick={handleSaveRoles} 
+            onClick={handleSaveChanges} 
             disabled={isSubmitting || isLoading || !selectedOrganization}
           >
             {isSubmitting ? (

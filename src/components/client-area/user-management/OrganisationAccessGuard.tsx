@@ -17,8 +17,12 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
 }) => {
   const { isAdmin, clientData, userProfile, isLoading } = useRole();
 
+  console.log('OrganisationAccessGuard - clientData:', clientData);
+  console.log('OrganisationAccessGuard - userProfile:', userProfile);
+
   // Admin users (SAPP Security) can always access everything
   if (isAdmin()) {
+    console.log('OrganisationAccessGuard - User is admin, allowing access');
     return <>{children}</>;
   }
 
@@ -34,9 +38,14 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
     );
   }
 
-  // Check if user has organisation assigned
-  const hasOrganisation = !!clientData?.organization_id;
-  const isGuestUser = clientData?.organization_id === '00000000-0000-0000-0000-000000000001';
+  // Check if user has organisation assigned - check both sources
+  const organizationId = clientData?.organization_id || userProfile?.organization_id;
+  const hasOrganisation = !!organizationId;
+  const isGuestUser = organizationId === '00000000-0000-0000-0000-000000000001';
+
+  console.log('OrganisationAccessGuard - organizationId:', organizationId);
+  console.log('OrganisationAccessGuard - hasOrganisation:', hasOrganisation);
+  console.log('OrganisationAccessGuard - isGuestUser:', isGuestUser);
 
   // Special handling for guest users
   if (isGuestUser) {
@@ -124,5 +133,6 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
   }
 
   // User has organisation (and it's not guest), allow access
+  console.log('OrganisationAccessGuard - Allowing access, user has valid organisation');
   return <>{children}</>;
 };
