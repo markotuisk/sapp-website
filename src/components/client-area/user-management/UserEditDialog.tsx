@@ -32,23 +32,33 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const [selectedOrganization, setSelectedOrganization] = useState<string>('');
   const { toast } = useToast();
 
+  // Debug logging
+  console.log('UserEditDialog - user:', user);
+  console.log('UserEditDialog - isOpen:', isOpen);
+  console.log('UserEditDialog - organizations:', organizations);
+
   useEffect(() => {
     if (user && isOpen) {
+      console.log('UserEditDialog - Setting up user data:', user);
+      
       // Safely handle roles array - ensure it's always an array
-      setPendingRoles(user.roles || []);
+      const userRoles = Array.isArray(user.roles) ? user.roles : [];
+      setPendingRoles(userRoles);
+      console.log('UserEditDialog - Set pending roles:', userRoles);
       
       // Get organization ID from client data, safely handling undefined
       const orgId = user.clientData?.organization_id || '';
       setSelectedOrganization(orgId);
+      console.log('UserEditDialog - Set organization ID:', orgId);
+    } else {
+      // Reset state when dialog closes or user is null
+      setPendingRoles([]);
+      setSelectedOrganization('');
     }
   }, [user, isOpen]);
 
-  // Don't render anything if user is null
-  if (!user) {
-    return null;
-  }
-
   const handleRoleToggle = (role: AppRole, checked: boolean) => {
+    console.log('Role toggle:', role, checked);
     if (checked) {
       setPendingRoles(prev => [...prev, role]);
     } else {
@@ -57,7 +67,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   };
 
   const handleSaveRoles = async () => {
-    if (!user) return;
+    if (!user) {
+      console.log('No user to save roles for');
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -111,8 +124,33 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
+  // Don't render anything if not open
+  if (!isOpen) {
+    return null;
+  }
+
+  // Don't render anything if user is null
+  if (!user) {
+    console.log('UserEditDialog - No user provided');
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Error</DialogTitle>
+            <DialogDescription>No user data available</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={onClose}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   // Find organization name from the selected organization ID
   const selectedOrgName = organizations.find(org => org.id === selectedOrganization)?.name || 'No organization';
+
+  console.log('UserEditDialog - Rendering with user:', user.email);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

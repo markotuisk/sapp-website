@@ -57,6 +57,18 @@ export const UsersList: React.FC = () => {
     }
   };
 
+  const handleManageUser = (user: UserWithProfile) => {
+    console.log('UsersList - Managing user:', user);
+    setSelectedUser(user);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    console.log('UsersList - Closing dialog');
+    setIsEditDialogOpen(false);
+    setSelectedUser(null);
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -172,10 +184,7 @@ export const UsersList: React.FC = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => {
-                      setSelectedUser(user);
-                      setIsEditDialogOpen(true);
-                    }}
+                    onClick={() => handleManageUser(user)}
                   >
                     <Shield className="h-4 w-4 mr-1" />
                     Manage
@@ -214,10 +223,7 @@ export const UsersList: React.FC = () => {
       <UserEditDialog
         user={selectedUser}
         isOpen={isEditDialogOpen}
-        onClose={() => {
-          setIsEditDialogOpen(false);
-          setSelectedUser(null);
-        }}
+        onClose={handleCloseDialog}
       />
     </div>
   );
