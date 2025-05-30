@@ -30,7 +30,13 @@ export const useClientDocuments = () => {
         throw error;
       }
 
-      setDocuments(data || []);
+      // Type cast the data to match our ClientDocument interface
+      const typedDocuments: ClientDocument[] = (data || []).map(doc => ({
+        ...doc,
+        document_type: doc.document_type as 'file' | 'link'
+      }));
+
+      setDocuments(typedDocuments);
     } catch (error) {
       console.error('Error fetching client documents:', error);
       toast({
@@ -83,14 +89,20 @@ export const useClientDocuments = () => {
 
       if (error) throw error;
 
-      setDocuments(prev => [data, ...prev]);
+      // Type cast the returned data
+      const typedDocument: ClientDocument = {
+        ...data,
+        document_type: data.document_type as 'file' | 'link'
+      };
+
+      setDocuments(prev => [typedDocument, ...prev]);
       
       toast({
         title: 'Success',
         description: 'Document uploaded successfully',
       });
 
-      return data;
+      return typedDocument;
     } catch (error) {
       console.error('Error uploading document:', error);
       toast({
@@ -136,14 +148,20 @@ export const useClientDocuments = () => {
 
       if (error) throw error;
 
-      setDocuments(prev => [data, ...prev]);
+      // Type cast the returned data
+      const typedDocument: ClientDocument = {
+        ...data,
+        document_type: data.document_type as 'file' | 'link'
+      };
+
+      setDocuments(prev => [typedDocument, ...prev]);
       
       toast({
         title: 'Success',
         description: 'Link added successfully',
       });
 
-      return data;
+      return typedDocument;
     } catch (error) {
       console.error('Error adding link:', error);
       toast({
