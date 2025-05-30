@@ -160,54 +160,70 @@ export const useUserManagement = () => {
     fetchData();
   }, []);
 
-  // User management functions
+  // User management functions with improved error handling and logging
   const assignUserRole = async (userId: string, role: AppRole) => {
     try {
+      console.log(`Attempting to assign role ${role} to user ${userId}`);
+      
       const { error } = await supabase.rpc('assign_user_role', {
         _user_id: userId,
         _role: role
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('RPC error:', error);
+        throw error;
+      }
 
+      console.log(`Successfully assigned role ${role} to user ${userId}`);
+      
       toast({
         title: 'Success',
         description: `Role ${role} assigned successfully`,
       });
       
-      fetchData(); // Refresh data
+      // Don't refetch here, let the parent component handle it
     } catch (error) {
       console.error('Error assigning role:', error);
       toast({
         title: 'Error',
-        description: 'Failed to assign role',
+        description: `Failed to assign role: ${error instanceof Error ? error.message : 'Unknown error'}`,
         variant: 'destructive',
       });
+      throw error; // Re-throw so the calling function knows it failed
     }
   };
 
   const removeUserRole = async (userId: string, role: AppRole) => {
     try {
+      console.log(`Attempting to remove role ${role} from user ${userId}`);
+      
       const { error } = await supabase.rpc('remove_user_role', {
         _user_id: userId,
         _role: role
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('RPC error:', error);
+        throw error;
+      }
 
+      console.log(`Successfully removed role ${role} from user ${userId}`);
+      
       toast({
         title: 'Success',
         description: `Role ${role} removed successfully`,
       });
       
-      fetchData(); // Refresh data
+      // Don't refetch here, let the parent component handle it
     } catch (error) {
       console.error('Error removing role:', error);
       toast({
         title: 'Error',
-        description: 'Failed to remove role',
+        description: `Failed to remove role: ${error instanceof Error ? error.message : 'Unknown error'}`,
         variant: 'destructive',
       });
+      throw error; // Re-throw so the calling function knows it failed
     }
   };
 

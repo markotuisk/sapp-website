@@ -6,10 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trash2, Plus } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import type { UserWithProfile, AppRole } from '@/types/roles';
+import { useToast } from '@/hooks/use-toast';
 
 const AVAILABLE_ROLES: AppRole[] = ['admin', 'manager', 'support', 'client'];
 
@@ -24,13 +26,16 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { assignUserRole, removeUserRole, refetchData } = useUserManagement();
+  const { assignUserRole, removeUserRole, refetchData, organizations } = useUserManagement();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
+  const [selectedOrganization, setSelectedOrganization] = useState<string>('');
+  const { toast } = useToast();
 
   useEffect(() => {
     if (user && isOpen) {
       setPendingRoles(user.roles || []);
+      setSelectedOrganization(user.profile?.organization_id || '');
     }
   }, [user, isOpen]);
 
@@ -51,20 +56,37 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       const rolesToAdd = pendingRoles.filter(role => !currentRoles.includes(role));
       const rolesToRemove = currentRoles.filter(role => !pendingRoles.includes(role));
 
+      console.log('Current roles:', currentRoles);
+      console.log('Roles to add:', rolesToAdd);
+      console.log('Roles to remove:', rolesToRemove);
+
       // Add new roles
       for (const role of rolesToAdd) {
+        console.log(`Assigning role ${role} to user ${user.id}`);
         await assignUserRole(user.id, role);
       }
 
       // Remove roles
       for (const role of rolesToRemove) {
+        console.log(`Removing role ${role} from user ${user.id}`);
         await removeUserRole(user.id, role);
       }
 
       await refetchData();
+      
+      toast({
+        title: 'Success',
+        description: 'User roles updated successfully',
+      });
+      
       onClose();
     } catch (error) {
       console.error('Error updating roles:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update user roles',
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -80,15 +102,17 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
+  const selectedOrgName = organizations.find(org => org.id === selectedOrganization)?.name || 'No organization';
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {user ? 'Manage User' : 'Add New User'}
           </DialogTitle>
           <DialogDescription>
-            {user ? `Update roles and permissions for ${user.email}` : 'Create a new user account'}
+            {user ? `Update roles and organization for ${user.email}` : 'Create a new user account'}
           </DialogDescription>
         </DialogHeader>
 
@@ -114,9 +138,42 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                     <Input value={user.profile?.last_name || ''} disabled />
                   </div>
                   <div>
-                    <Label>Organization</Label>
-                    <Input value={user.profile?.organization || ''} disabled />
+                    <Label>Current Organization</Label>
+                    <Input value={selectedOrgName} disabled />
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Organization Assignment */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Organization Assignment</CardTitle>
+                <CardDescription>Assign user to an organization for proper access control</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="organization">Select Organization</Label>
+                    <Select value={selectedOrganization} onValueChange={setSelectedOrganization}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an organization" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">No organization</SelectItem>
+                        {organizations.map(org => (
+                          <SelectItem key={org.id} value={org.id}>
+                            {org.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {organizations.length === 0 && (
+                    <p className="text-sm text-gray-500">
+                      No organizations available. Create an organization first in the Organizations tab.
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
