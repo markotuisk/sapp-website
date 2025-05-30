@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Trash2, Plus } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
@@ -26,7 +26,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { assignUserRole, removeUserRole, refetchData, organizations } = useUserManagement();
+  const { assignUserRole, removeUserRole, refetchData, organizations, isLoading } = useUserManagement();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
   const [selectedOrganization, setSelectedOrganization] = useState<string>('');
@@ -34,12 +34,19 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
   useEffect(() => {
     if (user && isOpen) {
+      // Safely handle roles array - ensure it's always an array
       setPendingRoles(user.roles || []);
-      // Check if user has an organization through the client data organization_id
+      
+      // Get organization ID from client data, safely handling undefined
       const orgId = user.clientData?.organization_id || '';
       setSelectedOrganization(orgId);
     }
   }, [user, isOpen]);
+
+  // Don't render anything if user is null
+  if (!user) {
+    return null;
+  }
 
   const handleRoleToggle = (role: AppRole, checked: boolean) => {
     if (checked) {
@@ -112,14 +119,19 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {user ? 'Manage User' : 'Add New User'}
+            Manage User
           </DialogTitle>
           <DialogDescription>
-            {user ? `Update roles and organization for ${user.email}` : 'Create a new user account'}
+            Update roles and organization for {user.email}
           </DialogDescription>
         </DialogHeader>
 
-        {user && (
+        {isLoading ? (
+          <div className="flex items-center justify-center p-8">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-2">Loading user data...</span>
+          </div>
+        ) : (
           <div className="space-y-6">
             {/* User Info */}
             <Card>
@@ -130,7 +142,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label>Email</Label>
-                    <Input value={user.email} disabled />
+                    <Input value={user.email || ''} disabled />
                   </div>
                   <div>
                     <Label>First Name</Label>
@@ -189,7 +201,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {user.roles.length > 0 ? (
+                  {(user.roles && user.roles.length > 0) ? (
                     user.roles.map(role => (
                       <Badge key={role} className={getRoleColor(role)}>
                         {role}
@@ -245,11 +257,16 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
             Cancel
           </Button>
-          {user && (
-            <Button onClick={handleSaveRoles} disabled={isSubmitting}>
-              {isSubmitting ? 'Saving...' : 'Save Changes'}
-            </Button>
-          )}
+          <Button onClick={handleSaveRoles} disabled={isSubmitting || isLoading}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              'Save Changes'
+            )}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
