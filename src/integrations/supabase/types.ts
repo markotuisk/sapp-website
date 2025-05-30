@@ -1236,6 +1236,10 @@ export type Database = {
           updated_at: string
         }
       }
+      user_has_organisation: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "client" | "manager" | "support"

@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { UserPlus, Search, Mail, Building2, Calendar, Shield, AlertCircle } from 'lucide-react';
+import { UserPlus, Search, Mail, Building2, Calendar, Shield, AlertCircle, AlertTriangle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { UserEditDialog } from './UserEditDialog';
 import type { UserWithProfile } from '@/types/roles';
@@ -35,6 +35,9 @@ export const UsersList: React.FC = () => {
     
     return matchesSearch && matchesRole;
   });
+
+  // Count users without organisations
+  const usersWithoutOrg = filteredUsers.filter(user => !user.clientData?.organization_id);
 
   const getInitials = (user: UserWithProfile) => {
     const first = user.profile?.first_name?.charAt(0) || '';
@@ -113,6 +116,17 @@ export const UsersList: React.FC = () => {
         </Button>
       </div>
 
+      {/* Security Warning for users without organisation */}
+      {usersWithoutOrg.length > 0 && (
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Security Alert:</strong> {usersWithoutOrg.length} user(s) have no organisation assigned and cannot access secure areas. 
+            These users should be assigned to organisations immediately for proper access control.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Debug info */}
       {users.length === 0 && !isLoading && (
         <Alert>
@@ -149,65 +163,83 @@ export const UsersList: React.FC = () => {
 
       {/* Users Grid */}
       <div className="grid gap-4">
-        {filteredUsers.map((user) => (
-          <Card key={user.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-12 w-12">
-                    <AvatarImage src={user.profile?.avatar_url} />
-                    <AvatarFallback className="bg-sapp-blue text-white">
-                      {getInitials(user)}
-                    </AvatarFallback>
-                  </Avatar>
-                  
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-semibold">{getDisplayName(user)}</h3>
-                      {user.roles.length > 0 ? (
-                        user.roles.map(role => (
-                          <Badge key={role} className={getRoleColor(role)}>
-                            {role}
-                          </Badge>
-                        ))
-                      ) : (
-                        <Badge variant="outline">No roles</Badge>
-                      )}
-                    </div>
+        {filteredUsers.map((user) => {
+          const hasOrganisation = !!user.clientData?.organization_id;
+          
+          return (
+            <Card 
+              key={user.id} 
+              className={`hover:shadow-md transition-shadow ${!hasOrganisation ? 'border-red-300 bg-red-50' : ''}`}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src={user.profile?.avatar_url} />
+                      <AvatarFallback className="bg-sapp-blue text-white">
+                        {getInitials(user)}
+                      </AvatarFallback>
+                    </Avatar>
                     
-                    <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <div className="flex items-center gap-1">
-                        <Mail className="h-3 w-3" />
-                        {user.email}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-semibold">{getDisplayName(user)}</h3>
+                        {!hasOrganisation && (
+                          <Badge variant="destructive" className="text-xs">
+                            No Organisation
+                          </Badge>
+                        )}
+                        {user.roles.length > 0 ? (
+                          user.roles.map(role => (
+                            <Badge key={role} className={getRoleColor(role)}>
+                              {role}
+                            </Badge>
+                          ))
+                        ) : (
+                          <Badge variant="outline">No roles</Badge>
+                        )}
                       </div>
-                      {user.profile?.organization && (
+                      
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
                         <div className="flex items-center gap-1">
-                          <Building2 className="h-3 w-3" />
-                          {user.profile.organization}
+                          <Mail className="h-3 w-3" />
+                          {user.email}
+                        </div>
+                        {user.profile?.organization && (
+                          <div className="flex items-center gap-1">
+                            <Building2 className="h-3 w-3" />
+                            {user.profile.organization}
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {new Date(user.profile?.created_at || '').toLocaleDateString()}
+                        </div>
+                      </div>
+                      
+                      {!hasOrganisation && (
+                        <div className="text-xs text-red-600 font-medium">
+                          ⚠️ Cannot access secure areas - organisation assignment required
                         </div>
                       )}
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(user.profile?.created_at || '').toLocaleDateString()}
-                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleManageUser(user)}
-                  >
-                    <Shield className="h-4 w-4 mr-1" />
-                    Manage
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleManageUser(user)}
+                    >
+                      <Shield className="h-4 w-4 mr-1" />
+                      Manage
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {filteredUsers.length === 0 && users.length > 0 && (

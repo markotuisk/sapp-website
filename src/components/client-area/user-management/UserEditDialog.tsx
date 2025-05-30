@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, AlertTriangle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
@@ -30,7 +30,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const { assignUserRole, removeUserRole, refetchData, organizations, isLoading } = useUserManagement();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
-  const [selectedOrganization, setSelectedOrganization] = useState<string>('none');
+  const [selectedOrganization, setSelectedOrganization] = useState<string>('');
   const [dialogError, setDialogError] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -52,8 +52,8 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         setPendingRoles(userRoles);
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Get organization ID from client data, safely handling undefined
-        const orgId = user.clientData?.organization_id || 'none';
+        // Get organization ID from client data
+        const orgId = user.clientData?.organization_id || '';
         setSelectedOrganization(orgId);
         console.log('UserEditDialog - Set organization ID:', orgId);
       } catch (error) {
@@ -63,7 +63,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     } else {
       // Reset state when dialog closes or user is null
       setPendingRoles([]);
-      setSelectedOrganization('none');
+      setSelectedOrganization('');
       setDialogError(null);
     }
   }, [user, isOpen]);
@@ -80,6 +80,16 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const handleSaveRoles = async () => {
     if (!user) {
       console.log('No user to save roles for');
+      return;
+    }
+
+    // Check if organisation is assigned
+    if (!selectedOrganization) {
+      toast({
+        title: 'Organisation Required',
+        description: 'User must be assigned to an organisation before accessing the system.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -185,10 +195,11 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  // Find organization name from the selected organization ID
-  const selectedOrgName = selectedOrganization === 'none' 
-    ? 'No organisation' 
-    : organizations.find(org => org.id === selectedOrganization)?.name || 'No organisation';
+  // Check if user has organisation assigned
+  const hasOrganisation = !!user.clientData?.organization_id;
+  const selectedOrgName = selectedOrganization 
+    ? organizations.find(org => org.id === selectedOrganization)?.name || 'Unknown Organisation'
+    : 'No organisation assigned';
 
   console.log('UserEditDialog - Rendering with user:', user.email);
 
@@ -198,7 +209,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         <DialogHeader>
           <DialogTitle>Manage User</DialogTitle>
           <DialogDescription>
-            Update roles and organization for {user.email}
+            Update roles and organisation for {user.email}
           </DialogDescription>
         </DialogHeader>
 
@@ -209,6 +220,17 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           </div>
         ) : (
           <div className="space-y-6">
+            {/* Security Warning for users without organisation */}
+            {!hasOrganisation && (
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Security Warning:</strong> This user has no organisation assigned and cannot access any secure documents or areas. 
+                  An organisation must be assigned before the user can use the system.
+                </AlertDescription>
+              </Alert>
+            )}
+
             {/* User Info */}
             <Card>
               <CardHeader>
@@ -229,29 +251,34 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                     <Input value={user.profile?.last_name || ''} disabled />
                   </div>
                   <div>
-                    <Label>Current Organization</Label>
-                    <Input value={selectedOrgName} disabled />
+                    <Label>Current Organisation</Label>
+                    <Input 
+                      value={selectedOrgName} 
+                      disabled 
+                      className={!hasOrganisation ? 'border-red-300 bg-red-50' : ''}
+                    />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Organization Assignment */}
+            {/* Organisation Assignment */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Organization Assignment</CardTitle>
-                <CardDescription>Assign user to an organisation for proper access control</CardDescription>
+                <CardTitle className="text-lg">Organisation Assignment</CardTitle>
+                <CardDescription>
+                  <strong>Required:</strong> All users must be assigned to an organisation for security and access control
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="organization">Select Organisation</Label>
+                    <Label htmlFor="organization">Select Organisation *</Label>
                     <Select value={selectedOrganization} onValueChange={setSelectedOrganization}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select an organisation" />
+                      <SelectTrigger className={!selectedOrganization ? 'border-red-300' : ''}>
+                        <SelectValue placeholder="Organisation is required" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="none">No organisation</SelectItem>
                         {organizations.map(org => (
                           <SelectItem key={org.id} value={org.id}>
                             {org.name}
@@ -261,9 +288,20 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                     </Select>
                   </div>
                   {organizations.length === 0 && (
-                    <p className="text-sm text-gray-500">
-                      No organisations available. Create an organisation first in the Organisations tab.
-                    </p>
+                    <Alert>
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>
+                        No organisations available. Create an organisation first in the Organisations tab.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  {!selectedOrganization && (
+                    <Alert variant="destructive">
+                      <AlertTriangle className="h-4 w-4" />
+                      <AlertDescription>
+                        This user cannot access secure areas without an organisation assignment. Please select an organisation above.
+                      </AlertDescription>
+                    </Alert>
                   )}
                 </div>
               </CardContent>
@@ -310,7 +348,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                           <div>
                             <span className="font-medium capitalize">{role}</span>
                             <p className="text-sm text-gray-500">
-                              {role === 'admin' && 'Full system access and user management'}
+                              {role === 'admin' && 'Full system access and user management (SAPP Security only)'}
                               {role === 'manager' && 'Manage teams and oversee operations'}
                               {role === 'support' && 'Provide customer support and assistance'}
                               {role === 'client' && 'Standard client access to services'}
@@ -333,7 +371,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
             Cancel
           </Button>
-          <Button onClick={handleSaveRoles} disabled={isSubmitting || isLoading}>
+          <Button 
+            onClick={handleSaveRoles} 
+            disabled={isSubmitting || isLoading || !selectedOrganization}
+          >
             {isSubmitting ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />

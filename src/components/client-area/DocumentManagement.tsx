@@ -1,123 +1,88 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Plus } from 'lucide-react';
-import { useDocuments } from '@/hooks/useDocuments';
-import { DocumentSharingDialog } from './DocumentSharingDialog';
+import { ArrowLeft, Upload, Search, Filter } from 'lucide-react';
+import { DocumentsList } from './document-management/DocumentsList';
 import { DocumentUploadForm } from './document-management/DocumentUploadForm';
 import { DocumentSearchFilter } from './document-management/DocumentSearchFilter';
-import { DocumentsList } from './document-management/DocumentsList';
-import { DocumentEditDialog } from './document-management/DocumentEditDialog';
-import type { ClientDocument } from '@/types/profile';
+import { OrganisationAccessGuard } from './user-management/OrganisationAccessGuard';
 
 interface DocumentManagementProps {
   onBack: () => void;
 }
 
 export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }) => {
-  const { documents, categories, isLoading, deleteDocument, downloadDocument, updateDocument } = useDocuments();
-  const [showUpload, setShowUpload] = useState(false);
+  const [showUploadForm, setShowUploadForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedDocument, setSelectedDocument] = useState<ClientDocument | null>(null);
-  const [showSharingDialog, setShowSharingDialog] = useState(false);
-  const [editingDocument, setEditingDocument] = useState<ClientDocument | null>(null);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-
-  const filteredDocuments = documents.filter(doc => {
-    const displayName = doc.custom_name || doc.original_name;
-    const matchesSearch = displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         doc.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || doc.category_id === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const getCategoryColor = (categoryId?: string) => {
-    const category = categories.find(c => c.id === categoryId);
-    return category?.color || '#6B7280';
-  };
-
-  const handleShareDocument = (document: ClientDocument) => {
-    setSelectedDocument(document);
-    setShowSharingDialog(true);
-  };
-
-  const handleEditDocument = (document: ClientDocument) => {
-    setEditingDocument(document);
-    setShowEditDialog(true);
-  };
-
-  const handleSaveDocument = async (documentId: string, updates: Partial<ClientDocument>) => {
-    await updateDocument(documentId, updates);
-  };
-
-  if (isLoading) {
-    return <div className="flex items-center justify-center p-8">Loading documents...</div>;
-  }
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <Button
-          onClick={onBack}
-          variant="ghost"
-          size="sm"
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Dashboard
-        </Button>
-        <Button
-          onClick={() => setShowUpload(!showUpload)}
-          className="flex items-center gap-2"
-        >
-          <Plus className="h-4 w-4" />
-          Add Document
-        </Button>
+    <OrganisationAccessGuard>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <Button
+            onClick={onBack}
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </Button>
+          <h1 className="text-2xl font-bold">Document Management</h1>
+          <div></div>
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search documents..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-80"
+              />
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-2"
+            >
+              <Filter className="h-4 w-4" />
+              Filters
+            </Button>
+          </div>
+          <Button
+            onClick={() => setShowUploadForm(!showUploadForm)}
+            className="flex items-center gap-2"
+          >
+            <Upload className="h-4 w-4" />
+            Upload Document
+          </Button>
+        </div>
+
+        {showFilters && (
+          <DocumentSearchFilter
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+          />
+        )}
+
+        {showUploadForm && (
+          <DocumentUploadForm onClose={() => setShowUploadForm(false)} />
+        )}
+
+        <DocumentsList 
+          searchTerm={searchTerm}
+          selectedCategory={selectedCategory}
+        />
       </div>
-
-      {/* Upload Form */}
-      <DocumentUploadForm
-        isVisible={showUpload}
-        onClose={() => setShowUpload(false)}
-        categories={categories}
-        onFileUpload={async () => {}} // Not used anymore - handled internally
-        onLinkAdd={async () => {}} // Not used anymore - handled internally
-      />
-
-      {/* Search and Filter */}
-      <DocumentSearchFilter
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        categories={categories}
-      />
-
-      {/* Documents List */}
-      <DocumentsList
-        documents={filteredDocuments}
-        onShare={handleShareDocument}
-        onDownload={downloadDocument}
-        onDelete={deleteDocument}
-        onEdit={handleEditDocument}
-        getCategoryColor={getCategoryColor}
-      />
-
-      <DocumentSharingDialog
-        isOpen={showSharingDialog}
-        onClose={() => setShowSharingDialog(false)}
-        document={selectedDocument}
-      />
-
-      <DocumentEditDialog
-        document={editingDocument}
-        isOpen={showEditDialog}
-        onClose={() => setShowEditDialog(false)}
-        categories={categories}
-        onSave={handleSaveDocument}
-      />
-    </div>
+    </OrganisationAccessGuard>
   );
 };
