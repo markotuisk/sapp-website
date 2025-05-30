@@ -276,57 +276,260 @@ export type Database = {
         }
         Relationships: []
       }
+      email_campaigns: {
+        Row: {
+          article_id: string | null
+          bounce_count: number | null
+          campaign_data: Json | null
+          click_count: number | null
+          created_at: string
+          delivery_count: number | null
+          id: string
+          open_count: number | null
+          recipient_count: number | null
+          sent_at: string
+          sent_by: string | null
+          subject: string
+          template_id: string | null
+          unsubscribe_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          article_id?: string | null
+          bounce_count?: number | null
+          campaign_data?: Json | null
+          click_count?: number | null
+          created_at?: string
+          delivery_count?: number | null
+          id?: string
+          open_count?: number | null
+          recipient_count?: number | null
+          sent_at?: string
+          sent_by?: string | null
+          subject: string
+          template_id?: string | null
+          unsubscribe_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          article_id?: string | null
+          bounce_count?: number | null
+          campaign_data?: Json | null
+          click_count?: number | null
+          created_at?: string
+          delivery_count?: number | null
+          id?: string
+          open_count?: number | null
+          recipient_count?: number | null
+          sent_at?: string
+          sent_by?: string | null
+          subject?: string
+          template_id?: string | null
+          unsubscribe_count?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_campaigns_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "news_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_campaigns_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_templates: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          html_template: string
+          id: string
+          is_default: boolean | null
+          name: string
+          subject_template: string
+          template_type: string
+          text_template: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          html_template: string
+          id?: string
+          is_default?: boolean | null
+          name: string
+          subject_template: string
+          template_type?: string
+          text_template?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          html_template?: string
+          id?: string
+          is_default?: boolean | null
+          name?: string
+          subject_template?: string
+          template_type?: string
+          text_template?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       news_articles: {
         Row: {
           author: string
           author_title: string | null
+          canonical_url: string | null
           category: string
           content: string
           cover_image: string | null
           created_at: string
+          email_sent: boolean | null
+          email_sent_at: string | null
           featured: boolean
           id: string
+          meta_description: string | null
+          meta_keywords: string[] | null
+          og_image: string | null
           published: boolean
           published_at: string | null
+          reading_time: number | null
+          scheduled_at: string | null
           slug: string
           summary: string
           tags: string[] | null
           title: string
+          twitter_image: string | null
           updated_at: string
+          view_count: number | null
         }
         Insert: {
           author: string
           author_title?: string | null
+          canonical_url?: string | null
           category: string
           content: string
           cover_image?: string | null
           created_at?: string
+          email_sent?: boolean | null
+          email_sent_at?: string | null
           featured?: boolean
           id?: string
+          meta_description?: string | null
+          meta_keywords?: string[] | null
+          og_image?: string | null
           published?: boolean
           published_at?: string | null
+          reading_time?: number | null
+          scheduled_at?: string | null
           slug: string
           summary: string
           tags?: string[] | null
           title: string
+          twitter_image?: string | null
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
           author?: string
           author_title?: string | null
+          canonical_url?: string | null
           category?: string
           content?: string
           cover_image?: string | null
           created_at?: string
+          email_sent?: boolean | null
+          email_sent_at?: string | null
           featured?: boolean
           id?: string
+          meta_description?: string | null
+          meta_keywords?: string[] | null
+          og_image?: string | null
           published?: boolean
           published_at?: string | null
+          reading_time?: number | null
+          scheduled_at?: string | null
           slug?: string
           summary?: string
           tags?: string[] | null
           title?: string
+          twitter_image?: string | null
           updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      news_subscribers: {
+        Row: {
+          confirmation_token: string | null
+          confirmed_at: string | null
+          created_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          name: string | null
+          source: string | null
+          status: string
+          subscribed_at: string
+          subscription_preferences: Json | null
+          unsubscribe_token: string | null
+          unsubscribed_at: string | null
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          confirmation_token?: string | null
+          confirmed_at?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          name?: string | null
+          source?: string | null
+          status?: string
+          subscribed_at?: string
+          subscription_preferences?: Json | null
+          unsubscribe_token?: string | null
+          unsubscribed_at?: string | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          confirmation_token?: string | null
+          confirmed_at?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          name?: string | null
+          source?: string | null
+          status?: string
+          subscribed_at?: string
+          subscription_preferences?: Json | null
+          unsubscribe_token?: string | null
+          unsubscribed_at?: string | null
+          updated_at?: string
+          user_agent?: string | null
         }
         Relationships: []
       }
@@ -671,6 +874,14 @@ export type Database = {
         Args: { _email: string }
         Returns: undefined
       }
+      create_newsletter_campaign: {
+        Args: {
+          article_id_param: string
+          subject_param: string
+          template_id_param?: string
+        }
+        Returns: string
+      }
       get_all_page_versions: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -745,6 +956,15 @@ export type Database = {
           last_attempt: string
         }[]
       }
+      get_subscriber_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total_subscribers: number
+          active_subscribers: number
+          unsubscribed: number
+          recent_signups: number
+        }[]
+      }
       get_user_roles: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"][]
@@ -799,6 +1019,18 @@ export type Database = {
           id: string
           lead_id: string
         }[]
+      }
+      subscribe_to_newsletter: {
+        Args: {
+          subscriber_email: string
+          subscriber_name?: string
+          preferences?: Json
+        }
+        Returns: string
+      }
+      unsubscribe_newsletter: {
+        Args: { unsubscribe_token_param: string }
+        Returns: boolean
       }
       update_page_version: {
         Args: {
