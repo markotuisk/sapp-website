@@ -39,7 +39,8 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
   }
 
   // Check if user has organisation assigned - check both sources
-  const organizationId = clientData?.organization_id || userProfile?.organization_id;
+  // clientData.organization_id is the primary source, userProfile doesn't have organization_id
+  const organizationId = clientData?.organization_id;
   const hasOrganisation = !!organizationId;
   const isGuestUser = organizationId === '00000000-0000-0000-0000-000000000001';
 

@@ -49,8 +49,8 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         setPendingRoles(userRoles);
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Get organization ID from client data OR profile
-        const orgId = user.clientData?.organization_id || user.profile?.organization_id || '';
+        // Get organization ID from client data only (profiles table doesn't have organization_id)
+        const orgId = user.clientData?.organization_id || '';
         setSelectedOrganization(orgId);
         console.log('UserEditDialog - Set organization ID:', orgId);
       } catch (error) {
@@ -77,7 +77,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     console.log('Updating user organisation:', userId, 'to org:', organizationId);
     
     try {
-      // Update both profiles and client_data tables
+      // Update both profiles (organization_id field) and client_data tables
       const [profileUpdate, clientDataUpdate] = await Promise.all([
         supabase
           .from('profiles')
@@ -229,7 +229,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  const hasOrganisation = !!(user.clientData?.organization_id || user.profile?.organization_id);
+  const hasOrganisation = !!user.clientData?.organization_id;
   const selectedOrgName = selectedOrganization 
     ? organizations.find(org => org.id === selectedOrganization)?.name || 'Unknown Organisation'
     : 'No organisation assigned';
