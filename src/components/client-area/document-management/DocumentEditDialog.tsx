@@ -42,7 +42,7 @@ export const DocumentEditDialog: React.FC<DocumentEditDialogProps> = ({
       setEditForm({
         custom_name: document.custom_name || '',
         description: document.description || '',
-        category_id: document.category_id || '',
+        category_id: document.category_id || 'no-category',
         tags: document.tags ? document.tags.join(', ') : '',
         is_confidential: document.is_confidential || false,
         external_url: document.external_url || '',
@@ -56,7 +56,7 @@ export const DocumentEditDialog: React.FC<DocumentEditDialogProps> = ({
     const updates: Partial<ClientDocument> = {
       custom_name: editForm.custom_name || null,
       description: editForm.description || null,
-      category_id: editForm.category_id || null,
+      category_id: editForm.category_id === 'no-category' ? null : editForm.category_id || null,
       tags: editForm.tags ? editForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : null,
       is_confidential: editForm.is_confidential,
     };
@@ -149,7 +149,7 @@ export const DocumentEditDialog: React.FC<DocumentEditDialogProps> = ({
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">No Category</SelectItem>
+                <SelectItem value="no-category">No Category</SelectItem>
                 {categories.map(category => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}

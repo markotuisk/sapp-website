@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -43,7 +42,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadForm, setUploadForm] = useState<UploadFormData>({
-    categoryId: '',
+    categoryId: 'no-category',
     description: '',
     tags: '',
     isConfidential: false,
@@ -54,7 +53,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
 
   const resetForm = () => {
     setUploadForm({
-      categoryId: '',
+      categoryId: 'no-category',
       description: '',
       tags: '',
       isConfidential: false,
@@ -113,9 +112,11 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
         });
       }, 200);
 
+      const categoryIdToSend = uploadForm.categoryId === 'no-category' ? undefined : uploadForm.categoryId;
+
       const success = await uploadDocument(
         selectedFile,
-        uploadForm.categoryId || undefined,
+        categoryIdToSend,
         uploadForm.description || undefined,
         tags,
         uploadForm.isConfidential,
@@ -143,10 +144,12 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
     try {
       const tags = uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : undefined;
       
+      const categoryIdToSend = uploadForm.categoryId === 'no-category' ? undefined : uploadForm.categoryId;
+
       const success = await addLinkDocument(
         uploadForm.linkUrl,
         uploadForm.linkName,
-        uploadForm.categoryId || undefined,
+        categoryIdToSend,
         uploadForm.description || undefined,
         tags,
         uploadForm.isConfidential
@@ -302,6 +305,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="no-category">No Category</SelectItem>
                 {categories.map(category => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
