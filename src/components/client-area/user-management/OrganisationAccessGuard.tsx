@@ -3,7 +3,7 @@ import React from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, Building2, Mail } from 'lucide-react';
+import { AlertTriangle, Building2, Mail, Users } from 'lucide-react';
 import { useRole } from '@/hooks/useRole';
 
 interface OrganisationAccessGuardProps {
@@ -36,7 +36,52 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
 
   // Check if user has organisation assigned
   const hasOrganisation = !!clientData?.organization_id;
+  const isGuestUser = clientData?.organization_id === '00000000-0000-0000-0000-000000000001';
 
+  // Special handling for guest users
+  if (isGuestUser) {
+    return fallback || (
+      <Card className="max-w-2xl mx-auto mt-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-amber-700">
+            <Users className="h-5 w-5" />
+            Guest User Access
+          </CardTitle>
+          <CardDescription>
+            You are currently assigned to the guest organisation with limited access
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Alert variant="destructive">
+            <Building2 className="h-4 w-4" />
+            <AlertDescription>
+              <strong>Limited Access:</strong> Guest users cannot access document management or other secure areas. 
+              You need to be assigned to a proper organisation to access these features.
+            </AlertDescription>
+          </Alert>
+          
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 className="font-semibold text-blue-900 mb-2">To gain full access:</h3>
+            <ol className="list-decimal list-inside space-y-1 text-blue-800 text-sm">
+              <li>Contact SAPP Security support for organisation assignment</li>
+              <li>Provide your email address: <strong>{userProfile?.email}</strong></li>
+              <li>Specify which organisation you should be assigned to</li>
+              <li>Wait for an administrator to update your account</li>
+            </ol>
+          </div>
+
+          <div className="flex items-center justify-center pt-4">
+            <Button variant="outline" className="flex items-center gap-2">
+              <Mail className="h-4 w-4" />
+              Contact Support
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Regular check for users without organisation
   if (!hasOrganisation) {
     return fallback || (
       <Card className="max-w-2xl mx-auto mt-8">
@@ -78,6 +123,6 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
     );
   }
 
-  // User has organisation, allow access
+  // User has organisation (and it's not guest), allow access
   return <>{children}</>;
 };

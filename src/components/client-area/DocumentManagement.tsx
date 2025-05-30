@@ -6,6 +6,8 @@ import { DocumentsList } from './document-management/DocumentsList';
 import { DocumentUploadForm } from './document-management/DocumentUploadForm';
 import { DocumentSearchFilter } from './document-management/DocumentSearchFilter';
 import { OrganisationAccessGuard } from './user-management/OrganisationAccessGuard';
+import { useDocumentCategories } from '@/hooks/useDocumentCategories';
+import { useClientDocuments } from '@/hooks/useClientDocuments';
 
 interface DocumentManagementProps {
   onBack: () => void;
@@ -16,6 +18,47 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [showFilters, setShowFilters] = useState(false);
+
+  const { categories, isLoading: categoriesLoading } = useDocumentCategories();
+  const { documents, isLoading: documentsLoading, uploadDocument, addLink, refetch } = useClientDocuments();
+
+  // Filter documents based on search and category
+  const filteredDocuments = documents.filter(doc => {
+    const matchesSearch = !searchTerm || 
+      doc.file_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.custom_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doc.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesCategory = !selectedCategory || selectedCategory === 'all' || doc.category_id === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
+
+  const getCategoryColor = (categoryId?: string) => {
+    if (!categoryId) return '#3B82F6';
+    const category = categories.find(cat => cat.id === categoryId);
+    return category?.color || '#3B82F6';
+  };
+
+  const handleShare = (document: any) => {
+    // Implement sharing logic
+    console.log('Sharing document:', document);
+  };
+
+  const handleDownload = (document: any) => {
+    // Implement download logic
+    console.log('Downloading document:', document);
+  };
+
+  const handleDelete = (documentId: string) => {
+    // Implement delete logic
+    console.log('Deleting document:', documentId);
+  };
+
+  const handleEdit = (document: any) => {
+    // Implement edit logic
+    console.log('Editing document:', document);
+  };
 
   return (
     <OrganisationAccessGuard>
@@ -71,16 +114,27 @@ export const DocumentManagement: React.FC<DocumentManagementProps> = ({ onBack }
             onSearchChange={setSearchTerm}
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
+            categories={categories}
           />
         )}
 
         {showUploadForm && (
-          <DocumentUploadForm onClose={() => setShowUploadForm(false)} />
+          <DocumentUploadForm 
+            isVisible={showUploadForm}
+            onClose={() => setShowUploadForm(false)}
+            categories={categories}
+            onFileUpload={uploadDocument}
+            onLinkAdd={addLink}
+          />
         )}
 
         <DocumentsList 
-          searchTerm={searchTerm}
-          selectedCategory={selectedCategory}
+          documents={filteredDocuments}
+          onShare={handleShare}
+          onDownload={handleDownload}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          getCategoryColor={getCategoryColor}
         />
       </div>
     </OrganisationAccessGuard>

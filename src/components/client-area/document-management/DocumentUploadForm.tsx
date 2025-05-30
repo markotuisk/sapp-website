@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -5,373 +6,283 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Progress } from '@/components/ui/progress';
-import { Upload, Link, Plus, FileText } from 'lucide-react';
-import { useDocuments } from '@/hooks/useDocuments';
-import type { DocumentCategory } from '@/types/profile';
+import { Upload, Link, X } from 'lucide-react';
+import { DocumentCategory } from '@/hooks/useDocumentCategories';
 
 interface DocumentUploadFormProps {
   isVisible: boolean;
   onClose: () => void;
   categories: DocumentCategory[];
-  onFileUpload: (files: FileList | null) => Promise<void>;
-  onLinkAdd: () => Promise<void>;
-}
-
-interface UploadFormData {
-  categoryId: string;
-  description: string;
-  tags: string;
-  isConfidential: boolean;
-  customName: string;
-  linkUrl: string;
-  linkName: string;
+  onFileUpload: (file: File, metadata: {
+    customName?: string;
+    description?: string;
+    categoryId?: string;
+    tags?: string[];
+    isConfidential?: boolean;
+  }) => Promise<any>;
+  onLinkAdd: (metadata: {
+    url: string;
+    customName: string;
+    description?: string;
+    categoryId?: string;
+    tags?: string[];
+  }) => Promise<any>;
 }
 
 export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
   isVisible,
   onClose,
   categories,
+  onFileUpload,
+  onLinkAdd,
 }) => {
-  const { uploadDocument, addLinkDocument } = useDocuments();
-  const [uploadType, setUploadType] = useState<'file' | 'link'>('file');
-  const [dragActive, setDragActive] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploadForm, setUploadForm] = useState<UploadFormData>({
-    categoryId: 'no-category',
-    description: '',
-    tags: '',
-    isConfidential: false,
-    customName: '',
-    linkUrl: '',
-    linkName: '',
-  });
+  const [linkUrl, setLinkUrl] = useState('');
+  const [customName, setCustomName] = useState('');
+  const [description, setDescription] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [tags, setTags] = useState('');
+  const [isConfidential, setIsConfidential] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const resetForm = () => {
-    setUploadForm({
-      categoryId: 'no-category',
-      description: '',
-      tags: '',
-      isConfidential: false,
-      customName: '',
-      linkUrl: '',
-      linkName: '',
-    });
-    setSelectedFile(null);
-    setUploadProgress(0);
-  };
+  if (!isVisible) return null;
 
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setDragActive(false);
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      if (!customName) {
+        setCustomName(file.name);
+      }
     }
-  };
-
-  const handleDrop = async (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileSelection(e.dataTransfer.files[0]);
-    }
-  };
-
-  const handleFileSelection = (file: File) => {
-    if (file.size > 50 * 1024 * 1024) {
-      // File too large - show error
-      return;
-    }
-    setSelectedFile(file);
   };
 
   const handleFileUpload = async () => {
     if (!selectedFile) return;
 
-    setIsSubmitting(true);
-    setUploadProgress(0);
-
+    setIsUploading(true);
     try {
-      const tags = uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : undefined;
+      await onFileUpload(selectedFile, {
+        customName,
+        description,
+        categoryId: selectedCategory || undefined,
+        tags: tags.split(',').map(tag => tag.trim()).filter(Boolean),
+        isConfidential,
+      });
       
-      // Simulate progress (in real app, you'd get this from upload API)
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
-          if (prev >= 90) {
-            clearInterval(progressInterval);
-            return 90;
-          }
-          return prev + 10;
-        });
-      }, 200);
-
-      const categoryIdToSend = uploadForm.categoryId === 'no-category' ? undefined : uploadForm.categoryId;
-
-      const success = await uploadDocument(
-        selectedFile,
-        categoryIdToSend,
-        uploadForm.description || undefined,
-        tags,
-        uploadForm.isConfidential,
-        uploadForm.customName || undefined
-      );
-
-      clearInterval(progressInterval);
-      setUploadProgress(100);
-
-      if (success) {
-        setTimeout(() => {
-          resetForm();
-          onClose();
-        }, 500);
-      }
+      // Reset form
+      setSelectedFile(null);
+      setCustomName('');
+      setDescription('');
+      setSelectedCategory('');
+      setTags('');
+      setIsConfidential(false);
+      onClose();
+    } catch (error) {
+      console.error('Upload failed:', error);
     } finally {
-      setIsSubmitting(false);
+      setIsUploading(false);
     }
   };
 
-  const handleLinkSubmit = async () => {
-    if (!uploadForm.linkUrl || !uploadForm.linkName) return;
+  const handleLinkAdd = async () => {
+    if (!linkUrl || !customName) return;
 
-    setIsSubmitting(true);
+    setIsUploading(true);
     try {
-      const tags = uploadForm.tags ? uploadForm.tags.split(',').map(tag => tag.trim()).filter(Boolean) : undefined;
+      await onLinkAdd({
+        url: linkUrl,
+        customName,
+        description,
+        categoryId: selectedCategory || undefined,
+        tags: tags.split(',').map(tag => tag.trim()).filter(Boolean),
+      });
       
-      const categoryIdToSend = uploadForm.categoryId === 'no-category' ? undefined : uploadForm.categoryId;
-
-      const success = await addLinkDocument(
-        uploadForm.linkUrl,
-        uploadForm.linkName,
-        categoryIdToSend,
-        uploadForm.description || undefined,
-        tags,
-        uploadForm.isConfidential
-      );
-
-      if (success) {
-        resetForm();
-        onClose();
-      }
+      // Reset form
+      setLinkUrl('');
+      setCustomName('');
+      setDescription('');
+      setSelectedCategory('');
+      setTags('');
+      onClose();
+    } catch (error) {
+      console.error('Link add failed:', error);
     } finally {
-      setIsSubmitting(false);
+      setIsUploading(false);
     }
   };
-
-  if (!isVisible) return null;
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Upload className="h-5 w-5" />
-          Add Document
-        </CardTitle>
-        <CardDescription>
-          Upload a file or add a link to your secure document storage
-        </CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle>Add Document</CardTitle>
+          <CardDescription>Upload a file or add a link to your documents</CardDescription>
+        </div>
+        <Button variant="ghost" size="sm" onClick={onClose}>
+          <X className="h-4 w-4" />
+        </Button>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <Tabs value={uploadType} onValueChange={(value: 'file' | 'link') => setUploadType(value)}>
+      <CardContent>
+        <Tabs defaultValue="file" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="file" className="flex items-center gap-2">
-              <Upload className="h-4 w-4" />
-              Upload File
-            </TabsTrigger>
-            <TabsTrigger value="link" className="flex items-center gap-2">
-              <Link className="h-4 w-4" />
-              Add Link
-            </TabsTrigger>
+            <TabsTrigger value="file">Upload File</TabsTrigger>
+            <TabsTrigger value="link">Add Link</TabsTrigger>
           </TabsList>
-
+          
           <TabsContent value="file" className="space-y-4">
-            {!selectedFile ? (
-              <div
-                className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                  dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
-                }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-              >
-                <Upload className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                <p className="text-lg font-medium mb-2">Drop files here or click to browse</p>
-                <p className="text-sm text-gray-500 mb-4">
-                  Maximum file size: 50MB. Supported formats: PDF, Images, Documents
+            <div>
+              <Label htmlFor="file-upload">Select File</Label>
+              <Input
+                id="file-upload"
+                type="file"
+                onChange={handleFileSelect}
+                className="mt-1"
+              />
+              {selectedFile && (
+                <p className="text-sm text-gray-600 mt-1">
+                  Selected: {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
                 </p>
-                <input
-                  type="file"
-                  onChange={(e) => e.target.files && handleFileSelection(e.target.files[0])}
-                  className="hidden"
-                  id="file-upload"
-                  accept=".pdf,.jpg,.jpeg,.png,.gif,.txt,.doc,.docx,.xls,.xlsx"
-                  disabled={isSubmitting}
-                />
-                <Button asChild variant="outline" disabled={isSubmitting}>
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    Choose File
-                  </label>
-                </Button>
-              </div>
-            ) : (
-              <div className="border rounded-lg p-4 bg-gray-50">
-                <div className="flex items-center gap-3 mb-3">
-                  <FileText className="h-8 w-8 text-blue-500" />
-                  <div>
-                    <p className="font-medium">{selectedFile.name}</p>
-                    <p className="text-sm text-gray-500">
-                      {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setSelectedFile(null)}
-                    disabled={isSubmitting}
-                  >
-                    Remove
-                  </Button>
-                </div>
-                
-                {isSubmitting && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Uploading...</span>
-                      <span>{uploadProgress}%</span>
-                    </div>
-                    <Progress value={uploadProgress} className="w-full" />
-                  </div>
-                )}
-              </div>
-            )}
+              )}
+            </div>
             
             <div>
-              <Label htmlFor="file-custom-name">Custom Display Name (optional)</Label>
+              <Label htmlFor="custom-name">Custom Name</Label>
               <Input
-                id="file-custom-name"
-                value={uploadForm.customName}
-                onChange={(e) => setUploadForm(prev => ({ ...prev, customName: e.target.value }))}
-                placeholder="e.g., Q4 Financial Report"
-                disabled={isSubmitting}
+                id="custom-name"
+                value={customName}
+                onChange={(e) => setCustomName(e.target.value)}
+                placeholder="Enter a custom name for this document"
               />
-              <p className="text-xs text-gray-500 mt-1">Leave empty to use the original filename</p>
             </div>
+            
+            <div>
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter a description (optional)"
+                rows={3}
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="category">Category</Label>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a category (optional)" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map(category => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label htmlFor="tags">Tags</Label>
+              <Input
+                id="tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="Enter tags separated by commas"
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="confidential"
+                checked={isConfidential}
+                onCheckedChange={setIsConfidential}
+              />
+              <Label htmlFor="confidential">Mark as confidential</Label>
+            </div>
+            
+            <Button 
+              onClick={handleFileUpload} 
+              disabled={!selectedFile || isUploading}
+              className="w-full"
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              {isUploading ? 'Uploading...' : 'Upload Document'}
+            </Button>
           </TabsContent>
-
+          
           <TabsContent value="link" className="space-y-4">
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="link-url">Document URL *</Label>
-                <Input
-                  id="link-url"
-                  type="url"
-                  value={uploadForm.linkUrl}
-                  onChange={(e) => setUploadForm(prev => ({ ...prev, linkUrl: e.target.value }))}
-                  placeholder="https://example.com/document.pdf"
-                  disabled={isSubmitting}
-                />
-              </div>
-              <div>
-                <Label htmlFor="link-name">Document Name *</Label>
-                <Input
-                  id="link-name"
-                  value={uploadForm.linkName}
-                  onChange={(e) => setUploadForm(prev => ({ ...prev, linkName: e.target.value }))}
-                  placeholder="e.g., Important Contract"
-                  disabled={isSubmitting}
-                />
-                <p className="text-xs text-gray-500 mt-1">This name will be displayed in your document list</p>
-              </div>
+            <div>
+              <Label htmlFor="link-url">URL</Label>
+              <Input
+                id="link-url"
+                type="url"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                placeholder="https://example.com"
+              />
             </div>
+            
+            <div>
+              <Label htmlFor="link-name">Name</Label>
+              <Input
+                id="link-name"
+                value={customName}
+                onChange={(e) => setCustomName(e.target.value)}
+                placeholder="Enter a name for this link"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="link-description">Description</Label>
+              <Textarea
+                id="link-description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter a description (optional)"
+                rows={3}
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="link-category">Category</Label>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a category (optional)" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map(category => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label htmlFor="link-tags">Tags</Label>
+              <Input
+                id="link-tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="Enter tags separated by commas"
+              />
+            </div>
+            
+            <Button 
+              onClick={handleLinkAdd} 
+              disabled={!linkUrl || !customName || isUploading}
+              className="w-full"
+            >
+              <Link className="h-4 w-4 mr-2" />
+              {isUploading ? 'Adding...' : 'Add Link'}
+            </Button>
           </TabsContent>
         </Tabs>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="category">Category</Label>
-            <Select
-              value={uploadForm.categoryId}
-              onValueChange={(value) => setUploadForm(prev => ({ ...prev, categoryId: value }))}
-              disabled={isSubmitting}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="no-category">No Category</SelectItem>
-                {categories.map(category => (
-                  <SelectItem key={category.id} value={category.id}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label htmlFor="tags">Tags (comma-separated)</Label>
-            <Input
-              id="tags"
-              value={uploadForm.tags}
-              onChange={(e) => setUploadForm(prev => ({ ...prev, tags: e.target.value }))}
-              placeholder="urgent, contract, 2024"
-              disabled={isSubmitting}
-            />
-          </div>
-        </div>
-
-        <div>
-          <Label htmlFor="description">Description</Label>
-          <Textarea
-            id="description"
-            value={uploadForm.description}
-            onChange={(e) => setUploadForm(prev => ({ ...prev, description: e.target.value }))}
-            placeholder="Brief description of the document"
-            rows={3}
-            disabled={isSubmitting}
-          />
-        </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="confidential"
-              checked={uploadForm.isConfidential}
-              onCheckedChange={(checked) => setUploadForm(prev => ({ ...prev, isConfidential: checked }))}
-              disabled={isSubmitting}
-            />
-            <Label htmlFor="confidential">Mark as confidential</Label>
-          </div>
-          <div className="flex gap-2">
-            <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
-              Cancel
-            </Button>
-            {uploadType === 'file' && selectedFile && (
-              <Button
-                onClick={handleFileUpload}
-                disabled={isSubmitting}
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                {isSubmitting ? 'Uploading...' : 'Upload File'}
-              </Button>
-            )}
-            {uploadType === 'link' && (
-              <Button
-                onClick={handleLinkSubmit}
-                disabled={!uploadForm.linkUrl || !uploadForm.linkName || isSubmitting}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                {isSubmitting ? 'Adding...' : 'Add Link'}
-              </Button>
-            )}
-          </div>
-        </div>
       </CardContent>
     </Card>
   );

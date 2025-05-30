@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { UserPlus, Search, Mail, Building2, Calendar, Shield, AlertCircle, AlertTriangle } from 'lucide-react';
+import { UserPlus, Search, Mail, Building2, Calendar, Shield, AlertCircle, AlertTriangle, Users } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { UserEditDialog } from './UserEditDialog';
 import type { UserWithProfile } from '@/types/roles';
@@ -21,8 +21,6 @@ export const UsersList: React.FC = () => {
 
   // Debug logging
   console.log('UsersList - isLoading:', isLoading, 'users count:', users?.length || 0);
-  console.log('UsersList - selectedUser:', selectedUser);
-  console.log('UsersList - isEditDialogOpen:', isEditDialogOpen);
 
   const filteredUsers = users.filter(user => {
     const matchesSearch = !searchTerm || 
@@ -36,8 +34,11 @@ export const UsersList: React.FC = () => {
     return matchesSearch && matchesRole;
   });
 
-  // Count users without organisations
+  // Count users without organisations and guest users
   const usersWithoutOrg = filteredUsers.filter(user => !user.clientData?.organization_id);
+  const guestUsers = filteredUsers.filter(user => 
+    user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001'
+  );
 
   const getInitials = (user: UserWithProfile) => {
     const first = user.profile?.first_name?.charAt(0) || '';
@@ -62,16 +63,14 @@ export const UsersList: React.FC = () => {
     }
   };
 
+  const isGuestUser = (user: UserWithProfile) => {
+    return user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001';
+  };
+
   const handleManageUser = (user: UserWithProfile) => {
     console.log('UsersList - Managing user:', user);
-    console.log('UsersList - User roles:', user.roles);
-    console.log('UsersList - User profile:', user.profile);
-    console.log('UsersList - User client data:', user.clientData);
-    
     setSelectedUser(user);
     setIsEditDialogOpen(true);
-    
-    console.log('UsersList - Dialog should be opening');
   };
 
   const handleCloseDialog = () => {
@@ -116,7 +115,17 @@ export const UsersList: React.FC = () => {
         </Button>
       </div>
 
-      {/* Security Warning for users without organisation */}
+      {/* Security Warnings */}
+      {guestUsers.length > 0 && (
+        <Alert className="border-amber-200 bg-amber-50">
+          <Users className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Guest Users:</strong> {guestUsers.length} user(s) are assigned to the guest organisation with limited access. 
+            These users should be moved to proper organisations for full system access.
+          </AlertDescription>
+        </Alert>
+      )}
+
       {usersWithoutOrg.length > 0 && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
@@ -165,11 +174,15 @@ export const UsersList: React.FC = () => {
       <div className="grid gap-4">
         {filteredUsers.map((user) => {
           const hasOrganisation = !!user.clientData?.organization_id;
+          const isGuest = isGuestUser(user);
           
           return (
             <Card 
               key={user.id} 
-              className={`hover:shadow-md transition-shadow ${!hasOrganisation ? 'border-red-300 bg-red-50' : ''}`}
+              className={`hover:shadow-md transition-shadow ${
+                !hasOrganisation ? 'border-red-300 bg-red-50' : 
+                isGuest ? 'border-amber-300 bg-amber-50' : ''
+              }`}
             >
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
@@ -187,6 +200,11 @@ export const UsersList: React.FC = () => {
                         {!hasOrganisation && (
                           <Badge variant="destructive" className="text-xs">
                             No Organisation
+                          </Badge>
+                        )}
+                        {isGuest && (
+                          <Badge variant="outline" className="text-xs border-amber-400 text-amber-700">
+                            Guest User
                           </Badge>
                         )}
                         {user.roles.length > 0 ? (
@@ -220,6 +238,12 @@ export const UsersList: React.FC = () => {
                       {!hasOrganisation && (
                         <div className="text-xs text-red-600 font-medium">
                           ⚠️ Cannot access secure areas - organisation assignment required
+                        </div>
+                      )}
+                      
+                      {isGuest && (
+                        <div className="text-xs text-amber-600 font-medium">
+                          👤 Guest user with limited access - needs proper organisation assignment
                         </div>
                       )}
                     </div>
