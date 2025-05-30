@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -49,7 +48,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         setPendingRoles(userRoles);
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Get organization ID from clientData (which has the proper organization_id field)
+        // Get organization ID from clientData first, then fall back to profile
         const clientOrgId = user.clientData?.organization_id;
         const orgId = clientOrgId || '';
         
@@ -83,40 +82,48 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     console.log('Updating user organisation:', userId, 'to org:', organizationId);
     
     try {
-      // Update both profiles and client_data tables to ensure consistency
-      const updatePromises = [];
-      
-      // Update profiles table (note: this might need to use a different field based on the actual schema)
-      updatePromises.push(
-        supabase
-          .from('profiles')
-          .update({ organization_id: organizationId })
-          .eq('id', userId)
-      );
-      
-      // Upsert to client_data table to ensure it exists and is updated
-      updatePromises.push(
-        supabase
-          .from('client_data')
-          .upsert({
-            user_id: userId,
-            organization_id: organizationId
-          })
-      );
+      // Start with ensuring client_data exists and is updated
+      const { data: existingClientData, error: fetchError } = await supabase
+        .from('client_data')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
 
-      const [profileUpdate, clientDataUpdate] = await Promise.all(updatePromises);
-
-      if (profileUpdate.error) {
-        console.error('Error updating profile organisation:', profileUpdate.error);
-        throw profileUpdate.error;
+      if (fetchError) {
+        console.error('Error fetching client data:', fetchError);
+        throw fetchError;
       }
 
-      if (clientDataUpdate.error) {
-        console.error('Error updating client data organisation:', clientDataUpdate.error);
-        throw clientDataUpdate.error;
+      // Upsert client_data first (this is the primary source)
+      const { error: clientDataError } = await supabase
+        .from('client_data')
+        .upsert({
+          user_id: userId,
+          organization_id: organizationId
+        }, {
+          onConflict: 'user_id'
+        });
+
+      if (clientDataError) {
+        console.error('Error updating client data organisation:', clientDataError);
+        throw clientDataError;
       }
 
-      console.log('Successfully updated user organisation in both tables');
+      console.log('Successfully updated client_data organisation');
+
+      // Now update profiles table to keep it in sync
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ organization_id: organizationId })
+        .eq('id', userId);
+
+      if (profileError) {
+        console.warn('Warning updating profile organisation (non-critical):', profileError);
+        // Don't throw here as client_data is the primary source
+      } else {
+        console.log('Successfully synced profile organisation');
+      }
+
       return true;
     } catch (error) {
       console.error('Failed to update user organisation:', error);
@@ -131,6 +138,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
 
     if (!selectedOrganization) {
+      setDialogError('Organisation assignment is required');
       toast({
         title: 'Organisation Required',
         description: 'User must be assigned to an organisation before accessing the system.',
@@ -140,16 +148,19 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
 
     setIsSubmitting(true);
+    setDialogError(null);
     console.log('Saving changes for user:', user.id);
     console.log('Current roles:', user.roles);
     console.log('Pending roles:', pendingRoles);
     console.log('Selected organisation:', selectedOrganization);
     
     try {
-      // Update organisation first to ensure consistency
+      // Step 1: Update organisation first to ensure data consistency
+      console.log('Step 1: Updating organisation assignment...');
       await updateUserOrganisation(user.id, selectedOrganization);
 
-      // Handle role changes
+      // Step 2: Handle role changes
+      console.log('Step 2: Processing role changes...');
       const currentRoles = user.roles || [];
       const rolesToAdd = pendingRoles.filter(role => !currentRoles.includes(role));
       const rolesToRemove = currentRoles.filter(role => !pendingRoles.includes(role));
@@ -169,20 +180,24 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         await removeUserRole(user.id, role);
       }
 
-      // Refresh data to get updated information
+      // Step 3: Refresh data to get updated information
+      console.log('Step 3: Refreshing user data...');
       await refetchData();
       
       toast({
         title: 'Success',
-        description: 'User updated successfully. Both organization assignment and roles have been saved.',
+        description: 'User updated successfully. Organization assignment and roles have been saved.',
       });
       
+      console.log('User update completed successfully');
       onClose();
     } catch (error) {
       console.error('Error updating user:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setDialogError(`Failed to update user: ${errorMessage}`);
       toast({
         title: 'Error',
-        description: 'Failed to update user. Please try again.',
+        description: `Failed to update user: ${errorMessage}`,
         variant: 'destructive',
       });
     } finally {
@@ -204,7 +219,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     return null;
   }
 
-  if (dialogError) {
+  if (dialogError && !user) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent>
@@ -244,7 +259,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  // Get organization status from clientData
+  // Get organization status from clientData (primary source)
   const clientOrgId = user.clientData?.organization_id;
   const hasOrganisation = !!clientOrgId;
   const selectedOrgName = selectedOrganization 
@@ -268,6 +283,14 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           </div>
         ) : (
           <div className="space-y-6">
+            {/* Show any dialog-specific errors */}
+            {dialogError && (
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>{dialogError}</AlertDescription>
+              </Alert>
+            )}
+
             {!hasOrganisation && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />

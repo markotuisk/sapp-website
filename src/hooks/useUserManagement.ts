@@ -23,6 +23,7 @@ export const useUserManagement = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
+      console.log('useUserManagement: Starting data fetch...');
       
       // Fetch users with profiles first
       const { data: profilesData, error: profilesError } = await supabase
@@ -35,6 +36,8 @@ export const useUserManagement = () => {
         throw new Error(`Failed to fetch profiles: ${profilesError.message}`);
       }
 
+      console.log('useUserManagement: Fetched profiles:', profilesData?.length || 0);
+
       // Fetch user roles separately
       const { data: rolesData, error: rolesError } = await supabase
         .from('user_roles')
@@ -45,6 +48,8 @@ export const useUserManagement = () => {
         // Don't throw here, roles might be empty for some users
       }
 
+      console.log('useUserManagement: Fetched roles:', rolesData?.length || 0);
+
       // Fetch client data separately
       const { data: clientData, error: clientError } = await supabase
         .from('client_data')
@@ -54,6 +59,8 @@ export const useUserManagement = () => {
         console.error('Error fetching client data:', clientError);
         // Don't throw here, client data might not exist for all users
       }
+
+      console.log('useUserManagement: Fetched client data:', clientData?.length || 0);
 
       // Transform and combine the data
       const transformedUsers = profilesData?.map(profile => {
@@ -69,6 +76,7 @@ export const useUserManagement = () => {
         };
       }) || [];
 
+      console.log('useUserManagement: Transformed users:', transformedUsers.length);
       setUsers(transformedUsers);
 
       // Fetch organizations
@@ -81,6 +89,7 @@ export const useUserManagement = () => {
         if (orgsError) {
           console.error('Error fetching organizations:', orgsError);
         } else {
+          console.log('useUserManagement: Fetched organizations:', orgsData?.length || 0);
           setOrganizations(orgsData || []);
         }
       } catch (err) {
@@ -101,6 +110,7 @@ export const useUserManagement = () => {
         if (invitationsError) {
           console.error('Error fetching invitations:', invitationsError);
         } else {
+          console.log('useUserManagement: Fetched invitations:', invitationsData?.length || 0);
           setInvitations(invitationsData || []);
         }
       } catch (err) {
@@ -119,6 +129,7 @@ export const useUserManagement = () => {
         if (activityError) {
           console.error('Error fetching activity logs:', activityError);
         } else {
+          console.log('useUserManagement: Fetched activity logs:', activityData?.length || 0);
           setActivityLogs(activityData || []);
         }
       } catch (err) {
@@ -137,12 +148,15 @@ export const useUserManagement = () => {
         if (authError) {
           console.error('Error fetching auth logs:', authError);
         } else {
+          console.log('useUserManagement: Fetched auth logs:', authData?.length || 0);
           setAuthLogs(authData || []);
         }
       } catch (err) {
         console.error('Auth logs fetch failed:', err);
         setAuthLogs([]);
       }
+
+      console.log('useUserManagement: Data fetch completed successfully');
 
     } catch (error) {
       console.error('Error fetching user management data:', error);
@@ -163,7 +177,7 @@ export const useUserManagement = () => {
   // User management functions with improved error handling and logging
   const assignUserRole = async (userId: string, role: AppRole) => {
     try {
-      console.log(`Attempting to assign role ${role} to user ${userId}`);
+      console.log(`useUserManagement: Attempting to assign role ${role} to user ${userId}`);
       
       const { error } = await supabase.rpc('assign_user_role', {
         _user_id: userId,
@@ -171,32 +185,24 @@ export const useUserManagement = () => {
       });
 
       if (error) {
-        console.error('RPC error:', error);
+        console.error('useUserManagement: RPC error:', error);
         throw error;
       }
 
-      console.log(`Successfully assigned role ${role} to user ${userId}`);
+      console.log(`useUserManagement: Successfully assigned role ${role} to user ${userId}`);
       
-      toast({
-        title: 'Success',
-        description: `Role ${role} assigned successfully`,
-      });
-      
+      // Don't show toast here, let the calling component handle it
       // Don't refetch here, let the parent component handle it
     } catch (error) {
-      console.error('Error assigning role:', error);
-      toast({
-        title: 'Error',
-        description: `Failed to assign role: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        variant: 'destructive',
-      });
-      throw error; // Re-throw so the calling function knows it failed
+      console.error('useUserManagement: Error assigning role:', error);
+      // Re-throw so the calling function knows it failed
+      throw error;
     }
   };
 
   const removeUserRole = async (userId: string, role: AppRole) => {
     try {
-      console.log(`Attempting to remove role ${role} from user ${userId}`);
+      console.log(`useUserManagement: Attempting to remove role ${role} from user ${userId}`);
       
       const { error } = await supabase.rpc('remove_user_role', {
         _user_id: userId,
@@ -204,40 +210,37 @@ export const useUserManagement = () => {
       });
 
       if (error) {
-        console.error('RPC error:', error);
+        console.error('useUserManagement: RPC error:', error);
         throw error;
       }
 
-      console.log(`Successfully removed role ${role} from user ${userId}`);
+      console.log(`useUserManagement: Successfully removed role ${role} from user ${userId}`);
       
-      toast({
-        title: 'Success',
-        description: `Role ${role} removed successfully`,
-      });
-      
+      // Don't show toast here, let the calling component handle it
       // Don't refetch here, let the parent component handle it
     } catch (error) {
-      console.error('Error removing role:', error);
-      toast({
-        title: 'Error',
-        description: `Failed to remove role: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        variant: 'destructive',
-      });
-      throw error; // Re-throw so the calling function knows it failed
+      console.error('useUserManagement: Error removing role:', error);
+      // Re-throw so the calling function knows it failed
+      throw error;
     }
   };
 
   // Organization management
   const createOrganization = async (orgData: Omit<Organization, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      console.log('useUserManagement: Creating organization:', orgData);
       const { data, error } = await supabase
         .from('organizations')
         .insert(orgData)
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('useUserManagement: Error creating organization:', error);
+        throw error;
+      }
 
+      console.log('useUserManagement: Successfully created organization:', data);
       setOrganizations(prev => [data, ...prev]);
       toast({
         title: 'Success',
@@ -245,7 +248,7 @@ export const useUserManagement = () => {
       });
       return data;
     } catch (error) {
-      console.error('Error creating organization:', error);
+      console.error('useUserManagement: Error creating organization:', error);
       toast({
         title: 'Error',
         description: 'Failed to create organization',
@@ -258,6 +261,7 @@ export const useUserManagement = () => {
   // User invitation
   const createInvitation = async (email: string, organizationId: string, roles: AppRole[]) => {
     try {
+      console.log('useUserManagement: Creating invitation for:', email, 'org:', organizationId, 'roles:', roles);
       const { data, error } = await supabase
         .from('user_invitations')
         .insert({
@@ -268,8 +272,12 @@ export const useUserManagement = () => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('useUserManagement: Error creating invitation:', error);
+        throw error;
+      }
 
+      console.log('useUserManagement: Successfully created invitation:', data);
       setInvitations(prev => [data, ...prev]);
       toast({
         title: 'Success',
@@ -277,7 +285,7 @@ export const useUserManagement = () => {
       });
       return data;
     } catch (error) {
-      console.error('Error creating invitation:', error);
+      console.error('useUserManagement: Error creating invitation:', error);
       toast({
         title: 'Error',
         description: 'Failed to send invitation',
