@@ -27,6 +27,7 @@ export interface UserRole {
 export interface ClientData {
   id: string;
   user_id: string;
+  organization_id?: string;
   company_name?: string;
   industry?: string;
   company_size?: string;
