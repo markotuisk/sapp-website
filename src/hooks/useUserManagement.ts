@@ -24,61 +24,131 @@ export const useUserManagement = () => {
     try {
       setIsLoading(true);
       
-      const [usersRes, orgsRes, invitationsRes, activityRes, authRes] = await Promise.all([
-        // Fetch users with profiles and roles
-        supabase
-          .from('profiles')
-          .select(`
-            *,
-            user_roles(role),
-            client_data(*),
-            organizations(name, industry)
-          `),
-        supabase
+      // Fetch users with profiles first
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+        throw new Error(`Failed to fetch profiles: ${profilesError.message}`);
+      }
+
+      // Fetch user roles separately
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('*');
+
+      if (rolesError) {
+        console.error('Error fetching roles:', rolesError);
+        // Don't throw here, roles might be empty for some users
+      }
+
+      // Fetch client data separately
+      const { data: clientData, error: clientError } = await supabase
+        .from('client_data')
+        .select('*');
+
+      if (clientError) {
+        console.error('Error fetching client data:', clientError);
+        // Don't throw here, client data might not exist for all users
+      }
+
+      // Transform and combine the data
+      const transformedUsers = profilesData?.map(profile => {
+        const userRoles = rolesData?.filter(role => role.user_id === profile.id).map(r => r.role) || [];
+        const userClientData = clientData?.find(cd => cd.user_id === profile.id) || null;
+        
+        return {
+          id: profile.id,
+          email: profile.email,
+          profile: profile,
+          roles: userRoles as AppRole[],
+          clientData: userClientData
+        };
+      }) || [];
+
+      setUsers(transformedUsers);
+
+      // Fetch organizations
+      try {
+        const { data: orgsData, error: orgsError } = await supabase
           .from('organizations')
           .select('*')
-          .order('created_at', { ascending: false }),
-        supabase
+          .order('created_at', { ascending: false });
+
+        if (orgsError) {
+          console.error('Error fetching organizations:', orgsError);
+        } else {
+          setOrganizations(orgsData || []);
+        }
+      } catch (err) {
+        console.error('Organizations fetch failed:', err);
+        setOrganizations([]);
+      }
+
+      // Fetch invitations
+      try {
+        const { data: invitationsData, error: invitationsError } = await supabase
           .from('user_invitations')
-          .select('*, organizations(name)')
-          .order('created_at', { ascending: false }),
-        supabase
+          .select(`
+            *,
+            organizations(name)
+          `)
+          .order('created_at', { ascending: false });
+
+        if (invitationsError) {
+          console.error('Error fetching invitations:', invitationsError);
+        } else {
+          setInvitations(invitationsData || []);
+        }
+      } catch (err) {
+        console.error('Invitations fetch failed:', err);
+        setInvitations([]);
+      }
+
+      // Fetch activity logs
+      try {
+        const { data: activityData, error: activityError } = await supabase
           .from('user_activity_logs')
           .select('*')
           .order('created_at', { ascending: false })
-          .limit(100),
-        supabase
+          .limit(100);
+
+        if (activityError) {
+          console.error('Error fetching activity logs:', activityError);
+        } else {
+          setActivityLogs(activityData || []);
+        }
+      } catch (err) {
+        console.error('Activity logs fetch failed:', err);
+        setActivityLogs([]);
+      }
+
+      // Fetch auth logs
+      try {
+        const { data: authData, error: authError } = await supabase
           .from('auth_logs')
           .select('*')
           .order('timestamp', { ascending: false })
-          .limit(100)
-      ]);
+          .limit(100);
 
-      if (usersRes.error) throw usersRes.error;
-      if (orgsRes.error) throw orgsRes.error;
-      if (invitationsRes.error) throw invitationsRes.error;
-      if (activityRes.error) throw activityRes.error;
-      if (authRes.error) throw authRes.error;
+        if (authError) {
+          console.error('Error fetching auth logs:', authError);
+        } else {
+          setAuthLogs(authData || []);
+        }
+      } catch (err) {
+        console.error('Auth logs fetch failed:', err);
+        setAuthLogs([]);
+      }
 
-      // Transform users data
-      const transformedUsers = usersRes.data?.map(user => ({
-        id: user.id,
-        email: user.email,
-        profile: user,
-        roles: user.user_roles?.map(r => r.role) || [],
-        clientData: user.client_data?.[0] || null
-      })) || [];
-
-      setUsers(transformedUsers);
-      setOrganizations(orgsRes.data || []);
-      setInvitations(invitationsRes.data || []);
-      setActivityLogs(activityRes.data || []);
-      setAuthLogs(authRes.data || []);
     } catch (error) {
       console.error('Error fetching user management data:', error);
       toast({
         title: 'Error',
-        description: 'Failed to load user management data',
+        description: error instanceof Error ? error.message : 'Failed to load user management data',
         variant: 'destructive',
       });
     } finally {

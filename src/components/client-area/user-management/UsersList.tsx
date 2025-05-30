@@ -6,10 +6,11 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { UserPlus, Search, Mail, Building2, Calendar, Shield } from 'lucide-react';
+import { UserPlus, Search, Mail, Building2, Calendar, Shield, AlertCircle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { UserEditDialog } from './UserEditDialog';
 import type { UserWithProfile } from '@/types/roles';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export const UsersList: React.FC = () => {
   const { users, isLoading } = useUserManagement();
@@ -17,6 +18,9 @@ export const UsersList: React.FC = () => {
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [selectedUser, setSelectedUser] = useState<UserWithProfile | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  // Debug logging
+  console.log('UsersList - isLoading:', isLoading, 'users count:', users?.length || 0);
 
   const filteredUsers = users.filter(user => {
     const matchesSearch = !searchTerm || 
@@ -54,7 +58,19 @@ export const UsersList: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div>Loading users...</div>;
+    return (
+      <div className="space-y-4">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2 mb-6"></div>
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-24 bg-gray-200 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -70,6 +86,16 @@ export const UsersList: React.FC = () => {
           Add User
         </Button>
       </div>
+
+      {/* Debug info */}
+      {users.length === 0 && !isLoading && (
+        <Alert>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            No users found in the database. This might indicate a permission issue or the database is empty.
+          </AlertDescription>
+        </Alert>
+      )}
 
       <div className="flex gap-4">
         <div className="relative flex-1">
@@ -112,11 +138,15 @@ export const UsersList: React.FC = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <h3 className="font-semibold">{getDisplayName(user)}</h3>
-                      {user.roles.map(role => (
-                        <Badge key={role} className={getRoleColor(role)}>
-                          {role}
-                        </Badge>
-                      ))}
+                      {user.roles.length > 0 ? (
+                        user.roles.map(role => (
+                          <Badge key={role} className={getRoleColor(role)}>
+                            {role}
+                          </Badge>
+                        ))
+                      ) : (
+                        <Badge variant="outline">No roles</Badge>
+                      )}
                     </div>
                     
                     <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -157,15 +187,25 @@ export const UsersList: React.FC = () => {
         ))}
       </div>
 
-      {filteredUsers.length === 0 && (
+      {filteredUsers.length === 0 && users.length > 0 && (
         <Card>
           <CardContent className="p-12 text-center">
             <UserPlus className="h-12 w-12 mx-auto text-gray-400 mb-4" />
             <h3 className="text-lg font-semibold mb-2">No users found</h3>
             <p className="text-gray-600">
-              {searchTerm || roleFilter !== 'all' 
-                ? 'Try adjusting your search criteria or filters.'
-                : 'Start by inviting users to your organization.'}
+              Try adjusting your search criteria or filters.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {filteredUsers.length === 0 && users.length === 0 && !isLoading && (
+        <Card>
+          <CardContent className="p-12 text-center">
+            <UserPlus className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No users found</h3>
+            <p className="text-gray-600">
+              No users are available. This might indicate a database access issue.
             </p>
           </CardContent>
         </Card>
