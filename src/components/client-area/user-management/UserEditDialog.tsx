@@ -1,20 +1,17 @@
+
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, AlertCircle, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-
-const AVAILABLE_ROLES: AppRole[] = ['admin', 'manager', 'support', 'client'];
+import { UserInfoCard } from './UserInfoCard';
+import { OrganizationAssignmentCard } from './OrganizationAssignmentCard';
+import { CurrentRolesCard } from './CurrentRolesCard';
+import { RoleManagementCard } from './RoleManagementCard';
 
 interface UserEditDialogProps {
   user: UserWithProfile | null;
@@ -50,7 +47,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         setPendingRoles(userRoles);
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Get organization ID from clientData first, then fall back to profile
         const clientOrgId = user.clientData?.organization_id;
         const orgId = clientOrgId || '';
         
@@ -74,7 +70,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
   const handleRoleToggle = (role: AppRole, checked: boolean) => {
     console.log('Role toggle:', role, checked);
-    setSuccessMessage(null); // Clear success message when making changes
+    setSuccessMessage(null);
     if (checked) {
       setPendingRoles(prev => [...prev, role]);
     } else {
@@ -82,11 +78,15 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
+  const handleOrganizationChange = (value: string) => {
+    setSelectedOrganization(value);
+    setSuccessMessage(null);
+  };
+
   const updateUserOrganisation = async (userId: string, organizationId: string) => {
     console.log('Updating user organisation:', userId, 'to org:', organizationId);
     
     try {
-      // First, check if client_data exists for this user
       const { data: existingClientData, error: checkError } = await supabase
         .from('client_data')
         .select('*')
@@ -99,7 +99,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       }
 
       if (existingClientData) {
-        // Update existing client_data
         console.log('Updating existing client_data:', existingClientData.id);
         const { error: updateError } = await supabase
           .from('client_data')
@@ -112,7 +111,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         }
         console.log('Successfully updated existing client_data organisation');
       } else {
-        // Create new client_data record
         console.log('Creating new client_data record for user:', userId);
         const { error: insertError } = await supabase
           .from('client_data')
@@ -123,7 +121,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
         if (insertError) {
           console.error('Error creating client data:', insertError);
-          // Provide more specific error messages for common RLS issues
           if (insertError.message.includes('row-level security')) {
             throw new Error('Permission denied: Unable to create organization assignment. Please contact an administrator.');
           }
@@ -132,7 +129,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         console.log('Successfully created new client_data organisation');
       }
 
-      // Also update profiles table to keep it in sync (non-critical)
       const { error: profileError } = await supabase
         .from('profiles')
         .update({ organization_id: organizationId })
@@ -140,7 +136,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
       if (profileError) {
         console.warn('Warning updating profile organisation (non-critical):', profileError);
-        // Don't throw here as client_data is the primary source
       } else {
         console.log('Successfully synced profile organisation');
       }
@@ -177,12 +172,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     console.log('Selected organisation:', selectedOrganization);
     
     try {
-      // Step 1: Update organisation first
       console.log('Step 1: Updating organisation assignment...');
       await updateUserOrganisation(user.id, selectedOrganization);
       console.log('✓ Organisation assignment completed successfully');
 
-      // Step 2: Handle role changes one by one with proper error handling
       console.log('Step 2: Processing role changes...');
       const currentRoles = user.roles || [];
       const rolesToAdd = pendingRoles.filter(role => !currentRoles.includes(role));
@@ -191,7 +184,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       console.log('Roles to add:', rolesToAdd);
       console.log('Roles to remove:', rolesToRemove);
 
-      // Remove roles first
       for (const role of rolesToRemove) {
         try {
           console.log(`Removing role ${role} from user ${user.id}`);
@@ -207,7 +199,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         }
       }
 
-      // Add new roles
       for (const role of rolesToAdd) {
         try {
           console.log(`Assigning role ${role} to user ${user.id}`);
@@ -225,7 +216,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
       console.log('✓ All role changes completed successfully');
 
-      // Step 3: Refresh data to get updated information
       console.log('Step 3: Refreshing user data...');
       await refetchData();
       console.log('✓ Data refresh completed');
@@ -238,7 +228,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       
       console.log('✓ User update completed successfully');
       
-      // Close dialog after a brief delay to show success message
       setTimeout(() => {
         onClose();
       }, 1500);
@@ -254,16 +243,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       });
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const getRoleColor = (role: string) => {
-    switch (role) {
-      case 'admin': return 'bg-red-100 text-red-800';
-      case 'manager': return 'bg-blue-100 text-blue-800';
-      case 'support': return 'bg-green-100 text-green-800';
-      case 'client': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -311,7 +290,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  // Get organization status from clientData (primary source)
   const clientOrgId = user.clientData?.organization_id;
   const hasOrganisation = !!clientOrgId;
   const selectedOrgName = selectedOrganization 
@@ -335,7 +313,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           </div>
         ) : (
           <div className="space-y-6">
-            {/* Show success message */}
             {successMessage && (
               <Alert className="border-green-200 bg-green-50">
                 <CheckCircle className="h-4 w-4 text-green-600" />
@@ -343,7 +320,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
               </Alert>
             )}
 
-            {/* Show any dialog-specific errors */}
             {dialogError && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
@@ -361,134 +337,25 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
               </Alert>
             )}
 
-            {/* User Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">User Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label>Email</Label>
-                    <Input value={user.email || ''} disabled />
-                  </div>
-                  <div>
-                    <Label>First Name</Label>
-                    <Input value={user.profile?.first_name || ''} disabled />
-                  </div>
-                  <div>
-                    <Label>Last Name</Label>
-                    <Input value={user.profile?.last_name || ''} disabled />
-                  </div>
-                  <div>
-                    <Label>Current Organisation</Label>
-                    <Input 
-                      value={selectedOrgName} 
-                      disabled 
-                      className={!hasOrganisation && !successMessage ? 'border-red-300 bg-red-50' : ''}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <UserInfoCard 
+              user={user}
+              selectedOrgName={selectedOrgName}
+              hasOrganisation={hasOrganisation}
+              successMessage={successMessage}
+            />
 
-            {/* Organisation Assignment */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Organisation Assignment</CardTitle>
-                <CardDescription>
-                  <strong>Required:</strong> All users must be assigned to an organisation for security and access control
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="organization">Select Organisation *</Label>
-                    <Select value={selectedOrganization} onValueChange={(value) => {
-                      setSelectedOrganization(value);
-                      setSuccessMessage(null); // Clear success message when making changes
-                    }}>
-                      <SelectTrigger className={!selectedOrganization ? 'border-red-300' : ''}>
-                        <SelectValue placeholder="Organisation is required" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {organizations.map(org => (
-                          <SelectItem key={org.id} value={org.id}>
-                            {org.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  {organizations.length === 0 && (
-                    <Alert>
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>
-                        No organisations available. Create an organisation first in the Organisations tab.
-                      </AlertDescription>
-                    </Alert>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            <OrganizationAssignmentCard 
+              selectedOrganization={selectedOrganization}
+              onOrganizationChange={handleOrganizationChange}
+              organizations={organizations}
+            />
 
-            {/* Current Roles */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Current Roles</CardTitle>
-                <CardDescription>User currently has these roles assigned</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {(user.roles && user.roles.length > 0) ? (
-                    user.roles.map(role => (
-                      <Badge key={role} className={getRoleColor(role)}>
-                        {role}
-                      </Badge>
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No roles assigned</p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            <CurrentRolesCard roles={user.roles || []} />
 
-            {/* Role Management */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Manage Roles</CardTitle>
-                <CardDescription>Select which roles this user should have</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {AVAILABLE_ROLES.map(role => (
-                    <div key={role} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={role}
-                        checked={pendingRoles.includes(role)}
-                        onCheckedChange={(checked) => handleRoleToggle(role, !!checked)}
-                      />
-                      <Label htmlFor={role} className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="font-medium capitalize">{role}</span>
-                            <p className="text-sm text-gray-500">
-                              {role === 'admin' && 'Full system access and user management (SAPP Security only)'}
-                              {role === 'manager' && 'Manage teams and oversee operations'}
-                              {role === 'support' && 'Provide customer support and assistance'}
-                              {role === 'client' && 'Standard client access to services'}
-                            </p>
-                          </div>
-                          <Badge className={getRoleColor(role)}>
-                            {role}
-                          </Badge>
-                        </div>
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <RoleManagementCard 
+              pendingRoles={pendingRoles}
+              onRoleToggle={handleRoleToggle}
+            />
           </div>
         )}
 
