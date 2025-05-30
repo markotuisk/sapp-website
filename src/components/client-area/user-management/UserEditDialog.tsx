@@ -49,26 +49,16 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         setPendingRoles(userRoles);
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Get organization ID with improved fallback logic
-        // Priority: client_data.organization_id > profiles.organization_id
+        // Get organization ID from clientData (which has the proper organization_id field)
         const clientOrgId = user.clientData?.organization_id;
-        const profileOrgId = user.profile?.organization_id;
-        const orgId = clientOrgId || profileOrgId || '';
+        const orgId = clientOrgId || '';
         
         setSelectedOrganization(orgId);
         console.log('UserEditDialog - Organization sources:', {
           clientOrgId,
-          profileOrgId,
           finalOrgId: orgId
         });
         
-        // Log data inconsistency for debugging
-        if (profileOrgId && clientOrgId && profileOrgId !== clientOrgId) {
-          console.warn('UserEditDialog - Data inconsistency detected:', {
-            profileOrgId,
-            clientOrgId
-          });
-        }
       } catch (error) {
         console.error('Error setting up user data:', error);
         setDialogError('Failed to load user data');
@@ -96,7 +86,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       // Update both profiles and client_data tables to ensure consistency
       const updatePromises = [];
       
-      // Update profiles table
+      // Update profiles table (note: this might need to use a different field based on the actual schema)
       updatePromises.push(
         supabase
           .from('profiles')
@@ -254,10 +244,9 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  // Improved organization detection with fallback
+  // Get organization status from clientData
   const clientOrgId = user.clientData?.organization_id;
-  const profileOrgId = user.profile?.organization_id;
-  const hasOrganisation = !!(clientOrgId || profileOrgId);
+  const hasOrganisation = !!clientOrgId;
   const selectedOrgName = selectedOrganization 
     ? organizations.find(org => org.id === selectedOrganization)?.name || 'Unknown Organisation'
     : 'No organisation assigned';
@@ -285,17 +274,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                 <AlertDescription>
                   <strong>Security Warning:</strong> This user has no organisation assigned and cannot access any secure documents or areas. 
                   An organisation must be assigned before the user can use the system.
-                </AlertDescription>
-              </Alert>
-            )}
-
-            {/* Data Inconsistency Warning */}
-            {profileOrgId && clientOrgId && profileOrgId !== clientOrgId && (
-              <Alert className="border-yellow-200 bg-yellow-50">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>
-                  <strong>Data Inconsistency Detected:</strong> This user has different organization assignments in profile ({profileOrgId}) and client data ({clientOrgId}). 
-                  Saving changes will synchronize both records.
                 </AlertDescription>
               </Alert>
             )}
