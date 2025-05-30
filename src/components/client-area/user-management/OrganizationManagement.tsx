@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,7 +21,9 @@ export const OrganizationManagement: React.FC = () => {
     website: '',
     phone: '',
     subscription_tier: 'basic',
-    status: 'active'
+    status: 'active',
+    address: null as any,
+    logo_url: ''
   });
 
   const handleCreateOrganization = async () => {
@@ -37,7 +38,9 @@ export const OrganizationManagement: React.FC = () => {
         website: '',
         phone: '',
         subscription_tier: 'basic',
-        status: 'active'
+        status: 'active',
+        address: null,
+        logo_url: ''
       });
     } catch (error) {
       console.error('Failed to create organization:', error);

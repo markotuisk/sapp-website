@@ -35,7 +35,9 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   useEffect(() => {
     if (user && isOpen) {
       setPendingRoles(user.roles || []);
-      setSelectedOrganization(user.profile?.organization_id || '');
+      // Check if user has an organization through the client data organization_id
+      const orgId = user.clientData?.organization_id || '';
+      setSelectedOrganization(orgId);
     }
   }, [user, isOpen]);
 
@@ -102,6 +104,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
+  // Find organization name from the selected organization ID
   const selectedOrgName = organizations.find(org => org.id === selectedOrganization)?.name || 'No organization';
 
   return (
@@ -149,18 +152,18 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Organization Assignment</CardTitle>
-                <CardDescription>Assign user to an organization for proper access control</CardDescription>
+                <CardDescription>Assign user to an organisation for proper access control</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="organization">Select Organization</Label>
+                    <Label htmlFor="organization">Select Organisation</Label>
                     <Select value={selectedOrganization} onValueChange={setSelectedOrganization}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select an organization" />
+                        <SelectValue placeholder="Select an organisation" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">No organization</SelectItem>
+                        <SelectItem value="">No organisation</SelectItem>
                         {organizations.map(org => (
                           <SelectItem key={org.id} value={org.id}>
                             {org.name}
@@ -171,7 +174,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                   </div>
                   {organizations.length === 0 && (
                     <p className="text-sm text-gray-500">
-                      No organizations available. Create an organization first in the Organizations tab.
+                      No organisations available. Create an organisation first in the Organisations tab.
                     </p>
                   )}
                 </div>
