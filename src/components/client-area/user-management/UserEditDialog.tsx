@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, AlertCircle, AlertTriangle } from 'lucide-react';
+import { Loader2, AlertCircle, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserWithProfile, AppRole } from '@/types/roles';
@@ -33,6 +32,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
   const [selectedOrganization, setSelectedOrganization] = useState<string>('');
   const [dialogError, setDialogError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { toast } = useToast();
 
   console.log('UserEditDialog render - user:', user);
@@ -44,6 +44,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     if (user && isOpen) {
       try {
         setDialogError(null);
+        setSuccessMessage(null);
         
         const userRoles = Array.isArray(user.roles) ? user.roles : [];
         setPendingRoles(userRoles);
@@ -67,11 +68,13 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       setPendingRoles([]);
       setSelectedOrganization('');
       setDialogError(null);
+      setSuccessMessage(null);
     }
   }, [user, isOpen]);
 
   const handleRoleToggle = (role: AppRole, checked: boolean) => {
     console.log('Role toggle:', role, checked);
+    setSuccessMessage(null); // Clear success message when making changes
     if (checked) {
       setPendingRoles(prev => [...prev, role]);
     } else {
@@ -83,24 +86,53 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     console.log('Updating user organisation:', userId, 'to org:', organizationId);
     
     try {
-      // Update client_data first (this is the primary source for organization)
-      const { error: clientDataError } = await supabase
+      // First, check if client_data exists for this user
+      const { data: existingClientData, error: checkError } = await supabase
         .from('client_data')
-        .upsert({
-          user_id: userId,
-          organization_id: organizationId
-        }, {
-          onConflict: 'user_id'
-        });
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
 
-      if (clientDataError) {
-        console.error('Error updating client data organisation:', clientDataError);
-        throw new Error(`Client data update failed: ${clientDataError.message}`);
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking existing client data:', checkError);
+        throw new Error(`Failed to check existing client data: ${checkError.message}`);
       }
 
-      console.log('Successfully updated client_data organisation');
+      if (existingClientData) {
+        // Update existing client_data
+        console.log('Updating existing client_data:', existingClientData.id);
+        const { error: updateError } = await supabase
+          .from('client_data')
+          .update({ organization_id: organizationId })
+          .eq('user_id', userId);
 
-      // Now update profiles table to keep it in sync
+        if (updateError) {
+          console.error('Error updating client data organisation:', updateError);
+          throw new Error(`Failed to update organization: ${updateError.message}`);
+        }
+        console.log('Successfully updated existing client_data organisation');
+      } else {
+        // Create new client_data record
+        console.log('Creating new client_data record for user:', userId);
+        const { error: insertError } = await supabase
+          .from('client_data')
+          .insert({
+            user_id: userId,
+            organization_id: organizationId
+          });
+
+        if (insertError) {
+          console.error('Error creating client data:', insertError);
+          // Provide more specific error messages for common RLS issues
+          if (insertError.message.includes('row-level security')) {
+            throw new Error('Permission denied: Unable to create organization assignment. Please contact an administrator.');
+          }
+          throw new Error(`Failed to create organization assignment: ${insertError.message}`);
+        }
+        console.log('Successfully created new client_data organisation');
+      }
+
+      // Also update profiles table to keep it in sync (non-critical)
       const { error: profileError } = await supabase
         .from('profiles')
         .update({ organization_id: organizationId })
@@ -138,6 +170,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
     setIsSubmitting(true);
     setDialogError(null);
+    setSuccessMessage(null);
     console.log('Saving changes for user:', user.id);
     console.log('Current roles:', user.roles);
     console.log('Pending roles:', pendingRoles);
@@ -147,6 +180,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       // Step 1: Update organisation first
       console.log('Step 1: Updating organisation assignment...');
       await updateUserOrganisation(user.id, selectedOrganization);
+      console.log('✓ Organisation assignment completed successfully');
 
       // Step 2: Handle role changes one by one with proper error handling
       console.log('Step 2: Processing role changes...');
@@ -162,10 +196,14 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         try {
           console.log(`Removing role ${role} from user ${user.id}`);
           await removeUserRole(user.id, role);
-          console.log(`Successfully removed role ${role}`);
+          console.log(`✓ Successfully removed role ${role}`);
         } catch (error) {
           console.error(`Failed to remove role ${role}:`, error);
-          throw new Error(`Failed to remove role ${role}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          if (errorMessage.includes('row-level security')) {
+            throw new Error(`Permission denied: Unable to remove role ${role}. Please contact an administrator.`);
+          }
+          throw new Error(`Failed to remove role ${role}: ${errorMessage}`);
         }
       }
 
@@ -174,28 +212,41 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         try {
           console.log(`Assigning role ${role} to user ${user.id}`);
           await assignUserRole(user.id, role);
-          console.log(`Successfully assigned role ${role}`);
+          console.log(`✓ Successfully assigned role ${role}`);
         } catch (error) {
           console.error(`Failed to assign role ${role}:`, error);
-          throw new Error(`Failed to assign role ${role}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          if (errorMessage.includes('row-level security')) {
+            throw new Error(`Permission denied: Unable to assign role ${role}. Please contact an administrator.`);
+          }
+          throw new Error(`Failed to assign role ${role}: ${errorMessage}`);
         }
       }
+
+      console.log('✓ All role changes completed successfully');
 
       // Step 3: Refresh data to get updated information
       console.log('Step 3: Refreshing user data...');
       await refetchData();
+      console.log('✓ Data refresh completed');
       
+      setSuccessMessage('User updated successfully! All changes have been saved.');
       toast({
         title: 'Success',
         description: 'User updated successfully. Organization assignment and roles have been saved.',
       });
       
-      console.log('User update completed successfully');
-      onClose();
+      console.log('✓ User update completed successfully');
+      
+      // Close dialog after a brief delay to show success message
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+      
     } catch (error) {
       console.error('Error updating user:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      setDialogError(`Failed to update user: ${errorMessage}`);
+      setDialogError(errorMessage);
       toast({
         title: 'Error',
         description: `Failed to update user: ${errorMessage}`,
@@ -284,6 +335,14 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           </div>
         ) : (
           <div className="space-y-6">
+            {/* Show success message */}
+            {successMessage && (
+              <Alert className="border-green-200 bg-green-50">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-800">{successMessage}</AlertDescription>
+              </Alert>
+            )}
+
             {/* Show any dialog-specific errors */}
             {dialogError && (
               <Alert variant="destructive">
@@ -292,7 +351,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
               </Alert>
             )}
 
-            {!hasOrganisation && (
+            {!hasOrganisation && !successMessage && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
                 <AlertDescription>
@@ -326,7 +385,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                     <Input 
                       value={selectedOrgName} 
                       disabled 
-                      className={!hasOrganisation ? 'border-red-300 bg-red-50' : ''}
+                      className={!hasOrganisation && !successMessage ? 'border-red-300 bg-red-50' : ''}
                     />
                   </div>
                 </div>
@@ -345,7 +404,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="organization">Select Organisation *</Label>
-                    <Select value={selectedOrganization} onValueChange={setSelectedOrganization}>
+                    <Select value={selectedOrganization} onValueChange={(value) => {
+                      setSelectedOrganization(value);
+                      setSuccessMessage(null); // Clear success message when making changes
+                    }}>
                       <SelectTrigger className={!selectedOrganization ? 'border-red-300' : ''}>
                         <SelectValue placeholder="Organisation is required" />
                       </SelectTrigger>
@@ -432,21 +494,23 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
         <DialogFooter>
           <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
-            Cancel
+            {successMessage ? 'Close' : 'Cancel'}
           </Button>
-          <Button 
-            onClick={handleSaveChanges} 
-            disabled={isSubmitting || isLoading || !selectedOrganization}
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              'Save Changes'
-            )}
-          </Button>
+          {!successMessage && (
+            <Button 
+              onClick={handleSaveChanges} 
+              disabled={isSubmitting || isLoading || !selectedOrganization}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
