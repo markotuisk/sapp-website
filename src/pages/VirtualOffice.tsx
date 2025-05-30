@@ -55,7 +55,7 @@ const ClientArea = () => {
             
             <div className="p-8">
               {user ? (
-                <ClientDashboard onSignOut={handleSignOut} />
+                <ClientDashboard />
               ) : (
                 <UnauthenticatedView
                   isSubmitting={isSubmitting}

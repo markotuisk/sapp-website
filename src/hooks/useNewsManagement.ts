@@ -59,11 +59,11 @@ export const useNewsManagement = () => {
   }, []);
 
   // Article management
-  const createArticle = async (articleData: Partial<NewsArticle>) => {
+  const createArticle = async (articleData: Omit<NewsArticle, 'id' | 'created_at' | 'updated_at'>) => {
     try {
       const { data, error } = await supabase
         .from('news_articles')
-        .insert([articleData])
+        .insert(articleData)
         .select()
         .single();
 
