@@ -30,7 +30,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const { assignUserRole, removeUserRole, refetchData, organizations, isLoading } = useUserManagement();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
-  const [selectedOrganization, setSelectedOrganization] = useState<string>('');
+  const [selectedOrganization, setSelectedOrganization] = useState<string>('none');
   const [dialogError, setDialogError] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -53,7 +53,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         console.log('UserEditDialog - Set pending roles:', userRoles);
         
         // Get organization ID from client data, safely handling undefined
-        const orgId = user.clientData?.organization_id || '';
+        const orgId = user.clientData?.organization_id || 'none';
         setSelectedOrganization(orgId);
         console.log('UserEditDialog - Set organization ID:', orgId);
       } catch (error) {
@@ -63,7 +63,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     } else {
       // Reset state when dialog closes or user is null
       setPendingRoles([]);
-      setSelectedOrganization('');
+      setSelectedOrganization('none');
       setDialogError(null);
     }
   }, [user, isOpen]);
@@ -186,7 +186,9 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   }
 
   // Find organization name from the selected organization ID
-  const selectedOrgName = organizations.find(org => org.id === selectedOrganization)?.name || 'No organization';
+  const selectedOrgName = selectedOrganization === 'none' 
+    ? 'No organisation' 
+    : organizations.find(org => org.id === selectedOrganization)?.name || 'No organisation';
 
   console.log('UserEditDialog - Rendering with user:', user.email);
 
@@ -249,7 +251,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
                         <SelectValue placeholder="Select an organisation" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">No organisation</SelectItem>
+                        <SelectItem value="none">No organisation</SelectItem>
                         {organizations.map(org => (
                           <SelectItem key={org.id} value={org.id}>
                             {org.name}
