@@ -8,10 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const AVAILABLE_ROLES: AppRole[] = ['admin', 'manager', 'support', 'client'];
 
@@ -30,30 +31,40 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
   const [selectedOrganization, setSelectedOrganization] = useState<string>('');
+  const [dialogError, setDialogError] = useState<string | null>(null);
   const { toast } = useToast();
 
   // Debug logging
-  console.log('UserEditDialog - user:', user);
-  console.log('UserEditDialog - isOpen:', isOpen);
-  console.log('UserEditDialog - organizations:', organizations);
+  console.log('UserEditDialog render - user:', user);
+  console.log('UserEditDialog render - isOpen:', isOpen);
+  console.log('UserEditDialog render - isLoading:', isLoading);
+  console.log('UserEditDialog render - organizations:', organizations);
 
   useEffect(() => {
+    console.log('UserEditDialog useEffect triggered - user:', user, 'isOpen:', isOpen);
+    
     if (user && isOpen) {
-      console.log('UserEditDialog - Setting up user data:', user);
-      
-      // Safely handle roles array - ensure it's always an array
-      const userRoles = Array.isArray(user.roles) ? user.roles : [];
-      setPendingRoles(userRoles);
-      console.log('UserEditDialog - Set pending roles:', userRoles);
-      
-      // Get organization ID from client data, safely handling undefined
-      const orgId = user.clientData?.organization_id || '';
-      setSelectedOrganization(orgId);
-      console.log('UserEditDialog - Set organization ID:', orgId);
+      try {
+        setDialogError(null);
+        
+        // Safely handle roles array - ensure it's always an array
+        const userRoles = Array.isArray(user.roles) ? user.roles : [];
+        setPendingRoles(userRoles);
+        console.log('UserEditDialog - Set pending roles:', userRoles);
+        
+        // Get organization ID from client data, safely handling undefined
+        const orgId = user.clientData?.organization_id || '';
+        setSelectedOrganization(orgId);
+        console.log('UserEditDialog - Set organization ID:', orgId);
+      } catch (error) {
+        console.error('Error setting up user data:', error);
+        setDialogError('Failed to load user data');
+      }
     } else {
       // Reset state when dialog closes or user is null
       setPendingRoles([]);
       setSelectedOrganization('');
+      setDialogError(null);
     }
   }, [user, isOpen]);
 
@@ -124,12 +135,35 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
-  // Don't render anything if not open
+  // Early return if dialog is not open
   if (!isOpen) {
+    console.log('UserEditDialog - Not open, returning null');
     return null;
   }
 
-  // Don't render anything if user is null
+  // Show error state if there's a dialog error
+  if (dialogError) {
+    console.log('UserEditDialog - Showing error state:', dialogError);
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Error</DialogTitle>
+            <DialogDescription>Unable to load user management dialog</DialogDescription>
+          </DialogHeader>
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{dialogError}</AlertDescription>
+          </Alert>
+          <DialogFooter>
+            <Button onClick={onClose}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  // Show error state if user is null
   if (!user) {
     console.log('UserEditDialog - No user provided');
     return (
@@ -139,6 +173,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
             <DialogTitle>Error</DialogTitle>
             <DialogDescription>No user data available</DialogDescription>
           </DialogHeader>
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>Unable to load user information. Please try again.</AlertDescription>
+          </Alert>
           <DialogFooter>
             <Button onClick={onClose}>Close</Button>
           </DialogFooter>
@@ -156,9 +194,7 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>
-            Manage User
-          </DialogTitle>
+          <DialogTitle>Manage User</DialogTitle>
           <DialogDescription>
             Update roles and organization for {user.email}
           </DialogDescription>

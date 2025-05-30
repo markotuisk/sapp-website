@@ -21,6 +21,8 @@ export const UsersList: React.FC = () => {
 
   // Debug logging
   console.log('UsersList - isLoading:', isLoading, 'users count:', users?.length || 0);
+  console.log('UsersList - selectedUser:', selectedUser);
+  console.log('UsersList - isEditDialogOpen:', isEditDialogOpen);
 
   const filteredUsers = users.filter(user => {
     const matchesSearch = !searchTerm || 
@@ -59,14 +61,26 @@ export const UsersList: React.FC = () => {
 
   const handleManageUser = (user: UserWithProfile) => {
     console.log('UsersList - Managing user:', user);
+    console.log('UsersList - User roles:', user.roles);
+    console.log('UsersList - User profile:', user.profile);
+    console.log('UsersList - User client data:', user.clientData);
+    
     setSelectedUser(user);
     setIsEditDialogOpen(true);
+    
+    console.log('UsersList - Dialog should be opening');
   };
 
   const handleCloseDialog = () => {
     console.log('UsersList - Closing dialog');
     setIsEditDialogOpen(false);
     setSelectedUser(null);
+  };
+
+  const handleAddUser = () => {
+    console.log('UsersList - Adding new user');
+    setSelectedUser(null);
+    setIsEditDialogOpen(true);
   };
 
   if (isLoading) {
@@ -93,7 +107,7 @@ export const UsersList: React.FC = () => {
           <h2 className="text-2xl font-bold">Users ({filteredUsers.length})</h2>
           <p className="text-gray-600">Manage user accounts, roles, and permissions</p>
         </div>
-        <Button onClick={() => setIsEditDialogOpen(true)}>
+        <Button onClick={handleAddUser}>
           <UserPlus className="h-4 w-4 mr-2" />
           Add User
         </Button>
