@@ -3,28 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-
-export interface ClientDocument {
-  id: string;
-  file_name: string;
-  original_name: string;
-  custom_name?: string;
-  description?: string;
-  file_path: string;
-  mime_type: string;
-  file_size: number;
-  document_type: string;
-  external_url?: string;
-  category_id?: string;
-  is_confidential: boolean;
-  tags?: string[];
-  download_count: number;
-  last_downloaded_at?: string;
-  uploaded_by?: string;
-  user_id: string;
-  created_at: string;
-  updated_at: string;
-}
+import type { ClientDocument } from '@/types/profile';
 
 export const useClientDocuments = () => {
   const [documents, setDocuments] = useState<ClientDocument[]>([]);
@@ -93,7 +72,7 @@ export const useClientDocuments = () => {
           file_path: `/uploads/${file.name}`, // Placeholder path
           mime_type: file.type,
           file_size: file.size,
-          document_type: 'file',
+          document_type: 'file' as const,
           category_id: metadata.categoryId,
           is_confidential: metadata.isConfidential || false,
           tags: metadata.tags || [],
@@ -146,7 +125,7 @@ export const useClientDocuments = () => {
           file_path: metadata.url,
           mime_type: 'text/html',
           file_size: 0,
-          document_type: 'link',
+          document_type: 'link' as const,
           external_url: metadata.url,
           category_id: metadata.categoryId,
           tags: metadata.tags || [],

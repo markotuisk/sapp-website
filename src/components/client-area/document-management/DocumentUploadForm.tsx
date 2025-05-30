@@ -114,6 +114,11 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
     }
   };
 
+  const handleConfidentialChange = (checked: boolean | "indeterminate") => {
+    // Convert indeterminate state to false for our boolean field
+    setIsConfidential(checked === true);
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -199,7 +204,7 @@ export const DocumentUploadForm: React.FC<DocumentUploadFormProps> = ({
               <Checkbox
                 id="confidential"
                 checked={isConfidential}
-                onCheckedChange={setIsConfidential}
+                onCheckedChange={handleConfidentialChange}
               />
               <Label htmlFor="confidential">Mark as confidential</Label>
             </div>
