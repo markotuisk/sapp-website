@@ -114,11 +114,28 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
     setIsSubmitting(true);
     try {
       const articleData = {
-        ...formData,
+        title: formData.title,
+        slug: formData.slug,
+        summary: formData.summary,
+        content: formData.content,
+        author: formData.author,
+        author_title: formData.author_title,
+        category: formData.category,
+        cover_image: formData.cover_image,
+        meta_description: formData.meta_description,
+        og_image: formData.og_image,
+        twitter_image: formData.twitter_image,
+        canonical_url: formData.canonical_url,
+        featured: formData.featured,
+        published: formData.published,
         tags: formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
         meta_keywords: formData.meta_keywords ? formData.meta_keywords.split(',').map(keyword => keyword.trim()).filter(Boolean) : [],
         published_at: formData.published ? new Date().toISOString() : null,
         reading_time: Math.ceil(formData.content.split(' ').length / 200), // Estimate reading time
+        email_sent: false,
+        email_sent_at: null,
+        scheduled_at: null,
+        view_count: 0,
       };
 
       if (article) {
