@@ -14,10 +14,17 @@ export const useUsers = () => {
       setIsLoading(true);
       console.log('useUsers: Starting user fetch...');
       
-      // Fetch users with profiles first
+      // Fetch users with profiles first - note the organization field is now an object
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
-        .select('*')
+        .select(`
+          *,
+          organization:organizations!profiles_organization_id_fkey(
+            id,
+            name,
+            description
+          )
+        `)
         .order('created_at', { ascending: false });
 
       if (profilesError) {

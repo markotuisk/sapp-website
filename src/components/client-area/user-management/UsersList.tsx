@@ -23,11 +23,15 @@ export const UsersList: React.FC = () => {
   console.log('UsersList - isLoading:', isLoading, 'users count:', users?.length || 0);
 
   const filteredUsers = users.filter(user => {
+    const organizationName = user.profile?.organization && typeof user.profile.organization === 'object'
+      ? user.profile.organization.name
+      : '';
+    
     const matchesSearch = !searchTerm || 
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.profile?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.profile?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.profile?.organization?.toLowerCase().includes(searchTerm.toLowerCase());
+      organizationName.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesRole = roleFilter === 'all' || user.roles.includes(roleFilter as any);
     
@@ -201,6 +205,9 @@ export const UsersList: React.FC = () => {
         {filteredUsers.map((user) => {
           const orgStatus = getOrganizationStatus(user);
           const isGuest = isGuestUser(user);
+          const organizationName = user.profile?.organization && typeof user.profile.organization === 'object'
+            ? user.profile.organization.name
+            : null;
           
           let cardClassName = 'hover:shadow-md transition-shadow';
           if (orgStatus.status === 'none') {
@@ -254,10 +261,10 @@ export const UsersList: React.FC = () => {
                           <Mail className="h-3 w-3" />
                           {user.email}
                         </div>
-                        {user.profile?.organization && (
+                        {organizationName && (
                           <div className="flex items-center gap-1">
                             <Building2 className="h-3 w-3" />
-                            {user.profile.organization}
+                            {organizationName}
                           </div>
                         )}
                         <div className="flex items-center gap-1">

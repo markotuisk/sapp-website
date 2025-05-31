@@ -38,11 +38,16 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
   // Pre-populate form with existing data
   useEffect(() => {
     if (userProfile) {
+      // Handle organization name extraction
+      const organizationName = userProfile.organization && typeof userProfile.organization === 'object'
+        ? userProfile.organization.name
+        : '';
+        
       setProfileData({
         first_name: userProfile.first_name || '',
         last_name: userProfile.last_name || '',
         phone: userProfile.phone || '',
-        organization: userProfile.organization || '',
+        organization: organizationName,
         organization_type: userProfile.organization_type || '',
         department: userProfile.department || '',
         job_title: userProfile.job_title || '',

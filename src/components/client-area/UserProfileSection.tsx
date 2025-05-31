@@ -24,10 +24,11 @@ export const UserProfileSection: React.FC = () => {
   };
 
   const getOrganizationDisplay = () => {
-    if (userProfile?.organization || clientData?.company_name) {
-      return userProfile?.organization || clientData?.company_name;
-    }
-    return null;
+    // Handle organization as object or fallback to client data
+    const orgName = userProfile?.organization && typeof userProfile.organization === 'object' 
+      ? userProfile.organization.name 
+      : clientData?.company_name;
+    return orgName || null;
   };
 
   if (isLoading) {
