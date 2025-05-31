@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileText, Users, Settings, Shield, Newspaper, UserCog } from 'lucide-react';
+import { FileText, Users, Settings, Shield, Newspaper, UserCog, ScanLine } from 'lucide-react';
 import { DocumentManagement } from './DocumentManagement';
 import { ProfileManagement } from './ProfileManagement';
 import { UserSettings } from './UserSettings';
 import { NewsManagement } from './NewsManagement';
 import { UserManagement } from './UserManagement';
+import { IDVerification } from './IDVerification';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
 
@@ -36,6 +37,10 @@ export const ClientDashboard: React.FC = () => {
     return <UserManagement onBack={() => setCurrentView('dashboard')} />;
   }
 
+  if (currentView === 'id-verification') {
+    return <IDVerification onBack={() => setCurrentView('dashboard')} />;
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -44,6 +49,27 @@ export const ClientDashboard: React.FC = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* ID Verification */}
+        <Card className="cursor-pointer hover:shadow-md transition-shadow">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ScanLine className="h-5 w-5" />
+              ID Verification
+            </CardTitle>
+            <CardDescription>
+              Scan and verify team member digital IDs
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={() => setCurrentView('id-verification')} 
+              className="w-full"
+            >
+              Verify Team IDs
+            </Button>
+          </CardContent>
+        </Card>
+
         {/* Document Management */}
         <Card className="cursor-pointer hover:shadow-md transition-shadow">
           <CardHeader>

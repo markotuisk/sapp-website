@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Building2, Shield, User, IdCard } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
+import QRCode from 'qrcode';
 
 interface DigitalIDCardProps {
   className?: string;
@@ -13,6 +14,7 @@ interface DigitalIDCardProps {
 export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) => {
   const { user } = useAuth();
   const { userProfile } = useRole();
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>('');
 
   const getInitials = () => {
     const first = userProfile?.first_name?.charAt(0) || '';
@@ -34,6 +36,9 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
   };
 
   const generateQRData = () => {
+    const expirationTime = new Date();
+    expirationTime.setHours(expirationTime.getHours() + 24); // Valid for 24 hours
+    
     return JSON.stringify({
       id: user?.id,
       name: getDisplayName(),
@@ -43,8 +48,36 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
       title: userProfile?.job_title,
       employeeId: generateEmployeeId(),
       issued: new Date().toISOString(),
+      expires: expirationTime.toISOString(),
+      company: 'SAPP Security',
+      verified: true,
+      hash: btoa(`${user?.id}-${Date.now()}`).slice(0, 16) // Simple verification hash
     });
   };
+
+  useEffect(() => {
+    const generateQRCode = async () => {
+      try {
+        const qrData = generateQRData();
+        const dataUrl = await QRCode.toDataURL(qrData, {
+          width: 120,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          },
+          errorCorrectionLevel: 'M'
+        });
+        setQrCodeDataUrl(dataUrl);
+      } catch (error) {
+        console.error('Failed to generate QR code:', error);
+      }
+    };
+
+    if (user?.id) {
+      generateQRCode();
+    }
+  }, [user?.id, userProfile]);
 
   return (
     <div className={`relative w-full max-w-md mx-auto ${className}`}>
@@ -72,10 +105,10 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
 
         {/* Main Content */}
         <div className="relative px-6 py-6">
-          {/* Profile Section */}
+          {/* Profile Section with Larger Image */}
           <div className="flex items-center gap-4 mb-6">
             <div className="relative">
-              <div className="w-20 h-20 rounded-lg overflow-hidden border-4 border-white/30 ring-2 ring-white/50 bg-white/10">
+              <div className="w-32 h-32 rounded-lg overflow-hidden border-4 border-white/30 ring-2 ring-white/50 bg-white/10">
                 {userProfile?.avatar_url ? (
                   <img 
                     src={userProfile.avatar_url} 
@@ -84,14 +117,14 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
                   />
                 ) : (
                   <div className="w-full h-full bg-white flex items-center justify-center">
-                    <span className="text-sapp-blue text-xl font-bold">
+                    <span className="text-sapp-blue text-3xl font-bold">
                       {getInitials()}
                     </span>
                   </div>
                 )}
               </div>
-              <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
-                <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-2 -right-2 bg-green-500 rounded-full p-2">
+                <div className="w-4 h-4 bg-white rounded-full animate-pulse"></div>
               </div>
             </div>
             <div className="flex-1">
@@ -125,21 +158,23 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
             </div>
           </div>
 
-          {/* QR Code Section */}
+          {/* QR Code Section with Real QR Code */}
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
             <div className="bg-white rounded-lg p-3 inline-block mb-2">
-              <div className="w-16 h-16 bg-gray-800 rounded flex items-center justify-center">
-                <div className="grid grid-cols-4 gap-1">
-                  {Array.from({ length: 16 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-1 h-1 ${Math.random() > 0.5 ? 'bg-black' : 'bg-white'}`}
-                    ></div>
-                  ))}
+              {qrCodeDataUrl ? (
+                <img 
+                  src={qrCodeDataUrl} 
+                  alt="ID Verification QR Code"
+                  className="w-24 h-24"
+                />
+              ) : (
+                <div className="w-24 h-24 bg-gray-200 rounded flex items-center justify-center">
+                  <span className="text-gray-500 text-xs">Loading...</span>
                 </div>
-              </div>
+              )}
             </div>
             <p className="text-white/60 text-xs">Scan for verification</p>
+            <p className="text-white/40 text-xs mt-1">Valid for 24 hours</p>
           </div>
         </div>
 
