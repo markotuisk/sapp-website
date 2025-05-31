@@ -1,4 +1,3 @@
-
 export type AppRole = 'admin' | 'client' | 'manager' | 'support';
 
 export interface UserProfile {
@@ -9,7 +8,6 @@ export interface UserProfile {
   phone?: string;
   phone_country_code?: string;
   phone_local_number?: string;
-  organization?: string;
   organization_type?: string;
   department?: string;
   job_title?: string;

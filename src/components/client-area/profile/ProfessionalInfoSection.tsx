@@ -23,10 +23,10 @@ export const ProfessionalInfoSection: React.FC<ProfessionalInfoSectionProps> = (
 }) => {
   const { userProfile } = useRole();
   
-  // Get organization name - check if it's an object with name property or just a string
-  const organizationName = (typeof userProfile?.organization === 'object' && userProfile?.organization?.name) 
+  // Get organization name with proper null checking
+  const organizationName = userProfile?.organization && typeof userProfile.organization === 'object' 
     ? userProfile.organization.name 
-    : userProfile?.organization || 'No organization assigned';
+    : 'No organization assigned';
 
   return (
     <Card>
@@ -103,3 +103,4 @@ export const ProfessionalInfoSection: React.FC<ProfessionalInfoSectionProps> = (
     </Card>
   );
 };
+
