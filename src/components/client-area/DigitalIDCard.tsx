@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Building2, Shield, User, IdCard } from 'lucide-react';
+import { Building2, Shield, User, IdCard, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
 import QRCode from 'qrcode';
@@ -13,8 +13,9 @@ interface DigitalIDCardProps {
 
 export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) => {
   const { user } = useAuth();
-  const { userProfile } = useRole();
+  const { userProfile, isLoading } = useRole();
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>('');
+  const [qrLoading, setQrLoading] = useState(false);
 
   const getInitials = () => {
     const first = userProfile?.first_name?.charAt(0) || '';
@@ -37,7 +38,7 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
 
   const generateQRData = () => {
     const expirationTime = new Date();
-    expirationTime.setHours(expirationTime.getHours() + 24); // Valid for 24 hours
+    expirationTime.setHours(expirationTime.getHours() + 24);
     
     return JSON.stringify({
       id: user?.id,
@@ -51,12 +52,15 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
       expires: expirationTime.toISOString(),
       company: 'SAPP Security',
       verified: true,
-      hash: btoa(`${user?.id}-${Date.now()}`).slice(0, 16) // Simple verification hash
+      hash: btoa(`${user?.id}-${Date.now()}`).slice(0, 16)
     });
   };
 
   useEffect(() => {
     const generateQRCode = async () => {
+      if (!user?.id || isLoading) return;
+      
+      setQrLoading(true);
       try {
         const qrData = generateQRData();
         const dataUrl = await QRCode.toDataURL(qrData, {
@@ -71,13 +75,26 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
         setQrCodeDataUrl(dataUrl);
       } catch (error) {
         console.error('Failed to generate QR code:', error);
+      } finally {
+        setQrLoading(false);
       }
     };
 
-    if (user?.id) {
-      generateQRCode();
-    }
-  }, [user?.id, userProfile]);
+    generateQRCode();
+  }, [user?.id, userProfile, isLoading]);
+
+  if (isLoading) {
+    return (
+      <div className={`relative w-full max-w-md mx-auto ${className}`}>
+        <div className="flex items-center justify-center h-96 bg-gradient-to-br from-sapp-blue to-accent-dark-blue rounded-xl">
+          <div className="text-center text-white">
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-2" />
+            <p>Loading your digital ID...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`relative w-full max-w-md mx-auto ${className}`}>
@@ -158,10 +175,14 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
             </div>
           </div>
 
-          {/* QR Code Section with Real QR Code */}
+          {/* QR Code Section */}
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
             <div className="bg-white rounded-lg p-3 inline-block mb-2">
-              {qrCodeDataUrl ? (
+              {qrLoading ? (
+                <div className="w-24 h-24 flex items-center justify-center">
+                  <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
+                </div>
+              ) : qrCodeDataUrl ? (
                 <img 
                   src={qrCodeDataUrl} 
                   alt="ID Verification QR Code"
@@ -169,7 +190,7 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
                 />
               ) : (
                 <div className="w-24 h-24 bg-gray-200 rounded flex items-center justify-center">
-                  <span className="text-gray-500 text-xs">Loading...</span>
+                  <span className="text-gray-500 text-xs">Error</span>
                 </div>
               )}
             </div>

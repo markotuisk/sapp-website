@@ -2,13 +2,13 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Building2, User } from 'lucide-react';
+import { Building2, User, Loader2 } from 'lucide-react';
 import { useRole } from '@/hooks/useRole';
 import { useAuth } from '@/contexts/AuthContext';
 
 export const UserProfileSection: React.FC = () => {
   const { user } = useAuth();
-  const { userProfile, clientData } = useRole();
+  const { userProfile, clientData, isLoading } = useRole();
 
   const getInitials = () => {
     const first = userProfile?.first_name?.charAt(0) || '';
@@ -29,6 +29,20 @@ export const UserProfileSection: React.FC = () => {
     }
     return null;
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg border">
+        <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <Loader2 className="h-5 w-5 animate-spin text-gray-500" />
+        </div>
+        <div className="flex-1">
+          <div className="h-4 bg-gray-200 rounded w-32 mb-2"></div>
+          <div className="h-3 bg-gray-200 rounded w-48"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg border">

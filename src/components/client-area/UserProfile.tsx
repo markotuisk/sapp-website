@@ -21,7 +21,7 @@ type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
   const { user } = useAuth();
-  const { userProfile } = useRole();
+  const { userProfile, refreshUserData } = useRole();
   const { organizationTypes, isLoading: orgTypesLoading } = useOrganizationTypes();
   const { toast } = useToast();
   const [saveState, setSaveState] = useState<SaveState>('idle');
@@ -73,6 +73,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
           title: 'Success',
           description: 'Profile updated successfully',
         });
+        
+        // Refresh the user data to ensure all components get updated
+        await refreshUserData();
         
         // Reset to idle after 2 seconds
         setTimeout(() => setSaveState('idle'), 2000);
@@ -138,6 +141,8 @@ export const UserProfile: React.FC<UserProfileProps> = ({ onBack }) => {
           title: 'Success',
           description: 'Avatar updated successfully',
         });
+        // Refresh user data to update all components
+        await refreshUserData();
       }
     } catch (error) {
       console.error('Error uploading avatar:', error);
