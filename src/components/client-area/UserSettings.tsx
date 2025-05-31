@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Settings, ArrowLeft } from 'lucide-react';
+import { Settings, ArrowLeft, Bell, Palette, Globe, Shield } from 'lucide-react';
 import { useUserPreferences } from '@/hooks/useUserPreferences';
 
 interface UserSettingsProps {
@@ -29,22 +29,34 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onBack }) => {
         </Button>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+            <Settings className="h-8 w-8" />
             Account Settings
-          </CardTitle>
-          <CardDescription>
-            Manage your account preferences and settings
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Notification Settings */}
-          <div className="space-y-4">
-            <h4 className="font-medium">Notifications</h4>
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Manage your account preferences, notifications, and security settings
+          </p>
+        </div>
+
+        {/* Notification Settings */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Bell className="h-5 w-5" />
+              Notifications
+            </CardTitle>
+            <CardDescription>
+              Control how and when you receive notifications
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
             <div className="flex items-center justify-between">
-              <Label htmlFor="email-notifications">Email Notifications</Label>
+              <div className="space-y-0.5">
+                <Label htmlFor="email-notifications">Email Notifications</Label>
+                <p className="text-sm text-gray-500">Receive important updates via email</p>
+              </div>
               <Switch
                 id="email-notifications"
                 checked={preferences?.email_notifications ?? true}
@@ -52,18 +64,31 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onBack }) => {
               />
             </div>
             <div className="flex items-center justify-between">
-              <Label htmlFor="document-notifications">Document Notifications</Label>
+              <div className="space-y-0.5">
+                <Label htmlFor="document-notifications">Document Notifications</Label>
+                <p className="text-sm text-gray-500">Get notified when documents are shared with you</p>
+              </div>
               <Switch
                 id="document-notifications"
                 checked={preferences?.document_notifications ?? true}
                 onCheckedChange={(checked) => updatePreferences({ document_notifications: checked })}
               />
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Theme Settings */}
-          <div className="space-y-4">
-            <h4 className="font-medium">Appearance</h4>
+        {/* Appearance Settings */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Palette className="h-5 w-5" />
+              Appearance
+            </CardTitle>
+            <CardDescription>
+              Customise how the application looks and feels
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <div>
               <Label htmlFor="theme">Theme</Label>
               <Select
@@ -79,12 +104,23 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onBack }) => {
                   <SelectItem value="system">System</SelectItem>
                 </SelectContent>
               </Select>
+              <p className="text-sm text-gray-500 mt-1">Choose your preferred colour scheme</p>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Language and Timezone */}
-          <div className="space-y-4">
-            <h4 className="font-medium">Localization</h4>
+        {/* Localisation Settings */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Globe className="h-5 w-5" />
+              Localisation
+            </CardTitle>
+            <CardDescription>
+              Set your language and regional preferences
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <div>
               <Label htmlFor="language">Language</Label>
               <Select
@@ -122,9 +158,29 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ onBack }) => {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        {/* Security Settings */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5" />
+              Security Settings
+            </CardTitle>
+            <CardDescription>
+              Manage your account security and session preferences
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-blue-800">
+                <strong>Coming Soon:</strong> Session timeout settings will be available here to automatically log you out after periods of inactivity for enhanced security.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

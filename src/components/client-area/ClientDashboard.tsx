@@ -119,7 +119,7 @@ export const ClientDashboard: React.FC = () => {
               Profile Management
             </CardTitle>
             <CardDescription>
-              Update your personal and company information
+              Update your personal and professional information
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -132,7 +132,7 @@ export const ClientDashboard: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Settings */}
+        {/* Account Settings */}
         <Card className="cursor-pointer hover:shadow-md transition-shadow">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

@@ -4,13 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Camera, Save, ArrowLeft } from 'lucide-react';
+import { User, Camera, Save, ArrowLeft, Briefcase, Building, Phone, Globe } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
-import { useUserPreferences } from '@/hooks/useUserPreferences';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -21,7 +19,6 @@ interface ProfileManagementProps {
 export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) => {
   const { user } = useAuth();
   const { userProfile } = useRole();
-  const { preferences, updatePreferences } = useUserPreferences();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -29,6 +26,12 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
     last_name: userProfile?.last_name || '',
     phone: userProfile?.phone || '',
     organization: userProfile?.organization || '',
+    job_title: userProfile?.job_title || '',
+    department: userProfile?.department || '',
+    bio: '',
+    linkedin_url: '',
+    emergency_contact_name: '',
+    emergency_contact_phone: '',
   });
 
   const handleProfileUpdate = async () => {
@@ -38,7 +41,14 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
     try {
       const { error } = await supabase
         .from('profiles')
-        .update(profileData)
+        .update({
+          first_name: profileData.first_name,
+          last_name: profileData.last_name,
+          phone: profileData.phone,
+          organization: profileData.organization,
+          job_title: profileData.job_title,
+          department: profileData.department,
+        })
         .eq('id', user.id);
 
       if (error) {
@@ -150,30 +160,30 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Profile Information */}
+      <div className="max-w-4xl mx-auto space-y-6">
+        {/* Personal Information Card */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="h-5 w-5" />
-              Profile Information
+              Personal Information
             </CardTitle>
             <CardDescription>
-              Update your personal information and avatar
+              Your personal and professional details. This information is confidential and will be removed if you delete your account.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Avatar Section */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <div className="relative">
-                <Avatar className="h-20 w-20">
+                <Avatar className="h-24 w-24">
                   <AvatarImage src={userProfile?.avatar_url} />
-                  <AvatarFallback className="text-lg">
+                  <AvatarFallback className="text-xl">
                     {getInitials()}
                   </AvatarFallback>
                 </Avatar>
-                <label htmlFor="avatar-upload" className="absolute -bottom-1 -right-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full cursor-pointer transition-colors">
-                  <Camera className="h-3 w-3" />
+                <label htmlFor="avatar-upload" className="absolute -bottom-2 -right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full cursor-pointer transition-colors">
+                  <Camera className="h-4 w-4" />
                   <input
                     id="avatar-upload"
                     type="file"
@@ -183,159 +193,172 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
                   />
                 </label>
               </div>
-              <div>
-                <p className="font-medium">{user?.email}</p>
-                <p className="text-sm text-gray-500">Click camera to change avatar</p>
+              <div className="space-y-1">
+                <p className="font-medium text-lg">{profileData.first_name} {profileData.last_name}</p>
+                <p className="text-gray-600">{user?.email}</p>
+                <p className="text-sm text-gray-500">Click camera to change your profile photo</p>
               </div>
             </div>
 
-            {/* Profile Fields */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Basic Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label htmlFor="first-name">First Name</Label>
+                <Label htmlFor="first-name">First Name *</Label>
                 <Input
                   id="first-name"
                   value={profileData.first_name}
                   onChange={(e) => setProfileData(prev => ({ ...prev, first_name: e.target.value }))}
-                  placeholder="Enter first name"
+                  placeholder="Enter your first name"
                 />
               </div>
               <div>
-                <Label htmlFor="last-name">Last Name</Label>
+                <Label htmlFor="last-name">Last Name *</Label>
                 <Input
                   id="last-name"
                   value={profileData.last_name}
                   onChange={(e) => setProfileData(prev => ({ ...prev, last_name: e.target.value }))}
-                  placeholder="Enter last name"
+                  placeholder="Enter your last name"
                 />
               </div>
+              <div>
+                <Label htmlFor="phone" className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  Phone Number
+                </Label>
+                <Input
+                  id="phone"
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="Enter your phone number"
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  value={user?.email || ''}
+                  disabled
+                  className="bg-gray-50"
+                />
+                <p className="text-xs text-gray-500 mt-1">Email cannot be changed here</p>
+              </div>
             </div>
-
-            <div>
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                value={profileData.phone}
-                onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
-                placeholder="Enter phone number"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="organization">Organization</Label>
-              <Input
-                id="organization"
-                value={profileData.organization}
-                onChange={(e) => setProfileData(prev => ({ ...prev, organization: e.target.value }))}
-                placeholder="Enter organization"
-              />
-            </div>
-
-            <Button
-              onClick={handleProfileUpdate}
-              disabled={isLoading}
-              className="w-full"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              {isLoading ? 'Saving...' : 'Save Profile'}
-            </Button>
           </CardContent>
         </Card>
 
-        {/* Preferences */}
+        {/* Professional Information Card */}
         <Card>
           <CardHeader>
-            <CardTitle>Preferences</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Briefcase className="h-5 w-5" />
+              Professional Information
+            </CardTitle>
             <CardDescription>
-              Manage your account preferences and settings
+              Your work-related details and professional background
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Notification Settings */}
-            <div className="space-y-4">
-              <h4 className="font-medium">Notifications</h4>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="email-notifications">Email Notifications</Label>
-                <Switch
-                  id="email-notifications"
-                  checked={preferences?.email_notifications ?? true}
-                  onCheckedChange={(checked) => updatePreferences({ email_notifications: checked })}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Label htmlFor="organization" className="flex items-center gap-2">
+                  <Building className="h-4 w-4" />
+                  Organization
+                </Label>
+                <Input
+                  id="organization"
+                  value={profileData.organization}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, organization: e.target.value }))}
+                  placeholder="Enter your organization"
                 />
               </div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="document-notifications">Document Notifications</Label>
-                <Switch
-                  id="document-notifications"
-                  checked={preferences?.document_notifications ?? true}
-                  onCheckedChange={(checked) => updatePreferences({ document_notifications: checked })}
+              <div>
+                <Label htmlFor="job-title">Job Title</Label>
+                <Input
+                  id="job-title"
+                  value={profileData.job_title}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, job_title: e.target.value }))}
+                  placeholder="Enter your job title"
+                />
+              </div>
+              <div>
+                <Label htmlFor="department">Department</Label>
+                <Input
+                  id="department"
+                  value={profileData.department}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, department: e.target.value }))}
+                  placeholder="Enter your department"
+                />
+              </div>
+              <div>
+                <Label htmlFor="linkedin" className="flex items-center gap-2">
+                  <Globe className="h-4 w-4" />
+                  LinkedIn Profile
+                </Label>
+                <Input
+                  id="linkedin"
+                  value={profileData.linkedin_url}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, linkedin_url: e.target.value }))}
+                  placeholder="https://linkedin.com/in/username"
                 />
               </div>
             </div>
 
-            {/* Theme Settings */}
-            <div className="space-y-4">
-              <h4 className="font-medium">Appearance</h4>
-              <div>
-                <Label htmlFor="theme">Theme</Label>
-                <Select
-                  value={preferences?.theme ?? 'light'}
-                  onValueChange={(value) => updatePreferences({ theme: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select theme" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div>
+              <Label htmlFor="bio">Professional Bio</Label>
+              <Textarea
+                id="bio"
+                value={profileData.bio}
+                onChange={(e) => setProfileData(prev => ({ ...prev, bio: e.target.value }))}
+                placeholder="Tell us about your professional background, expertise, and interests..."
+                rows={4}
+              />
             </div>
+          </CardContent>
+        </Card>
 
-            {/* Language and Timezone */}
-            <div className="space-y-4">
-              <h4 className="font-medium">Localization</h4>
+        {/* Emergency Contact Card */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Emergency Contact</CardTitle>
+            <CardDescription>
+              Emergency contact information for security purposes
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="language">Language</Label>
-                <Select
-                  value={preferences?.language ?? 'en'}
-                  onValueChange={(value) => updatePreferences({ language: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select language" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="es">Spanish</SelectItem>
-                    <SelectItem value="fr">French</SelectItem>
-                    <SelectItem value="de">German</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="emergency-name">Contact Name</Label>
+                <Input
+                  id="emergency-name"
+                  value={profileData.emergency_contact_name}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, emergency_contact_name: e.target.value }))}
+                  placeholder="Emergency contact name"
+                />
               </div>
               <div>
-                <Label htmlFor="timezone">Timezone</Label>
-                <Select
-                  value={preferences?.timezone ?? 'UTC'}
-                  onValueChange={(value) => updatePreferences({ timezone: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select timezone" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="UTC">UTC</SelectItem>
-                    <SelectItem value="America/New_York">Eastern Time</SelectItem>
-                    <SelectItem value="America/Chicago">Central Time</SelectItem>
-                    <SelectItem value="America/Denver">Mountain Time</SelectItem>
-                    <SelectItem value="America/Los_Angeles">Pacific Time</SelectItem>
-                    <SelectItem value="Europe/London">London</SelectItem>
-                    <SelectItem value="Europe/Paris">Paris</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="emergency-phone">Contact Phone</Label>
+                <Input
+                  id="emergency-phone"
+                  value={profileData.emergency_contact_phone}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, emergency_contact_phone: e.target.value }))}
+                  placeholder="Emergency contact phone"
+                />
               </div>
             </div>
           </CardContent>
         </Card>
+
+        {/* Save Button */}
+        <div className="flex justify-end">
+          <Button
+            onClick={handleProfileUpdate}
+            disabled={isLoading}
+            className="px-8"
+          >
+            <Save className="h-4 w-4 mr-2" />
+            {isLoading ? 'Saving...' : 'Save Profile'}
+          </Button>
+        </div>
       </div>
     </div>
   );
