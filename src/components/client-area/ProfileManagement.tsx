@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Camera, Save, ArrowLeft, Briefcase, Building, Phone, Globe, IdCard } from 'lucide-react';
+import { User, Camera, Save, ArrowLeft, Briefcase, Building, Phone, Globe, IdCard, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
 import { supabase } from '@/integrations/supabase/client';
@@ -18,28 +19,56 @@ interface ProfileManagementProps {
 
 export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) => {
   const { user } = useAuth();
-  const { userProfile } = useRole();
+  const { userProfile, isLoading: profileLoading, refreshUserData } = useRole();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showIDDialog, setShowIDDialog] = useState(false);
   const [profileData, setProfileData] = useState({
-    first_name: userProfile?.first_name || '',
-    last_name: userProfile?.last_name || '',
-    phone: userProfile?.phone || '',
-    organization: userProfile?.organization || '',
-    job_title: userProfile?.job_title || '',
-    department: userProfile?.department || '',
+    first_name: '',
+    last_name: '',
+    phone: '',
+    organization: '',
+    job_title: '',
+    department: '',
     bio: '',
     linkedin_url: '',
     emergency_contact_name: '',
     emergency_contact_phone: '',
   });
 
+  // Update form data when userProfile loads or changes
+  useEffect(() => {
+    console.log('ProfileManagement: userProfile changed:', userProfile);
+    if (userProfile) {
+      setProfileData({
+        first_name: userProfile.first_name || '',
+        last_name: userProfile.last_name || '',
+        phone: userProfile.phone || '',
+        organization: userProfile.organization || '',
+        job_title: userProfile.job_title || '',
+        department: userProfile.department || '',
+        bio: '',
+        linkedin_url: '',
+        emergency_contact_name: '',
+        emergency_contact_phone: '',
+      });
+    }
+  }, [userProfile]);
+
+  // Refresh data when component mounts
+  useEffect(() => {
+    console.log('ProfileManagement: Component mounted, refreshing user data');
+    if (user && !profileLoading) {
+      refreshUserData();
+    }
+  }, [user, refreshUserData, profileLoading]);
+
   const handleProfileUpdate = async () => {
     if (!user) return;
 
     setIsLoading(true);
     try {
+      console.log('ProfileManagement: Updating profile with data:', profileData);
       const { error } = await supabase
         .from('profiles')
         .update({
@@ -53,19 +82,24 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
         .eq('id', user.id);
 
       if (error) {
+        console.error('ProfileManagement: Update error:', error);
         toast({
           title: 'Error',
           description: error.message,
           variant: 'destructive',
         });
       } else {
+        console.log('ProfileManagement: Profile updated successfully');
         toast({
           title: 'Success',
           description: 'Profile updated successfully',
         });
+        
+        // Refresh the user data to ensure all components get updated
+        await refreshUserData();
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error('ProfileManagement: Error updating profile:', error);
       toast({
         title: 'Error',
         description: 'Failed to update profile',
@@ -128,6 +162,8 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
           title: 'Success',
           description: 'Avatar updated successfully',
         });
+        // Refresh user data to update all components
+        await refreshUserData();
       }
     } catch (error) {
       console.error('Error uploading avatar:', error);
@@ -146,6 +182,48 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
     const last = profileData.last_name?.charAt(0) || '';
     return (first + last).toUpperCase();
   };
+
+  // Show loading state while profile data is being fetched
+  if (profileLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4 mb-6">
+          <Button
+            onClick={onBack}
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </Button>
+        </div>
+
+        <div className="max-w-4xl mx-auto space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Loading Profile...
+              </CardTitle>
+              <CardDescription>
+                Please wait while we load your profile information
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="h-24 w-24 bg-gray-200 rounded-full animate-pulse"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-32 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded w-48 animate-pulse"></div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -383,11 +461,20 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
         <div className="flex justify-end">
           <Button
             onClick={handleProfileUpdate}
-            disabled={isLoading}
+            disabled={isLoading || profileLoading}
             className="px-8"
           >
-            <Save className="h-4 w-4 mr-2" />
-            {isLoading ? 'Saving...' : 'Save Profile'}
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="h-4 w-4 mr-2" />
+                Save Profile
+              </>
+            )}
           </Button>
         </div>
       </div>
