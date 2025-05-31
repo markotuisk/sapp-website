@@ -75,12 +75,21 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
           {/* Profile Section */}
           <div className="flex items-center gap-4 mb-6">
             <div className="relative">
-              <Avatar className="h-20 w-20 border-4 border-white/30 ring-2 ring-white/50">
-                <AvatarImage src={userProfile?.avatar_url} />
-                <AvatarFallback className="bg-white text-sapp-blue text-xl font-bold">
-                  {getInitials()}
-                </AvatarFallback>
-              </Avatar>
+              <div className="w-20 h-20 rounded-lg overflow-hidden border-4 border-white/30 ring-2 ring-white/50 bg-white/10">
+                {userProfile?.avatar_url ? (
+                  <img 
+                    src={userProfile.avatar_url} 
+                    alt={getDisplayName()}
+                    className="w-full h-full object-cover object-center"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-white flex items-center justify-center">
+                    <span className="text-sapp-blue text-xl font-bold">
+                      {getInitials()}
+                    </span>
+                  </div>
+                )}
+              </div>
               <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1">
                 <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
               </div>
