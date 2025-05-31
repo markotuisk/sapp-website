@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import type { AppRole, UserProfile, ClientData } from '@/types/roles';
@@ -10,6 +10,42 @@ export const useRole = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [clientData, setClientData] = useState<ClientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Memoize the refreshUserData function to prevent infinite loops
+  const refreshUserData = useCallback(async () => {
+    if (!user) return;
+    
+    console.log('useRole: Refreshing user data...');
+    setIsLoading(true);
+    
+    try {
+      // Re-fetch all data
+      const [profileResult, rolesResult, clientResult] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('user_roles').select('role').eq('user_id', user.id),
+        supabase.from('client_data').select('*').eq('user_id', user.id).single()
+      ]);
+
+      if (profileResult.data) {
+        console.log('useRole: Refreshed profile:', profileResult.data);
+        setUserProfile(profileResult.data);
+      }
+      
+      if (rolesResult.data) {
+        console.log('useRole: Refreshed roles:', rolesResult.data);
+        setUserRoles(rolesResult.data.map(r => r.role));
+      }
+      
+      if (clientResult.data) {
+        console.log('useRole: Refreshed client data:', clientResult.data);
+        setClientData(clientResult.data);
+      }
+    } catch (error) {
+      console.error('Error refreshing user data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!user) {
@@ -123,42 +159,6 @@ export const useRole = () => {
 
     fetchUserData();
   }, [user]);
-
-  // Function to refresh user data
-  const refreshUserData = async () => {
-    if (!user) return;
-    
-    console.log('useRole: Refreshing user data...');
-    setIsLoading(true);
-    
-    try {
-      // Re-fetch all data
-      const [profileResult, rolesResult, clientResult] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', user.id).single(),
-        supabase.from('user_roles').select('role').eq('user_id', user.id),
-        supabase.from('client_data').select('*').eq('user_id', user.id).single()
-      ]);
-
-      if (profileResult.data) {
-        console.log('useRole: Refreshed profile:', profileResult.data);
-        setUserProfile(profileResult.data);
-      }
-      
-      if (rolesResult.data) {
-        console.log('useRole: Refreshed roles:', rolesResult.data);
-        setUserRoles(rolesResult.data.map(r => r.role));
-      }
-      
-      if (clientResult.data) {
-        console.log('useRole: Refreshed client data:', clientResult.data);
-        setClientData(clientResult.data);
-      }
-    } catch (error) {
-      console.error('Error refreshing user data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const hasRole = (role: AppRole): boolean => {
     return userRoles.includes(role);

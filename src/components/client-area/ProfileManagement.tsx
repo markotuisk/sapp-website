@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -54,14 +53,6 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
       });
     }
   }, [userProfile]);
-
-  // Refresh data when component mounts
-  useEffect(() => {
-    console.log('ProfileManagement: Component mounted, refreshing user data');
-    if (user && !profileLoading) {
-      refreshUserData();
-    }
-  }, [user, refreshUserData, profileLoading]);
 
   const handleProfileUpdate = async () => {
     if (!user) return;

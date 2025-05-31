@@ -50,8 +50,8 @@ export const ClientDashboard: React.FC = () => {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* ID Verification */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow">
-          <CardHeader>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+          <CardHeader className="flex-1">
             <CardTitle className="flex items-center gap-2">
               <ScanLine className="h-5 w-5" />
               ID Verification
@@ -60,7 +60,7 @@ export const ClientDashboard: React.FC = () => {
               Scan and verify team member digital IDs
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <Button 
               onClick={() => setCurrentView('id-verification')} 
               className="w-full"
@@ -71,8 +71,8 @@ export const ClientDashboard: React.FC = () => {
         </Card>
 
         {/* Document Management */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow">
-          <CardHeader>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+          <CardHeader className="flex-1">
             <CardTitle className="flex items-center gap-2">
               <FileText className="h-5 w-5" />
               Document Management
@@ -81,7 +81,7 @@ export const ClientDashboard: React.FC = () => {
               Upload, organise, and share your secure documents
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <Button 
               onClick={() => setCurrentView('documents')} 
               className="w-full"
@@ -93,8 +93,8 @@ export const ClientDashboard: React.FC = () => {
 
         {/* User Management - Admin Only */}
         {isAdmin && (
-          <Card className="cursor-pointer hover:shadow-md transition-shadow">
-            <CardHeader>
+          <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+            <CardHeader className="flex-1">
               <CardTitle className="flex items-center gap-2">
                 <UserCog className="h-5 w-5" />
                 User Management
@@ -103,7 +103,7 @@ export const ClientDashboard: React.FC = () => {
                 Manage users, roles, organizations, and invitations
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <Button 
                 onClick={() => setCurrentView('users')} 
                 className="w-full"
@@ -116,8 +116,8 @@ export const ClientDashboard: React.FC = () => {
 
         {/* News Management - Admin Only */}
         {isAdmin && (
-          <Card className="cursor-pointer hover:shadow-md transition-shadow">
-            <CardHeader>
+          <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+            <CardHeader className="flex-1">
               <CardTitle className="flex items-center gap-2">
                 <Newspaper className="h-5 w-5" />
                 News Management
@@ -126,7 +126,7 @@ export const ClientDashboard: React.FC = () => {
                 Create, edit, and manage news articles and newsletters
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <Button 
                 onClick={() => setCurrentView('news')} 
                 className="w-full"
@@ -138,8 +138,8 @@ export const ClientDashboard: React.FC = () => {
         )}
 
         {/* Profile Management */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow">
-          <CardHeader>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+          <CardHeader className="flex-1">
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
               Profile Management
@@ -148,7 +148,7 @@ export const ClientDashboard: React.FC = () => {
               Update your personal and professional information
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <Button 
               onClick={() => setCurrentView('profile')} 
               className="w-full"
@@ -159,8 +159,8 @@ export const ClientDashboard: React.FC = () => {
         </Card>
 
         {/* Account Settings */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow">
-          <CardHeader>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+          <CardHeader className="flex-1">
             <CardTitle className="flex items-center gap-2">
               <Settings className="h-5 w-5" />
               Account Settings
@@ -169,7 +169,7 @@ export const ClientDashboard: React.FC = () => {
               Configure notifications, security, and preferences
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <Button 
               onClick={() => setCurrentView('settings')} 
               className="w-full"
@@ -180,8 +180,8 @@ export const ClientDashboard: React.FC = () => {
         </Card>
 
         {/* Security Overview */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow">
-          <CardHeader>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
+          <CardHeader className="flex-1">
             <CardTitle className="flex items-center gap-2">
               <Shield className="h-5 w-5" />
               Security Overview
@@ -190,7 +190,7 @@ export const ClientDashboard: React.FC = () => {
               Monitor account security and recent activity
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <Button variant="outline" className="w-full">
               View Security
             </Button>
