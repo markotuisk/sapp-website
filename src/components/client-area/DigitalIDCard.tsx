@@ -30,6 +30,13 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
     return user?.email || 'User';
   };
 
+  const getOrganizationName = () => {
+    if (userProfile?.organization && typeof userProfile.organization === 'object') {
+      return userProfile.organization.name;
+    }
+    return 'SAPP Security';
+  };
+
   const generateEmployeeId = () => {
     const prefix = 'SAPP';
     const userId = user?.id?.slice(0, 8).toUpperCase() || '00000000';
@@ -44,7 +51,7 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
       id: user?.id,
       name: getDisplayName(),
       email: user?.email,
-      org: userProfile?.organization,
+      org: getOrganizationName(),
       dept: userProfile?.department,
       title: userProfile?.job_title,
       employeeId: generateEmployeeId(),
@@ -163,7 +170,7 @@ export const DigitalIDCard: React.FC<DigitalIDCardProps> = ({ className = '' }) 
                 <span className="text-white/60 text-xs uppercase tracking-wide">Organization</span>
               </div>
               <p className="text-white text-sm font-medium truncate">
-                {userProfile?.organization || 'SAPP Security'}
+                {getOrganizationName()}
               </p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3">
