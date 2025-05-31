@@ -4,11 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Briefcase, Building, Globe } from 'lucide-react';
+import { Briefcase, Building, Globe, Lock } from 'lucide-react';
+import { useRole } from '@/hooks/useRole';
 
 interface ProfessionalInfoSectionProps {
   profileData: {
-    organization: string;
     job_title: string;
     department: string;
     bio: string;
@@ -21,6 +21,11 @@ export const ProfessionalInfoSection: React.FC<ProfessionalInfoSectionProps> = (
   profileData,
   onProfileDataChange
 }) => {
+  const { userProfile } = useRole();
+  
+  // Get organization name from the joined data
+  const organizationName = userProfile?.organization?.name || 'No organization assigned';
+
   return (
     <Card>
       <CardHeader>
@@ -38,13 +43,17 @@ export const ProfessionalInfoSection: React.FC<ProfessionalInfoSectionProps> = (
             <Label htmlFor="organization" className="flex items-center gap-2">
               <Building className="h-4 w-4" />
               Organization
+              <Lock className="h-3 w-3 text-gray-400" />
             </Label>
             <Input
               id="organization"
-              value={profileData.organization}
-              onChange={(e) => onProfileDataChange('organization', e.target.value)}
-              placeholder="Enter your organization"
+              value={organizationName}
+              disabled
+              className="bg-gray-50"
             />
+            <p className="text-xs text-gray-500 mt-1">
+              Organization assignment is managed by administrators
+            </p>
           </div>
           <div>
             <Label htmlFor="job-title">Job Title</Label>

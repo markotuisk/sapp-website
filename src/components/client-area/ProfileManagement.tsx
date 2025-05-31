@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
@@ -26,8 +25,8 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
   const [profileData, setProfileData] = useState({
     first_name: '',
     last_name: '',
-    phone: '',
-    organization: '',
+    phone_country_code: '+44',
+    phone_local_number: '',
     job_title: '',
     department: '',
     bio: '',
@@ -43,8 +42,8 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
       setProfileData({
         first_name: userProfile.first_name || '',
         last_name: userProfile.last_name || '',
-        phone: userProfile.phone || '',
-        organization: userProfile.organization || '',
+        phone_country_code: userProfile.phone_country_code || '+44',
+        phone_local_number: userProfile.phone_local_number || '',
         job_title: userProfile.job_title || '',
         department: userProfile.department || '',
         bio: '',
@@ -70,8 +69,8 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
         .update({
           first_name: profileData.first_name,
           last_name: profileData.last_name,
-          phone: profileData.phone,
-          organization: profileData.organization,
+          phone_country_code: profileData.phone_country_code,
+          phone_local_number: profileData.phone_local_number,
           job_title: profileData.job_title,
           department: profileData.department,
         })

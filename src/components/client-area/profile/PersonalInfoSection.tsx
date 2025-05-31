@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Camera, Phone } from 'lucide-react';
+import { PhoneInput } from '@/components/ui/phone-input';
+import { User, Camera } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
 
@@ -12,7 +13,8 @@ interface PersonalInfoSectionProps {
   profileData: {
     first_name: string;
     last_name: string;
-    phone: string;
+    phone_country_code: string;
+    phone_local_number: string;
   };
   onProfileDataChange: (field: string, value: string) => void;
   onAvatarUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -44,7 +46,10 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
         <div className="flex items-center gap-6">
           <div className="relative">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={userProfile?.avatar_url} />
+              <AvatarImage 
+                src={userProfile?.avatar_url} 
+                className="object-cover object-center"
+              />
               <AvatarFallback className="text-xl">
                 {getInitials()}
               </AvatarFallback>
@@ -87,16 +92,13 @@ export const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
               placeholder="Enter your last name"
             />
           </div>
-          <div>
-            <Label htmlFor="phone" className="flex items-center gap-2">
-              <Phone className="h-4 w-4" />
-              Phone Number
-            </Label>
-            <Input
-              id="phone"
-              value={profileData.phone}
-              onChange={(e) => onProfileDataChange('phone', e.target.value)}
-              placeholder="Enter your phone number"
+          <div className="md:col-span-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <PhoneInput
+              countryCode={profileData.phone_country_code || '+44'}
+              localNumber={profileData.phone_local_number || ''}
+              onCountryCodeChange={(value) => onProfileDataChange('phone_country_code', value)}
+              onLocalNumberChange={(value) => onProfileDataChange('phone_local_number', value)}
             />
           </div>
           <div>

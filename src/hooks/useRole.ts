@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -19,9 +18,20 @@ export const useRole = () => {
     setIsLoading(true);
     
     try {
-      // Re-fetch all data
+      // Re-fetch all data with organization join
       const [profileResult, rolesResult, clientResult] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase
+          .from('profiles')
+          .select(`
+            *,
+            organization:organizations!profiles_organization_id_fkey(
+              id,
+              name,
+              description
+            )
+          `)
+          .eq('id', user.id)
+          .single(),
         supabase.from('user_roles').select('role').eq('user_id', user.id),
         supabase.from('client_data').select('*').eq('user_id', user.id).single()
       ]);
@@ -61,10 +71,17 @@ export const useRole = () => {
         setIsLoading(true);
         console.log('useRole: Fetching data for user:', user.id);
 
-        // Fetch user profile
+        // Fetch user profile with organization data
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
-          .select('*')
+          .select(`
+            *,
+            organization:organizations!profiles_organization_id_fkey(
+              id,
+              name,
+              description
+            )
+          `)
           .eq('id', user.id)
           .single();
 
