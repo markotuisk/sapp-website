@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,11 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, Camera, Save, ArrowLeft, Briefcase, Building, Phone, Globe } from 'lucide-react';
+import { User, Camera, Save, ArrowLeft, Briefcase, Building, Phone, Globe, IdCard } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRole } from '@/hooks/useRole';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { DigitalIDDialog } from './DigitalIDDialog';
 
 interface ProfileManagementProps {
   onBack: () => void;
@@ -21,6 +21,7 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
   const { userProfile } = useRole();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [showIDDialog, setShowIDDialog] = useState(false);
   const [profileData, setProfileData] = useState({
     first_name: userProfile?.first_name || '',
     last_name: userProfile?.last_name || '',
@@ -161,6 +162,36 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
       </div>
 
       <div className="max-w-4xl mx-auto space-y-6">
+        {/* Digital ID Section */}
+        <Card className="border-2 border-sapp-blue/20 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-sapp-blue">
+              <IdCard className="h-5 w-5" />
+              Digital Security ID
+            </CardTitle>
+            <CardDescription>
+              Professional digital identification for team verification and site access
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-semibold text-sapp-dark">Ready to present your credentials?</h4>
+                <p className="text-sm text-gray-600 mt-1">
+                  Show your professional ID to team members for quick verification
+                </p>
+              </div>
+              <Button
+                onClick={() => setShowIDDialog(true)}
+                className="bg-sapp-blue hover:bg-sapp-blue/90 text-white px-6"
+              >
+                <IdCard className="h-4 w-4 mr-2" />
+                Show Digital ID
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Personal Information Card */}
         <Card>
           <CardHeader>
@@ -360,6 +391,12 @@ export const ProfileManagement: React.FC<ProfileManagementProps> = ({ onBack }) 
           </Button>
         </div>
       </div>
+
+      {/* Digital ID Dialog */}
+      <DigitalIDDialog 
+        open={showIDDialog} 
+        onOpenChange={setShowIDDialog} 
+      />
     </div>
   );
 };
