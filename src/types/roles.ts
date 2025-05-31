@@ -7,13 +7,21 @@ export interface UserProfile {
   first_name?: string;
   last_name?: string;
   phone?: string;
+  phone_country_code?: string;
+  phone_local_number?: string;
   organization?: string;
   organization_type?: string;
   department?: string;
   job_title?: string;
   avatar_url?: string;
+  organization_id?: string;
   created_at: string;
   updated_at: string;
+  organization?: {
+    id: string;
+    name: string;
+    description?: string;
+  };
 }
 
 export interface UserRole {
