@@ -23,8 +23,10 @@ export const ProfessionalInfoSection: React.FC<ProfessionalInfoSectionProps> = (
 }) => {
   const { userProfile } = useRole();
   
-  // Get organization name from the joined data
-  const organizationName = userProfile?.organization?.name || userProfile?.organization || 'No organization assigned';
+  // Get organization name - check if it's an object with name property or just a string
+  const organizationName = (typeof userProfile?.organization === 'object' && userProfile?.organization?.name) 
+    ? userProfile.organization.name 
+    : userProfile?.organization || 'No organization assigned';
 
   return (
     <Card>
