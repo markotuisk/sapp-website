@@ -50,7 +50,8 @@ export const useNewsManagement = () => {
       
       console.log('useNewsManagement: Admin role verified, fetching data...');
       
-      const [articlesRes, subscribersRes, campaignsRes] = await Promise.all([
+      // Fetch data with better error handling
+      const [articlesRes, subscribersRes, campaignsRes] = await Promise.allSettled([
         supabase
           .from('news_articles')
           .select('*')
@@ -65,29 +66,33 @@ export const useNewsManagement = () => {
           .order('created_at', { ascending: false })
       ]);
 
-      if (articlesRes.error) {
-        console.error('Articles fetch error:', articlesRes.error);
-        throw new Error(`Failed to fetch articles: ${articlesRes.error.message}`);
-      }
-      
-      if (subscribersRes.error) {
-        console.error('Subscribers fetch error:', subscribersRes.error);
-        throw new Error(`Failed to fetch subscribers: ${subscribersRes.error.message}`);
-      }
-      
-      if (campaignsRes.error) {
-        console.error('Campaigns fetch error:', campaignsRes.error);
-        throw new Error(`Failed to fetch campaigns: ${campaignsRes.error.message}`);
+      // Handle articles result
+      if (articlesRes.status === 'fulfilled' && !articlesRes.value.error) {
+        setArticles(articlesRes.value.data || []);
+        console.log('useNewsManagement: Articles loaded:', articlesRes.value.data?.length || 0);
+      } else {
+        console.error('Articles fetch error:', articlesRes.status === 'fulfilled' ? articlesRes.value.error : articlesRes.reason);
+        setArticles([]);
       }
 
-      console.log('useNewsManagement: Data fetched successfully');
-      console.log('- Articles:', articlesRes.data?.length || 0);
-      console.log('- Subscribers:', subscribersRes.data?.length || 0);
-      console.log('- Campaigns:', campaignsRes.data?.length || 0);
+      // Handle subscribers result
+      if (subscribersRes.status === 'fulfilled' && !subscribersRes.value.error) {
+        setSubscribers(subscribersRes.value.data || []);
+        console.log('useNewsManagement: Subscribers loaded:', subscribersRes.value.data?.length || 0);
+      } else {
+        console.error('Subscribers fetch error:', subscribersRes.status === 'fulfilled' ? subscribersRes.value.error : subscribersRes.reason);
+        setSubscribers([]);
+      }
 
-      setArticles(articlesRes.data || []);
-      setSubscribers(subscribersRes.data || []);
-      setCampaigns(campaignsRes.data || []);
+      // Handle campaigns result
+      if (campaignsRes.status === 'fulfilled' && !campaignsRes.value.error) {
+        setCampaigns(campaignsRes.value.data || []);
+        console.log('useNewsManagement: Campaigns loaded:', campaignsRes.value.data?.length || 0);
+      } else {
+        console.error('Campaigns fetch error:', campaignsRes.status === 'fulfilled' ? campaignsRes.value.error : campaignsRes.reason);
+        setCampaigns([]);
+      }
+
     } catch (error) {
       console.error('Error fetching news data:', error);
       toast({
