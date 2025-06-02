@@ -3,11 +3,18 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { UserWithProfile, AppRole } from '@/types/roles';
+import type { Tables } from '@/integrations/supabase/types';
+import { useUserRoles } from '@/hooks/user-management/useUserRoles';
+import { useOrganizations } from '@/hooks/user-management/useOrganizations';
+
+type Organization = Tables<'organizations'>;
 
 export const useUserManagement = () => {
   const [users, setUsers] = useState<UserWithProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const { assignUserRole, removeUserRole } = useUserRoles();
+  const { organizations, isLoading: organizationsLoading, createOrganization, refetchOrganizations } = useOrganizations();
 
   const fetchUsers = async () => {
     try {
@@ -116,7 +123,12 @@ export const useUserManagement = () => {
 
   return {
     users,
-    isLoading,
+    isLoading: isLoading || organizationsLoading,
+    organizations,
+    assignUserRole,
+    removeUserRole,
+    createOrganization,
     refetchData,
+    refetchOrganizations,
   };
 };

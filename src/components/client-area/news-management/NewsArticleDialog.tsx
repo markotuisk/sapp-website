@@ -39,6 +39,11 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
     published: false,
     featured: false,
     tags: [] as string[],
+    meta_description: '',
+    meta_keywords: [] as string[],
+    og_image: '',
+    twitter_image: '',
+    canonical_url: '',
   });
   
   const [tagInput, setTagInput] = useState('');
@@ -69,6 +74,11 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
         published: article.published,
         featured: article.featured,
         tags: article.tags || [],
+        meta_description: article.meta_description || '',
+        meta_keywords: article.meta_keywords || [],
+        og_image: article.og_image || '',
+        twitter_image: article.twitter_image || '',
+        canonical_url: article.canonical_url || '',
       });
     } else {
       // Reset form for new article
@@ -84,6 +94,11 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
         published: false,
         featured: false,
         tags: [],
+        meta_description: '',
+        meta_keywords: [],
+        og_image: '',
+        twitter_image: '',
+        canonical_url: '',
       });
     }
     setTagInput('');
@@ -140,8 +155,28 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
     
     try {
       const articleData = {
-        ...formData,
+        title: formData.title,
+        slug: formData.slug,
+        summary: formData.summary,
+        content: formData.content,
+        cover_image: formData.cover_image || null,
+        category: formData.category,
+        author: formData.author,
+        author_title: formData.author_title || null,
+        published: formData.published,
+        featured: formData.featured,
+        tags: formData.tags,
+        meta_description: formData.meta_description || null,
+        meta_keywords: formData.meta_keywords.length > 0 ? formData.meta_keywords : null,
+        og_image: formData.og_image || null,
+        twitter_image: formData.twitter_image || null,
+        canonical_url: formData.canonical_url || null,
         published_at: formData.published ? new Date().toISOString() : null,
+        email_sent: false,
+        email_sent_at: null,
+        reading_time: null,
+        view_count: 0,
+        scheduled_at: null,
       };
 
       if (article) {
@@ -294,6 +329,18 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
               value={formData.author_title}
               onChange={(e) => handleInputChange('author_title', e.target.value)}
               placeholder="Author position or title"
+            />
+          </div>
+
+          {/* Meta Description */}
+          <div className="space-y-2">
+            <Label htmlFor="meta_description">Meta Description</Label>
+            <Textarea
+              id="meta_description"
+              value={formData.meta_description}
+              onChange={(e) => handleInputChange('meta_description', e.target.value)}
+              placeholder="SEO meta description"
+              className="min-h-[60px]"
             />
           </div>
 
