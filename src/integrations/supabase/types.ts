@@ -1027,7 +1027,7 @@ export type Database = {
         }
       }
       assign_admin_role: {
-        Args: { _email: string }
+        Args: Record<PropertyKey, never> | { _email: string }
         Returns: undefined
       }
       assign_user_role: {
@@ -1045,6 +1045,10 @@ export type Database = {
           template_id_param?: string
         }
         Returns: string
+      }
+      current_user_is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
       }
       get_all_page_versions: {
         Args: Record<PropertyKey, never>

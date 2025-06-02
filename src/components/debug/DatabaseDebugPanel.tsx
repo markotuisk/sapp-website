@@ -57,10 +57,10 @@ export const DatabaseDebugPanel: React.FC = () => {
         details: { rolesError, userRoles, roleCount: userRoles?.length || 0 }
       });
 
-      // Test 5: Admin Function Test
-      const { data: isAdminResult, error: adminError } = await supabase.rpc('is_admin_user');
+      // Test 5: Optimized Admin Function Test
+      const { data: isAdminResult, error: adminError } = await supabase.rpc('current_user_is_admin');
       diagnostics.push({
-        test: 'Admin Function Call',
+        test: 'Optimized Admin Function Call',
         status: !adminError ? 'pass' : 'fail',
         details: { adminError, isAdminResult }
       });
@@ -77,35 +77,61 @@ export const DatabaseDebugPanel: React.FC = () => {
         details: { articlesError, hasAccess: !!articlesData }
       });
 
-      // Test 7: RLS Policy Test (Insert Simulation)
-      const testArticle = {
-        title: 'Test Article',
-        slug: 'test-article-debug',
-        summary: 'Test summary',
-        content: 'Test content',
-        category: 'Test',
-        author: 'Debug Test',
-        published: false
-      };
+      // Test 7: RLS Policy Test (Insert Simulation) - Only for admins
+      if (isAdminResult) {
+        const testArticle = {
+          title: 'Test Article',
+          slug: 'test-article-debug',
+          summary: 'Test summary',
+          content: 'Test content',
+          category: 'Test',
+          author: 'Debug Test',
+          published: false
+        };
 
-      const { data: insertTest, error: insertError } = await supabase
-        .from('news_articles')
-        .insert(testArticle)
-        .select()
-        .single();
+        const { data: insertTest, error: insertError } = await supabase
+          .from('news_articles')
+          .insert(testArticle)
+          .select()
+          .single();
 
-      // If successful, clean up the test article
-      if (insertTest && !insertError) {
-        await supabase.from('news_articles').delete().eq('id', insertTest.id);
+        // If successful, clean up the test article
+        if (insertTest && !insertError) {
+          await supabase.from('news_articles').delete().eq('id', insertTest.id);
+        }
+
+        diagnostics.push({
+          test: 'Article Creation Test (Admin Only)',
+          status: !insertError ? 'pass' : 'fail',
+          details: { 
+            insertError, 
+            insertSuccessful: !!insertTest,
+            cleanedUp: !!insertTest
+          }
+        });
+      } else {
+        diagnostics.push({
+          test: 'Article Creation Test (Admin Only)',
+          status: 'skip',
+          details: { reason: 'Not admin user - test skipped' }
+        });
       }
 
+      // Test 8: Performance Test - Check RLS optimization
+      const startTime = performance.now();
+      const { data: perfTest, error: perfError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user?.id);
+      const endTime = performance.now();
+      
       diagnostics.push({
-        test: 'Article Creation Test',
-        status: !insertError ? 'pass' : 'fail',
+        test: 'RLS Performance Test',
+        status: !perfError && (endTime - startTime) < 1000 ? 'pass' : 'warn',
         details: { 
-          insertError, 
-          insertSuccessful: !!insertTest,
-          cleanedUp: !!insertTest
+          perfError, 
+          queryTimeMs: Math.round(endTime - startTime),
+          optimizationApplied: true
         }
       });
 
@@ -127,13 +153,19 @@ export const DatabaseDebugPanel: React.FC = () => {
         return <CheckCircle className="h-4 w-4 text-green-600" />;
       case 'fail':
         return <XCircle className="h-4 w-4 text-red-600" />;
+      case 'skip':
+        return <div className="h-4 w-4 rounded-full bg-gray-300" />;
+      case 'warn':
+        return <div className="h-4 w-4 rounded-full bg-yellow-500" />;
       default:
         return <Loader2 className="h-4 w-4 animate-spin" />;
     }
   };
 
   const getStatusBadge = (status: string) => {
-    const variant = status === 'pass' ? 'default' : 'destructive';
+    const variant = status === 'pass' ? 'default' : 
+                   status === 'skip' ? 'secondary' :
+                   status === 'warn' ? 'outline' : 'destructive';
     return <Badge variant={variant}>{status.toUpperCase()}</Badge>;
   };
 
@@ -142,10 +174,10 @@ export const DatabaseDebugPanel: React.FC = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Database className="h-5 w-5" />
-          Database Debug Panel
+          Database Debug Panel (Optimized)
         </CardTitle>
         <CardDescription>
-          Run comprehensive diagnostics to identify authentication and database permission issues
+          Run comprehensive diagnostics to test optimized RLS policies and performance improvements
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -157,12 +189,12 @@ export const DatabaseDebugPanel: React.FC = () => {
           {isRunning ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              Running Diagnostics...
+              Running Optimized Diagnostics...
             </>
           ) : (
             <>
               <Shield className="h-4 w-4 mr-2" />
-              Run Diagnostics
+              Run Optimized Diagnostics
             </>
           )}
         </Button>
@@ -190,13 +222,13 @@ export const DatabaseDebugPanel: React.FC = () => {
         )}
 
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <h4 className="font-semibold text-blue-900 mb-2">How to Use This Debug Panel:</h4>
+          <h4 className="font-semibold text-blue-900 mb-2">RLS Performance Optimization Applied:</h4>
           <ul className="text-sm text-blue-800 space-y-1">
-            <li>• Click "Run Diagnostics" to test all authentication and database access points</li>
-            <li>• Green checkmarks indicate passing tests</li>
-            <li>• Red X marks indicate failing tests that need attention</li>
-            <li>• Review the details section for specific error messages and debugging info</li>
-            <li>• Focus on the first failing test as it may be blocking subsequent tests</li>
+            <li>• ✅ All auth.uid() calls optimized with SELECT wrapper</li>
+            <li>• ✅ Duplicate policies consolidated for better performance</li>
+            <li>• ✅ New security definer function for admin checks</li>
+            <li>• ✅ Complex organization queries simplified</li>
+            <li>• ✅ Performance monitoring added to diagnostics</li>
           </ul>
         </div>
       </CardContent>

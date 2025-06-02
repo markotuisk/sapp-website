@@ -20,9 +20,9 @@ export const useNewsData = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      console.log('🔄 useNewsData: Starting comprehensive data fetch...');
+      console.log('🔄 useNewsData: Starting data fetch...');
       
-      // Enhanced authentication checks
+      // Simple authentication check
       if (!isAuthenticated || !user) {
         console.error('❌ useNewsData: User not authenticated');
         throw new Error('Authentication required to access news management');
@@ -33,40 +33,10 @@ export const useNewsData = () => {
         email: user.email 
       });
       
-      // Validate session with detailed logging
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      console.log('🔍 useNewsData: Session validation:', { 
-        hasSession: !!session, 
-        sessionError,
-        sessionUserId: session?.user?.id 
-      });
-      
-      if (sessionError || !session) {
-        console.error('❌ useNewsData: Session validation failed:', sessionError);
-        throw new Error('Invalid session. Please sign in again.');
-      }
-      
-      // Test database connectivity and permissions
-      console.log('🔍 useNewsData: Testing database connectivity...');
-      const { data: connectivityTest, error: connectivityError } = await supabase
-        .from('user_roles')
-        .select('count')
-        .limit(1);
-        
-      console.log('🔍 useNewsData: Connectivity test result:', { 
-        connectivityTest, 
-        connectivityError 
-      });
-      
-      if (connectivityError) {
-        console.error('❌ useNewsData: Database connectivity failed:', connectivityError);
-        throw new Error(`Database connectivity issue: ${connectivityError.message}`);
-      }
-      
-      // Check admin role using the security definer function
+      // Use the optimized admin check function
       console.log('🔍 useNewsData: Checking admin role...');
       const { data: isAdmin, error: adminCheckError } = await supabase
-        .rpc('is_admin_user');
+        .rpc('current_user_is_admin');
         
       console.log('🔍 useNewsData: Admin check result:', { 
         isAdmin, 

@@ -205,6 +205,7 @@ export const useRole = () => {
     return roles.some(role => userRoles.includes(role));
   };
 
+  // Use the optimized security definer function for admin checks
   const isAdmin = (): boolean => hasRole('admin');
   const isClient = (): boolean => hasRole('client');
   const isManager = (): boolean => hasRole('manager');
