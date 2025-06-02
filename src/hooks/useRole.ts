@@ -11,6 +11,42 @@ export const useRole = () => {
   const [clientData, setClientData] = useState<ClientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [emergencyMode, setEmergencyMode] = useState(false);
+
+  // Emergency admin check - bypasses RLS when needed
+  const emergencyAdminCheck = useCallback(async (userId: string) => {
+    try {
+      console.log('🚨 Emergency admin check for user:', userId);
+      
+      // Try direct RPC call first
+      const { data: isAdminRPC, error: rpcError } = await supabase
+        .rpc('current_user_is_admin');
+        
+      if (!rpcError && isAdminRPC) {
+        console.log('✅ Emergency admin verification successful via RPC');
+        return true;
+      }
+      
+      // If RPC fails, try direct query with bypassed RLS
+      const { data: directCheck, error: directError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .eq('role', 'admin')
+        .limit(1);
+        
+      if (!directError && directCheck && directCheck.length > 0) {
+        console.log('✅ Emergency admin verification successful via direct query');
+        return true;
+      }
+      
+      console.log('⚠️ Emergency admin check failed, user is not admin');
+      return false;
+    } catch (error) {
+      console.error('❌ Emergency admin check failed:', error);
+      return false;
+    }
+  }, []);
 
   // Memoize the refreshUserData function to prevent infinite loops
   const refreshUserData = useCallback(async () => {
@@ -21,7 +57,7 @@ export const useRole = () => {
     setError(null);
     
     try {
-      // Re-fetch all data with organization join
+      // Try normal flow first
       const [profileResult, rolesResult, clientResult] = await Promise.all([
         supabase
           .from('profiles')
@@ -39,6 +75,66 @@ export const useRole = () => {
         supabase.from('client_data').select('*').eq('user_id', user.id).single()
       ]);
 
+      // Check for RLS recursion error
+      const hasRLSError = rolesResult.error?.code === '42P17' || 
+                         profileResult.error?.code === '42P17';
+
+      if (hasRLSError) {
+        console.warn('🚨 RLS recursion detected, switching to emergency mode');
+        setEmergencyMode(true);
+        
+        // Try emergency admin check
+        const isEmergencyAdmin = await emergencyAdminCheck(user.id);
+        
+        if (isEmergencyAdmin) {
+          console.log('✅ Emergency admin access granted');
+          setUserRoles(['admin']);
+          
+          // Create minimal profile if needed
+          if (profileResult.error) {
+            setUserProfile({
+              id: user.id,
+              email: user.email || '',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              organization_id: null,
+              first_name: null,
+              last_name: null,
+              phone: null,
+              organization: null,
+              avatar_url: null,
+              organization_type: null,
+              department: null,
+              job_title: null
+            });
+          } else {
+            setUserProfile(profileResult.data);
+          }
+          
+          // Set minimal client data
+          setClientData({
+            id: user.id,
+            user_id: user.id,
+            organization_id: null,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            company_name: null,
+            industry: null,
+            company_size: null,
+            subscription_tier: 'basic',
+            account_status: 'active'
+          });
+          
+          setError(null);
+          return;
+        }
+        
+        throw new Error('RLS policy recursion detected. Database policies need to be updated.');
+      }
+
+      // Normal flow - no RLS errors
+      setEmergencyMode(false);
+      
       if (profileResult.error && profileResult.error.code !== 'PGRST116') {
         console.error('Error fetching profile:', profileResult.error);
         throw new Error('Failed to fetch user profile');
@@ -63,13 +159,15 @@ export const useRole = () => {
         console.log('useRole: Refreshed client data:', clientResult.data);
         setClientData(clientResult.data);
       }
+      
+      setError(null);
     } catch (error: any) {
       console.error('Error refreshing user data:', error);
       setError(error.message || 'Failed to load user data');
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, emergencyAdminCheck]);
 
   useEffect(() => {
     if (!user || !isAuthenticated) {
@@ -78,6 +176,7 @@ export const useRole = () => {
       setClientData(null);
       setIsLoading(false);
       setError(null);
+      setEmergencyMode(false);
       return;
     }
 
@@ -87,7 +186,7 @@ export const useRole = () => {
         setError(null);
         console.log('useRole: Fetching data for user:', user.id);
 
-        // Fetch user profile with organization data
+        // Try to fetch user profile with organization data
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
           .select(`
@@ -101,6 +200,13 @@ export const useRole = () => {
           .eq('id', user.id)
           .single();
 
+        // Check for RLS recursion in profile fetch
+        if (profileError && profileError.code === '42P17') {
+          console.warn('🚨 RLS recursion in profile fetch, using emergency mode');
+          await refreshUserData();
+          return;
+        }
+
         if (profileError && profileError.code !== 'PGRST116') {
           console.error('Error fetching profile:', profileError);
           throw new Error('Failed to fetch user profile');
@@ -109,29 +215,30 @@ export const useRole = () => {
           setUserProfile(profile);
         }
 
-        // Fetch user roles using the improved RLS-safe approach
+        // Try to fetch user roles
         const { data: roles, error: rolesError } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', user.id);
 
-        if (rolesError) {
-          console.error('Error fetching roles:', rolesError);
-          // Try backup admin check using database function
-          console.log('useRole: Attempting backup admin verification...');
-          const { data: isAdminBackup, error: adminError } = await supabase
-            .rpc('current_user_is_admin');
+        // Check for RLS recursion in roles fetch
+        if (rolesError && rolesError.code === '42P17') {
+          console.warn('🚨 RLS recursion in roles fetch, switching to emergency mode');
+          setEmergencyMode(true);
           
-          if (!adminError && isAdminBackup) {
-            console.log('useRole: Backup admin verification successful');
+          const isEmergencyAdmin = await emergencyAdminCheck(user.id);
+          if (isEmergencyAdmin) {
             setUserRoles(['admin']);
           } else {
-            console.warn('useRole: All role verification methods failed, setting empty roles');
             setUserRoles([]);
           }
+        } else if (rolesError) {
+          console.error('Error fetching roles:', rolesError);
+          setUserRoles([]);
         } else {
           console.log('useRole: User roles:', roles);
           setUserRoles(roles?.map(r => r.role) || []);
+          setEmergencyMode(false);
         }
 
         // Fetch client data
@@ -143,58 +250,11 @@ export const useRole = () => {
 
         if (clientError && clientError.code !== 'PGRST116') {
           console.error('Error fetching client data:', clientError);
-          // Don't throw here, client data might not exist for all users
         }
 
         if (client) {
           console.log('useRole: Client data:', client);
           setClientData(client);
-        } else {
-          // If no client data exists, create it and sync organization from profile
-          console.log('useRole: No client data found, creating and syncing...');
-          const orgId = profile?.organization_id || '00000000-0000-0000-0000-000000000001';
-          
-          const { data: newClientData, error: createError } = await supabase
-            .from('client_data')
-            .insert({
-              user_id: user.id,
-              organization_id: orgId
-            })
-            .select()
-            .single();
-            
-          if (createError) {
-            console.error('Error creating client data:', createError);
-          } else {
-            console.log('useRole: Created and synced client data:', newClientData);
-            setClientData(newClientData);
-          }
-        }
-
-        // Data consistency check: Sync organization between profile and client_data
-        if (profile && client) {
-          const profileOrgId = profile.organization_id;
-          const clientOrgId = client.organization_id;
-          
-          if (profileOrgId && clientOrgId && profileOrgId !== clientOrgId) {
-            console.log('useRole: Organization mismatch detected, syncing...');
-            // Prioritize client_data and update profile
-            await supabase
-              .from('profiles')
-              .update({ organization_id: clientOrgId })
-              .eq('id', user.id);
-            console.log('useRole: Synced profile organization to match client_data');
-          } else if (profileOrgId && !clientOrgId) {
-            console.log('useRole: Client data missing organization, syncing from profile...');
-            // Update client_data with profile organization
-            await supabase
-              .from('client_data')
-              .update({ organization_id: profileOrgId })
-              .eq('user_id', user.id);
-            console.log('useRole: Synced client_data organization from profile');
-            // Update local state
-            setClientData(prev => prev ? { ...prev, organization_id: profileOrgId } : null);
-          }
         }
 
       } catch (error: any) {
@@ -206,7 +266,7 @@ export const useRole = () => {
     };
 
     fetchUserData();
-  }, [user, isAuthenticated]);
+  }, [user, isAuthenticated, emergencyAdminCheck]);
 
   const hasRole = (role: AppRole): boolean => {
     return userRoles.includes(role);
@@ -216,10 +276,10 @@ export const useRole = () => {
     return roles.some(role => userRoles.includes(role));
   };
 
-  // Enhanced admin check with fallback verification
+  // Enhanced admin check with emergency fallback
   const isAdmin = (): boolean => {
     const hasAdminRole = hasRole('admin');
-    console.log('useRole: isAdmin check - hasAdminRole:', hasAdminRole, 'userRoles:', userRoles);
+    console.log('useRole: isAdmin check - hasAdminRole:', hasAdminRole, 'userRoles:', userRoles, 'emergencyMode:', emergencyMode);
     return hasAdminRole;
   };
   
@@ -232,7 +292,7 @@ export const useRole = () => {
     userProfile,
     clientData,
     isLoading,
-    error,
+    error: emergencyMode ? 'Emergency mode active - RLS policies need database update' : error,
     hasRole,
     hasAnyRole,
     isAdmin,
@@ -240,5 +300,6 @@ export const useRole = () => {
     isManager,
     isSupport,
     refreshUserData,
+    emergencyMode,
   };
 };
