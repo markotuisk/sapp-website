@@ -8,9 +8,12 @@ import { NewsletterDialog } from './NewsletterDialog';
 import { NewsManagementErrorBoundary } from './NewsManagementErrorBoundary';
 import { NewsArticleHeader } from './components/NewsArticleHeader';
 import { NewsArticleList } from './components/NewsArticleList';
+import { DatabaseDebugPanel } from '@/components/debug/DatabaseDebugPanel';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, Loader2, Shield } from 'lucide-react';
+import { AlertTriangle, Loader2, Shield, Bug } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
@@ -23,6 +26,7 @@ const NewsArticleManagementContent: React.FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [editingArticle, setEditingArticle] = useState<NewsArticle | null>(null);
   const [newsletterArticle, setNewsletterArticle] = useState<NewsArticle | null>(null);
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
 
   // Pre-flight authentication checks
   if (!isAuthenticated) {
@@ -112,29 +116,42 @@ const NewsArticleManagementContent: React.FC = () => {
 
   const togglePublish = async (article: NewsArticle) => {
     try {
-      console.log('Toggling publish status for article:', article.id);
+      console.log('🔄 NewsArticleManagement: Toggling publish status for article:', article.id);
       await updateArticle(article.id, {
         published: !article.published,
         published_at: !article.published ? new Date().toISOString() : null
       });
     } catch (error) {
-      console.error('Error toggling publish status:', error);
+      console.error('❌ NewsArticleManagement: Error toggling publish status:', error);
       // Error handling is already done in the hook
     }
   };
 
   const handleDelete = async (articleId: string) => {
     try {
-      console.log('Deleting article:', articleId);
+      console.log('🗑️ NewsArticleManagement: Deleting article:', articleId);
       await deleteArticle(articleId);
     } catch (error) {
-      console.error('Error deleting article:', error);
+      console.error('❌ NewsArticleManagement: Error deleting article:', error);
       // Error handling is already done in the hook
     }
   };
 
   return (
     <div className="space-y-6">
+      {/* Debug Panel Toggle */}
+      <Collapsible open={showDebugPanel} onOpenChange={setShowDebugPanel}>
+        <CollapsibleTrigger asChild>
+          <Button variant="outline" size="sm" className="mb-4">
+            <Bug className="h-4 w-4 mr-2" />
+            {showDebugPanel ? 'Hide' : 'Show'} Debug Panel
+          </Button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mb-6">
+          <DatabaseDebugPanel />
+        </CollapsibleContent>
+      </Collapsible>
+
       <NewsArticleHeader
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
