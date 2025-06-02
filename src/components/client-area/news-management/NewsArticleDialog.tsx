@@ -1,15 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { X, Eye } from 'lucide-react';
 import { useNewsManagement } from '@/hooks/useNewsManagement';
+import { useToast } from '@/hooks/use-toast';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
@@ -17,125 +15,133 @@ type NewsArticle = Tables<'news_articles'>;
 interface NewsArticleDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  article: NewsArticle | null;
+  article?: NewsArticle | null;
 }
 
 export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
   isOpen,
   onClose,
-  article,
+  article
 }) => {
   const { createArticle, updateArticle } = useNewsManagement();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
     summary: '',
     content: '',
+    cover_image: '',
+    category: 'Security',
     author: '',
     author_title: '',
-    category: '',
-    tags: '',
-    cover_image: '',
-    meta_description: '',
-    meta_keywords: '',
-    og_image: '',
-    twitter_image: '',
-    canonical_url: '',
-    featured: false,
     published: false,
+    featured: false,
+    tags: [] as string[],
   });
+  
+  const [tagInput, setTagInput] = useState('');
+
+  // Common categories for security news
+  const categories = [
+    'Security',
+    'Cyber Security',
+    'Physical Security',
+    'Technology',
+    'Company News',
+    'Events',
+    'Tutorials',
+    'Case Studies'
+  ];
 
   useEffect(() => {
-    if (article && isOpen) {
+    if (article) {
       setFormData({
-        title: article.title || '',
-        slug: article.slug || '',
-        summary: article.summary || '',
-        content: article.content || '',
-        author: article.author || '',
-        author_title: article.author_title || '',
-        category: article.category || '',
-        tags: article.tags ? article.tags.join(', ') : '',
+        title: article.title,
+        slug: article.slug,
+        summary: article.summary,
+        content: article.content,
         cover_image: article.cover_image || '',
-        meta_description: article.meta_description || '',
-        meta_keywords: article.meta_keywords ? article.meta_keywords.join(', ') : '',
-        og_image: article.og_image || '',
-        twitter_image: article.twitter_image || '',
-        canonical_url: article.canonical_url || '',
-        featured: article.featured || false,
-        published: article.published || false,
+        category: article.category,
+        author: article.author,
+        author_title: article.author_title || '',
+        published: article.published,
+        featured: article.featured,
+        tags: article.tags || [],
       });
-    } else if (isOpen) {
+    } else {
       // Reset form for new article
       setFormData({
         title: '',
         slug: '',
         summary: '',
         content: '',
+        cover_image: '',
+        category: 'Security',
         author: '',
         author_title: '',
-        category: '',
-        tags: '',
-        cover_image: '',
-        meta_description: '',
-        meta_keywords: '',
-        og_image: '',
-        twitter_image: '',
-        canonical_url: '',
-        featured: false,
         published: false,
+        featured: false,
+        tags: [],
       });
     }
+    setTagInput('');
   }, [article, isOpen]);
 
-  const generateSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .trim();
+  // Generate slug from title
+  useEffect(() => {
+    if (formData.title && !article) {
+      const slug = formData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-');
+      setFormData(prev => ({ ...prev, slug }));
+    }
+  }, [formData.title, article]);
+
+  const handleInputChange = (field: string, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleTitleChange = (title: string) => {
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && tagInput.trim()) {
+      e.preventDefault();
+      if (!formData.tags.includes(tagInput.trim())) {
+        setFormData(prev => ({
+          ...prev,
+          tags: [...prev.tags, tagInput.trim()]
+        }));
+      }
+      setTagInput('');
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
     setFormData(prev => ({
       ...prev,
-      title,
-      slug: prev.slug || generateSlug(title),
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
     }));
   };
 
-  const handleSubmit = async () => {
-    if (!formData.title || !formData.summary || !formData.content) {
-      alert('Please fill in all required fields');
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.title.trim() || !formData.summary.trim() || !formData.content.trim() || !formData.author.trim()) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fill in all required fields (title, summary, content, and author)',
+        variant: 'destructive',
+      });
       return;
     }
 
-    setIsSubmitting(true);
+    setIsLoading(true);
+    
     try {
       const articleData = {
-        title: formData.title,
-        slug: formData.slug,
-        summary: formData.summary,
-        content: formData.content,
-        author: formData.author,
-        author_title: formData.author_title,
-        category: formData.category,
-        cover_image: formData.cover_image,
-        meta_description: formData.meta_description,
-        og_image: formData.og_image,
-        twitter_image: formData.twitter_image,
-        canonical_url: formData.canonical_url,
-        featured: formData.featured,
-        published: formData.published,
-        tags: formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
-        meta_keywords: formData.meta_keywords ? formData.meta_keywords.split(',').map(keyword => keyword.trim()).filter(Boolean) : [],
+        ...formData,
         published_at: formData.published ? new Date().toISOString() : null,
-        reading_time: Math.ceil(formData.content.split(' ').length / 200), // Estimate reading time
-        email_sent: false,
-        email_sent_at: null,
-        scheduled_at: null,
-        view_count: 0,
       };
 
       if (article) {
@@ -147,234 +153,222 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
       onClose();
     } catch (error) {
       console.error('Error saving article:', error);
+      // Error is already handled in the hook
     } finally {
-      setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 
-  const removeTag = (tagToRemove: string) => {
-    const currentTags = formData.tags.split(',').map(tag => tag.trim()).filter(Boolean);
-    const updatedTags = currentTags.filter(tag => tag !== tagToRemove);
-    setFormData(prev => ({ ...prev, tags: updatedTags.join(', ') }));
+  const handleClose = () => {
+    if (!isLoading) {
+      onClose();
+    }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {article ? 'Edit Article' : 'Create New Article'}
           </DialogTitle>
           <DialogDescription>
-            {article ? 'Update your news article' : 'Create a new news article with SEO optimization'}
+            {article ? 'Update the article information below.' : 'Fill in the details to create a new article.'}
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="content" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="content">Content</TabsTrigger>
-            <TabsTrigger value="seo">SEO & Meta</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-          </TabsList>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Title */}
+          <div className="space-y-2">
+            <Label htmlFor="title">
+              Title <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="title"
+              value={formData.title}
+              onChange={(e) => handleInputChange('title', e.target.value)}
+              placeholder="Enter article title"
+              required
+            />
+          </div>
 
-          <TabsContent value="content" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="title">Title *</Label>
-                <Input
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) => handleTitleChange(e.target.value)}
-                  placeholder="Article title"
-                />
-              </div>
-              <div>
-                <Label htmlFor="slug">URL Slug</Label>
-                <Input
-                  id="slug"
-                  value={formData.slug}
-                  onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                  placeholder="article-url-slug"
-                />
-              </div>
+          {/* Slug */}
+          <div className="space-y-2">
+            <Label htmlFor="slug">
+              Slug <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="slug"
+              value={formData.slug}
+              onChange={(e) => handleInputChange('slug', e.target.value)}
+              placeholder="URL-friendly slug"
+              required
+              className="font-mono text-sm"
+            />
+            <p className="text-xs text-muted-foreground">
+              This will be used in the URL: /news/{formData.slug}
+            </p>
+          </div>
+
+          {/* Summary */}
+          <div className="space-y-2">
+            <Label htmlFor="summary">
+              Summary <span className="text-red-500">*</span>
+            </Label>
+            <Textarea
+              id="summary"
+              value={formData.summary}
+              onChange={(e) => handleInputChange('summary', e.target.value)}
+              placeholder="Brief summary of the article"
+              required
+              className="min-h-[80px]"
+            />
+          </div>
+
+          {/* Content */}
+          <div className="space-y-2">
+            <Label htmlFor="content">
+              Content <span className="text-red-500">*</span>
+            </Label>
+            <Textarea
+              id="content"
+              value={formData.content}
+              onChange={(e) => handleInputChange('content', e.target.value)}
+              placeholder="Full article content (supports HTML)"
+              required
+              className="min-h-[200px] font-mono text-sm"
+            />
+          </div>
+
+          {/* Cover Image */}
+          <div className="space-y-2">
+            <Label htmlFor="cover_image">Cover Image URL</Label>
+            <Input
+              id="cover_image"
+              value={formData.cover_image}
+              onChange={(e) => handleInputChange('cover_image', e.target.value)}
+              placeholder="URL to the cover image"
+            />
+          </div>
+
+          {/* Category & Author */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="category">
+                Category <span className="text-red-500">*</span>
+              </Label>
+              <select
+                id="category"
+                value={formData.category}
+                onChange={(e) => handleInputChange('category', e.target.value)}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                required
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            <div>
-              <Label htmlFor="summary">Summary *</Label>
-              <Textarea
-                id="summary"
-                value={formData.summary}
-                onChange={(e) => setFormData(prev => ({ ...prev, summary: e.target.value }))}
-                placeholder="Brief article summary"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="content">Content *</Label>
-              <Textarea
-                id="content"
-                value={formData.content}
-                onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                placeholder="Article content (Markdown supported)"
-                rows={10}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="author">Author</Label>
-                <Input
-                  id="author"
-                  value={formData.author}
-                  onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                  placeholder="Author name"
-                />
-              </div>
-              <div>
-                <Label htmlFor="author_title">Author Title</Label>
-                <Input
-                  id="author_title"
-                  value={formData.author_title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, author_title: e.target.value }))}
-                  placeholder="Author title/position"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="category">Category</Label>
-                <Input
-                  id="category"
-                  value={formData.category}
-                  onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                  placeholder="e.g., Security, Company News"
-                />
-              </div>
-              <div>
-                <Label htmlFor="cover_image">Cover Image URL</Label>
-                <Input
-                  id="cover_image"
-                  value={formData.cover_image}
-                  onChange={(e) => setFormData(prev => ({ ...prev, cover_image: e.target.value }))}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="tags">Tags</Label>
+            <div className="space-y-2">
+              <Label htmlFor="author">
+                Author <span className="text-red-500">*</span>
+              </Label>
               <Input
-                id="tags"
-                value={formData.tags}
-                onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
-                placeholder="security, cybersecurity, SAPP"
+                id="author"
+                value={formData.author}
+                onChange={(e) => handleInputChange('author', e.target.value)}
+                placeholder="Author name"
+                required
               />
-              {formData.tags && (
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {formData.tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                      <button
-                        onClick={() => removeTag(tag)}
-                        className="ml-1 hover:text-red-600"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
+            </div>
+          </div>
+
+          {/* Author Title */}
+          <div className="space-y-2">
+            <Label htmlFor="author_title">Author Title</Label>
+            <Input
+              id="author_title"
+              value={formData.author_title}
+              onChange={(e) => handleInputChange('author_title', e.target.value)}
+              placeholder="Author position or title"
+            />
+          </div>
+
+          {/* Tags */}
+          <div className="space-y-2">
+            <Label htmlFor="tags">Tags</Label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {formData.tags.map((tag) => (
+                <div 
+                  key={tag} 
+                  className="bg-slate-100 px-2 py-1 rounded-md flex items-center gap-1"
+                >
+                  <span>{tag}</span>
+                  <button 
+                    type="button" 
+                    onClick={() => removeTag(tag)}
+                    className="text-slate-500 hover:text-red-500"
+                  >
+                    ×
+                  </button>
                 </div>
-              )}
+              ))}
             </div>
-          </TabsContent>
+            <Input
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={handleTagKeyDown}
+              placeholder="Add a tag and press Enter"
+            />
+          </div>
 
-          <TabsContent value="seo" className="space-y-4">
-            <div>
-              <Label htmlFor="meta_description">Meta Description</Label>
-              <Textarea
-                id="meta_description"
-                value={formData.meta_description}
-                onChange={(e) => setFormData(prev => ({ ...prev, meta_description: e.target.value }))}
-                placeholder="Brief description for search engines (150-160 characters)"
-                rows={3}
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                {formData.meta_description.length}/160 characters
-              </p>
-            </div>
-
-            <div>
-              <Label htmlFor="meta_keywords">Meta Keywords</Label>
-              <Input
-                id="meta_keywords"
-                value={formData.meta_keywords}
-                onChange={(e) => setFormData(prev => ({ ...prev, meta_keywords: e.target.value }))}
-                placeholder="keyword1, keyword2, keyword3"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="canonical_url">Canonical URL</Label>
-              <Input
-                id="canonical_url"
-                value={formData.canonical_url}
-                onChange={(e) => setFormData(prev => ({ ...prev, canonical_url: e.target.value }))}
-                placeholder="https://sapp-security.com/news/article-slug"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Publication Options */}
+          <div className="space-y-4 pt-4 border-t">
+            <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="og_image">Open Graph Image</Label>
-                <Input
-                  id="og_image"
-                  value={formData.og_image}
-                  onChange={(e) => setFormData(prev => ({ ...prev, og_image: e.target.value }))}
-                  placeholder="https://example.com/og-image.jpg"
-                />
+                <Label>Publish Article</Label>
+                <p className="text-sm text-muted-foreground">
+                  Make this article visible to the public
+                </p>
               </div>
-              <div>
-                <Label htmlFor="twitter_image">Twitter Card Image</Label>
-                <Input
-                  id="twitter_image"
-                  value={formData.twitter_image}
-                  onChange={(e) => setFormData(prev => ({ ...prev, twitter_image: e.target.value }))}
-                  placeholder="https://example.com/twitter-image.jpg"
-                />
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="settings" className="space-y-4">
-            <div className="flex items-center space-x-2">
               <Switch
-                id="featured"
-                checked={formData.featured}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, featured: checked }))}
-              />
-              <Label htmlFor="featured">Featured Article</Label>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="published"
                 checked={formData.published}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, published: checked }))}
+                onCheckedChange={(checked) => handleInputChange('published', checked)}
               />
-              <Label htmlFor="published">Publish Article</Label>
             </div>
-          </TabsContent>
-        </Tabs>
 
-        <DialogFooter>
-          <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? 'Saving...' : (article ? 'Update Article' : 'Create Article')}
-          </Button>
-        </DialogFooter>
+            <div className="flex items-center justify-between">
+              <div>
+                <Label>Featured Article</Label>
+                <p className="text-sm text-muted-foreground">
+                  Display prominently on the news page
+                </p>
+              </div>
+              <Switch
+                checked={formData.featured}
+                onCheckedChange={(checked) => handleInputChange('featured', checked)}
+              />
+            </div>
+          </div>
+
+          {/* Form Actions */}
+          <div className="flex justify-end gap-4 pt-4 border-t">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClose}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? 'Saving...' : (article ? 'Update Article' : 'Create Article')}
+            </Button>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
