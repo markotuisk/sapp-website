@@ -14,7 +14,7 @@ export const NewsArticleManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   
-  const { articles, isLoading, createArticle, setArticles } = useOrganizationAwareNews();
+  const { articles, isLoading } = useOrganizationAwareNews();
   const { organizationId, canAccessCrossOrganization } = useOrganizationAwareData();
 
   const filteredArticles = articles.filter(article => {
@@ -104,17 +104,12 @@ export const NewsArticleManagement: React.FC = () => {
         </CardContent>
       </Card>
 
-      <NewsArticleList 
-        articles={filteredArticles}
-        onArticleUpdate={setArticles}
-      />
+      <NewsArticleList articles={filteredArticles} />
 
       {showCreateDialog && (
         <NewsArticleDialog
           isOpen={showCreateDialog}
           onClose={() => setShowCreateDialog(false)}
-          onSave={createArticle}
-          mode="create"
         />
       )}
     </div>

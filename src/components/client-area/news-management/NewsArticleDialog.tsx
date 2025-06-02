@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useNewsManagement } from '@/hooks/useNewsManagement';
 import { useToast } from '@/hooks/use-toast';
+import { useOrganizationAwareNews } from '@/hooks/news-management/useOrganizationAwareNews';
 import type { Tables } from '@/integrations/supabase/types';
 
 // Import the smaller components
@@ -28,7 +28,7 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
   onClose,
   article
 }) => {
-  const { createArticle, updateArticle } = useNewsManagement();
+  const { createArticle } = useOrganizationAwareNews();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const { formData, updateField, validateForm } = useArticleForm(article);
@@ -73,12 +73,7 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
         scheduled_at: null,
       };
 
-      if (article) {
-        await updateArticle(article.id, articleData);
-      } else {
-        await createArticle(articleData);
-      }
-
+      await createArticle(articleData);
       onClose();
     } catch (error) {
       console.error('Error saving article:', error);
