@@ -26,6 +26,7 @@ export type Database = {
           ip_address: string | null
           is_mobile: boolean | null
           language: string | null
+          organization_id: string | null
           os: string | null
           screen_resolution: string | null
           session_id: string | null
@@ -50,6 +51,7 @@ export type Database = {
           ip_address?: string | null
           is_mobile?: boolean | null
           language?: string | null
+          organization_id?: string | null
           os?: string | null
           screen_resolution?: string | null
           session_id?: string | null
@@ -74,6 +76,7 @@ export type Database = {
           ip_address?: string | null
           is_mobile?: boolean | null
           language?: string | null
+          organization_id?: string | null
           os?: string | null
           screen_resolution?: string | null
           session_id?: string | null
@@ -421,6 +424,7 @@ export type Database = {
           meta_description: string | null
           meta_keywords: string[] | null
           og_image: string | null
+          organization_id: string | null
           published: boolean
           published_at: string | null
           reading_time: number | null
@@ -448,6 +452,7 @@ export type Database = {
           meta_description?: string | null
           meta_keywords?: string[] | null
           og_image?: string | null
+          organization_id?: string | null
           published?: boolean
           published_at?: string | null
           reading_time?: number | null
@@ -475,6 +480,7 @@ export type Database = {
           meta_description?: string | null
           meta_keywords?: string[] | null
           og_image?: string | null
+          organization_id?: string | null
           published?: boolean
           published_at?: string | null
           reading_time?: number | null
@@ -487,7 +493,15 @@ export type Database = {
           updated_at?: string
           view_count?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "news_articles_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       news_subscribers: {
         Row: {
@@ -804,6 +818,7 @@ export type Database = {
           created_at: string
           id: string
           ip_address: string | null
+          organization_id: string | null
           performed_by: string | null
           target_user_id: string | null
           user_agent: string | null
@@ -815,6 +830,7 @@ export type Database = {
           created_at?: string
           id?: string
           ip_address?: string | null
+          organization_id?: string | null
           performed_by?: string | null
           target_user_id?: string | null
           user_agent?: string | null
@@ -826,12 +842,21 @@ export type Database = {
           created_at?: string
           id?: string
           ip_address?: string | null
+          organization_id?: string | null
           performed_by?: string | null
           target_user_id?: string | null
           user_agent?: string | null
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_activity_logs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_invitations: {
         Row: {
@@ -1133,6 +1158,10 @@ export type Database = {
           recent_signups: number
         }[]
       }
+      get_user_organization: {
+        Args: { _user_id: string }
+        Returns: string
+      }
       get_user_roles: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"][]
@@ -1246,6 +1275,10 @@ export type Database = {
       }
       user_has_organisation: {
         Args: { _user_id: string }
+        Returns: boolean
+      }
+      user_in_same_organization: {
+        Args: { _user_id1: string; _user_id2: string }
         Returns: boolean
       }
     }
