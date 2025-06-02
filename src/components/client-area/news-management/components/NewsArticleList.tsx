@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Plus, AlertCircle } from 'lucide-react';
 import { NewsArticleCard } from './NewsArticleCard';
 import { NewsArticleDialog } from '../NewsArticleDialog';
-import { useNewsManagement } from '@/hooks/useNewsManagement';
+import { useOrganizationAwareNews } from '@/hooks/news-management/useOrganizationAwareNews';
 import { useToast } from '@/hooks/use-toast';
 import type { Tables } from '@/integrations/supabase/types';
 
@@ -20,7 +20,7 @@ export const NewsArticleList: React.FC<NewsArticleListProps> = ({
 }) => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [editingArticle, setEditingArticle] = useState<NewsArticle | null>(null);
-  const { updateArticle, deleteArticle, sendNewsletter } = useNewsManagement();
+  const { updateArticle, deleteArticle, sendNewsletter } = useOrganizationAwareNews();
   const { toast } = useToast();
 
   const handleEditArticle = (article: NewsArticle) => {

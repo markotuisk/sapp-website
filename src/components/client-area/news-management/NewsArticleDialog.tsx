@@ -48,6 +48,7 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
     setIsLoading(true);
     
     try {
+      // Create article data without organization_id - the hook will add it
       const articleData = {
         title: formData.title,
         slug: formData.slug,
@@ -71,7 +72,7 @@ export const NewsArticleDialog: React.FC<NewsArticleDialogProps> = ({
         reading_time: null,
         view_count: 0,
         scheduled_at: null,
-      };
+      } as Omit<NewsArticle, 'id' | 'created_at' | 'updated_at' | 'organization_id'>;
 
       await createArticle(articleData);
       onClose();

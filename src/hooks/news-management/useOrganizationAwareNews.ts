@@ -7,6 +7,7 @@ import { useOrganizationAwareData } from '@/hooks/useOrganizationAwareData';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
+type NewsArticleInsert = Omit<NewsArticle, 'id' | 'created_at' | 'updated_at' | 'organization_id'>;
 
 export const useOrganizationAwareNews = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -66,7 +67,7 @@ export const useOrganizationAwareNews = () => {
     }
   };
 
-  const createArticle = async (articleData: Omit<NewsArticle, 'id' | 'created_at' | 'updated_at'>) => {
+  const createArticle = async (articleData: NewsArticleInsert) => {
     try {
       console.log('🚀 createArticle: Starting organization-aware creation...');
       
@@ -107,6 +108,82 @@ export const useOrganizationAwareNews = () => {
     }
   };
 
+  const updateArticle = async (articleId: string, updates: Partial<NewsArticle>) => {
+    try {
+      const { data, error } = await supabase
+        .from('news_articles')
+        .update(updates)
+        .eq('id', articleId)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setArticles(prev => prev.map(article => 
+        article.id === articleId ? data : article
+      ));
+
+      return data;
+    } catch (error) {
+      console.error('Error updating article:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update article',
+        variant: 'destructive',
+      });
+      throw error;
+    }
+  };
+
+  const deleteArticle = async (articleId: string) => {
+    try {
+      const { error } = await supabase
+        .from('news_articles')
+        .delete()
+        .eq('id', articleId);
+
+      if (error) throw error;
+
+      setArticles(prev => prev.filter(article => article.id !== articleId));
+    } catch (error) {
+      console.error('Error deleting article:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete article',
+        variant: 'destructive',
+      });
+      throw error;
+    }
+  };
+
+  const sendNewsletter = async (articleId: string) => {
+    try {
+      const { data, error } = await supabase
+        .rpc('create_newsletter_campaign', {
+          article_id_param: articleId,
+          subject_param: 'New Security Update from SAPP',
+          template_id_param: 'default'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Newsletter Sent',
+        description: 'Newsletter campaign created successfully',
+      });
+
+      return data;
+    } catch (error) {
+      console.error('Error sending newsletter:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to send newsletter',
+        variant: 'destructive',
+      });
+      throw error;
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchArticles();
@@ -117,6 +194,9 @@ export const useOrganizationAwareNews = () => {
     articles,
     isLoading,
     createArticle,
+    updateArticle,
+    deleteArticle,
+    sendNewsletter,
     refetchArticles: fetchArticles,
     setArticles
   };
