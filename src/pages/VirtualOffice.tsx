@@ -12,10 +12,11 @@ import { ClientAreaHeader } from '@/components/client-area/ClientAreaHeader';
 import { ClientDashboard } from '@/components/client-area/ClientDashboard';
 import { UnauthenticatedView } from '@/components/client-area/UnauthenticatedView';
 import { OTPDialog } from '@/components/client-area/OTPDialog';
+import { AuthGuard } from '@/components/auth/AuthGuard';
 
 const ClientArea = () => {
   const navigate = useNavigate();
-  const { user, signOut, isOnline } = useAuth();
+  const { user, signOut, isOnline, isAuthenticated } = useAuth();
   const { isSubmitting, setIsSubmitting } = useOTPHandling();
   const [showOTPDialog, setShowOTPDialog] = useState(false);
   const [otpEmail, setOtpEmail] = useState('');
@@ -54,18 +55,29 @@ const ClientArea = () => {
             <ClientAreaHeader />
             
             <div className="p-8">
-              {user ? (
-                <ClientDashboard />
-              ) : (
-                <UnauthenticatedView
-                  isSubmitting={isSubmitting}
-                  setIsSubmitting={setIsSubmitting}
-                  onOTPRequired={handleOTPRequired}
-                />
-              )}
+              <AuthGuard 
+                requireAuth={false}
+                fallback={
+                  <UnauthenticatedView
+                    isSubmitting={isSubmitting}
+                    setIsSubmitting={setIsSubmitting}
+                    onOTPRequired={handleOTPRequired}
+                  />
+                }
+              >
+                {isAuthenticated ? (
+                  <ClientDashboard />
+                ) : (
+                  <UnauthenticatedView
+                    isSubmitting={isSubmitting}
+                    setIsSubmitting={setIsSubmitting}
+                    onOTPRequired={handleOTPRequired}
+                  />
+                )}
+              </AuthGuard>
               
               {/* Only show Close button for unauthenticated users */}
-              {!user && (
+              {!isAuthenticated && (
                 <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
                   <Button 
                     onClick={handleClose}

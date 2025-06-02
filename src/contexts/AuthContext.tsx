@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,6 +11,7 @@ type AuthContextType = {
   session: Session | null;
   isLoading: boolean;
   isOnline: boolean;
+  isAuthenticated: boolean;
   signIn: (email: string) => Promise<{ error: any | null }>;
   verifyOTP: (email: string, token: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<void>;
@@ -25,6 +25,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const { toast } = useToast();
+
+  // Derived state for better reliability
+  const isAuthenticated = !!user && !!session;
 
   useEffect(() => {
     const handleOnline = () => {
@@ -64,16 +67,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, newSession) => {
         console.log('Auth state changed:', event, newSession ? 'Session exists' : 'No session');
+        
+        // Update state immediately
         setSession(newSession);
         setUser(newSession?.user ?? null);
+        
+        // Always set loading to false after any auth state change
         setIsLoading(false);
         
-        if (event === 'SIGNED_IN') {
+        if (event === 'SIGNED_IN' && newSession?.user) {
+          console.log('User successfully signed in:', newSession.user.email);
           // Don't make direct Supabase calls in the auth state change callback
           // Use setTimeout to move it to the next event loop cycle
           setTimeout(() => {
             logAuthEvent({
-              email: newSession?.user?.email || 'unknown',
+              email: newSession.user?.email || 'unknown',
               action: 'sign_in_success',
               success: true,
               user_agent: navigator.userAgent,
@@ -81,19 +89,36 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             });
           }, 0);
         }
+        
+        if (event === 'SIGNED_OUT') {
+          console.log('User signed out');
+          // Clear any cached data or state here if needed
+        }
       }
     );
 
     // Then check for existing session
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      console.log('Session check complete:', currentSession ? 'User logged in' : 'No active session');
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setIsLoading(false);
-    }).catch(error => {
-      console.error('Error getting session:', error);
-      setIsLoading(false);
-    });
+    const initializeAuth = async () => {
+      try {
+        console.log('Checking for existing session...');
+        const { data: { session: currentSession }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          // Don't throw here, just log and continue
+        } else {
+          console.log('Session check complete:', currentSession ? 'User logged in' : 'No active session');
+          setSession(currentSession);
+          setUser(currentSession?.user ?? null);
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeAuth();
 
     return () => {
       subscription.unsubscribe();
@@ -330,20 +355,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     
     const email = user?.email || 'unknown';
     
-    await supabase.auth.signOut();
-    
-    await logAuthEvent({
-      email,
-      action: 'sign_out',
-      success: true,
-      user_agent: navigator.userAgent,
-      timestamp: new Date().toISOString(),
-    });
-    
-    toast({
-      title: "Signed out",
-      description: "You've been successfully signed out.",
-    });
+    try {
+      await supabase.auth.signOut();
+      
+      await logAuthEvent({
+        email,
+        action: 'sign_out',
+        success: true,
+        user_agent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+      });
+      
+      toast({
+        title: "Signed out",
+        description: "You've been successfully signed out.",
+      });
+    } catch (error) {
+      console.error('Error during sign out:', error);
+    }
   };
 
   if (!isOnline) {
@@ -357,6 +386,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         session,
         isLoading,
         isOnline,
+        isAuthenticated,
         signIn,
         verifyOTP,
         signOut,
