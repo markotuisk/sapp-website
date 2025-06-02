@@ -25,17 +25,21 @@ export const useOrganizationAwareNews = () => {
         throw new Error('Authentication required');
       }
       
-      // Check admin role
+      // Check admin role using the improved function
       const { data: isAdmin, error: adminCheckError } = await supabase
         .rpc('current_user_is_admin');
         
       if (adminCheckError) {
+        console.error('❌ Admin check failed:', adminCheckError);
         throw new Error(`Failed to verify admin permissions: ${adminCheckError.message}`);
       }
       
       if (!isAdmin) {
+        console.warn('⚠️ User is not admin, access denied');
         throw new Error('Access denied: Admin role required for news management');
       }
+
+      console.log('✅ Admin verification successful, proceeding with fetch...');
       
       // Base query for news articles
       const baseQuery = supabase

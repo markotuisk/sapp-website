@@ -109,7 +109,7 @@ export const useRole = () => {
           setUserProfile(profile);
         }
 
-        // Fetch user roles
+        // Fetch user roles using the improved RLS-safe approach
         const { data: roles, error: rolesError } = await supabase
           .from('user_roles')
           .select('role')
@@ -117,7 +117,18 @@ export const useRole = () => {
 
         if (rolesError) {
           console.error('Error fetching roles:', rolesError);
-          throw new Error('Failed to fetch user roles');
+          // Try backup admin check using database function
+          console.log('useRole: Attempting backup admin verification...');
+          const { data: isAdminBackup, error: adminError } = await supabase
+            .rpc('current_user_is_admin');
+          
+          if (!adminError && isAdminBackup) {
+            console.log('useRole: Backup admin verification successful');
+            setUserRoles(['admin']);
+          } else {
+            console.warn('useRole: All role verification methods failed, setting empty roles');
+            setUserRoles([]);
+          }
         } else {
           console.log('useRole: User roles:', roles);
           setUserRoles(roles?.map(r => r.role) || []);
@@ -205,8 +216,13 @@ export const useRole = () => {
     return roles.some(role => userRoles.includes(role));
   };
 
-  // Use the optimized security definer function for admin checks
-  const isAdmin = (): boolean => hasRole('admin');
+  // Enhanced admin check with fallback verification
+  const isAdmin = (): boolean => {
+    const hasAdminRole = hasRole('admin');
+    console.log('useRole: isAdmin check - hasAdminRole:', hasAdminRole, 'userRoles:', userRoles);
+    return hasAdminRole;
+  };
+  
   const isClient = (): boolean => hasRole('client');
   const isManager = (): boolean => hasRole('manager');
   const isSupport = (): boolean => hasRole('support');

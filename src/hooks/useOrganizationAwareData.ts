@@ -20,16 +20,22 @@ export const useOrganizationAwareData = () => {
   }, [userProfile]);
 
   const getOrganizationSpecificQuery = (baseQuery: any, tableName: string) => {
-    if (isAdmin()) {
-      // Admins can see all data
+    // Enhanced admin check - admins can see all data
+    const userIsAdmin = isAdmin();
+    console.log('🔍 getOrganizationSpecificQuery: Admin check result:', userIsAdmin);
+    
+    if (userIsAdmin) {
+      console.log('✅ Admin user detected, returning unrestricted query');
       return baseQuery;
     }
 
     if (!organizationId) {
+      console.log('⚠️ No organization ID, returning empty result query');
       // Users without organization see no data
       return baseQuery.eq('organization_id', '00000000-0000-0000-0000-000000000000');
     }
 
+    console.log('🏢 Regular user, applying organization filter:', organizationId);
     // Regular users see only their organization's data
     switch (tableName) {
       case 'news_articles':
