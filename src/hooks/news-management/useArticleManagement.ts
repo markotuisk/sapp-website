@@ -12,75 +12,19 @@ export const useArticleManagement = (
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
 
-  const validateAuthentication = async () => {
-    console.log('🔍 validateAuthentication: Starting validation...');
-    
-    if (!isAuthenticated || !user) {
-      console.error('❌ validateAuthentication: User not authenticated');
-      throw new Error('You must be signed in to manage articles');
-    }
-    
-    console.log('✅ validateAuthentication: User authenticated:', user.id);
-    
-    // Get current session with detailed logging
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-    console.log('🔍 validateAuthentication: Session check result:', { 
-      hasSession: !!session, 
-      sessionError, 
-      userId: session?.user?.id,
-      userEmail: session?.user?.email 
-    });
-    
-    if (sessionError || !session) {
-      console.error('❌ validateAuthentication: Invalid session:', sessionError);
-      throw new Error('Invalid session. Please sign in again.');
-    }
-    
-    // Test if we can call our security definer function
-    console.log('🔍 validateAuthentication: Testing admin check function...');
-    const { data: isAdminResult, error: adminError } = await supabase.rpc('is_admin_user');
-    console.log('🔍 validateAuthentication: Admin check result:', { isAdminResult, adminError });
-    
-    if (adminError) {
-      console.error('❌ validateAuthentication: Error checking admin status:', adminError);
-      throw new Error(`Admin check failed: ${adminError.message}`);
-    }
-    
-    if (!isAdminResult) {
-      console.error('❌ validateAuthentication: User is not admin');
-      throw new Error('Admin privileges required');
-    }
-    
-    console.log('✅ validateAuthentication: All checks passed');
-    return true;
-  };
-
   const createArticle = async (articleData: Omit<NewsArticle, 'id' | 'created_at' | 'updated_at'>) => {
     try {
       console.log('🚀 createArticle: Starting article creation...');
       console.log('📝 createArticle: Article data:', articleData);
       
-      // Enhanced authentication validation
-      await validateAuthentication();
-      
-      console.log('🔍 createArticle: Testing basic database connectivity...');
-      
-      // Test basic connectivity first
-      const { data: testData, error: testError } = await supabase
-        .from('user_roles')
-        .select('count')
-        .limit(1);
-        
-      console.log('🔍 createArticle: Database connectivity test:', { testData, testError });
-      
-      if (testError) {
-        console.error('❌ createArticle: Database connectivity failed:', testError);
-        throw new Error(`Database connectivity issue: ${testError.message}`);
+      // Simple authentication check
+      if (!isAuthenticated || !user) {
+        throw new Error('You must be signed in to create articles');
       }
       
       console.log('🔍 createArticle: Attempting to insert article...');
       
-      // Attempt the actual insert with detailed error logging
+      // Direct insert - let the RLS policies handle the permission check
       const { data, error } = await supabase
         .from('news_articles')
         .insert(articleData)
@@ -95,7 +39,6 @@ export const useArticleManagement = (
           hint: error.hint
         });
         
-        // Enhanced error categorization
         if (error.code === 'RLS_POLICY_VIOLATION' || error.message.includes('policy')) {
           throw new Error('Access denied: Admin privileges required to create articles');
         } else if (error.code === 'PGRST301') {
@@ -117,7 +60,6 @@ export const useArticleManagement = (
     } catch (error) {
       console.error('💥 createArticle: Unexpected error:', error);
       
-      // Enhanced error reporting
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       console.log('🔍 createArticle: Error details for debugging:', {
         errorType: typeof error,
@@ -141,7 +83,9 @@ export const useArticleManagement = (
     try {
       console.log('🔄 updateArticle: Starting update for article:', id);
       
-      await validateAuthentication();
+      if (!isAuthenticated || !user) {
+        throw new Error('You must be signed in to update articles');
+      }
       
       const { data, error } = await supabase
         .from('news_articles')
@@ -184,7 +128,9 @@ export const useArticleManagement = (
     try {
       console.log('🗑️ deleteArticle: Starting deletion for article:', id);
       
-      await validateAuthentication();
+      if (!isAuthenticated || !user) {
+        throw new Error('You must be signed in to delete articles');
+      }
       
       const { error } = await supabase
         .from('news_articles')
