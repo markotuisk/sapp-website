@@ -1148,6 +1148,10 @@ export type Database = {
         Args: { acronym_id: string }
         Returns: undefined
       }
+      is_admin_user: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       remove_user_role: {
         Args: {
           _user_id: string

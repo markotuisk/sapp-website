@@ -9,14 +9,15 @@ import { NewsManagementErrorBoundary } from './NewsManagementErrorBoundary';
 import { NewsArticleHeader } from './components/NewsArticleHeader';
 import { NewsArticleList } from './components/NewsArticleList';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, Loader2 } from 'lucide-react';
+import { AlertTriangle, Loader2, Shield } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
 
 const NewsArticleManagementContent: React.FC = () => {
   const { isAuthenticated } = useAuth();
-  const { isAdmin, isLoading: roleLoading } = useRole();
+  const { isAdmin, isLoading: roleLoading, error: roleError } = useRole();
   const { articles, isLoading, updateArticle, deleteArticle, sendNewsletter } = useNewsManagement();
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -26,12 +27,25 @@ const NewsArticleManagementContent: React.FC = () => {
   // Pre-flight authentication checks
   if (!isAuthenticated) {
     return (
-      <Alert variant="destructive" className="max-w-md mx-auto">
-        <AlertTriangle className="h-4 w-4" />
-        <AlertDescription>
-          You must be signed in to access news management. Please sign in and try again.
-        </AlertDescription>
-      </Alert>
+      <Card className="max-w-md mx-auto">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-orange-700">
+            <Shield className="h-5 w-5" />
+            Authentication Required
+          </CardTitle>
+          <CardDescription>
+            You must be signed in to access news management
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>
+              Please sign in to continue. Only authenticated administrators can manage news articles.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -46,14 +60,48 @@ const NewsArticleManagementContent: React.FC = () => {
     );
   }
 
+  if (roleError) {
+    return (
+      <Card className="max-w-md mx-auto">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-red-700">
+            <AlertTriangle className="h-5 w-5" />
+            Permission Error
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>
+              {roleError}. Please refresh the page or contact support if the issue persists.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (!isAdmin()) {
     return (
-      <Alert variant="destructive" className="max-w-md mx-auto">
-        <AlertTriangle className="h-4 w-4" />
-        <AlertDescription>
-          Administrator privileges required. Only SAPP Security administrators can manage news articles.
-        </AlertDescription>
-      </Alert>
+      <Card className="max-w-md mx-auto">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-orange-700">
+            <Shield className="h-5 w-5" />
+            Administrator Access Required
+          </CardTitle>
+          <CardDescription>
+            Only SAPP Security administrators can manage news articles
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>
+              You do not have administrator privileges. Contact SAPP Security support to request admin access.
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -71,6 +119,7 @@ const NewsArticleManagementContent: React.FC = () => {
       });
     } catch (error) {
       console.error('Error toggling publish status:', error);
+      // Error handling is already done in the hook
     }
   };
 
@@ -80,6 +129,7 @@ const NewsArticleManagementContent: React.FC = () => {
       await deleteArticle(articleId);
     } catch (error) {
       console.error('Error deleting article:', error);
+      // Error handling is already done in the hook
     }
   };
 

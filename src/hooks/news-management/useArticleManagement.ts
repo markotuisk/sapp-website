@@ -1,6 +1,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
@@ -9,16 +10,29 @@ export const useArticleManagement = (
   setArticles: React.Dispatch<React.SetStateAction<NewsArticle[]>>
 ) => {
   const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
+
+  const validateAuthentication = () => {
+    if (!isAuthenticated || !user) {
+      throw new Error('You must be signed in to manage articles');
+    }
+    return true;
+  };
 
   const createArticle = async (articleData: Omit<NewsArticle, 'id' | 'created_at' | 'updated_at'>) => {
     try {
       console.log('Creating article with data:', articleData);
       
-      // Check authentication
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      if (authError || !user) {
-        throw new Error('User not authenticated');
+      // Validate authentication first
+      validateAuthentication();
+      
+      // Double-check session is valid
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
+        throw new Error('Invalid session. Please sign in again.');
       }
+      
+      console.log('Session validated, proceeding with article creation...');
       
       const { data, error } = await supabase
         .from('news_articles')
@@ -28,7 +42,15 @@ export const useArticleManagement = (
 
       if (error) {
         console.error('Article creation error:', error);
-        throw new Error(`Failed to create article: ${error.message}`);
+        
+        // Provide more specific error messages
+        if (error.code === 'RLS_POLICY_VIOLATION' || error.message.includes('policy')) {
+          throw new Error('Access denied: Admin privileges required to create articles');
+        } else if (error.code === 'PGRST301') {
+          throw new Error('Authentication required. Please sign in and try again.');
+        } else {
+          throw new Error(`Failed to create article: ${error.message}`);
+        }
       }
 
       console.log('Article created successfully:', data);
@@ -42,7 +64,7 @@ export const useArticleManagement = (
       console.error('Error creating article:', error);
       toast({
         title: 'Error Creating Article',
-        description: error instanceof Error ? error.message : 'Failed to create article',
+        description: error instanceof Error ? error.message : 'Failed to create article. Please check your permissions and try again.',
         variant: 'destructive',
       });
       throw error;
@@ -53,6 +75,9 @@ export const useArticleManagement = (
     try {
       console.log('Updating article:', id, updates);
       
+      // Validate authentication first
+      validateAuthentication();
+      
       const { data, error } = await supabase
         .from('news_articles')
         .update(updates)
@@ -62,7 +87,12 @@ export const useArticleManagement = (
 
       if (error) {
         console.error('Article update error:', error);
-        throw new Error(`Failed to update article: ${error.message}`);
+        
+        if (error.code === 'RLS_POLICY_VIOLATION' || error.message.includes('policy')) {
+          throw new Error('Access denied: Admin privileges required to update articles');
+        } else {
+          throw new Error(`Failed to update article: ${error.message}`);
+        }
       }
 
       console.log('Article updated successfully:', data);
@@ -89,6 +119,9 @@ export const useArticleManagement = (
     try {
       console.log('Deleting article:', id);
       
+      // Validate authentication first
+      validateAuthentication();
+      
       const { error } = await supabase
         .from('news_articles')
         .delete()
@@ -96,7 +129,12 @@ export const useArticleManagement = (
 
       if (error) {
         console.error('Article deletion error:', error);
-        throw new Error(`Failed to delete article: ${error.message}`);
+        
+        if (error.code === 'RLS_POLICY_VIOLATION' || error.message.includes('policy')) {
+          throw new Error('Access denied: Admin privileges required to delete articles');
+        } else {
+          throw new Error(`Failed to delete article: ${error.message}`);
+        }
       }
 
       console.log('Article deleted successfully');

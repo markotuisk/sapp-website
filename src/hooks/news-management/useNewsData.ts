@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
@@ -14,6 +15,7 @@ export const useNewsData = () => {
   const [campaigns, setCampaigns] = useState<EmailCampaign[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
 
   const fetchData = async () => {
     try {
@@ -21,29 +23,32 @@ export const useNewsData = () => {
       console.log('useNewsData: Starting data fetch...');
       
       // Check authentication first
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      if (authError || !user) {
-        console.error('Authentication error:', authError);
-        throw new Error('User not authenticated');
+      if (!isAuthenticated || !user) {
+        console.error('User not authenticated');
+        throw new Error('Authentication required to access news management');
       }
       
       console.log('useNewsData: User authenticated:', user.id);
       
-      // Check if user has admin role
-      const { data: userRoles, error: roleError } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id);
-        
-      if (roleError) {
-        console.error('Error checking user roles:', roleError);
-        throw new Error('Failed to verify user permissions');
+      // Validate session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
+        console.error('Session validation error:', sessionError);
+        throw new Error('Invalid session. Please sign in again.');
       }
       
-      console.log('useNewsData: User roles:', userRoles);
+      // Check if user has admin role using the new security definer function
+      const { data: isAdmin, error: adminCheckError } = await supabase
+        .rpc('is_admin_user');
+        
+      if (adminCheckError) {
+        console.error('Error checking admin role:', adminCheckError);
+        throw new Error('Failed to verify admin permissions');
+      }
       
-      const hasAdminRole = userRoles?.some(r => r.role === 'admin');
-      if (!hasAdminRole) {
+      console.log('useNewsData: Admin check result:', isAdmin);
+      
+      if (!isAdmin) {
         throw new Error('Access denied: Admin role required for news management');
       }
       
@@ -96,7 +101,7 @@ export const useNewsData = () => {
       console.error('Error fetching news data:', error);
       toast({
         title: 'Error Loading News Data',
-        description: error instanceof Error ? error.message : 'Failed to load news management data',
+        description: error instanceof Error ? error.message : 'Failed to load news management data. Please check your permissions and try again.',
         variant: 'destructive',
       });
     } finally {
@@ -105,8 +110,12 @@ export const useNewsData = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isAuthenticated) {
+      fetchData();
+    } else {
+      setIsLoading(false);
+    }
+  }, [isAuthenticated]);
 
   return {
     articles,
