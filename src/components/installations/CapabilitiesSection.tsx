@@ -1,20 +1,14 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import { Animated } from '@/components/ui/AnimatedElements';
+import { useState } from 'react';
 
 const CapabilitiesSection = () => {
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState('');
-
-  const handleGetDetails = (serviceName: string) => {
-    setSelectedService(serviceName);
-    setContactDialogOpen(true);
-  };
 
   return (
     <section className="py-16 bg-slate-50">
@@ -36,20 +30,24 @@ const CapabilitiesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-12">
           {[
             {
-              title: "Physical Security",
-              description: "Control visibility, movement, and presence with CCTV, access and visitor management systems."
+              title: "CCTV & Access Control",
+              description: "Advanced surveillance and access management systems with cloud and on-premise options, including Verkada and Ubiquiti solutions.",
+              href: "/installations/cctv-access"
             },
             {
               title: "Speech & Sound Masking",
-              description: "Protect conversations and reduce acoustic exposure in sensitive or shared environments."
+              description: "Protect conversations and reduce acoustic exposure in sensitive or shared environments.",
+              href: "/installations/speech-privacy"
             },
             {
               title: "Counter Surveillance TSCM",
-              description: "Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors."
+              description: "Identify and neutralise unauthorised surveillance activity across acoustic, RF, and electromagnetic vectors.",
+              href: "/installations/counter-surveillance"
             },
             {
               title: "IT Network Systems",
-              description: "Implement secure foundation for communication and control, whether is local or distributed cloud or hybrid solution."
+              description: "Implement secure foundation for communication and control, whether is local or distributed cloud or hybrid solution.",
+              href: "/installations/network-infrastructure"
             }
           ].map((service, index) => (
             <Card key={index} className="border-gray-100 flex flex-col lg:col-span-3">
@@ -57,16 +55,18 @@ const CapabilitiesSection = () => {
                 <CardTitle className="text-xl text-sapp-dark">{service.title}</CardTitle>
               </CardHeader>
               <CardContent className="flex-grow">
-                <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                <CardDescription className="text-sapp-gray text-sm min-h-[120px]">
                   {service.description}
                 </CardDescription>
               </CardContent>
               <CardFooter className="mt-auto">
                 <Button 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
-                  onClick={() => handleGetDetails(service.title)}
+                  asChild
                 >
-                  Get Details
+                  <Link to={service.href}>
+                    Learn More
+                  </Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -87,8 +87,8 @@ const CapabilitiesSection = () => {
       <ContactFormDialog 
         open={contactDialogOpen}
         onOpenChange={setContactDialogOpen}
-        defaultMessage={`I'm interested in learning more about your ${selectedService} services.`}
-        serviceName={selectedService}
+        defaultMessage="I'm interested in learning more about your installation services and would like to discuss how SAPP Security can help with our organisation's security infrastructure."
+        serviceName="Installation Services"
       />
     </section>
   );
