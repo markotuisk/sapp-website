@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import SearchBox from './ServicesOverlay/SearchBox';
 import ServicesTab from './ServicesOverlay/ServicesTab';
 import ResourcesTab from './ServicesOverlay/ResourcesTab';
 import AcronymsTab from './ServicesOverlay/AcronymsTab';
+import SearchResultsTab from './ServicesOverlay/SearchResultsTab';
 import { services, resources, filterItems } from './ServicesOverlay/servicesData';
 import { useDisplayMode } from '@/contexts/DisplayModeContext';
 
@@ -28,6 +30,15 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
     }
   }, [open]);
 
+  // Switch to search results tab when user starts searching
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      setActiveTab('search-results');
+    } else if (activeTab === 'search-results') {
+      setActiveTab('services');
+    }
+  }, [searchQuery]);
+
   const filteredServices = filterItems(services, searchQuery);
   const filteredResources = filterItems(resources, searchQuery);
 
@@ -37,8 +48,6 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
     ? "data-[state=active]:border-white data-[state=active]:text-white data-[state=inactive]:text-gray-400" 
     : "data-[state=active]:border-sapp-blue data-[state=active]:text-sapp-dark data-[state=inactive]:text-gray-500";
 
-  // Responsive fix: full mobile height, overflow auto for scroll area
-  // Only apply this for mobile (below md)
   const mobileContentClass =
     "max-h-screen h-screen overflow-y-auto md:max-h-[800px] md:h-auto";
 
@@ -65,6 +74,14 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
             <div className="px-4 pt-3">
               <TabsList className={`w-full justify-start border-b rounded-none bg-transparent p-0 mb-1`}>
+                {searchQuery.trim() && (
+                  <TabsTrigger
+                    value="search-results"
+                    className={`data-[state=active]:border-b-2 data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent ${tabClass}`}
+                  >
+                    Search Results
+                  </TabsTrigger>
+                )}
                 <TabsTrigger
                   value="services"
                   className={`data-[state=active]:border-b-2 data-[state=active]:shadow-none rounded-none px-4 py-2 bg-transparent ${tabClass}`}
@@ -88,6 +105,14 @@ const ServicesOverlay = ({ open, onOpenChange }: ServicesOverlayProps) => {
 
             <div className="flex-1 min-h-0 overflow-hidden">
               <ScrollArea className="h-full p-4" type="always">
+                <TabsContent value="search-results" className="m-0 p-0 h-full data-[state=active]:block">
+                  <SearchResultsTab
+                    searchQuery={searchQuery}
+                    filteredServices={filteredServices}
+                    filteredResources={filteredResources}
+                    onItemClick={() => onOpenChange(false)}
+                  />
+                </TabsContent>
                 <TabsContent value="services" className="m-0 p-0 h-full data-[state=active]:block">
                   <ServicesTab
                     filteredServices={filteredServices}
