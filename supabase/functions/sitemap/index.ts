@@ -101,7 +101,7 @@ serve(async (req) => {
       // Continue with empty array
     }
 
-    // Build sitemap XML with proper encoding
+    // Build sitemap XML with proper encoding - NO leading whitespace
     let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `
@@ -162,7 +162,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Critical error generating sitemap:', error)
     
-    // Return minimal valid XML sitemap even on error
+    // Return minimal valid XML sitemap even on error - NO leading whitespace
     const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
