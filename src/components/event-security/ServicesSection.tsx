@@ -1,10 +1,8 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import { Animated } from '@/components/ui/AnimatedElements';
 
 interface ServicesSectionProps {
@@ -17,14 +15,6 @@ interface ServicesSectionProps {
 }
 
 const ServicesSection: React.FC<ServicesSectionProps> = ({ serviceDetails }) => {
-  const [contactDialogOpen, setContactDialogOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState('');
-
-  const handleGetDetails = (serviceTitle: string) => {
-    setSelectedService(serviceTitle);
-    setContactDialogOpen(true);
-  };
-
   return (
     <section className="py-16 bg-slate-50" id="executive-events">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl">
@@ -58,22 +48,17 @@ const ServicesSection: React.FC<ServicesSectionProps> = ({ serviceDetails }) => 
               <CardFooter className="mt-auto">
                 <Button 
                   className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
-                  onClick={() => handleGetDetails(service.title)}
+                  asChild
                 >
-                  Get Details
+                  <Link to={service.href}>
+                    Learn More
+                  </Link>
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
       </div>
-
-      <ContactFormDialog 
-        open={contactDialogOpen}
-        onOpenChange={setContactDialogOpen}
-        defaultMessage={`I'm interested in learning more about your ${selectedService} services.`}
-        serviceName={selectedService}
-      />
     </section>
   );
 };
