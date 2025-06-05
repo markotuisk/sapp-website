@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -38,6 +37,7 @@ import SecureTechnology from "./pages/services/SecureTechnology";
 import CCTVAccess from "./pages/installations/CCTVAccess";
 import CounterSurveillance from "./pages/installations/CounterSurveillance";
 import NetworkInfrastructure from "./pages/installations/NetworkInfrastructure";
+import SitemapXML from "./pages/SitemapXML";
 
 // Create a wrapper component for handling legacy redirects
 const LegacyAcronymRedirect = () => {
@@ -84,6 +84,7 @@ const App = () => {
                   <BrowserRouter>
                     <Routes>
                       <Route path="/" element={<Index />} />
+                      <Route path="/sitemap.xml" element={<SitemapXML />} />
                       <Route path="/client-area" element={<ClientArea />} />
                       <Route path="/event-security" element={<EventSecurity />} />
                       <Route path="/security-audits" element={<SecurityAudits />} />

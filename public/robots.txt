@@ -45,8 +45,8 @@ Allow: /images/
 Allow: /lovable-uploads/
 Allow: /favicon/
 
-# Dynamic sitemap location - Updated with complete path
-Sitemap: https://zxgsqsdhnwbldytzvwsq.supabase.co/functions/v1/sitemap
+# Dynamic sitemap location - Now served from your domain
+Sitemap: https://sappsecurity.com/sitemap.xml
 
 # Additional sitemaps if needed in future
 # Sitemap: https://sappsecurity.com/sitemap-news.xml
