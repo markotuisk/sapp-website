@@ -39,9 +39,9 @@ const ServiceCardsSection = () => {
       delay: 300
     },
     {
-      title: "Technology & Systems Testing",
-      description: "Technical testing of organisation's existing security and communications technology to identify any gaps and protect against physical security and cyber attacks.",
-      href: "/services/technology-systems-testing",
+      title: "Penetration Testing",
+      description: "Comprehensive physical security penetration testing to identify vulnerabilities in your security infrastructure through real-world attack simulations and systematic testing methodologies.",
+      href: "/services/penetration-testing",
       delay: 400
     }
   ];
@@ -78,23 +78,14 @@ const ServiceCardsSection = () => {
                 </CardDescription>
               </CardContent>
               <CardFooter className="mt-auto">
-                {service.title === "TSCM Inspections" ? (
-                  <Button 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 w-full"
-                    asChild
-                  >
-                    <Link to="/tscm">
-                      Explore TSCM Services
-                    </Link>
-                  </Button>
-                ) : (
-                  <Button 
-                    className="bg-sapp-blue hover:bg-sapp-blue/90 w-full" 
-                    onClick={() => handleGetDetails(service.title)}
-                  >
-                    Get Details
-                  </Button>
-                )}
+                <Button 
+                  className="bg-sapp-blue hover:bg-sapp-blue/90 w-full"
+                  asChild
+                >
+                  <Link to={service.href}>
+                    Learn More
+                  </Link>
+                </Button>
               </CardFooter>
             </Card>
           ))}
