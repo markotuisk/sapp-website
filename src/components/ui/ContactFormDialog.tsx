@@ -1,5 +1,6 @@
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
+import { X } from 'lucide-react';
 import ContactFormStep from '@/components/contact-form/ContactFormStep';
 import ContactFormReview from '@/components/contact-form/ContactFormReview';
 import ContactFormSuccess from '@/components/contact-form/ContactFormSuccess';
@@ -45,11 +46,18 @@ export default function ContactFormDialog({
         {step < 3 && (
           <DialogHeader>
             <div className="flex items-center justify-between">
-              <DialogTitle className="text-sapp-dark">{step === 1 ? "Contact Us" : "Review Your Message"}</DialogTitle>
-              <div className="flex items-center gap-1.5">
-                <span className={`h-2.5 w-2.5 rounded-full ${step === 1 ? 'bg-sapp-blue' : 'bg-slate-200'}`}></span>
-                <span className={`h-2.5 w-2.5 rounded-full ${step === 2 ? 'bg-sapp-blue' : 'bg-slate-200'}`}></span>
+              <div className="flex-1">
+                <DialogTitle className="text-sapp-dark">
+                  {step === 1 ? "Contact Us" : "Review Your Message"}
+                  <span className="text-sm font-normal text-sapp-gray ml-2">
+                    (Step {step} of 2)
+                  </span>
+                </DialogTitle>
               </div>
+              <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </DialogClose>
             </div>
             <DialogDescription>
               {step === 1 
