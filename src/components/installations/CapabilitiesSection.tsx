@@ -37,7 +37,7 @@ const CapabilitiesSection = () => {
             {
               title: "Speech & Sound Masking",
               description: "Protect conversations and reduce acoustic exposure in sensitive or shared environments.",
-              href: "/installations/speech-privacy"
+              href: "/services/speech-privacy"
             },
             {
               title: "Counter Surveillance TSCM",
