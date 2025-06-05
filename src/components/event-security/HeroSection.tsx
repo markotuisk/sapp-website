@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface HeroSectionProps {
   setServicesOpen: (open: boolean) => void;
@@ -12,6 +14,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setServicesOpen }) => {
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  const navigate = useNavigate();
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-slate-50 to-white">
@@ -54,7 +58,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ setServicesOpen }) => {
             <Button 
               size="lg" 
               className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-              onClick={() => setServicesOpen(true)}
+              onClick={() => navigate('/service-navigator')}
             >
               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
                 Rapid Service Navigator

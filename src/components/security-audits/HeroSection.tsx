@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import { cn } from '@/lib/utils';
 import { Shield, Search, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
-import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import { useNavigate } from 'react-router-dom';
 import TranslatedText from '@/components/ui/TranslatedText';
 
 const HeroSection = () => {
@@ -14,7 +14,7 @@ const HeroSection = () => {
     threshold: 0.1,
   });
   
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-gradient-to-b from-slate-50 to-white">
@@ -76,7 +76,7 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20 w-full sm:w-auto transition-all duration-300 group relative overflow-hidden"
-                onClick={() => setServicesOpen(true)}
+                onClick={() => navigate('/service-navigator')}
               >
                 <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
                   Rapid Service Navigator
@@ -150,11 +150,6 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </div>
-
-      <ServicesOverlay 
-        open={servicesOpen}
-        onOpenChange={setServicesOpen}
-      />
     </section>
   );
 };
