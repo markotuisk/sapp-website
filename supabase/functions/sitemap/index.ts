@@ -102,20 +102,12 @@ serve(async (req) => {
     }
 
     // Build sitemap XML with proper encoding - NO leading whitespace
-    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-`
+    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
 
     // Add static routes
     staticRoutes.forEach(route => {
       const escapedUrl = route.url.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      sitemap += `  <url>
-    <loc>https://sappsecurity.com/${escapedUrl}</loc>
-    <lastmod>${route.lastmod}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
-  </url>
-`
+      sitemap += `  <url>\n    <loc>https://sappsecurity.com/${escapedUrl}</loc>\n    <lastmod>${route.lastmod}</lastmod>\n    <changefreq>${route.changefreq}</changefreq>\n    <priority>${route.priority}</priority>\n  </url>\n`
     })
 
     // Add news articles
@@ -123,13 +115,7 @@ serve(async (req) => {
       newsArticles.forEach(article => {
         const lastmod = article.updated_at ? new Date(article.updated_at).toISOString().split('T')[0] : currentDate
         const escapedSlug = article.slug.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        sitemap += `  <url>
-    <loc>https://sappsecurity.com/news/${escapedSlug}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-`
+        sitemap += `  <url>\n    <loc>https://sappsecurity.com/news/${escapedSlug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`
       })
     }
 
@@ -138,13 +124,7 @@ serve(async (req) => {
       acronyms.forEach(acronym => {
         const lastmod = acronym.updated_at ? new Date(acronym.updated_at).toISOString().split('T')[0] : currentDate
         const escapedSlug = acronym.url_slug.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        sitemap += `  <url>
-    <loc>https://sappsecurity.com/acronyms/what-is-${escapedSlug}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-`
+        sitemap += `  <url>\n    <loc>https://sappsecurity.com/acronyms/what-is-${escapedSlug}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n`
       })
     }
 
@@ -163,39 +143,7 @@ serve(async (req) => {
     console.error('Critical error generating sitemap:', error)
     
     // Return minimal valid XML sitemap even on error - NO leading whitespace
-    const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://sappsecurity.com/</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://sappsecurity.com/event-security</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sappsecurity.com/security-audits</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sappsecurity.com/installations</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sappsecurity.com/cyber-security</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-</urlset>`
+    const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://sappsecurity.com/</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>https://sappsecurity.com/event-security</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://sappsecurity.com/security-audits</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://sappsecurity.com/installations</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://sappsecurity.com/cyber-security</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>\n</urlset>`
 
     return new Response(fallbackSitemap, {
       status: 200,
