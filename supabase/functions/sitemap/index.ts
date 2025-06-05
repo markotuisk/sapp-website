@@ -2,15 +2,13 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
-
 serve(async (req) => {
-  // Handle CORS preflight requests
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+  // Only handle GET requests for sitemap
+  if (req.method !== 'GET') {
+    return new Response('Method not allowed', { 
+      status: 405,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 
   try {
@@ -22,7 +20,7 @@ serve(async (req) => {
     // Get current date for lastmod
     const currentDate = new Date().toISOString().split('T')[0]
     
-    // Static routes with their priorities and change frequencies
+    // Comprehensive static routes with proper priorities and change frequencies
     const staticRoutes = [
       { url: '', priority: '1.0', changefreq: 'monthly', lastmod: currentDate },
       { url: 'event-security', priority: '0.9', changefreq: 'monthly', lastmod: currentDate },
@@ -36,6 +34,9 @@ serve(async (req) => {
       { url: 'service-navigator/services', priority: '0.7', changefreq: 'weekly', lastmod: currentDate },
       { url: 'service-navigator/resources', priority: '0.7', changefreq: 'weekly', lastmod: currentDate },
       { url: 'service-navigator/acronyms', priority: '0.7', changefreq: 'weekly', lastmod: currentDate },
+      { url: 'client-area', priority: '0.6', changefreq: 'monthly', lastmod: currentDate },
+      
+      // Service pages
       { url: 'services/close-protection', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
       { url: 'services/speech-privacy', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
       { url: 'services/physical-security-assessments', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
@@ -44,41 +45,72 @@ serve(async (req) => {
       { url: 'services/compliance-audits', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
       { url: 'services/event-monitoring', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
       { url: 'services/secure-technology', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
+      { url: 'services/tscm-inspections', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
+      { url: 'services/technology-systems-testing', priority: '0.8', changefreq: 'monthly', lastmod: currentDate },
+      
+      // Installation pages
       { url: 'installations/cctv-access', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
       { url: 'installations/counter-surveillance', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
       { url: 'installations/network-infrastructure', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
+      { url: 'installations/speech-privacy', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
+      
+      // Cyber security pages
+      { url: 'cyber-security/wifi-security', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
+      { url: 'cyber-security/bluetooth-security', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
+      { url: 'cyber-security/cellular-security', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
+      { url: 'cyber-security/iot-device-security', priority: '0.7', changefreq: 'monthly', lastmod: currentDate },
     ]
 
-    // Fetch published news articles
-    const { data: newsArticles, error: newsError } = await supabase
-      .from('news_articles')
-      .select('slug, updated_at')
-      .eq('published', true)
-      .order('published_at', { ascending: false })
+    let newsArticles = [];
+    let acronyms = [];
 
-    if (newsError) {
-      console.error('Error fetching news articles:', newsError)
+    // Fetch published news articles with timeout
+    try {
+      const { data: newsData, error: newsError } = await Promise.race([
+        supabase
+          .from('news_articles')
+          .select('slug, updated_at')
+          .eq('published', true)
+          .order('published_at', { ascending: false }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+      ]);
+
+      if (!newsError && newsData) {
+        newsArticles = newsData;
+      }
+    } catch (error) {
+      console.error('Error fetching news articles:', error);
+      // Continue with empty array
     }
 
-    // Fetch technical acronyms
-    const { data: acronyms, error: acronymsError } = await supabase
-      .from('technical_acronyms')
-      .select('url_slug, updated_at')
-      .not('url_slug', 'is', null)
+    // Fetch technical acronyms with timeout
+    try {
+      const { data: acronymsData, error: acronymsError } = await Promise.race([
+        supabase
+          .from('technical_acronyms')
+          .select('url_slug, updated_at')
+          .not('url_slug', 'is', null),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+      ]);
 
-    if (acronymsError) {
-      console.error('Error fetching acronyms:', acronymsError)
+      if (!acronymsError && acronymsData) {
+        acronyms = acronymsData;
+      }
+    } catch (error) {
+      console.error('Error fetching acronyms:', error);
+      // Continue with empty array
     }
 
-    // Build sitemap XML
+    // Build sitemap XML with proper encoding
     let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 `
 
     // Add static routes
     staticRoutes.forEach(route => {
+      const escapedUrl = route.url.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       sitemap += `  <url>
-    <loc>https://sappsecurity.com/${route.url}</loc>
+    <loc>https://sappsecurity.com/${escapedUrl}</loc>
     <lastmod>${route.lastmod}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
@@ -90,8 +122,9 @@ serve(async (req) => {
     if (newsArticles && newsArticles.length > 0) {
       newsArticles.forEach(article => {
         const lastmod = article.updated_at ? new Date(article.updated_at).toISOString().split('T')[0] : currentDate
+        const escapedSlug = article.slug.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         sitemap += `  <url>
-    <loc>https://sappsecurity.com/news/${article.slug}</loc>
+    <loc>https://sappsecurity.com/news/${escapedSlug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -104,8 +137,9 @@ serve(async (req) => {
     if (acronyms && acronyms.length > 0) {
       acronyms.forEach(acronym => {
         const lastmod = acronym.updated_at ? new Date(acronym.updated_at).toISOString().split('T')[0] : currentDate
+        const escapedSlug = acronym.url_slug.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         sitemap += `  <url>
-    <loc>https://sappsecurity.com/acronyms/what-is-${acronym.url_slug}</loc>
+    <loc>https://sappsecurity.com/acronyms/what-is-${escapedSlug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -116,19 +150,59 @@ serve(async (req) => {
 
     sitemap += `</urlset>`
 
+    // Return XML with proper headers (no CORS needed for sitemaps)
     return new Response(sitemap, {
+      status: 200,
       headers: {
-        'Content-Type': 'application/xml',
+        'Content-Type': 'application/xml; charset=utf-8',
         'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
-        ...corsHeaders
       },
     })
 
   } catch (error) {
-    console.error('Error generating sitemap:', error)
-    return new Response('Error generating sitemap', { 
-      status: 500,
-      headers: corsHeaders
+    console.error('Critical error generating sitemap:', error)
+    
+    // Return minimal valid XML sitemap even on error
+    const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://sappsecurity.com/</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://sappsecurity.com/event-security</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sappsecurity.com/security-audits</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sappsecurity.com/installations</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sappsecurity.com/cyber-security</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>`
+
+    return new Response(fallbackSitemap, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=1800', // Shorter cache on error
+      },
     })
   }
 })
