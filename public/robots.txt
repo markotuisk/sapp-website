@@ -1,9 +1,14 @@
 
+# Robots.txt for SAPP Security
+# https://sappsecurity.com
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -11,8 +16,36 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
 
-Sitemap: https://sappsecurity.com/sitemap.xml
+User-agent: WhatsApp
+Allow: /
 
+User-agent: *
+Allow: /
+Crawl-delay: 2
+
+# Block staging and development environments
+User-agent: *
+Disallow: /staging/
+Disallow: /dev/
+Disallow: /test/
+Disallow: /.env
+Disallow: /admin/
+Disallow: /api/internal/
+Disallow: /*?debug=*
+Disallow: /*?test=*
+
+# Allow important directories
+Allow: /assets/
+Allow: /images/
+Allow: /lovable-uploads/
+Allow: /favicon/
+
+# Dynamic sitemap location
+Sitemap: https://sappsecurity.com/functions/v1/sitemap
+
+# Additional sitemaps if needed in future
+# Sitemap: https://sappsecurity.com/sitemap-news.xml
+# Sitemap: https://sappsecurity.com/sitemap-images.xml
