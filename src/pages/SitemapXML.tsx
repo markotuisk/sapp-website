@@ -1,38 +1,47 @@
 
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 const SitemapXML: React.FC = () => {
-  const [sitemapContent, setSitemapContent] = useState<string>('');
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    const fetchSitemap = async () => {
+    const fetchAndServeSitemap = async () => {
       try {
         console.log('Fetching sitemap data from edge function...');
         
         const { data, error } = await supabase.functions.invoke('sitemap');
         
+        let sitemapContent: string;
+        
         if (error) {
           console.error('Error fetching sitemap:', error);
-          // Fallback to basic sitemap if edge function fails
-          setSitemapContent(generateFallbackSitemap());
+          sitemapContent = generateFallbackSitemap();
         } else if (typeof data === 'string') {
-          setSitemapContent(data);
+          sitemapContent = data;
         } else {
           console.error('Unexpected sitemap response format:', data);
-          setSitemapContent(generateFallbackSitemap());
+          sitemapContent = generateFallbackSitemap();
         }
+
+        // Clear the document and write raw XML
+        document.open();
+        document.write(sitemapContent);
+        document.close();
+        
+        // Set the content type to XML
+        if (document.contentType) {
+          (document as any).contentType = 'application/xml';
+        }
+        
       } catch (error) {
         console.error('Error in sitemap fetch:', error);
-        setSitemapContent(generateFallbackSitemap());
-      } finally {
-        setLoading(false);
+        const fallbackContent = generateFallbackSitemap();
+        document.open();
+        document.write(fallbackContent);
+        document.close();
       }
     };
 
-    fetchSitemap();
+    fetchAndServeSitemap();
   }, []);
 
   const generateFallbackSitemap = () => {
@@ -72,28 +81,8 @@ const SitemapXML: React.FC = () => {
 </urlset>`;
   };
 
-  if (loading) {
-    return (
-      <>
-        <Helmet>
-          <meta charSet="utf-8" />
-          <meta httpEquiv="Content-Type" content="application/xml; charset=utf-8" />
-        </Helmet>
-        <pre>Loading sitemap...</pre>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <meta httpEquiv="Content-Type" content="application/xml; charset=utf-8" />
-        <title>Sitemap</title>
-      </Helmet>
-      <pre dangerouslySetInnerHTML={{ __html: sitemapContent }} />
-    </>
-  );
+  // Return null since we're handling the response manually
+  return null;
 };
 
 export default SitemapXML;
