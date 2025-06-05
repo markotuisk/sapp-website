@@ -1,4 +1,5 @@
 
+
 # Robots.txt for SAPP Security
 # https://sappsecurity.com
 
@@ -43,9 +44,10 @@ Allow: /images/
 Allow: /lovable-uploads/
 Allow: /favicon/
 
-# Dynamic sitemap location - Updated for proper XML delivery
-Sitemap: https://sappsecurity.com/functions/v1/sitemap
+# Dynamic sitemap location - Updated to use direct Supabase edge function URL
+Sitemap: https://zxgsqsdhnwbldytzvwsq.supabase.co/functions/v1/sitemap
 
 # Additional sitemaps if needed in future
 # Sitemap: https://sappsecurity.com/sitemap-news.xml
 # Sitemap: https://sappsecurity.com/sitemap-images.xml
+
