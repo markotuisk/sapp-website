@@ -2,11 +2,11 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import TranslatedText from '@/components/ui/TranslatedText';
-import ServicesOverlay from '@/components/ui/ServicesOverlay';
+import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import { Animated } from '@/components/ui/AnimatedElements';
 
 const CTASection = () => {
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
 
   return (
     <section className="py-16 bg-slate-50">
@@ -25,14 +25,16 @@ const CTASection = () => {
         <Button 
           size="lg" 
           className="bg-sapp-blue hover:bg-sapp-blue/90 text-white shadow-lg shadow-sapp-blue/20"
-          onClick={() => setServicesOpen(true)}
+          onClick={() => setContactDialogOpen(true)}
         >
           <TranslatedText textKey="getInTouch" />
         </Button>
         
-        <ServicesOverlay 
-          open={servicesOpen} 
-          onOpenChange={setServicesOpen}
+        <ContactFormDialog 
+          open={contactDialogOpen} 
+          onOpenChange={setContactDialogOpen}
+          defaultMessage="I'm interested in learning more about your security audit services and would like to discuss how SAPP Security can help improve our organisation's security posture."
+          serviceName="Security Audits"
         />
       </div>
     </section>

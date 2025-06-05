@@ -73,7 +73,7 @@ const ServiceCardsSection = () => {
                 <CardTitle className="heading-secondary">{service.title}</CardTitle>
               </CardHeader>
               <CardContent className="flex-grow">
-                <CardDescription className="text-sapp-gray text-sm min-h-[80px]">
+                <CardDescription className="text-sapp-gray text-sm min-h-[140px]">
                   {service.description}
                 </CardDescription>
               </CardContent>

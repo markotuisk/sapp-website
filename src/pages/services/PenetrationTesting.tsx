@@ -20,7 +20,10 @@ const PenetrationTesting = () => {
   const location = useLocation();
   
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Add a small delay to ensure proper scroll behavior
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   }, [location]);
 
   return (
