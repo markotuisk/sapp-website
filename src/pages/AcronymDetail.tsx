@@ -1,7 +1,7 @@
 
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import Navbar from "@/components/layout/Navbar";
+import { Navbar } from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AcronymLoadingState from "@/components/resources/AcronymLoadingState";
 import AcronymErrorState from "@/components/resources/AcronymErrorState";

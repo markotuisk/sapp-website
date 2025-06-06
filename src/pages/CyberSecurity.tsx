@@ -1,7 +1,7 @@
 
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Navbar from '@/components/layout/Navbar';
+import { Navbar } from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
