@@ -1,6 +1,6 @@
 
 import { Helmet } from 'react-helmet-async';
-import { Navbar } from '@/components/layout/Navbar';
+import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/tscm/HeroSection';
 import ServicesSection from '@/components/tscm/ServicesSection';

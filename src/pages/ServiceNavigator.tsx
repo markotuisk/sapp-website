@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation, Link } from 'react-router-dom';
-import { Navbar } from '@/components/layout/Navbar';
+import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import SearchBox from '@/components/ui/ServicesOverlay/SearchBox';
 import ServicesTab from '@/components/ui/ServicesOverlay/ServicesTab';

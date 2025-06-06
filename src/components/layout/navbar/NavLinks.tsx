@@ -1,3 +1,4 @@
+
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
@@ -12,7 +13,7 @@ export const mainNavLinks = [
   { key: 'about' as const, href: '/about' },
 ];
 
-const NavLinks = ({ isScrolled }: { isScrolled?: boolean }) => {
+const NavLinks = ({ isScrolled }: { isScrolled: boolean }) => {
   const location = useLocation();
   
   const isActivePath = (path: string) => {

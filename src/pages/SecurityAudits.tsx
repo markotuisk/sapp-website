@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Navbar } from '@/components/layout/Navbar';
+import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/security-audits/HeroSection';
 import WhyIndependentAudits from '@/components/security-audits/WhyIndependentAudits';

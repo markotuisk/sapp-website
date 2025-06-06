@@ -1,7 +1,7 @@
 
 import { useEffect, lazy, Suspense, useState, useTransition, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Navbar } from '@/components/layout/Navbar';
+import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { DebugInfo, useComponentLogger, useDebugContext } from '@/utils/debugTools';
 
