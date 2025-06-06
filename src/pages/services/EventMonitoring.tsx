@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import Navbar from '@/components/layout/Navbar';
+import { Navbar } from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContactFormDialog from '@/components/ui/ContactFormDialog';
 import HeroSection from '@/components/services/event-monitoring/HeroSection';
