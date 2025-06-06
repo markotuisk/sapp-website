@@ -911,6 +911,7 @@ export type Database = {
       user_preferences: {
         Row: {
           created_at: string
+          dashboard_layout: Json | null
           document_notifications: boolean | null
           email_notifications: boolean | null
           id: string
@@ -922,6 +923,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          dashboard_layout?: Json | null
           document_notifications?: boolean | null
           email_notifications?: boolean | null
           id?: string
@@ -933,6 +935,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          dashboard_layout?: Json | null
           document_notifications?: boolean | null
           email_notifications?: boolean | null
           id?: string

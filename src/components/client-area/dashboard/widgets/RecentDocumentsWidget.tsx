@@ -15,6 +15,9 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { formatDistanceToNow } from 'date-fns';
+import type { Tables } from '@/integrations/supabase/types';
+
+type ClientDocument = Tables<'client_documents'>;
 
 interface RecentDocument {
   id: string;
@@ -56,13 +59,27 @@ export const RecentDocumentsWidget: React.FC<RecentDocumentsWidgetProps> = ({
         .from('client_documents')
         .select('*')
         .eq('user_id', user?.id)
-        .order('last_downloaded_at', { ascending: false, nullsLast: true })
+        .order('last_downloaded_at', { ascending: false, nullsFirst: false })
         .order('created_at', { ascending: false })
         .limit(maxItems);
 
       if (error) throw error;
 
-      setDocuments(data || []);
+      // Transform the data to match our interface
+      const transformedData: RecentDocument[] = (data || []).map(doc => ({
+        id: doc.id,
+        file_name: doc.file_name,
+        custom_name: doc.custom_name || undefined,
+        document_type: (doc.document_type === 'file' || doc.document_type === 'link') ? doc.document_type : 'file',
+        external_url: doc.external_url || undefined,
+        last_downloaded_at: doc.last_downloaded_at || undefined,
+        download_count: doc.download_count || 0,
+        created_at: doc.created_at,
+        file_size: doc.file_size || undefined,
+        mime_type: doc.mime_type || 'application/octet-stream'
+      }));
+
+      setDocuments(transformedData);
     } catch (error) {
       console.error('Error fetching recent documents:', error);
     } finally {

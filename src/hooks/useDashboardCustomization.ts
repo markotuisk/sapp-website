@@ -88,7 +88,7 @@ export const useDashboardCustomization = () => {
         .from('user_preferences')
         .select('dashboard_layout')
         .eq('user_id', user?.id)
-        .single();
+        .maybeSingle();
 
       if (error && error.code !== 'PGRST116') {
         throw error;

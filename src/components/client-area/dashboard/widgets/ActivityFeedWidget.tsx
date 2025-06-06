@@ -16,6 +16,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { formatDistanceToNow } from 'date-fns';
+import type { Tables } from '@/integrations/supabase/types';
 
 interface ActivityItem {
   id: string;
@@ -64,10 +65,10 @@ export const ActivityFeedWidget: React.FC<ActivityFeedWidgetProps> = ({
       const activityItems: ActivityItem[] = (userLogs || []).map(log => ({
         id: log.id,
         action: log.action,
-        description: getActivityDescription(log.action, log.changes),
+        description: getActivityDescription(log.action, log.changes as Record<string, any>),
         timestamp: log.created_at,
         category: getActivityCategory(log.action),
-        metadata: log.changes
+        metadata: log.changes as Record<string, any> || {}
       }));
 
       setActivities(activityItems);
@@ -79,7 +80,7 @@ export const ActivityFeedWidget: React.FC<ActivityFeedWidgetProps> = ({
     }
   };
 
-  const getActivityDescription = (action: string, changes: any): string => {
+  const getActivityDescription = (action: string, changes: Record<string, any> | null): string => {
     switch (action) {
       case 'login':
         return 'Signed in to the platform';
