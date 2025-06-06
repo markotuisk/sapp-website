@@ -5,13 +5,13 @@ import { ArrowLeft, Users, UserPlus, Building2, Shield, Activity, RefreshCw, Unl
 import { AdminGuard } from '@/components/auth/AdminGuard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { UsersList } from './user-management/UsersList';
-import { OrganizationManagement } from './user-management/OrganizationManagement';
-import { UserInvitations } from './user-management/UserInvitations';
-import { AuthenticationLogs } from './user-management/AuthenticationLogs';
-import { UserActivityLogs } from './user-management/UserActivityLogs';
-import { DataMigrationUtility } from './user-management/DataMigrationUtility';
-import { AccountUnlockCard } from './user-management/AccountUnlockCard';
+import { UsersList } from './UsersList';
+import { OrganizationManagement } from './OrganizationManagement';
+import { UserInvitations } from './UserInvitations';
+import { AuthenticationLogs } from './AuthenticationLogs';
+import { UserActivityLogs } from './UserActivityLogs';
+import { DataMigrationUtility } from './DataMigrationUtility';
+import { AccountUnlockCard } from './AccountUnlockCard';
 import { useOrganizationData } from '@/hooks/useOrganizationData';
 
 interface UserManagementProps {

@@ -1173,6 +1173,10 @@ export type Database = {
           recent_signups: number
         }[]
       }
+      get_user_lockout_status: {
+        Args: { target_email: string }
+        Returns: Json
+      }
       get_user_organization: {
         Args: { _user_id: string }
         Returns: string
@@ -1279,6 +1283,10 @@ export type Database = {
           preferences?: Json
         }
         Returns: string
+      }
+      unlock_user_account: {
+        Args: { target_email: string }
+        Returns: Json
       }
       unsubscribe_newsletter: {
         Args: { unsubscribe_token_param: string }
