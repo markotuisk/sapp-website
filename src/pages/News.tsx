@@ -1,16 +1,45 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import NewsHero from '@/components/news/NewsHero';
 import SearchBar from '@/components/news/SearchBar';
 import CategoryFilter from '@/components/news/CategoryFilter';
 import NewsGrid from '@/components/news/NewsGrid';
+import { useNewsArticles } from '@/hooks/useNewsArticles';
 
 const News = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+  const { data: articles = [], isLoading } = useNewsArticles();
+
+  // Filter articles based on search and category
+  const filteredArticles = articles.filter(article => {
+    const matchesSearch = searchTerm === '' || 
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesCategory = selectedCategory === null || 
+      article.category === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
+
+  // Get unique categories from articles
+  const categories = Array.from(new Set(articles.map(article => article.category)));
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+  };
+
+  const handleCategorySelect = (category: string | null) => {
+    setSelectedCategory(category);
+  };
 
   return (
     <div className="min-h-screen">
@@ -31,10 +60,14 @@ const News = () => {
         <section className="py-12 bg-slate-50">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row gap-6 mb-8">
-              <SearchBar />
-              <CategoryFilter />
+              <SearchBar onSearch={handleSearch} />
+              <CategoryFilter 
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={handleCategorySelect}
+              />
             </div>
-            <NewsGrid />
+            <NewsGrid articles={filteredArticles} loading={isLoading} />
           </div>
         </section>
       </PublicLayout>

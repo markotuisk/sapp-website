@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import HeroSection from '@/components/event-security/HeroSection';
@@ -10,6 +10,35 @@ import InfoSection from '@/components/event-security/InfoSection';
 import CTASection from '@/components/event-security/CTASection';
 
 const EventSecurity = () => {
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  const serviceDetails = [
+    {
+      title: "Venue Security Assessment",
+      description: "Comprehensive evaluation of event venues to identify potential security vulnerabilities and develop mitigation strategies.",
+      href: "/services/venue-security-audits",
+      imagePath: "/lovable-uploads/venue-security.jpg"
+    },
+    {
+      title: "Executive Protection", 
+      description: "Professional close protection services for high-profile attendees and VIP guests at corporate events.",
+      href: "/services/close-protection",
+      imagePath: "/lovable-uploads/executive-protection.jpg"
+    },
+    {
+      title: "Event Monitoring",
+      description: "Real-time surveillance and monitoring services to ensure event security throughout the duration.",
+      href: "/services/event-monitoring", 
+      imagePath: "/lovable-uploads/event-monitoring.jpg"
+    },
+    {
+      title: "TSCM Inspections",
+      description: "Technical surveillance countermeasures to detect and neutralise electronic eavesdropping devices.",
+      href: "/services/tscm-inspections",
+      imagePath: "/lovable-uploads/tscm-inspections.jpg"
+    }
+  ];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -29,11 +58,11 @@ const EventSecurity = () => {
         <meta property="og:url" content="https://www.sappsecurity.com/event-security" />
       </Helmet>
       <PublicLayout>
-        <HeroSection />
-        <ServicesSection />
+        <HeroSection setServicesOpen={setServicesOpen} />
+        <ServicesSection serviceDetails={serviceDetails} />
         <SecurityProcessSection />
         <QuoteSection />
-        <InfoSection />
+        <InfoSection setServicesOpen={setServicesOpen} />
         <CTASection />
       </PublicLayout>
     </div>
