@@ -2,133 +2,112 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import type { UserWithProfile, AppRole } from '@/types/roles';
-import type { Tables } from '@/integrations/supabase/types';
+import { useAuth } from '@/contexts/AuthContext';
+import { useOrganizationData } from '@/hooks/useOrganizationData';
 import { useUserRoles } from '@/hooks/user-management/useUserRoles';
+import { useUsers } from '@/hooks/user-management/useUsers';
 import { useOrganizations } from '@/hooks/user-management/useOrganizations';
-
-type Organization = Tables<'organizations'>;
+import type { UserWithProfile, AppRole } from '@/types/roles';
 
 export const useUserManagement = () => {
-  const [users, setUsers] = useState<UserWithProfile[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
   const { toast } = useToast();
+  const { canAccessCrossOrganization, organizationId } = useOrganizationData();
   const { assignUserRole, removeUserRole } = useUserRoles();
-  const { organizations, isLoading: organizationsLoading, createOrganization, refetchOrganizations } = useOrganizations();
+  const { users, isLoading: usersLoading, refetchUsers } = useUsers();
+  const { organizations, isLoading: orgsLoading, createOrganization, refetchOrganizations } = useOrganizations();
+  
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchUsers = async () => {
+  // Combine loading states
+  useEffect(() => {
+    setIsLoading(usersLoading || orgsLoading);
+  }, [usersLoading, orgsLoading]);
+
+  // Filter users based on organization access
+  const getFilteredUsers = (): UserWithProfile[] => {
+    if (!user) return [];
+    
+    // Admins can see all users
+    if (canAccessCrossOrganization()) {
+      return users;
+    }
+    
+    // Regular users can only see users from their organization
+    if (organizationId) {
+      return users.filter(u => u.clientData?.organization_id === organizationId);
+    }
+    
+    return [];
+  };
+
+  const filteredUsers = getFilteredUsers();
+
+  const assignRole = async (userId: string, role: AppRole) => {
     try {
-      setIsLoading(true);
-      console.log('useUserManagement: Starting user fetch...');
-      
-      // Check if user is authenticated
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      if (authError || !user) {
-        console.error('Authentication error:', authError);
-        throw new Error('User not authenticated');
-      }
-      
-      // Check if user has admin role
-      const { data: userRoles, error: roleError } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id);
-        
-      if (roleError) {
-        console.error('Error checking user roles:', roleError);
-        throw new Error('Failed to verify user permissions');
-      }
-      
-      const hasAdminRole = userRoles?.some(r => r.role === 'admin');
-      if (!hasAdminRole) {
-        throw new Error('Access denied: Admin role required');
-      }
-      
-      // Fetch users with profiles - note the organization field is now an object
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
-        .select(`
-          *,
-          organization:organizations!profiles_organization_id_fkey(
-            id,
-            name,
-            description
-          )
-        `)
-        .order('created_at', { ascending: false });
-
-      if (profilesError) {
-        console.error('Error fetching profiles:', profilesError);
-        throw new Error(`Failed to fetch profiles: ${profilesError.message}`);
-      }
-
-      console.log('useUserManagement: Fetched profiles:', profilesData?.length || 0);
-
-      // Fetch user roles separately
-      const { data: rolesData, error: rolesError } = await supabase
-        .from('user_roles')
-        .select('*');
-
-      if (rolesError) {
-        console.error('Error fetching roles:', rolesError);
-      }
-
-      console.log('useUserManagement: Fetched roles:', rolesData?.length || 0);
-
-      // Fetch client data separately
-      const { data: clientData, error: clientError } = await supabase
-        .from('client_data')
-        .select('*');
-
-      if (clientError) {
-        console.error('Error fetching client data:', clientError);
-      }
-
-      console.log('useUserManagement: Fetched client data:', clientData?.length || 0);
-
-      // Transform and combine the data
-      const transformedUsers = profilesData?.map(profile => {
-        const userRoles = rolesData?.filter(role => role.user_id === profile.id).map(r => r.role) || [];
-        const userClientData = clientData?.find(cd => cd.user_id === profile.id) || null;
-        
-        return {
-          id: profile.id,
-          email: profile.email,
-          profile: profile,
-          roles: userRoles as AppRole[],
-          clientData: userClientData
-        };
-      }) || [];
-
-      console.log('useUserManagement: Transformed users:', transformedUsers.length);
-      setUsers(transformedUsers);
-
+      await assignUserRole(userId, role);
+      await refetchUsers();
+      toast({
+        title: 'Success',
+        description: `Role ${role} assigned successfully`,
+      });
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error('Error assigning role:', error);
       toast({
         title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to load users',
+        description: error instanceof Error ? error.message : 'Failed to assign role',
         variant: 'destructive',
       });
-    } finally {
-      setIsLoading(false);
+      throw error;
     }
   };
 
-  const refetchData = fetchUsers;
+  const removeRole = async (userId: string, role: AppRole) => {
+    try {
+      await removeUserRole(userId, role);
+      await refetchUsers();
+      toast({
+        title: 'Success',
+        description: `Role ${role} removed successfully`,
+      });
+    } catch (error) {
+      console.error('Error removing role:', error);
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to remove role',
+        variant: 'destructive',
+      });
+      throw error;
+    }
+  };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const refetchData = async () => {
+    try {
+      await Promise.all([
+        refetchUsers(),
+        refetchOrganizations()
+      ]);
+    } catch (error) {
+      console.error('Error refetching user management data:', error);
+    }
+  };
 
   return {
-    users,
-    isLoading: isLoading || organizationsLoading,
+    // Data
+    users: filteredUsers,
     organizations,
-    assignUserRole,
-    removeUserRole,
+    isLoading,
+    
+    // Actions
+    assignUserRole: assignRole,
+    removeUserRole: removeRole,
     createOrganization,
+    
+    // Utilities
     refetchData,
+    refetchUsers,
     refetchOrganizations,
+    canAccessCrossOrganization,
+    organizationId,
   };
 };

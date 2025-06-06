@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertTriangle, Building2, Mail, Users } from 'lucide-react';
-import { useRole } from '@/hooks/useRole';
+import { useOrganizationData } from '@/hooks/useOrganizationData';
 
 interface OrganisationAccessGuardProps {
   children: React.ReactNode;
@@ -15,14 +15,16 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
   children, 
   fallback 
 }) => {
-  const { isAdmin, clientData, userProfile, isLoading } = useRole();
-
-  console.log('OrganisationAccessGuard - clientData:', clientData);
-  console.log('OrganisationAccessGuard - userProfile:', userProfile);
+  const { 
+    hasOrganization, 
+    isGuestUser, 
+    canAccessCrossOrganization, 
+    currentOrganization,
+    isLoading 
+  } = useOrganizationData();
 
   // Admin users (SAPP Security) can always access everything
-  if (isAdmin()) {
-    console.log('OrganisationAccessGuard - User is admin, allowing access');
+  if (canAccessCrossOrganization()) {
     return <>{children}</>;
   }
 
@@ -38,19 +40,8 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
     );
   }
 
-  // Check organization assignment - use clientData for organization_id
-  const clientOrgId = clientData?.organization_id;
-  const organizationId = clientOrgId;
-  const hasOrganisation = !!organizationId;
-  const isGuestUser = organizationId === '00000000-0000-0000-0000-000000000001';
-
-  console.log('OrganisationAccessGuard - clientOrgId:', clientOrgId);
-  console.log('OrganisationAccessGuard - final organizationId:', organizationId);
-  console.log('OrganisationAccessGuard - hasOrganisation:', hasOrganisation);
-  console.log('OrganisationAccessGuard - isGuestUser:', isGuestUser);
-
   // Special handling for guest users
-  if (isGuestUser) {
+  if (isGuestUser()) {
     return fallback || (
       <Card className="max-w-2xl mx-auto mt-8">
         <CardHeader>
@@ -75,7 +66,6 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
             <h3 className="font-semibold text-blue-900 mb-2">To gain full access:</h3>
             <ol className="list-decimal list-inside space-y-1 text-blue-800 text-sm">
               <li>Contact SAPP Security support for organisation assignment</li>
-              <li>Provide your email address: <strong>{userProfile?.email}</strong></li>
               <li>Specify which organisation you should be assigned to</li>
               <li>Wait for an administrator to update your account</li>
             </ol>
@@ -93,7 +83,7 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
   }
 
   // Regular check for users without organisation
-  if (!hasOrganisation) {
+  if (!hasOrganization()) {
     return fallback || (
       <Card className="max-w-2xl mx-auto mt-8">
         <CardHeader>
@@ -118,7 +108,6 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
             <h3 className="font-semibold text-blue-900 mb-2">What you need to do:</h3>
             <ol className="list-decimal list-inside space-y-1 text-blue-800 text-sm">
               <li>Contact SAPP Security support to have your account properly configured</li>
-              <li>Provide your email address: <strong>{userProfile?.email}</strong></li>
               <li>Specify which organisation you should be assigned to</li>
             </ol>
           </div>
@@ -135,6 +124,5 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
   }
 
   // User has organisation (and it's not guest), allow access
-  console.log('OrganisationAccessGuard - Allowing access, user has valid organisation');
   return <>{children}</>;
 };
