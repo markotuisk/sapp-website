@@ -1,114 +1,74 @@
 
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
-import { useOrganizationAwareQueries } from './utils/organizationAwareQueries';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
-type NewsArticleInsert = Omit<NewsArticle, 'id' | 'created_at' | 'updated_at' | 'organization_id'>;
 
 export const useNewsArticleOperations = () => {
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const { toast } = useToast();
-  const { user, isAuthenticated } = useAuth();
-  const { addOrganizationContext } = useOrganizationAwareQueries();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const createArticle = async (articleData: NewsArticleInsert) => {
+  const createArticle = async (articleData: Partial<NewsArticle>) => {
+    setIsLoading(true);
     try {
-      console.log('🚀 createArticle: Starting organization-aware creation...');
-      
-      if (!isAuthenticated || !user) {
-        throw new Error('You must be signed in to create articles');
-      }
-      
-      // Add organization context to the article
-      const articleWithOrg = addOrganizationContext(articleData);
-      console.log('📝 createArticle: Article with org context:', articleWithOrg);
-      
       const { data, error } = await supabase
         .from('news_articles')
-        .insert(articleWithOrg)
+        .insert([articleData])
         .select()
         .single();
 
-      if (error) {
-        console.error('❌ createArticle: Insert failed:', error);
-        throw new Error(`Failed to create article: ${error.message}`);
-      }
-
-      console.log('✅ createArticle: Article created successfully:', data);
-      setArticles(prev => [data, ...prev]);
-      toast({
-        title: 'Success',
-        description: 'Article created successfully',
-      });
-      return data;
+      if (error) throw error;
+      return { success: true, data };
     } catch (error) {
-      console.error('💥 createArticle: Error:', error);
-      toast({
-        title: 'Error Creating Article',
-        description: error instanceof Error ? error.message : 'Failed to create article',
-        variant: 'destructive',
-      });
-      throw error;
+      console.error('Error creating article:', error);
+      return { success: false, error };
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const updateArticle = async (articleId: string, updates: Partial<NewsArticle>) => {
+  const updateArticle = async (id: string, updates: Partial<NewsArticle>) => {
+    setIsLoading(true);
     try {
       const { data, error } = await supabase
         .from('news_articles')
         .update(updates)
-        .eq('id', articleId)
+        .eq('id', id)
         .select()
         .single();
 
       if (error) throw error;
-
-      setArticles(prev => prev.map(article => 
-        article.id === articleId ? data : article
-      ));
-
-      return data;
+      return { success: true, data };
     } catch (error) {
       console.error('Error updating article:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to update article',
-        variant: 'destructive',
-      });
-      throw error;
+      return { success: false, error };
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const deleteArticle = async (articleId: string) => {
+  const deleteArticle = async (id: string) => {
+    setIsLoading(true);
     try {
       const { error } = await supabase
         .from('news_articles')
         .delete()
-        .eq('id', articleId);
+        .eq('id', id);
 
       if (error) throw error;
-
-      setArticles(prev => prev.filter(article => article.id !== articleId));
+      return { success: true };
     } catch (error) {
       console.error('Error deleting article:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to delete article',
-        variant: 'destructive',
-      });
-      throw error;
+      return { success: false, error };
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
-    articles,
-    setArticles,
     createArticle,
     updateArticle,
-    deleteArticle
+    deleteArticle,
+    isLoading
   };
 };

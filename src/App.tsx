@@ -9,8 +9,6 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
-import Acronyms from "./pages/Acronyms";
-import TechnicalAcronymsApi from "./pages/TechnicalAcronymsApi";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 
 const queryClient = new QueryClient();
@@ -27,8 +25,6 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/acronyms" element={<Acronyms />} />
-            <Route path="/technical-acronyms-api" element={<TechnicalAcronymsApi />} />
             <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
           </Routes>
         </BrowserRouter>
