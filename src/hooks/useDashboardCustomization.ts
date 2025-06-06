@@ -95,7 +95,9 @@ export const useDashboardCustomization = () => {
       }
 
       if (data?.dashboard_layout) {
-        setDashboardLayout(data.dashboard_layout as DashboardLayout);
+        // Safely parse the JSON data as DashboardLayout
+        const layoutData = data.dashboard_layout as unknown as DashboardLayout;
+        setDashboardLayout(layoutData);
       } else {
         // No saved layout, use default
         setDashboardLayout(defaultLayout);
@@ -116,8 +118,10 @@ export const useDashboardCustomization = () => {
         .from('user_preferences')
         .upsert({
           user_id: user.id,
-          dashboard_layout: newLayout,
+          dashboard_layout: newLayout as any, // Convert to Json type
           updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) throw error;
