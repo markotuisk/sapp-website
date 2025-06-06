@@ -50,6 +50,7 @@ export interface DocumentActivity {
   };
 }
 
+// Simplified ClientDocument interface that doesn't depend on missing database tables
 export interface ClientDocument {
   id: string;
   user_id: string;

@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 export interface DocumentCategory {
@@ -14,28 +13,27 @@ export interface DocumentCategory {
 
 export const useDocumentCategories = () => {
   const [categories, setCategories] = useState<DocumentCategory[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const fetchCategories = async () => {
     try {
       setIsLoading(true);
-      const { data, error } = await supabase
-        .from('document_categories')
-        .select('*')
-        .order('name');
-
-      if (error) {
-        console.error('Error fetching categories:', error);
-        throw error;
-      }
-
-      setCategories(data || []);
-    } catch (error) {
-      console.error('Error fetching document categories:', error);
+      console.log('Document categories feature disabled in simplified mode');
+      
+      // Return empty array since document_categories table doesn't exist
+      setCategories([]);
+      
       toast({
-        title: 'Error',
-        description: 'Failed to load document categories',
+        title: 'Document Categories Unavailable',
+        description: 'Document categories are not available in the simplified client area setup.',
+        variant: 'destructive',
+      });
+    } catch (error) {
+      console.error('Document categories feature disabled:', error);
+      toast({
+        title: 'Document Categories Unavailable',
+        description: 'Document categories are not available in the simplified client area setup.',
         variant: 'destructive',
       });
     } finally {
@@ -44,7 +42,8 @@ export const useDocumentCategories = () => {
   };
 
   useEffect(() => {
-    fetchCategories();
+    // Don't fetch categories automatically since the feature is disabled
+    setIsLoading(false);
   }, []);
 
   return {
