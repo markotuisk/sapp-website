@@ -21,7 +21,6 @@ import { UserProfile } from './UserProfile';
 import { DocumentManagement } from './DocumentManagement';
 import { UserSettings } from './UserSettings';
 import { NewsManagement } from './NewsManagement';
-import { UserManagement } from './UserManagement';
 import { OrganisationAccessGuard } from './user-management/OrganisationAccessGuard';
 import { AdminGuard } from '@/components/auth/AdminGuard';
 import { AdminProfileBlock } from './AdminProfileBlock';
@@ -37,6 +36,10 @@ export const ClientDashboard: React.FC = () => {
     } catch (error) {
       console.error('Sign out error:', error);
     }
+  };
+
+  const handleBackToProfile = () => {
+    setActiveTab('profile');
   };
 
   const getGreeting = () => {
@@ -109,17 +112,17 @@ export const ClientDashboard: React.FC = () => {
         </TabsList>
 
         <TabsContent value="profile" className="space-y-6">
-          <UserProfile />
+          <UserProfile onBack={handleBackToProfile} />
         </TabsContent>
 
         <TabsContent value="documents" className="space-y-6">
           <OrganisationAccessGuard>
-            <DocumentManagement />
+            <DocumentManagement onBack={handleBackToProfile} />
           </OrganisationAccessGuard>
         </TabsContent>
 
         <TabsContent value="settings" className="space-y-6">
-          <UserSettings />
+          <UserSettings onBack={handleBackToProfile} />
         </TabsContent>
 
         <TabsContent value="news" className="space-y-6">
@@ -136,7 +139,7 @@ export const ClientDashboard: React.FC = () => {
               </CardContent>
             </Card>
           }>
-            <NewsManagement />
+            <NewsManagement onBack={handleBackToProfile} />
           </AdminGuard>
         </TabsContent>
 
