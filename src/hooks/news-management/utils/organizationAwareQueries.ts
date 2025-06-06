@@ -1,43 +1,18 @@
-import { useOrganizationData } from '@/hooks/useOrganizationData';
 
-export const useOrganizationAwareQueries = () => {
-  const { canAccessCrossOrganization, organizationId } = useOrganizationData();
+import { supabase } from '@/integrations/supabase/client';
 
-  const getOrganizationSpecificQuery = (baseQuery: any, tableName: string) => {
-    // If user can access cross-organization, return base query (all data)
-    if (canAccessCrossOrganization()) {
-      return baseQuery;
-    }
-    
-    // Otherwise, filter by organization
-    if (organizationId) {
-      return baseQuery.eq('organization_id', organizationId);
-    }
-    
-    // No organization assigned - return empty query
-    return baseQuery.eq('organization_id', 'no-org-assigned');
-  };
+export const getOrganizationAwareNewsQuery = () => {
+  // For now, return all news articles since organization filtering has been simplified
+  return supabase
+    .from('news_articles')
+    .select('*')
+    .order('created_at', { ascending: false });
+};
 
-  const addOrganizationContext = (data: any) => {
-    // If user can access cross-organization, they can create for any org
-    if (canAccessCrossOrganization()) {
-      return {
-        ...data,
-        organization_id: data.organization_id || organizationId
-      };
-    }
-    
-    // Regular users create for their organization only
-    return {
-      ...data,
-      organization_id: organizationId
-    };
-  };
-
-  return {
-    getOrganizationSpecificQuery,
-    addOrganizationContext,
-    canAccessCrossOrganization,
-    organizationId
-  };
+export const getOrganizationAwareSubscribersQuery = () => {
+  // Return all subscribers since organization filtering has been simplified
+  return supabase
+    .from('news_subscribers')
+    .select('*')
+    .order('created_at', { ascending: false });
 };
