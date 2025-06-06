@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,12 +13,15 @@ import { DisplayModeProvider } from "./contexts/DisplayModeContext";
 import ConsentBanner from "./components/ui/ConsentBanner";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ClientArea from "./pages/VirtualOffice";
 import EventSecurity from "./pages/EventSecurity";
 import SecurityAudits from "./pages/SecurityAudits";
 import Installations from "./pages/Installations";
 import CyberSecurity from "./pages/CyberSecurity";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Acronyms from "./pages/Acronyms";
+import TechnicalAcronymsApi from "./pages/TechnicalAcronymsApi";
+import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 import CookieConsent from "./components/ui/CookieConsent";
 import VersionInfo from "./pages/VersionInfo";
 import ServiceNavigator from "./pages/ServiceNavigator";
@@ -85,7 +89,11 @@ const App = () => {
                     <Routes>
                       <Route path="/" element={<Index />} />
                       <Route path="/sitemap.xml" element={<SitemapXML />} />
-                      <Route path="/client-area" element={<ClientArea />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/acronyms" element={<Acronyms />} />
+                      <Route path="/technical-acronyms-api" element={<TechnicalAcronymsApi />} />
+                      <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
                       <Route path="/event-security" element={<EventSecurity />} />
                       <Route path="/security-audits" element={<SecurityAudits />} />
                       <Route path="/installations" element={<Installations />} />
@@ -96,7 +104,6 @@ const App = () => {
                       <Route path="/news" element={<News />} />
                       <Route path="/news/:slug" element={<NewsDetail />} />
                       <Route path="/admin/news" element={<NewsAdmin />} />
-                      <Route path="/about" element={<About />} />
                       <Route path="/version-info" element={<VersionInfo />} />
                       
                       {/* Service Navigator routes - dedicated pages for SEO */}
