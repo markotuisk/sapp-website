@@ -12,6 +12,14 @@ interface SecurityStatus {
   message: string;
 }
 
+interface SecurityCheckResponse {
+  is_locked: boolean;
+  failed_attempts: number;
+  remaining_attempts?: number;
+  lockout_until?: string;
+  message: string;
+}
+
 export const useSecurityMonitoring = () => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -30,12 +38,15 @@ export const useSecurityMonitoring = () => {
         return null;
       }
       
+      // Parse the JSON response properly
+      const parsedData = typeof data === 'string' ? JSON.parse(data) : data as SecurityCheckResponse;
+      
       const status: SecurityStatus = {
-        isAccountLocked: data.is_locked,
-        failedAttempts: data.failed_attempts,
-        remainingAttempts: data.remaining_attempts,
-        lockoutUntil: data.lockout_until,
-        message: data.message
+        isAccountLocked: parsedData.is_locked,
+        failedAttempts: parsedData.failed_attempts,
+        remainingAttempts: parsedData.remaining_attempts,
+        lockoutUntil: parsedData.lockout_until,
+        message: parsedData.message
       };
       
       setSecurityStatus(status);
