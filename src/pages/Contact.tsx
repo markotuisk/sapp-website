@@ -1,58 +1,42 @@
 
-import React from 'react';
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { PublicLayout } from '@/components/layout/PublicLayout';
-import { ContactForm } from '@/components/public/ContactForm';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import ContactHeader from '@/components/home/contact/ContactHeader';
+import ContactFormSection from '@/components/home/contact/ContactFormSection';
+import ContactInfoSection from '@/components/home/contact/ContactInfoSection';
 
 const Contact = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <PublicLayout>
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <ContactForm />
-            </div>
-            
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Get in Touch</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-blue-600" />
-                    <span>contact@example.com</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-blue-600" />
-                    <span>+1 (555) 123-4567</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5 text-blue-600" />
-                    <span>123 Business Street, City, Country</span>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-2">Business Hours</h3>
-                  <div className="space-y-1 text-sm text-gray-600">
-                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p>Saturday: 10:00 AM - 4:00 PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-                </CardContent>
-              </Card>
+    <div className="min-h-screen">
+      <Helmet>
+        <title>Contact Us | SAPP Security</title>
+        <meta 
+          name="description" 
+          content="Get in touch with SAPP Security for professional security consultations and services. Contact our expert team today." 
+        />
+        <link rel="canonical" href="https://www.sappsecurity.com/contact" />
+        <meta property="og:title" content="Contact Us | SAPP Security" />
+        <meta property="og:description" content="Get in touch with SAPP Security for professional security consultations and services." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.sappsecurity.com/contact" />
+      </Helmet>
+      <PublicLayout>
+        <ContactHeader />
+        <div className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <ContactFormSection />
+              <ContactInfoSection />
             </div>
           </div>
         </div>
-      </div>
-    </PublicLayout>
+      </PublicLayout>
+    </div>
   );
 };
 

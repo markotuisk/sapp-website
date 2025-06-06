@@ -1,58 +1,43 @@
 
-import React, { useState, useEffect, lazy, Suspense, useTransition } from 'react';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import HeroSection from '@/components/installations/HeroSection';
-
-// Lazy load components
-const InstallationsQuoteSection = lazy(() => import('@/components/installations/QuoteSection'));
-const SolutionsSection = lazy(() => import('@/components/installations/SolutionsSection'));
-const CapabilitiesSection = lazy(() => import('@/components/installations/CapabilitiesSection'));
-const DeploymentSection = lazy(() => import('@/components/installations/DeploymentSection'));
-const DeploymentConsultationSection = lazy(() => import('@/components/installations/DeploymentConsultationSection'));
-const CTASection = lazy(() => import('@/components/installations/CTASection'));
-
-// Loading fallback component
-const LoadingFallback = () => (
-  <div className="flex justify-center items-center py-8">
-    <div className="w-6 h-6 border-3 border-sapp-blue border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
+import SolutionsSection from '@/components/installations/SolutionsSection';
+import CapabilitiesSection from '@/components/installations/CapabilitiesSection';
+import DeploymentSection from '@/components/installations/DeploymentSection';
+import QuoteSection from '@/components/installations/QuoteSection';
+import DeploymentConsultationSection from '@/components/installations/DeploymentConsultationSection';
+import CTASection from '@/components/installations/CTASection';
 
 const Installations = () => {
-  const { t } = useLanguage();
-  const [isPending, startTransition] = useTransition();
-  const [mounted, setMounted] = useState(false);
-  
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    // Use startTransition to prevent suspension during initial render
-    startTransition(() => {
-      setMounted(true);
-    });
   }, []);
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-      <main aria-labelledby="installations-heading">
+      <Helmet>
+        <title>Security Installations | SAPP Security</title>
+        <meta 
+          name="description" 
+          content="Professional security system installations including CCTV, access control, and surveillance systems. Expert deployment and maintenance services." 
+        />
+        <link rel="canonical" href="https://www.sappsecurity.com/installations" />
+        <meta property="og:title" content="Security Installations | SAPP Security" />
+        <meta property="og:description" content="Professional security system installations including CCTV, access control, and surveillance systems." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.sappsecurity.com/installations" />
+      </Helmet>
+      <PublicLayout>
         <HeroSection />
-        <Suspense fallback={<LoadingFallback />}>
-          {mounted && (
-            <>
-              <SolutionsSection />
-              <InstallationsQuoteSection />
-              <CapabilitiesSection />
-              <DeploymentSection />
-              <DeploymentConsultationSection />
-              <CTASection />
-            </>
-          )}
-        </Suspense>
-      </main>
-      <Footer />
+        <SolutionsSection />
+        <CapabilitiesSection />
+        <DeploymentSection />
+        <QuoteSection />
+        <DeploymentConsultationSection />
+        <CTASection />
+      </PublicLayout>
     </div>
   );
 };

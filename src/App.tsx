@@ -10,7 +10,12 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
+import EventSecurity from "./pages/EventSecurity";
+import SecurityAudits from "./pages/SecurityAudits";
+import Installations from "./pages/Installations";
+import CyberSecurity from "./pages/CyberSecurity";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +32,12 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/news" element={<News />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/event-security" element={<EventSecurity />} />
+              <Route path="/security-audits" element={<SecurityAudits />} />
+              <Route path="/installations" element={<Installations />} />
+              <Route path="/cyber-security" element={<CyberSecurity />} />
               <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </TooltipProvider>

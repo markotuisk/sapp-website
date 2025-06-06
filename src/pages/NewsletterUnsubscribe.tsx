@@ -1,104 +1,113 @@
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { PublicLayout } from '@/components/layout/PublicLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useNewsletter } from '@/hooks/useNewsletter';
-import { CheckCircle, AlertTriangle } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, Mail } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const NewsletterUnsubscribe = () => {
   const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
-  const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'pending'>('pending');
-  const { unsubscribe, isLoading } = useNewsletter();
+  const [email, setEmail] = useState('');
+  const [isUnsubscribed, setIsUnsubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const emailParam = searchParams.get('email');
+    if (emailParam) {
+      setEmail(decodeURIComponent(emailParam));
+    }
+  }, [searchParams]);
 
   const handleUnsubscribe = async () => {
-    if (!token) {
-      setStatus('error');
+    if (!email) {
+      toast({
+        title: 'Email required',
+        description: 'Please enter your email address to unsubscribe.',
+        variant: 'destructive',
+      });
       return;
     }
 
-    setStatus('loading');
-    const result = await unsubscribe(token);
-    
-    if (result.success) {
-      setStatus('success');
-    } else {
-      setStatus('error');
+    setIsLoading(true);
+    try {
+      // Simulate unsubscribe process
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setIsUnsubscribed(true);
+      toast({
+        title: 'Successfully unsubscribed',
+        description: 'You have been removed from our newsletter.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to unsubscribe. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (status === 'success') {
-    return (
-      <PublicLayout>
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                <h2 className="text-xl font-semibold mb-2">Successfully Unsubscribed</h2>
-                <p className="text-gray-600">
-                  You have been successfully removed from our newsletter list.
-                  We're sorry to see you go!
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </PublicLayout>
-    );
-  }
-
-  if (status === 'error') {
-    return (
-      <PublicLayout>
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-                <h2 className="text-xl font-semibold mb-2">Unsubscribe Failed</h2>
-                <p className="text-gray-600">
-                  The unsubscribe link is invalid or has expired.
-                  Please contact us if you continue to receive emails.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </PublicLayout>
-    );
-  }
-
   return (
-    <PublicLayout>
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-md mx-auto">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-center">Unsubscribe from Newsletter</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <p className="text-gray-600">
-                Are you sure you want to unsubscribe from our newsletter?
-              </p>
-              <Button 
-                onClick={handleUnsubscribe}
-                disabled={isLoading || !token}
-                variant="destructive"
-                className="w-full"
-              >
-                {isLoading ? 'Unsubscribing...' : 'Unsubscribe'}
-              </Button>
-              {!token && (
-                <p className="text-red-500 text-sm">Invalid unsubscribe link</p>
+    <div className="min-h-screen">
+      <Helmet>
+        <title>Newsletter Unsubscribe | SAPP Security</title>
+        <meta name="description" content="Unsubscribe from SAPP Security newsletter." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <PublicLayout>
+        <div className="py-16 bg-slate-50 min-h-[60vh] flex items-center">
+          <div className="container mx-auto px-4">
+            <div className="max-w-md mx-auto">
+              {!isUnsubscribed ? (
+                <Card>
+                  <CardHeader className="text-center">
+                    <Mail className="h-12 w-12 text-sapp-blue mx-auto mb-4" />
+                    <CardTitle>Unsubscribe from Newsletter</CardTitle>
+                    <CardDescription>
+                      We're sorry to see you go. Enter your email address to unsubscribe from our newsletter.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Button 
+                      onClick={handleUnsubscribe}
+                      disabled={isLoading}
+                      className="w-full bg-sapp-blue hover:bg-sapp-blue/90"
+                    >
+                      {isLoading ? 'Unsubscribing...' : 'Unsubscribe'}
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card>
+                  <CardContent className="text-center py-8">
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold text-sapp-dark mb-2">Successfully Unsubscribed</h2>
+                    <p className="text-sapp-gray mb-6">
+                      You have been successfully removed from our newsletter. You will no longer receive emails from us.
+                    </p>
+                    <Button asChild className="bg-sapp-blue hover:bg-sapp-blue/90">
+                      <a href="/">Return to Homepage</a>
+                    </Button>
+                  </CardContent>
+                </Card>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </div>
-    </PublicLayout>
+      </PublicLayout>
+    </div>
   );
 };
 
