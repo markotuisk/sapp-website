@@ -8,11 +8,12 @@ import type { Tables } from '@/integrations/supabase/types';
 type Organization = Tables<'organizations'>;
 
 export const useOrganizationData = () => {
-  const { user } = useAuth();
-  const { userProfile, clientData, isAdmin } = useRole();
+  const { user, isAuthenticated } = useAuth();
+  const { userProfile, clientData, isAdmin, isLoading: roleLoading } = useRole();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [currentOrganization, setCurrentOrganization] = useState<Organization | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [dataInitialized, setDataInitialized] = useState(false);
 
   // Get the user's organization ID - prioritize client_data over profile
   const getUserOrganizationId = (): string | null => {
@@ -33,6 +34,16 @@ export const useOrganizationData = () => {
 
   useEffect(() => {
     const fetchOrganizations = async () => {
+      // Don't start fetching until we have user data and roles are not loading
+      if (!user || !isAuthenticated || roleLoading) {
+        console.log('useOrganizationData: Waiting for user auth and role data...', {
+          hasUser: !!user,
+          isAuthenticated,
+          roleLoading
+        });
+        return;
+      }
+
       try {
         setIsLoading(true);
         
@@ -71,49 +82,51 @@ export const useOrganizationData = () => {
           console.log('useOrganizationData: No organization assigned');
           setOrganizations([]);
         }
+        
+        setDataInitialized(true);
       } catch (error) {
         console.error('Error in fetchOrganizations:', error);
         setOrganizations([]);
+        setDataInitialized(true);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (user) {
-      fetchOrganizations();
-    } else {
-      setOrganizations([]);
-      setCurrentOrganization(null);
-      setIsLoading(false);
-    }
-  }, [user, organizationId, isAdmin]);
+    fetchOrganizations();
+  }, [user, isAuthenticated, organizationId, isAdmin, roleLoading]);
 
   // Set current organization based on user's assignment
   useEffect(() => {
-    if (organizationId && organizations.length > 0) {
+    if (dataInitialized && organizationId && organizations.length > 0) {
       const org = organizations.find(o => o.id === organizationId);
       setCurrentOrganization(org || null);
       console.log('useOrganizationData: Set current organization:', org?.name || 'Not found');
-    } else {
+    } else if (dataInitialized) {
       setCurrentOrganization(null);
     }
-  }, [organizationId, organizations]);
+  }, [organizationId, organizations, dataInitialized]);
 
   const hasOrganization = (): boolean => {
     const hasOrg = !!organizationId && organizationId !== '00000000-0000-0000-0000-000000000001';
-    console.log('useOrganizationData: hasOrganization check:', { organizationId, hasOrg });
+    console.log('useOrganizationData: hasOrganization check:', { organizationId, hasOrg, dataInitialized });
     return hasOrg;
   };
 
   const isGuestUser = (): boolean => {
     const isGuest = organizationId === '00000000-0000-0000-0000-000000000001';
-    console.log('useOrganizationData: isGuestUser check:', { organizationId, isGuest });
+    console.log('useOrganizationData: isGuestUser check:', { organizationId, isGuest, dataInitialized });
     return isGuest;
   };
 
   const canAccessCrossOrganization = (): boolean => {
     const canAccess = isAdmin();
-    console.log('useOrganizationData: canAccessCrossOrganization check:', { isAdminResult: isAdmin(), canAccess });
+    console.log('useOrganizationData: canAccessCrossOrganization check:', { 
+      isAdminResult: isAdmin(), 
+      canAccess, 
+      dataInitialized,
+      roleLoading 
+    });
     return canAccess;
   };
 
@@ -128,6 +141,9 @@ export const useOrganizationData = () => {
     return org?.name || 'Unknown Organization';
   };
 
+  // Only consider loading complete when both role data AND organization data are ready
+  const effectiveIsLoading = isLoading || roleLoading || !dataInitialized;
+
   console.log('useOrganizationData: Current state:', {
     organizationId,
     hasOrganization: hasOrganization(),
@@ -135,7 +151,10 @@ export const useOrganizationData = () => {
     canAccessCrossOrganization: canAccessCrossOrganization(),
     isAdmin: isAdmin(),
     organizationsCount: organizations.length,
-    currentOrganization: currentOrganization?.name
+    currentOrganization: currentOrganization?.name,
+    effectiveIsLoading,
+    dataInitialized,
+    roleLoading
   });
 
   return {
@@ -143,7 +162,7 @@ export const useOrganizationData = () => {
     organizationId,
     currentOrganization,
     organizations,
-    isLoading,
+    isLoading: effectiveIsLoading,
     
     // Status checks
     hasOrganization,

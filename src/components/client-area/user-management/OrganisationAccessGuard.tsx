@@ -3,8 +3,9 @@ import React from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, Building2, Mail, Users, Shield } from 'lucide-react';
+import { AlertTriangle, Building2, Mail, Users, Shield, Loader2 } from 'lucide-react';
 import { useOrganizationData } from '@/hooks/useOrganizationData';
+import { useRole } from '@/hooks/useRole';
 
 interface OrganisationAccessGuardProps {
   children: React.ReactNode;
@@ -20,32 +21,52 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
     isGuestUser, 
     canAccessCrossOrganization, 
     currentOrganization,
-    isLoading 
+    isLoading: orgDataLoading 
   } = useOrganizationData();
+  
+  const { isLoading: roleLoading, isAdmin } = useRole();
 
-  console.log('OrganisationAccessGuard: Access check', {
+  // Enhanced debug logging
+  const debugInfo = {
+    orgDataLoading,
+    roleLoading,
     hasOrganization: hasOrganization(),
     isGuestUser: isGuestUser(),
     canAccessCrossOrganization: canAccessCrossOrganization(),
-    currentOrganization: currentOrganization?.name
-  });
+    isAdmin: isAdmin(),
+    currentOrganization: currentOrganization?.name,
+    timestamp: new Date().toISOString()
+  };
 
-  // Admin users (SAPP Security) can always access everything
-  if (canAccessCrossOrganization()) {
-    console.log('OrganisationAccessGuard: Allowing access for admin user');
-    return <>{children}</>;
-  }
+  console.log('OrganisationAccessGuard: Enhanced debug info', debugInfo);
 
-  // While loading, show loading state
-  if (isLoading) {
+  // Wait for BOTH organization data AND role data to load completely
+  const isStillLoading = orgDataLoading || roleLoading;
+  
+  if (isStillLoading) {
+    console.log('OrganisationAccessGuard: Still loading, showing loading state');
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-200 rounded w-32 mb-2"></div>
-          <div className="h-4 bg-gray-200 rounded w-48"></div>
+        <div className="flex items-center gap-3">
+          <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+          <div>
+            <div className="font-medium">Loading access permissions...</div>
+            <div className="text-sm text-gray-600">
+              Verifying organization assignment and user roles
+            </div>
+          </div>
         </div>
       </div>
     );
+  }
+
+  // Admin users (SAPP Security) can always access everything - this should now work correctly
+  if (isAdmin() || canAccessCrossOrganization()) {
+    console.log('OrganisationAccessGuard: Allowing access for admin user', { 
+      isAdmin: isAdmin(), 
+      canAccessCrossOrganization: canAccessCrossOrganization() 
+    });
+    return <>{children}</>;
   }
 
   // Special handling for guest users
@@ -128,6 +149,13 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
               Contact Support
             </Button>
           </div>
+          
+          {/* Debug information in development */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-4 p-3 bg-gray-100 rounded text-xs">
+              <strong>Debug Info:</strong> {JSON.stringify(debugInfo, null, 2)}
+            </div>
+          )}
         </CardContent>
       </Card>
     );

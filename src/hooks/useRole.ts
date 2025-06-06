@@ -11,9 +11,13 @@ export const useRole = () => {
   const [clientData, setClientData] = useState<ClientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dataInitialized, setDataInitialized] = useState(false);
 
   const refreshUserData = useCallback(async () => {
-    if (!user) return;
+    if (!user || !isAuthenticated) {
+      console.log('useRole: No user or not authenticated, skipping data fetch');
+      return;
+    }
     
     console.log('useRole: Refreshing user data...');
     setIsLoading(true);
@@ -77,13 +81,15 @@ export const useRole = () => {
       }
 
       setError(null);
+      setDataInitialized(true);
     } catch (error: any) {
       console.error('Error refreshing user data:', error);
       setError(error.message || 'Failed to load user data');
+      setDataInitialized(true);
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, isAuthenticated]);
 
   useEffect(() => {
     if (!user || !isAuthenticated) {
@@ -92,6 +98,7 @@ export const useRole = () => {
       setClientData(null);
       setIsLoading(false);
       setError(null);
+      setDataInitialized(false);
       return;
     }
 
@@ -153,9 +160,11 @@ export const useRole = () => {
           setClientData(client);
         }
 
+        setDataInitialized(true);
       } catch (error: any) {
         console.error('Error fetching user data:', error);
         setError(error.message || 'Failed to load user data');
+        setDataInitialized(true);
       } finally {
         setIsLoading(false);
       }
@@ -174,7 +183,7 @@ export const useRole = () => {
 
   const isAdmin = (): boolean => {
     const hasAdminRole = hasRole('admin');
-    console.log('useRole: isAdmin check - hasAdminRole:', hasAdminRole, 'userRoles:', userRoles);
+    console.log('useRole: isAdmin check - hasAdminRole:', hasAdminRole, 'userRoles:', userRoles, 'dataInitialized:', dataInitialized);
     return hasAdminRole;
   };
   
@@ -195,5 +204,6 @@ export const useRole = () => {
     isManager,
     isSupport,
     refreshUserData,
+    dataInitialized,
   };
 };
