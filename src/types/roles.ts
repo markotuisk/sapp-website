@@ -3,7 +3,7 @@ export type AppRole = 'admin' | 'client' | 'manager' | 'support';
 
 export interface UserProfile {
   id: string;
-  email: string;
+  email: string; // This comes from auth.user, not profiles table
   first_name?: string;
   last_name?: string;
   phone?: string;
@@ -20,7 +20,7 @@ export interface UserProfile {
     id: string;
     name: string;
     description?: string;
-  };
+  } | null;
 }
 
 export interface UserRole {
@@ -31,6 +31,7 @@ export interface UserRole {
   assigned_by?: string;
 }
 
+// Simplified ClientData for basic compatibility
 export interface ClientData {
   id: string;
   user_id: string;
