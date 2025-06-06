@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
@@ -16,8 +17,8 @@ const TicketsBacklog = () => {
     queryKey: ['tickets', 'backlog'],
     queryFn: async () => {
       const { data: tickets } = await supabase
-        .rpc('get_all_tickets')
-        .neq('state', 'completed')
+        .from('tickets')
+        .select('*')
         .order('created_at', { ascending: false });
       return tickets || [];
     },
@@ -61,7 +62,7 @@ const TicketsBacklog = () => {
               <TableHead>Ticket</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Date Received</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>Priority</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Age</TableHead>
               <TableHead className="w-[30px]"></TableHead>
@@ -75,7 +76,7 @@ const TicketsBacklog = () => {
                 <TableCell>{formatDate(ticket.created_at)}</TableCell>
                 <TableCell>
                   <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset">
-                    {ticket.state}
+                    {ticket.priority}
                   </span>
                 </TableCell>
                 <TableCell>{ticket.category}</TableCell>
