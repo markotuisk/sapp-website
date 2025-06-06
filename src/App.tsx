@@ -15,6 +15,7 @@ import EventSecurity from "./pages/EventSecurity";
 import SecurityAudits from "./pages/SecurityAudits";
 import Installations from "./pages/Installations";
 import CyberSecurity from "./pages/CyberSecurity";
+import ServiceNavigator from "./pages/ServiceNavigator";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 import NotFound from "./pages/NotFound";
 
@@ -38,6 +39,7 @@ const App = () => (
                 <Route path="/security-audits" element={<SecurityAudits />} />
                 <Route path="/installations" element={<Installations />} />
                 <Route path="/cyber-security" element={<CyberSecurity />} />
+                <Route path="/service-navigator" element={<ServiceNavigator />} />
                 <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

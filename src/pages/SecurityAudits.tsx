@@ -1,15 +1,14 @@
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
+import { PublicLayout } from '@/components/layout/PublicLayout';
 import HeroSection from '@/components/security-audits/HeroSection';
-import WhyIndependentAudits from '@/components/security-audits/WhyIndependentAudits';
-import SecurityAuditsQuoteSection from '@/components/security-audits/QuoteSection';
 import ServiceCardsSection from '@/components/security-audits/ServiceCardsSection';
+import ServiceDetailsSection from '@/components/security-audits/ServiceDetailsSection';
+import WhyIndependentAudits from '@/components/security-audits/WhyIndependentAudits';
+import QuoteSection from '@/components/security-audits/QuoteSection';
 import ImageBannerSection from '@/components/security-audits/ImageBannerSection';
 import CTASection from '@/components/security-audits/CTASection';
-import AcronymEnhancer from '@/components/resources/AcronymEnhancer';
 
 const SecurityAudits = () => {
   useEffect(() => {
@@ -22,24 +21,23 @@ const SecurityAudits = () => {
         <title>Security Audits | SAPP Security</title>
         <meta 
           name="description" 
-          content="SAPP Security offers comprehensive physical security audits to help organisations identify vulnerabilities and enhance their security posture. ISO27001 certified." 
+          content="Comprehensive security audits and assessments for organisations. Professional security consulting and vulnerability assessments." 
         />
         <link rel="canonical" href="https://www.sappsecurity.com/security-audits" />
         <meta property="og:title" content="Security Audits | SAPP Security" />
-        <meta property="og:description" content="Comprehensive physical security audits to help organisations identify vulnerabilities and enhance their security posture." />
+        <meta property="og:description" content="Comprehensive security audits and assessments for organisations." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.sappsecurity.com/security-audits" />
       </Helmet>
-      <Navbar />
-      <main aria-labelledby="security-audits-heading">
+      <PublicLayout>
         <HeroSection />
-        <WhyIndependentAudits />
-        <SecurityAuditsQuoteSection />
         <ServiceCardsSection />
+        <ServiceDetailsSection />
+        <WhyIndependentAudits />
+        <QuoteSection />
         <ImageBannerSection />
         <CTASection />
-      </main>
-      <Footer />
+      </PublicLayout>
     </div>
   );
 };
