@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PublicProvider } from "@/contexts/AuthContext";
+import { DisplayModeProvider } from "@/contexts/DisplayModeContext";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import News from "./pages/News";
@@ -16,19 +17,21 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <PublicProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <DisplayModeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/newsletter/unsubscribe" element={<NewsletterUnsubscribe />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </DisplayModeProvider>
     </PublicProvider>
   </QueryClientProvider>
 );
