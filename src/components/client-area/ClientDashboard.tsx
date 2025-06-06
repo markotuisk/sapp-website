@@ -1,211 +1,194 @@
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileText, Users, Settings, Shield, Newspaper, UserCog, ScanLine } from 'lucide-react';
-import { DocumentManagement } from './DocumentManagement';
-import { ProfileManagement } from './ProfileManagement';
-import { UserSettings } from './UserSettings';
-import { NewsManagement } from './NewsManagement';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { 
+  Users, 
+  FileText, 
+  Newspaper, 
+  Settings, 
+  User,
+  Shield,
+  Building2
+} from 'lucide-react';
 import { UserManagement } from './UserManagement';
-import { IDVerification } from './IDVerification';
-import { useAuth } from '@/contexts/AuthContext';
+import { DocumentManagement } from './DocumentManagement';
+import { NewsArticleManagement } from './news-management/NewsArticleManagement';
+import { UserProfile } from './UserProfile';
+import { UserSettings } from './UserSettings';
+import { SecurityStatusIndicator } from '@/components/security/SecurityStatusIndicator';
+import { OrganizationStatusCard } from './user-management/OrganizationStatusCard';
 import { useRole } from '@/hooks/useRole';
+import { useOrganizationData } from '@/hooks/useOrganizationData';
+
+type DashboardView = 'overview' | 'users' | 'documents' | 'news' | 'profile' | 'settings';
 
 export const ClientDashboard: React.FC = () => {
-  const [currentView, setCurrentView] = useState<string>('dashboard');
-  const { user } = useAuth();
+  const [currentView, setCurrentView] = useState<DashboardView>('overview');
   const { isAdmin } = useRole();
+  const { hasOrganization } = useOrganizationData();
 
-  if (currentView === 'documents') {
-    return <DocumentManagement onBack={() => setCurrentView('dashboard')} />;
-  }
+  const renderContent = () => {
+    switch (currentView) {
+      case 'users':
+        return <UserManagement onBack={() => setCurrentView('overview')} />;
+      case 'documents':
+        return <DocumentManagement onBack={() => setCurrentView('overview')} />;
+      case 'news':
+        return <NewsArticleManagement />;
+      case 'profile':
+        return <UserProfile onBack={() => setCurrentView('overview')} />;
+      case 'settings':
+        return <UserSettings onBack={() => setCurrentView('overview')} />;
+      default:
+        return (
+          <div className="space-y-6">
+            {/* Security Status */}
+            <SecurityStatusIndicator />
+            
+            {/* Organization Status */}
+            <OrganizationStatusCard />
 
-  if (currentView === 'profile') {
-    return <ProfileManagement onBack={() => setCurrentView('dashboard')} />;
-  }
+            {/* Dashboard Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* User Management - Admin Only */}
+              {isAdmin() && (
+                <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5" />
+                      User Management
+                    </CardTitle>
+                    <CardDescription>
+                      Manage users, roles, and permissions across organizations
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      onClick={() => setCurrentView('users')} 
+                      className="w-full"
+                    >
+                      Manage Users
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
 
-  if (currentView === 'settings') {
-    return <UserSettings onBack={() => setCurrentView('dashboard')} />;
-  }
+              {/* Document Management - Organization Members Only */}
+              {hasOrganization() && (
+                <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FileText className="h-5 w-5" />
+                      Document Management
+                    </CardTitle>
+                    <CardDescription>
+                      Upload, organize, and share secure documents
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      onClick={() => setCurrentView('documents')} 
+                      className="w-full"
+                    >
+                      Manage Documents
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
 
-  if (currentView === 'news') {
-    return <NewsManagement onBack={() => setCurrentView('dashboard')} />;
-  }
+              {/* News Management - Admin Only */}
+              {isAdmin() && (
+                <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Newspaper className="h-5 w-5" />
+                      News Management
+                    </CardTitle>
+                    <CardDescription>
+                      Create and manage news articles and newsletters
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      onClick={() => setCurrentView('news')} 
+                      className="w-full"
+                    >
+                      Manage News
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
 
-  if (currentView === 'users') {
-    return <UserManagement onBack={() => setCurrentView('dashboard')} />;
-  }
+              {/* Profile Management - All Users */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <User className="h-5 w-5" />
+                    Profile
+                  </CardTitle>
+                  <CardDescription>
+                    View and update your personal information
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button 
+                    onClick={() => setCurrentView('profile')} 
+                    className="w-full"
+                    variant="outline"
+                  >
+                    View Profile
+                  </Button>
+                </CardContent>
+              </Card>
 
-  if (currentView === 'id-verification') {
-    return <IDVerification onBack={() => setCurrentView('dashboard')} />;
-  }
+              {/* Settings - All Users */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Settings className="h-5 w-5" />
+                    Settings
+                  </CardTitle>
+                  <CardDescription>
+                    Configure your account preferences and security
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button 
+                    onClick={() => setCurrentView('settings')} 
+                    className="w-full"
+                    variant="outline"
+                  >
+                    Open Settings
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Quick Access Information */}
+            <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="h-5 w-5 text-blue-600" />
+                <h3 className="font-semibold text-blue-900">Security Information</h3>
+              </div>
+              <p className="text-blue-800 text-sm">
+                Your account access is controlled by organization-based security policies. 
+                All activities are monitored and logged for security purposes.
+              </p>
+            </div>
+          </div>
+        );
+    }
+  };
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-gray-600">Welcome to your secure client area</p>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Client Area Dashboard</h1>
+        <p className="text-gray-600">Secure access to your organization's resources</p>
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* ID Verification */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-          <CardHeader className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <ScanLine className="h-5 w-5" />
-              ID Verification
-            </CardTitle>
-            <CardDescription>
-              Scan and verify team member digital IDs
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <Button 
-              onClick={() => setCurrentView('id-verification')} 
-              className="w-full"
-            >
-              Verify Team IDs
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Document Management */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-          <CardHeader className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Document Management
-            </CardTitle>
-            <CardDescription>
-              Upload, organise, and share your secure documents
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <Button 
-              onClick={() => setCurrentView('documents')} 
-              className="w-full"
-            >
-              Manage Documents
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* User Management - Admin Only */}
-        {isAdmin && (
-          <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-            <CardHeader className="flex-1">
-              <CardTitle className="flex items-center gap-2">
-                <UserCog className="h-5 w-5" />
-                User Management
-              </CardTitle>
-              <CardDescription>
-                Manage users, roles, organizations, and invitations
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <Button 
-                onClick={() => setCurrentView('users')} 
-                className="w-full"
-              >
-                Manage Users
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* News Management - Admin Only */}
-        {isAdmin && (
-          <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-            <CardHeader className="flex-1">
-              <CardTitle className="flex items-center gap-2">
-                <Newspaper className="h-5 w-5" />
-                News Management
-              </CardTitle>
-              <CardDescription>
-                Create, edit, and manage news articles and newsletters
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <Button 
-                onClick={() => setCurrentView('news')} 
-                className="w-full"
-              >
-                Manage News
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Profile Management */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-          <CardHeader className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Profile Management
-            </CardTitle>
-            <CardDescription>
-              Update your personal and professional information
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <Button 
-              onClick={() => setCurrentView('profile')} 
-              className="w-full"
-            >
-              Manage Profile
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Account Settings */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-          <CardHeader className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              Account Settings
-            </CardTitle>
-            <CardDescription>
-              Configure notifications, security, and preferences
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <Button 
-              onClick={() => setCurrentView('settings')} 
-              className="w-full"
-            >
-              Manage Settings
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Security Overview */}
-        <Card className="cursor-pointer hover:shadow-md transition-shadow flex flex-col h-full">
-          <CardHeader className="flex-1">
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              Security Overview
-            </CardTitle>
-            <CardDescription>
-              Monitor account security and recent activity
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <Button variant="outline" className="w-full">
-              View Security
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Debug info for admin users */}
-      {isAdmin && (
-        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800">
-            ✓ Admin access detected for: {user?.email}
-          </p>
-        </div>
-      )}
+      
+      {renderContent()}
     </div>
   );
 };

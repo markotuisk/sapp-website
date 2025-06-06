@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Loader2, AlertCircle, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { useOrganizationData } from '@/hooks/useOrganizationData';
+import { useOrganizationAccess } from '@/hooks/security/useOrganizationAccess';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { SecurityGuard } from '@/components/security/SecurityGuard';
 import { UserInfoCard } from './UserInfoCard';
 import { OrganizationAssignmentCard } from './OrganizationAssignmentCard';
 import { CurrentRolesCard } from './CurrentRolesCard';
@@ -27,12 +29,16 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 }) => {
   const { assignUserRole, removeUserRole, refetchData, organizations, isLoading } = useUserManagement();
   const { getOrganizationName } = useOrganizationData();
+  const { validateDataAccess } = useOrganizationAccess();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
   const [selectedOrganization, setSelectedOrganization] = useState<string>('');
   const [dialogError, setDialogError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Security validation
+  const canEditUser = user ? validateDataAccess(user.clientData?.organization_id) : false;
 
   useEffect(() => {
     if (user && isOpen) {
@@ -58,6 +64,29 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
       setSuccessMessage(null);
     }
   }, [user, isOpen]);
+
+  // Security check for access
+  if (!canEditUser && user) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Access Denied</DialogTitle>
+            <DialogDescription>Insufficient permissions to edit this user</DialogDescription>
+          </DialogHeader>
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>
+              You don't have permission to edit users from this organization.
+            </AlertDescription>
+          </Alert>
+          <DialogFooter>
+            <Button onClick={onClose}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   const handleRoleToggle = (role: AppRole, checked: boolean) => {
     setSuccessMessage(null);
@@ -229,89 +258,91 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const selectedOrgName = getOrganizationName(selectedOrganization);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Manage User</DialogTitle>
-          <DialogDescription>
-            Update roles and organisation for {user.email}
-          </DialogDescription>
-        </DialogHeader>
+    <SecurityGuard requiredOrgId={user.clientData?.organization_id}>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Manage User</DialogTitle>
+            <DialogDescription>
+              Update roles and organisation for {user.email}
+            </DialogDescription>
+          </DialogHeader>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center p-8">
-            <Loader2 className="h-8 w-8 animate-spin" />
-            <span className="ml-2">Loading user data...</span>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {successMessage && (
-              <Alert className="border-green-200 bg-green-50">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <AlertDescription className="text-green-800">{successMessage}</AlertDescription>
-              </Alert>
-            )}
-
-            {dialogError && (
-              <Alert variant="destructive">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>{dialogError}</AlertDescription>
-              </Alert>
-            )}
-
-            {!hasOrganisation && !successMessage && (
-              <Alert variant="destructive">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>
-                  <strong>Security Warning:</strong> This user has no organisation assigned and cannot access any secure documents or areas. 
-                  An organisation must be assigned before the user can use the system.
-                </AlertDescription>
-              </Alert>
-            )}
-
-            <UserInfoCard 
-              user={user}
-              selectedOrgName={selectedOrgName}
-              hasOrganisation={hasOrganisation}
-              successMessage={successMessage}
-            />
-
-            <OrganizationAssignmentCard 
-              selectedOrganization={selectedOrganization}
-              onOrganizationChange={handleOrganizationChange}
-              organizations={organizations}
-            />
-
-            <CurrentRolesCard roles={user.roles || []} />
-
-            <RoleManagementCard 
-              pendingRoles={pendingRoles}
-              onRoleToggle={handleRoleToggle}
-            />
-          </div>
-        )}
-
-        <DialogFooter>
-          <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
-            {successMessage ? 'Close' : 'Cancel'}
-          </Button>
-          {!successMessage && (
-            <Button 
-              onClick={handleSaveChanges} 
-              disabled={isSubmitting || isLoading || !selectedOrganization}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                'Save Changes'
+          {isLoading ? (
+            <div className="flex items-center justify-center p-8">
+              <Loader2 className="h-8 w-8 animate-spin" />
+              <span className="ml-2">Loading user data...</span>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {successMessage && (
+                <Alert className="border-green-200 bg-green-50">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <AlertDescription className="text-green-800">{successMessage}</AlertDescription>
+                </Alert>
               )}
-            </Button>
+
+              {dialogError && (
+                <Alert variant="destructive">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>{dialogError}</AlertDescription>
+                </Alert>
+              )}
+
+              {!hasOrganisation && !successMessage && (
+                <Alert variant="destructive">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>
+                    <strong>Security Warning:</strong> This user has no organisation assigned and cannot access any secure documents or areas. 
+                    An organisation must be assigned before the user can use the system.
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <UserInfoCard 
+                user={user}
+                selectedOrgName={selectedOrgName}
+                hasOrganisation={hasOrganisation}
+                successMessage={successMessage}
+              />
+
+              <OrganizationAssignmentCard 
+                selectedOrganization={selectedOrganization}
+                onOrganizationChange={handleOrganizationChange}
+                organizations={organizations}
+              />
+
+              <CurrentRolesCard roles={user.roles || []} />
+
+              <RoleManagementCard 
+                pendingRoles={pendingRoles}
+                onRoleToggle={handleRoleToggle}
+              />
+            </div>
           )}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+
+          <DialogFooter>
+            <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
+              {successMessage ? 'Close' : 'Cancel'}
+            </Button>
+            {!successMessage && (
+              <Button 
+                onClick={handleSaveChanges} 
+                disabled={isSubmitting || isLoading || !selectedOrganization}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save Changes'
+                )}
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </SecurityGuard>
   );
 };

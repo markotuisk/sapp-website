@@ -1063,6 +1063,14 @@ export type Database = {
         }
         Returns: undefined
       }
+      can_access_organization: {
+        Args: { target_org_id: string }
+        Returns: boolean
+      }
+      check_failed_login_attempts: {
+        Args: { user_email: string }
+        Returns: Json
+      }
       create_newsletter_campaign: {
         Args: {
           article_id_param: string
@@ -1204,6 +1212,18 @@ export type Database = {
       is_user_admin_safe: {
         Args: { _user_id: string }
         Returns: boolean
+      }
+      log_security_event: {
+        Args: {
+          event_email: string
+          event_action: string
+          event_success: boolean
+          event_ip?: string
+          event_user_agent?: string
+          event_error?: string
+          additional_context?: Json
+        }
+        Returns: undefined
       }
       remove_user_role: {
         Args: {
