@@ -3,53 +3,33 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { useOrganizationAwareData } from '@/hooks/useOrganizationAwareData';
 import type { Tables } from '@/integrations/supabase/types';
 
 type NewsArticle = Tables<'news_articles'>;
-type NewsArticleInsert = Omit<NewsArticle, 'id' | 'created_at' | 'updated_at' | 'organization_id'>;
+type NewsArticleInsert = Omit<NewsArticle, 'id' | 'created_at' | 'updated_at'>;
 
 export const useOrganizationAwareNews = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
-  const { getOrganizationSpecificQuery, addOrganizationContext } = useOrganizationAwareData();
 
   const fetchArticles = async () => {
     try {
       setIsLoading(true);
-      console.log('🔄 useOrganizationAwareNews: Starting organization-aware fetch...');
+      console.log('🔄 useOrganizationAwareNews: Starting simplified fetch...');
       
       if (!isAuthenticated || !user) {
         throw new Error('Authentication required');
       }
       
-      // Check admin role using the improved function
-      const { data: isAdmin, error: adminCheckError } = await supabase
-        .rpc('current_user_is_admin');
-        
-      if (adminCheckError) {
-        console.error('❌ Admin check failed:', adminCheckError);
-        throw new Error(`Failed to verify admin permissions: ${adminCheckError.message}`);
-      }
+      console.log('✅ User authenticated, proceeding with simplified fetch...');
       
-      if (!isAdmin) {
-        console.warn('⚠️ User is not admin, access denied');
-        throw new Error('Access denied: Admin role required for news management');
-      }
-
-      console.log('✅ Admin verification successful, proceeding with fetch...');
-      
-      // Base query for news articles
-      const baseQuery = supabase
+      // Simple query without organization filtering or admin checks
+      const { data, error } = await supabase
         .from('news_articles')
         .select('*')
         .order('created_at', { ascending: false });
-      
-      // Apply organization-aware filtering
-      const query = getOrganizationSpecificQuery(baseQuery, 'news_articles');
-      const { data, error } = await query;
 
       if (error) {
         console.error('❌ useOrganizationAwareNews: Fetch error:', error);
@@ -73,19 +53,15 @@ export const useOrganizationAwareNews = () => {
 
   const createArticle = async (articleData: NewsArticleInsert) => {
     try {
-      console.log('🚀 createArticle: Starting organization-aware creation...');
+      console.log('🚀 createArticle: Starting article creation...');
       
       if (!isAuthenticated || !user) {
         throw new Error('You must be signed in to create articles');
       }
       
-      // Add organization context to the article
-      const articleWithOrg = addOrganizationContext(articleData);
-      console.log('📝 createArticle: Article with org context:', articleWithOrg);
-      
       const { data, error } = await supabase
         .from('news_articles')
-        .insert(articleWithOrg)
+        .insert(articleData)
         .select()
         .single();
 
@@ -162,26 +138,20 @@ export const useOrganizationAwareNews = () => {
 
   const sendNewsletter = async (articleId: string) => {
     try {
-      const { data, error } = await supabase
-        .rpc('create_newsletter_campaign', {
-          article_id_param: articleId,
-          subject_param: 'New Security Update from SAPP',
-          template_id_param: 'default'
-        });
-
-      if (error) throw error;
-
+      console.log('Newsletter functionality disabled in simplified mode');
+      
       toast({
-        title: 'Newsletter Sent',
-        description: 'Newsletter campaign created successfully',
+        title: 'Newsletter Feature Unavailable',
+        description: 'Newsletter sending is not available in the simplified client area setup.',
+        variant: 'destructive',
       });
 
-      return data;
+      return { success: false, message: 'Feature not available' };
     } catch (error) {
-      console.error('Error sending newsletter:', error);
+      console.error('Newsletter feature disabled:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to send newsletter',
+        title: 'Newsletter Feature Unavailable',
+        description: 'Newsletter sending is not available in the simplified client area setup.',
         variant: 'destructive',
       });
       throw error;

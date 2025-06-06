@@ -1,5 +1,4 @@
 
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 export const useNewsletterCampaigns = (refetchData: () => Promise<void>) => {
@@ -7,33 +6,21 @@ export const useNewsletterCampaigns = (refetchData: () => Promise<void>) => {
 
   const sendNewsletter = async (articleId: string, subject: string) => {
     try {
-      console.log('Sending newsletter for article:', articleId, 'with subject:', subject);
+      console.log('Newsletter functionality disabled in simplified mode');
       
-      const { data, error } = await supabase
-        .rpc('create_newsletter_campaign', {
-          article_id_param: articleId,
-          subject_param: subject
-        });
-
-      if (error) {
-        console.error('Newsletter creation error:', error);
-        throw new Error(`Failed to send newsletter: ${error.message}`);
-      }
-
-      console.log('Newsletter campaign created successfully');
       toast({
-        title: 'Success',
-        description: 'Newsletter campaign created successfully',
+        title: 'Newsletter Feature Unavailable',
+        description: 'Newsletter sending is not available in the simplified client area setup.',
+        variant: 'destructive',
       });
       
-      // Refresh campaigns data
-      await refetchData();
-      return data;
+      // Return a mock successful response
+      return { success: false, message: 'Feature not available' };
     } catch (error) {
-      console.error('Error sending newsletter:', error);
+      console.error('Newsletter feature disabled:', error);
       toast({
-        title: 'Error Sending Newsletter',
-        description: error instanceof Error ? error.message : 'Failed to send newsletter',
+        title: 'Newsletter Feature Unavailable',
+        description: 'Newsletter sending is not available in the simplified client area setup.',
         variant: 'destructive',
       });
       throw error;
