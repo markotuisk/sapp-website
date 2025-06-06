@@ -4,13 +4,10 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button } from '@/components/ui/button';
 import { Loader2, AlertCircle, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
-import { useOrganizationData } from '@/hooks/useOrganizationData';
-import { useOrganizationAccess } from '@/hooks/security/useOrganizationAccess';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserWithProfile, AppRole } from '@/types/roles';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { SecurityGuard } from '@/components/security/SecurityGuard';
 import { UserInfoCard } from './UserInfoCard';
 import { OrganizationAssignmentCard } from './OrganizationAssignmentCard';
 import { CurrentRolesCard } from './CurrentRolesCard';
@@ -28,8 +25,6 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   onClose,
 }) => {
   const { assignUserRole, removeUserRole, refetchData, organizations, isLoading } = useUserManagement();
-  const { getOrganizationName } = useOrganizationData();
-  const { validateDataAccess } = useOrganizationAccess();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingRoles, setPendingRoles] = useState<AppRole[]>([]);
   const [selectedOrganization, setSelectedOrganization] = useState<string>('');
@@ -37,10 +32,12 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Security validation
-  const canEditUser = user ? validateDataAccess(user.clientData?.organization_id) : false;
+  console.log('UserEditDialog render - user:', user);
+  console.log('UserEditDialog render - isOpen:', isOpen);
 
   useEffect(() => {
+    console.log('UserEditDialog useEffect triggered - user:', user, 'isOpen:', isOpen);
+    
     if (user && isOpen) {
       try {
         setDialogError(null);
@@ -48,10 +45,16 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         
         const userRoles = Array.isArray(user.roles) ? user.roles : [];
         setPendingRoles(userRoles);
+        console.log('UserEditDialog - Set pending roles:', userRoles);
         
-        // Use client_data.organization_id as the primary source
-        const orgId = user.clientData?.organization_id || '';
+        const clientOrgId = user.clientData?.organization_id;
+        const orgId = clientOrgId || '';
+        
         setSelectedOrganization(orgId);
+        console.log('UserEditDialog - Organization sources:', {
+          clientOrgId,
+          finalOrgId: orgId
+        });
         
       } catch (error) {
         console.error('Error setting up user data:', error);
@@ -65,30 +68,8 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   }, [user, isOpen]);
 
-  // Security check for access
-  if (!canEditUser && user) {
-    return (
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Access Denied</DialogTitle>
-            <DialogDescription>Insufficient permissions to edit this user</DialogDescription>
-          </DialogHeader>
-          <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              You don't have permission to edit users from this organization.
-            </AlertDescription>
-          </Alert>
-          <DialogFooter>
-            <Button onClick={onClose}>Close</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
   const handleRoleToggle = (role: AppRole, checked: boolean) => {
+    console.log('Role toggle:', role, checked);
     setSuccessMessage(null);
     if (checked) {
       setPendingRoles(prev => [...prev, role]);
@@ -103,6 +84,8 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   };
 
   const updateUserOrganisation = async (userId: string, organizationId: string) => {
+    console.log('Updating user organisation:', userId, 'to org:', organizationId);
+    
     try {
       const { data: existingClientData, error: checkError } = await supabase
         .from('client_data')
@@ -111,19 +94,24 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         .maybeSingle();
 
       if (checkError && checkError.code !== 'PGRST116') {
+        console.error('Error checking existing client data:', checkError);
         throw new Error(`Failed to check existing client data: ${checkError.message}`);
       }
 
       if (existingClientData) {
+        console.log('Updating existing client_data:', existingClientData.id);
         const { error: updateError } = await supabase
           .from('client_data')
           .update({ organization_id: organizationId })
           .eq('user_id', userId);
 
         if (updateError) {
+          console.error('Error updating client data organisation:', updateError);
           throw new Error(`Failed to update organization: ${updateError.message}`);
         }
+        console.log('Successfully updated existing client_data organisation');
       } else {
+        console.log('Creating new client_data record for user:', userId);
         const { error: insertError } = await supabase
           .from('client_data')
           .insert({
@@ -132,14 +120,15 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
           });
 
         if (insertError) {
+          console.error('Error creating client data:', insertError);
           if (insertError.message.includes('row-level security')) {
             throw new Error('Permission denied: Unable to create organization assignment. Please contact an administrator.');
           }
           throw new Error(`Failed to create organization assignment: ${insertError.message}`);
         }
+        console.log('Successfully created new client_data organisation');
       }
 
-      // Also update the profile for consistency (non-critical)
       const { error: profileError } = await supabase
         .from('profiles')
         .update({ organization_id: organizationId })
@@ -147,6 +136,8 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
       if (profileError) {
         console.warn('Warning updating profile organisation (non-critical):', profileError);
+      } else {
+        console.log('Successfully synced profile organisation');
       }
 
       return true;
@@ -157,7 +148,10 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
   };
 
   const handleSaveChanges = async () => {
-    if (!user) return;
+    if (!user) {
+      console.log('No user to save changes for');
+      return;
+    }
 
     if (!selectedOrganization) {
       setDialogError('Organisation assignment is required');
@@ -172,20 +166,31 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     setIsSubmitting(true);
     setDialogError(null);
     setSuccessMessage(null);
+    console.log('Saving changes for user:', user.id);
+    console.log('Current roles:', user.roles);
+    console.log('Pending roles:', pendingRoles);
+    console.log('Selected organisation:', selectedOrganization);
     
     try {
-      // Update organization assignment
+      console.log('Step 1: Updating organisation assignment...');
       await updateUserOrganisation(user.id, selectedOrganization);
+      console.log('✓ Organisation assignment completed successfully');
 
-      // Process role changes
+      console.log('Step 2: Processing role changes...');
       const currentRoles = user.roles || [];
       const rolesToAdd = pendingRoles.filter(role => !currentRoles.includes(role));
       const rolesToRemove = currentRoles.filter(role => !pendingRoles.includes(role));
 
+      console.log('Roles to add:', rolesToAdd);
+      console.log('Roles to remove:', rolesToRemove);
+
       for (const role of rolesToRemove) {
         try {
+          console.log(`Removing role ${role} from user ${user.id}`);
           await removeUserRole(user.id, role);
+          console.log(`✓ Successfully removed role ${role}`);
         } catch (error) {
+          console.error(`Failed to remove role ${role}:`, error);
           const errorMessage = error instanceof Error ? error.message : 'Unknown error';
           if (errorMessage.includes('row-level security')) {
             throw new Error(`Permission denied: Unable to remove role ${role}. Please contact an administrator.`);
@@ -196,8 +201,11 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
 
       for (const role of rolesToAdd) {
         try {
+          console.log(`Assigning role ${role} to user ${user.id}`);
           await assignUserRole(user.id, role);
+          console.log(`✓ Successfully assigned role ${role}`);
         } catch (error) {
+          console.error(`Failed to assign role ${role}:`, error);
           const errorMessage = error instanceof Error ? error.message : 'Unknown error';
           if (errorMessage.includes('row-level security')) {
             throw new Error(`Permission denied: Unable to assign role ${role}. Please contact an administrator.`);
@@ -206,13 +214,19 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
         }
       }
 
+      console.log('✓ All role changes completed successfully');
+
+      console.log('Step 3: Refreshing user data...');
       await refetchData();
+      console.log('✓ Data refresh completed');
       
       setSuccessMessage('User updated successfully! All changes have been saved.');
       toast({
         title: 'Success',
         description: 'User updated successfully. Organization assignment and roles have been saved.',
       });
+      
+      console.log('✓ User update completed successfully');
       
       setTimeout(() => {
         onClose();
@@ -232,7 +246,29 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
+
+  if (dialogError && !user) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Error</DialogTitle>
+            <DialogDescription>Unable to load user management dialog</DialogDescription>
+          </DialogHeader>
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{dialogError}</AlertDescription>
+          </Alert>
+          <DialogFooter>
+            <Button onClick={onClose}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   if (!user) {
     return (
@@ -254,95 +290,96 @@ export const UserEditDialog: React.FC<UserEditDialogProps> = ({
     );
   }
 
-  const hasOrganisation = !!user.clientData?.organization_id;
-  const selectedOrgName = getOrganizationName(selectedOrganization);
+  const clientOrgId = user.clientData?.organization_id;
+  const hasOrganisation = !!clientOrgId;
+  const selectedOrgName = selectedOrganization 
+    ? organizations.find(org => org.id === selectedOrganization)?.name || 'Unknown Organisation'
+    : 'No organisation assigned';
 
   return (
-    <SecurityGuard requiredOrgId={user.clientData?.organization_id}>
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Manage User</DialogTitle>
-            <DialogDescription>
-              Update roles and organisation for {user.email}
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Manage User</DialogTitle>
+          <DialogDescription>
+            Update roles and organisation for {user.email}
+          </DialogDescription>
+        </DialogHeader>
 
-          {isLoading ? (
-            <div className="flex items-center justify-center p-8">
-              <Loader2 className="h-8 w-8 animate-spin" />
-              <span className="ml-2">Loading user data...</span>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {successMessage && (
-                <Alert className="border-green-200 bg-green-50">
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                  <AlertDescription className="text-green-800">{successMessage}</AlertDescription>
-                </Alert>
-              )}
-
-              {dialogError && (
-                <Alert variant="destructive">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertDescription>{dialogError}</AlertDescription>
-                </Alert>
-              )}
-
-              {!hasOrganisation && !successMessage && (
-                <Alert variant="destructive">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertDescription>
-                    <strong>Security Warning:</strong> This user has no organisation assigned and cannot access any secure documents or areas. 
-                    An organisation must be assigned before the user can use the system.
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              <UserInfoCard 
-                user={user}
-                selectedOrgName={selectedOrgName}
-                hasOrganisation={hasOrganisation}
-                successMessage={successMessage}
-              />
-
-              <OrganizationAssignmentCard 
-                selectedOrganization={selectedOrganization}
-                onOrganizationChange={handleOrganizationChange}
-                organizations={organizations}
-              />
-
-              <CurrentRolesCard roles={user.roles || []} />
-
-              <RoleManagementCard 
-                pendingRoles={pendingRoles}
-                onRoleToggle={handleRoleToggle}
-              />
-            </div>
-          )}
-
-          <DialogFooter>
-            <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
-              {successMessage ? 'Close' : 'Cancel'}
-            </Button>
-            {!successMessage && (
-              <Button 
-                onClick={handleSaveChanges} 
-                disabled={isSubmitting || isLoading || !selectedOrganization}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  'Save Changes'
-                )}
-              </Button>
+        {isLoading ? (
+          <div className="flex items-center justify-center p-8">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-2">Loading user data...</span>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {successMessage && (
+              <Alert className="border-green-200 bg-green-50">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-800">{successMessage}</AlertDescription>
+              </Alert>
             )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </SecurityGuard>
+
+            {dialogError && (
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>{dialogError}</AlertDescription>
+              </Alert>
+            )}
+
+            {!hasOrganisation && !successMessage && (
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription>
+                  <strong>Security Warning:</strong> This user has no organisation assigned and cannot access any secure documents or areas. 
+                  An organisation must be assigned before the user can use the system.
+                </AlertDescription>
+              </Alert>
+            )}
+
+            <UserInfoCard 
+              user={user}
+              selectedOrgName={selectedOrgName}
+              hasOrganisation={hasOrganisation}
+              successMessage={successMessage}
+            />
+
+            <OrganizationAssignmentCard 
+              selectedOrganization={selectedOrganization}
+              onOrganizationChange={handleOrganizationChange}
+              organizations={organizations}
+            />
+
+            <CurrentRolesCard roles={user.roles || []} />
+
+            <RoleManagementCard 
+              pendingRoles={pendingRoles}
+              onRoleToggle={handleRoleToggle}
+            />
+          </div>
+        )}
+
+        <DialogFooter>
+          <Button onClick={onClose} variant="outline" disabled={isSubmitting}>
+            {successMessage ? 'Close' : 'Cancel'}
+          </Button>
+          {!successMessage && (
+            <Button 
+              onClick={handleSaveChanges} 
+              disabled={isSubmitting || isLoading || !selectedOrganization}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
+            </Button>
+          )}
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };

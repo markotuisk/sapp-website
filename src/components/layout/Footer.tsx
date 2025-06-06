@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SAPPLogo } from '@/components/icons/CustomIcons';
 
-export const Footer = () => {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (

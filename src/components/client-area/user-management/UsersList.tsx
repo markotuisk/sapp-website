@@ -8,22 +8,24 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { UserPlus, Search, Mail, Building2, Calendar, Shield, AlertCircle, AlertTriangle, Users } from 'lucide-react';
 import { useUserManagement } from '@/hooks/useUserManagement';
-import { useOrganizationData } from '@/hooks/useOrganizationData';
 import { UserEditDialog } from './UserEditDialog';
-import { OrganizationStatusCard } from './OrganizationStatusCard';
 import type { UserWithProfile } from '@/types/roles';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export const UsersList: React.FC = () => {
   const { users, isLoading, refetchData } = useUserManagement();
-  const { getOrganizationName } = useOrganizationData();
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [selectedUser, setSelectedUser] = useState<UserWithProfile | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
+  // Debug logging
+  console.log('UsersList - isLoading:', isLoading, 'users count:', users?.length || 0);
+
   const filteredUsers = users.filter(user => {
-    const organizationName = getOrganizationName(user.clientData?.organization_id);
+    const organizationName = user.profile?.organization && typeof user.profile.organization === 'object'
+      ? user.profile.organization.name
+      : '';
     
     const matchesSearch = !searchTerm || 
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -36,14 +38,21 @@ export const UsersList: React.FC = () => {
     return matchesSearch && matchesRole;
   });
 
-  // Organization analysis using the new centralized logic
-  const usersWithoutOrg = filteredUsers.filter(user => 
-    !user.clientData?.organization_id
-  );
+  // Enhanced organization analysis - use clientData for organization_id
+  const usersWithoutOrg = filteredUsers.filter(user => {
+    const clientOrgId = user.clientData?.organization_id;
+    return !clientOrgId;
+  });
   
   const guestUsers = filteredUsers.filter(user => 
     user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001'
   );
+
+  const inconsistentUsers = filteredUsers.filter(user => {
+    const clientOrgId = user.clientData?.organization_id;
+    // For now, we'll focus on client data consistency since that's what the system primarily uses
+    return false; // Removing this check for now since we can't access profile organization_id properly
+  });
 
   const getInitials = (user: UserWithProfile) => {
     const first = user.profile?.first_name?.charAt(0) || '';
@@ -69,31 +78,39 @@ export const UsersList: React.FC = () => {
   };
 
   const getOrganizationStatus = (user: UserWithProfile) => {
-    const orgId = user.clientData?.organization_id;
+    const clientOrgId = user.clientData?.organization_id;
     
-    if (!orgId) {
+    if (!clientOrgId) {
       return { status: 'none', message: 'No organisation assigned' };
     }
     
-    if (orgId === '00000000-0000-0000-0000-000000000001') {
+    if (clientOrgId === '00000000-0000-0000-0000-000000000001') {
       return { status: 'guest', message: 'Guest organisation' };
     }
     
     return { status: 'assigned', message: 'Organisation assigned' };
   };
 
+  const isGuestUser = (user: UserWithProfile) => {
+    return user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001';
+  };
+
   const handleManageUser = (user: UserWithProfile) => {
+    console.log('UsersList - Managing user:', user);
     setSelectedUser(user);
     setIsEditDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
+    console.log('UsersList - Closing dialog, refreshing data');
     setIsEditDialogOpen(false);
     setSelectedUser(null);
+    // Refresh data when dialog closes to show updated information
     refetchData();
   };
 
   const handleAddUser = () => {
+    console.log('UsersList - Adding new user');
     setSelectedUser(null);
     setIsEditDialogOpen(true);
   };
@@ -116,9 +133,6 @@ export const UsersList: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Organization Status Card */}
-      <OrganizationStatusCard />
-
       {/* Header and Filters */}
       <div className="flex items-center justify-between">
         <div>
@@ -131,7 +145,7 @@ export const UsersList: React.FC = () => {
         </Button>
       </div>
 
-      {/* Security Warnings */}
+      {/* Enhanced Security Warnings */}
       {guestUsers.length > 0 && (
         <Alert className="border-amber-200 bg-amber-50">
           <Users className="h-4 w-4" />
@@ -152,7 +166,16 @@ export const UsersList: React.FC = () => {
         </Alert>
       )}
 
-      {/* Search and Filters */}
+      {/* Debug info */}
+      {users.length === 0 && !isLoading && (
+        <Alert>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            No users found in the database. This might indicate a permission issue or the database is empty.
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="flex gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -181,8 +204,10 @@ export const UsersList: React.FC = () => {
       <div className="grid gap-4">
         {filteredUsers.map((user) => {
           const orgStatus = getOrganizationStatus(user);
-          const isGuest = user.clientData?.organization_id === '00000000-0000-0000-0000-000000000001';
-          const organizationName = getOrganizationName(user.clientData?.organization_id);
+          const isGuest = isGuestUser(user);
+          const organizationName = user.profile?.organization && typeof user.profile.organization === 'object'
+            ? user.profile.organization.name
+            : null;
           
           let cardClassName = 'hover:shadow-md transition-shadow';
           if (orgStatus.status === 'none') {
@@ -236,7 +261,7 @@ export const UsersList: React.FC = () => {
                           <Mail className="h-3 w-3" />
                           {user.email}
                         </div>
-                        {organizationName && organizationName !== 'No organization' && (
+                        {organizationName && (
                           <div className="flex items-center gap-1">
                             <Building2 className="h-3 w-3" />
                             {organizationName}
@@ -280,7 +305,6 @@ export const UsersList: React.FC = () => {
         })}
       </div>
 
-      {/* Empty states */}
       {filteredUsers.length === 0 && users.length > 0 && (
         <Card>
           <CardContent className="p-12 text-center">

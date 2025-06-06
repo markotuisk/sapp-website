@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { NewsArticleDialog } from './NewsArticleDialog';
 import { NewsArticleList } from './components/NewsArticleList';
 import { useOrganizationAwareNews } from '@/hooks/news-management/useOrganizationAwareNews';
-import { useOrganizationData } from '@/hooks/useOrganizationData';
+import { useOrganizationAwareData } from '@/hooks/useOrganizationAwareData';
 
 export const NewsArticleManagement: React.FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -15,7 +15,7 @@ export const NewsArticleManagement: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   
   const { articles, isLoading } = useOrganizationAwareNews();
-  const { organizationId, canAccessCrossOrganization } = useOrganizationData();
+  const { organizationId, canAccessCrossOrganization } = useOrganizationAwareData();
 
   const filteredArticles = articles.filter(article => {
     const matchesSearch = !searchTerm || 
@@ -50,14 +50,14 @@ export const NewsArticleManagement: React.FC = () => {
             <div>
               <CardTitle className="flex items-center gap-2">
                 News Article Management
-                {!canAccessCrossOrganization() && (
+                {!canAccessCrossOrganization && (
                   <Badge variant="outline" className="ml-2">
                     Organization Scope
                   </Badge>
                 )}
               </CardTitle>
               <CardDescription>
-                {canAccessCrossOrganization() 
+                {canAccessCrossOrganization 
                   ? 'Manage news articles across all organizations'
                   : 'Manage news articles for your organization'
                 }
@@ -95,7 +95,7 @@ export const NewsArticleManagement: React.FC = () => {
 
           <div className="flex items-center justify-between text-sm text-gray-600">
             <span>Showing {filteredArticles.length} of {articles.length} articles</span>
-            {organizationId && !canAccessCrossOrganization() && (
+            {organizationId && !canAccessCrossOrganization && (
               <Badge variant="secondary">
                 Organization-specific view
               </Badge>

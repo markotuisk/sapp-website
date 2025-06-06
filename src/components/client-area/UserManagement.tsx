@@ -11,7 +11,7 @@ import { UserInvitations } from './user-management/UserInvitations';
 import { AuthenticationLogs } from './user-management/AuthenticationLogs';
 import { UserActivityLogs } from './user-management/UserActivityLogs';
 import { DataMigrationUtility } from './user-management/DataMigrationUtility';
-import { useOrganizationData } from '@/hooks/useOrganizationData';
+import { useOrganizationAwareData } from '@/hooks/useOrganizationAwareData';
 
 interface UserManagementProps {
   onBack: () => void;
@@ -19,14 +19,14 @@ interface UserManagementProps {
 
 export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState('users');
-  const { canAccessCrossOrganization } = useOrganizationData();
+  const { canAccessCrossOrganization, organizationId } = useOrganizationAwareData();
 
   return (
     <AdminGuard fallback={
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Access Denied</h2>
-          <p className="text-gray-600">Only administrators can access user management.</p>
+          <p className="text-gray-600">Only SAPP Security administrators can access user management.</p>
         </div>
       </div>
     }>
@@ -44,7 +44,7 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
           </Button>
           <div className="text-center">
             <h1 className="text-2xl font-bold">User Management</h1>
-            {!canAccessCrossOrganization() && (
+            {!canAccessCrossOrganization && (
               <Badge variant="outline" className="mt-1">
                 Organization Scope
               </Badge>
@@ -54,14 +54,14 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
         </div>
 
         {/* Access Level Indicator */}
-        {!canAccessCrossOrganization() && (
+        {!canAccessCrossOrganization && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-center gap-2">
               <Building2 className="h-5 w-5 text-blue-600" />
               <div>
                 <h3 className="font-semibold text-blue-900">Organization-Scoped Access</h3>
                 <p className="text-blue-800 text-sm">
-                  You can only manage users within your organization. Contact an administrator for cross-organization access.
+                  You can only manage users within your organization. Contact a SAPP Security admin for cross-organization access.
                 </p>
               </div>
             </div>
