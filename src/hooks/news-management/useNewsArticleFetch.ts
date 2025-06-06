@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { Tables } from '@/integrations/supabase/types';
@@ -9,28 +10,28 @@ export const useNewsArticleFetch = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('news_articles')
-          .select('*')
-          .eq('published', true)
-          .order('published_at', { ascending: false });
+  const fetchArticles = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('news_articles')
+        .select('*')
+        .eq('published', true)
+        .order('published_at', { ascending: false });
 
-        if (error) {
-          throw error;
-        }
-
-        setArticles(data || []);
-      } catch (err) {
-        console.error('Error fetching articles:', err);
-        setError(err instanceof Error ? err.message : 'Failed to fetch articles');
-      } finally {
-        setIsLoading(false);
+      if (error) {
+        throw error;
       }
-    };
 
+      setArticles(data || []);
+    } catch (err) {
+      console.error('Error fetching articles:', err);
+      setError(err instanceof Error ? err.message : 'Failed to fetch articles');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchArticles();
   }, []);
 
@@ -38,10 +39,6 @@ export const useNewsArticleFetch = () => {
     articles,
     isLoading,
     error,
-    refetch: () => {
-      setIsLoading(true);
-      setError(null);
-      // Re-run the fetch
-    }
+    refetch: fetchArticles
   };
 };
