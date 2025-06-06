@@ -1,42 +1,12 @@
 
-import { supabase } from '@/integrations/supabase/client';
 import type { AppRole } from '@/types/roles';
 
 export const useUserRoles = () => {
   const assignUserRole = async (userId: string, role: AppRole) => {
     try {
-      console.log(`useUserRoles: Attempting to assign role ${role} to user ${userId}`);
+      console.log(`useUserRoles: Role assignment disabled in simplified mode`);
       
-      // First check if the role already exists to avoid conflicts
-      const { data: existingRole, error: checkError } = await supabase
-        .from('user_roles')
-        .select('*')
-        .eq('user_id', userId)
-        .eq('role', role)
-        .maybeSingle();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        console.error('Error checking existing role:', checkError);
-        throw checkError;
-      }
-
-      if (existingRole) {
-        console.log(`Role ${role} already exists for user ${userId}, skipping assignment`);
-        return;
-      }
-
-      const { error } = await supabase.rpc('assign_user_role', {
-        _user_id: userId,
-        _role: role
-      });
-
-      if (error) {
-        console.error('useUserRoles: RPC error:', error);
-        throw new Error(`Failed to assign role ${role}: ${error.message}`);
-      }
-
-      console.log(`useUserRoles: Successfully assigned role ${role} to user ${userId}`);
-      
+      throw new Error('Role assignment feature not available in simplified mode');
     } catch (error) {
       console.error('useUserRoles: Error assigning role:', error);
       throw error;
@@ -45,20 +15,9 @@ export const useUserRoles = () => {
 
   const removeUserRole = async (userId: string, role: AppRole) => {
     try {
-      console.log(`useUserRoles: Attempting to remove role ${role} from user ${userId}`);
+      console.log(`useUserRoles: Role removal disabled in simplified mode`);
       
-      const { error } = await supabase.rpc('remove_user_role', {
-        _user_id: userId,
-        _role: role
-      });
-
-      if (error) {
-        console.error('useUserRoles: RPC error:', error);
-        throw new Error(`Failed to remove role ${role}: ${error.message}`);
-      }
-
-      console.log(`useUserRoles: Successfully removed role ${role} from user ${userId}`);
-      
+      throw new Error('Role removal feature not available in simplified mode');
     } catch (error) {
       console.error('useUserRoles: Error removing role:', error);
       throw error;

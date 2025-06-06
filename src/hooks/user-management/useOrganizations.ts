@@ -1,31 +1,33 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import type { Tables } from '@/integrations/supabase/types';
 
-type Organization = Tables<'organizations'>;
+type Organization = {
+  id: string;
+  name: string;
+  description?: string;
+  created_at: string;
+  updated_at: string;
+};
 
 export const useOrganizations = () => {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const fetchOrganizations = async () => {
     try {
       setIsLoading(true);
-      const { data: orgsData, error: orgsError } = await supabase
-        .from('organizations')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (orgsError) {
-        console.error('Error fetching organizations:', orgsError);
-        throw orgsError;
-      } else {
-        console.log('useOrganizations: Fetched organizations:', orgsData?.length || 0);
-        setOrganizations(orgsData || []);
-      }
+      console.log('useOrganizations: Organizations feature disabled in simplified mode');
+      
+      // Return empty array since organizations table doesn't exist
+      setOrganizations([]);
+      
+      toast({
+        title: 'Organizations Unavailable',
+        description: 'Organization management is not available in the simplified client area setup.',
+        variant: 'destructive',
+      });
     } catch (err) {
       console.error('Organizations fetch failed:', err);
       setOrganizations([]);
@@ -41,25 +43,15 @@ export const useOrganizations = () => {
 
   const createOrganization = async (orgData: Omit<Organization, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      console.log('useOrganizations: Creating organization:', orgData);
-      const { data, error } = await supabase
-        .from('organizations')
-        .insert(orgData)
-        .select()
-        .single();
-
-      if (error) {
-        console.error('useOrganizations: Error creating organization:', error);
-        throw error;
-      }
-
-      console.log('useOrganizations: Successfully created organization:', data);
-      setOrganizations(prev => [data, ...prev]);
+      console.log('useOrganizations: Organization creation disabled in simplified mode');
+      
       toast({
-        title: 'Success',
-        description: 'Organization created successfully',
+        title: 'Organization Creation Unavailable',
+        description: 'Organization creation is not available in the simplified client area setup.',
+        variant: 'destructive',
       });
-      return data;
+      
+      throw new Error('Organization creation not available in simplified mode');
     } catch (error) {
       console.error('useOrganizations: Error creating organization:', error);
       toast({
@@ -72,7 +64,8 @@ export const useOrganizations = () => {
   };
 
   useEffect(() => {
-    fetchOrganizations();
+    // Don't automatically fetch organizations since the feature is disabled
+    setIsLoading(false);
   }, []);
 
   return {
