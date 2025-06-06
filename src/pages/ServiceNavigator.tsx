@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation, Link } from 'react-router-dom';
@@ -93,6 +92,21 @@ const ServiceNavigatorPage = ({ defaultTab = 'services' }: ServiceNavigatorProps
     return descriptions[activeTab as keyof typeof descriptions];
   };
 
+  const getSearchInstructionText = () => {
+    if (searchQuery.trim()) return undefined;
+    
+    switch (activeTab) {
+      case 'services':
+        return "Try searching by service type (e.g., 'penetration testing', 'TSCM', 'event security')";
+      case 'resources':
+        return "Search for security guides, documentation, and educational materials";
+      case 'acronyms':
+        return "Look up technical security acronyms (e.g., 'TSCM', 'IoT', 'CCTV')";
+      default:
+        return "Search across all security services, resources, and technical acronyms";
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -132,7 +146,8 @@ const ServiceNavigatorPage = ({ defaultTab = 'services' }: ServiceNavigatorProps
             <div className="p-4 border-b">
               <SearchBox 
                 searchQuery={searchQuery} 
-                setSearchQuery={setSearchQuery} 
+                setSearchQuery={setSearchQuery}
+                instructionText={getSearchInstructionText()}
               />
             </div>
             
