@@ -1,50 +1,42 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import type { Tables } from '@/integrations/supabase/types';
 
-type UserActivityLog = Tables<'user_activity_logs'>;
-type AuthLog = Tables<'auth_logs'>;
+// Define simple log types for compatibility
+type UserActivityLog = {
+  id: string;
+  user_id: string;
+  action: string;
+  created_at: string;
+};
+
+type AuthLog = {
+  id: string;
+  user_id: string;
+  event_type: string;
+  timestamp: string;
+};
 
 export const useLogs = () => {
   const [activityLogs, setActivityLogs] = useState<UserActivityLog[]>([]);
   const [authLogs, setAuthLogs] = useState<AuthLog[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const fetchLogs = async () => {
     try {
       setIsLoading(true);
+      console.log('useLogs: Logging features disabled in simplified mode');
       
-      // Fetch activity logs
-      const { data: activityData, error: activityError } = await supabase
-        .from('user_activity_logs')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(100);
-
-      if (activityError) {
-        console.error('Error fetching activity logs:', activityError);
-      } else {
-        console.log('useLogs: Fetched activity logs:', activityData?.length || 0);
-        setActivityLogs(activityData || []);
-      }
-
-      // Fetch auth logs
-      const { data: authData, error: authError } = await supabase
-        .from('auth_logs')
-        .select('*')
-        .order('timestamp', { ascending: false })
-        .limit(100);
-
-      if (authError) {
-        console.error('Error fetching auth logs:', authError);
-      } else {
-        console.log('useLogs: Fetched auth logs:', authData?.length || 0);
-        setAuthLogs(authData || []);
-      }
-
+      // Return empty arrays since logging tables don't exist
+      setActivityLogs([]);
+      setAuthLogs([]);
+      
+      toast({
+        title: 'Logs Unavailable',
+        description: 'Activity and authentication logs are not available in the simplified client area setup.',
+        variant: 'destructive',
+      });
     } catch (err) {
       console.error('Logs fetch failed:', err);
       setActivityLogs([]);
@@ -60,7 +52,8 @@ export const useLogs = () => {
   };
 
   useEffect(() => {
-    fetchLogs();
+    // Don't automatically fetch logs since the feature is disabled
+    setIsLoading(false);
   }, []);
 
   return {

@@ -1,35 +1,35 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import type { Tables } from '@/integrations/supabase/types';
 import type { AppRole } from '@/types/roles';
 
-type UserInvitation = Tables<'user_invitations'>;
+// Define a simple invitation type for compatibility
+type UserInvitation = {
+  id: string;
+  email: string;
+  organization_id: string;
+  roles: AppRole[];
+  created_at: string;
+};
 
 export const useInvitations = () => {
   const [invitations, setInvitations] = useState<UserInvitation[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const fetchInvitations = async () => {
     try {
       setIsLoading(true);
-      const { data: invitationsData, error: invitationsError } = await supabase
-        .from('user_invitations')
-        .select(`
-          *,
-          organizations(name)
-        `)
-        .order('created_at', { ascending: false });
-
-      if (invitationsError) {
-        console.error('Error fetching invitations:', invitationsError);
-        throw invitationsError;
-      } else {
-        console.log('useInvitations: Fetched invitations:', invitationsData?.length || 0);
-        setInvitations(invitationsData || []);
-      }
+      console.log('useInvitations: Invitations feature disabled in simplified mode');
+      
+      // Return empty array since user_invitations table doesn't exist
+      setInvitations([]);
+      
+      toast({
+        title: 'Invitations Unavailable',
+        description: 'User invitations are not available in the simplified client area setup.',
+        variant: 'destructive',
+      });
     } catch (err) {
       console.error('Invitations fetch failed:', err);
       setInvitations([]);
@@ -45,29 +45,15 @@ export const useInvitations = () => {
 
   const createInvitation = async (email: string, organizationId: string, roles: AppRole[]) => {
     try {
-      console.log('useInvitations: Creating invitation for:', email, 'org:', organizationId, 'roles:', roles);
-      const { data, error } = await supabase
-        .from('user_invitations')
-        .insert({
-          email,
-          organization_id: organizationId,
-          roles
-        })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('useInvitations: Error creating invitation:', error);
-        throw error;
-      }
-
-      console.log('useInvitations: Successfully created invitation:', data);
-      setInvitations(prev => [data, ...prev]);
+      console.log('useInvitations: Invitation creation disabled in simplified mode');
+      
       toast({
-        title: 'Success',
-        description: 'Invitation sent successfully',
+        title: 'Invitation Creation Unavailable',
+        description: 'User invitation creation is not available in the simplified client area setup.',
+        variant: 'destructive',
       });
-      return data;
+      
+      throw new Error('Invitation creation not available in simplified mode');
     } catch (error) {
       console.error('useInvitations: Error creating invitation:', error);
       toast({
@@ -80,7 +66,8 @@ export const useInvitations = () => {
   };
 
   useEffect(() => {
-    fetchInvitations();
+    // Don't automatically fetch invitations since the feature is disabled
+    setIsLoading(false);
   }, []);
 
   return {
