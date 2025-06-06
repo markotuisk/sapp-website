@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface OrganizationType {
   id: string;
@@ -10,29 +9,25 @@ interface OrganizationType {
 
 export const useOrganizationTypes = () => {
   const [organizationTypes, setOrganizationTypes] = useState<OrganizationType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchOrganizationTypes = async () => {
       try {
-        const { data, error } = await supabase
-          .from('organization_types')
-          .select('id, name, description')
-          .order('name');
-
-        if (error) {
-          console.error('Error fetching organization types:', error);
-        } else {
-          setOrganizationTypes(data || []);
-        }
+        setIsLoading(true);
+        console.log('Organization types feature disabled in simplified mode');
+        
+        // Return empty array since organization_types table doesn't exist
+        setOrganizationTypes([]);
       } catch (error) {
-        console.error('Error in fetchOrganizationTypes:', error);
+        console.error('Organization types feature disabled:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchOrganizationTypes();
+    // Don't fetch organization types since the feature is disabled
+    setIsLoading(false);
   }, []);
 
   return { organizationTypes, isLoading };

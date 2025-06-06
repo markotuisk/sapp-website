@@ -1,3 +1,4 @@
+
 export type AppRole = 'admin' | 'client' | 'manager' | 'support';
 
 export interface UserProfile {
