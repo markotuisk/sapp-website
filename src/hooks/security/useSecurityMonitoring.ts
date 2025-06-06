@@ -9,7 +9,9 @@ interface SecurityStatus {
   failedAttempts: number;
   remainingAttempts?: number;
   lockoutUntil?: string;
+  remainingMinutes?: number;
   message: string;
+  isAdmin?: boolean;
 }
 
 interface SecurityCheckResponse {
@@ -17,7 +19,9 @@ interface SecurityCheckResponse {
   failed_attempts: number;
   remaining_attempts?: number;
   lockout_until?: string;
+  remaining_minutes?: number;
   message: string;
+  is_admin?: boolean;
 }
 
 export const useSecurityMonitoring = () => {
@@ -48,17 +52,22 @@ export const useSecurityMonitoring = () => {
         failedAttempts: parsedData.failed_attempts,
         remainingAttempts: parsedData.remaining_attempts,
         lockoutUntil: parsedData.lockout_until,
-        message: parsedData.message
+        remainingMinutes: parsedData.remaining_minutes,
+        message: parsedData.message,
+        isAdmin: parsedData.is_admin
       };
       
       setSecurityStatus(status);
       
-      if (status.isAccountLocked) {
+      // Show different messages based on admin status
+      if (status.isAccountLocked && !status.isAdmin) {
         toast({
           title: 'Account Temporarily Locked',
-          description: status.message,
+          description: `${status.message} Contact an administrator if you need immediate access.`,
           variant: 'destructive',
         });
+      } else if (status.isAdmin) {
+        console.log('Admin user - lockout protection active');
       }
       
       return status;
