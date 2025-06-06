@@ -13,6 +13,7 @@ import { ClientDashboard } from '@/components/client-area/ClientDashboard';
 import { UnauthenticatedView } from '@/components/client-area/UnauthenticatedView';
 import { OTPDialog } from '@/components/client-area/OTPDialog';
 import { AuthGuard } from '@/components/auth/AuthGuard';
+import { ClientAreaErrorBoundary } from '@/components/client-area/ClientAreaErrorBoundary';
 
 const ClientArea = () => {
   const navigate = useNavigate();
@@ -35,76 +36,78 @@ const ClientArea = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      
-      <main className="flex-grow pt-32 pb-20">
-        <div className="container mx-auto px-6">
-          {!isOnline && (
-            <Alert variant="destructive" className="mb-6">
-              <WifiOff className="h-4 w-4" />
-              <AlertTitle>No Internet Connection</AlertTitle>
-              <AlertDescription>
-                You appear to be offline. Authentication services require an internet connection.
-                Please check your connection and try again.
-              </AlertDescription>
-            </Alert>
-          )}
-          
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
-            <ClientAreaHeader />
+    <ClientAreaErrorBoundary>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        
+        <main className="flex-grow pt-32 pb-20">
+          <div className="container mx-auto px-6">
+            {!isOnline && (
+              <Alert variant="destructive" className="mb-6">
+                <WifiOff className="h-4 w-4" />
+                <AlertTitle>No Internet Connection</AlertTitle>
+                <AlertDescription>
+                  You appear to be offline. Authentication services require an internet connection.
+                  Please check your connection and try again.
+                </AlertDescription>
+              </Alert>
+            )}
             
-            <div className="p-8">
-              <AuthGuard 
-                requireAuth={false}
-                fallback={
-                  <UnauthenticatedView
-                    isSubmitting={isSubmitting}
-                    setIsSubmitting={setIsSubmitting}
-                    onOTPRequired={handleOTPRequired}
-                  />
-                }
-              >
-                {isAuthenticated ? (
-                  <ClientDashboard />
-                ) : (
-                  <UnauthenticatedView
-                    isSubmitting={isSubmitting}
-                    setIsSubmitting={setIsSubmitting}
-                    onOTPRequired={handleOTPRequired}
-                  />
-                )}
-              </AuthGuard>
+            <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden relative">
+              <ClientAreaHeader />
               
-              {/* Only show Close button for unauthenticated users */}
-              {!isAuthenticated && (
-                <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
-                  <Button 
-                    onClick={handleClose}
-                    variant="outline"
-                    className="ml-auto flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    size="sm"
-                  >
-                    Close
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              )}
+              <div className="p-8">
+                <AuthGuard 
+                  requireAuth={false}
+                  fallback={
+                    <UnauthenticatedView
+                      isSubmitting={isSubmitting}
+                      setIsSubmitting={setIsSubmitting}
+                      onOTPRequired={handleOTPRequired}
+                    />
+                  }
+                >
+                  {isAuthenticated ? (
+                    <ClientDashboard />
+                  ) : (
+                    <UnauthenticatedView
+                      isSubmitting={isSubmitting}
+                      setIsSubmitting={setIsSubmitting}
+                      onOTPRequired={handleOTPRequired}
+                    />
+                  )}
+                </AuthGuard>
+                
+                {/* Only show Close button for unauthenticated users */}
+                {!isAuthenticated && (
+                  <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
+                    <Button 
+                      onClick={handleClose}
+                      variant="outline"
+                      className="ml-auto flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      size="sm"
+                    >
+                      Close
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-      
-      <OTPDialog
-        isOpen={showOTPDialog}
-        onClose={() => setShowOTPDialog(false)}
-        email={otpEmail}
-        isSubmitting={isSubmitting}
-        setIsSubmitting={setIsSubmitting}
-      />
-      
-      <Footer />
-    </div>
+        </main>
+        
+        <OTPDialog
+          isOpen={showOTPDialog}
+          onClose={() => setShowOTPDialog(false)}
+          email={otpEmail}
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
+        />
+        
+        <Footer />
+      </div>
+    </ClientAreaErrorBoundary>
   );
 };
 

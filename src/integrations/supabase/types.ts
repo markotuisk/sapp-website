@@ -9,226 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      auth_logs: {
-        Row: {
-          action: string
-          battery_level: number | null
-          browser: string | null
-          city: string | null
-          connection_type: string | null
-          country: string | null
-          device_fingerprint: string | null
-          email: string
-          error_message: string | null
-          failed_attempts_count: number | null
-          geolocation: string | null
-          id: number
-          ip_address: string | null
-          is_mobile: boolean | null
-          language: string | null
-          organization_id: string | null
-          os: string | null
-          screen_resolution: string | null
-          session_id: string | null
-          success: boolean
-          timestamp: string
-          timezone: string | null
-          user_agent: string | null
-        }
-        Insert: {
-          action: string
-          battery_level?: number | null
-          browser?: string | null
-          city?: string | null
-          connection_type?: string | null
-          country?: string | null
-          device_fingerprint?: string | null
-          email: string
-          error_message?: string | null
-          failed_attempts_count?: number | null
-          geolocation?: string | null
-          id?: number
-          ip_address?: string | null
-          is_mobile?: boolean | null
-          language?: string | null
-          organization_id?: string | null
-          os?: string | null
-          screen_resolution?: string | null
-          session_id?: string | null
-          success?: boolean
-          timestamp?: string
-          timezone?: string | null
-          user_agent?: string | null
-        }
-        Update: {
-          action?: string
-          battery_level?: number | null
-          browser?: string | null
-          city?: string | null
-          connection_type?: string | null
-          country?: string | null
-          device_fingerprint?: string | null
-          email?: string
-          error_message?: string | null
-          failed_attempts_count?: number | null
-          geolocation?: string | null
-          id?: number
-          ip_address?: string | null
-          is_mobile?: boolean | null
-          language?: string | null
-          organization_id?: string | null
-          os?: string | null
-          screen_resolution?: string | null
-          session_id?: string | null
-          success?: boolean
-          timestamp?: string
-          timezone?: string | null
-          user_agent?: string | null
-        }
-        Relationships: []
-      }
-      client_data: {
-        Row: {
-          account_status: string | null
-          company_name: string | null
-          company_size: string | null
-          created_at: string
-          id: string
-          industry: string | null
-          organization_id: string | null
-          subscription_tier: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          account_status?: string | null
-          company_name?: string | null
-          company_size?: string | null
-          created_at?: string
-          id?: string
-          industry?: string | null
-          organization_id?: string | null
-          subscription_tier?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          account_status?: string | null
-          company_name?: string | null
-          company_size?: string | null
-          created_at?: string
-          id?: string
-          industry?: string | null
-          organization_id?: string | null
-          subscription_tier?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "client_data_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "client_data_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      client_documents: {
-        Row: {
-          category_id: string | null
-          created_at: string
-          custom_name: string | null
-          description: string | null
-          document_type: string | null
-          download_count: number | null
-          external_url: string | null
-          file_name: string
-          file_path: string
-          file_size: number
-          id: string
-          is_confidential: boolean | null
-          last_downloaded_at: string | null
-          mime_type: string
-          original_name: string
-          tags: string[] | null
-          updated_at: string
-          uploaded_by: string | null
-          user_id: string
-        }
-        Insert: {
-          category_id?: string | null
-          created_at?: string
-          custom_name?: string | null
-          description?: string | null
-          document_type?: string | null
-          download_count?: number | null
-          external_url?: string | null
-          file_name: string
-          file_path: string
-          file_size: number
-          id?: string
-          is_confidential?: boolean | null
-          last_downloaded_at?: string | null
-          mime_type: string
-          original_name: string
-          tags?: string[] | null
-          updated_at?: string
-          uploaded_by?: string | null
-          user_id: string
-        }
-        Update: {
-          category_id?: string | null
-          created_at?: string
-          custom_name?: string | null
-          description?: string | null
-          document_type?: string | null
-          download_count?: number | null
-          external_url?: string | null
-          file_name?: string
-          file_path?: string
-          file_size?: number
-          id?: string
-          is_confidential?: boolean | null
-          last_downloaded_at?: string | null
-          mime_type?: string
-          original_name?: string
-          tags?: string[] | null
-          updated_at?: string
-          uploaded_by?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "client_documents_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "document_categories"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "client_documents_uploaded_by_fkey"
-            columns: ["uploaded_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "client_documents_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -262,152 +42,6 @@ export type Database = {
         }
         Relationships: []
       }
-      document_categories: {
-        Row: {
-          color: string | null
-          created_at: string
-          description: string | null
-          icon: string | null
-          id: string
-          name: string
-        }
-        Insert: {
-          color?: string | null
-          created_at?: string
-          description?: string | null
-          icon?: string | null
-          id?: string
-          name: string
-        }
-        Update: {
-          color?: string | null
-          created_at?: string
-          description?: string | null
-          icon?: string | null
-          id?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      email_campaigns: {
-        Row: {
-          article_id: string | null
-          bounce_count: number | null
-          campaign_data: Json | null
-          click_count: number | null
-          created_at: string
-          delivery_count: number | null
-          id: string
-          open_count: number | null
-          recipient_count: number | null
-          sent_at: string
-          sent_by: string | null
-          subject: string
-          template_id: string | null
-          unsubscribe_count: number | null
-          updated_at: string
-        }
-        Insert: {
-          article_id?: string | null
-          bounce_count?: number | null
-          campaign_data?: Json | null
-          click_count?: number | null
-          created_at?: string
-          delivery_count?: number | null
-          id?: string
-          open_count?: number | null
-          recipient_count?: number | null
-          sent_at?: string
-          sent_by?: string | null
-          subject: string
-          template_id?: string | null
-          unsubscribe_count?: number | null
-          updated_at?: string
-        }
-        Update: {
-          article_id?: string | null
-          bounce_count?: number | null
-          campaign_data?: Json | null
-          click_count?: number | null
-          created_at?: string
-          delivery_count?: number | null
-          id?: string
-          open_count?: number | null
-          recipient_count?: number | null
-          sent_at?: string
-          sent_by?: string | null
-          subject?: string
-          template_id?: string | null
-          unsubscribe_count?: number | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "email_campaigns_article_id_fkey"
-            columns: ["article_id"]
-            isOneToOne: false
-            referencedRelation: "news_articles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "email_campaigns_sent_by_fkey"
-            columns: ["sent_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      email_templates: {
-        Row: {
-          created_at: string
-          created_by: string | null
-          description: string | null
-          html_template: string
-          id: string
-          is_default: boolean | null
-          name: string
-          subject_template: string
-          template_type: string
-          text_template: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          html_template: string
-          id?: string
-          is_default?: boolean | null
-          name: string
-          subject_template: string
-          template_type?: string
-          text_template?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          created_by?: string | null
-          description?: string | null
-          html_template?: string
-          id?: string
-          is_default?: boolean | null
-          name?: string
-          subject_template?: string
-          template_type?: string
-          text_template?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "email_templates_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       news_articles: {
         Row: {
           author: string
@@ -424,7 +58,6 @@ export type Database = {
           meta_description: string | null
           meta_keywords: string[] | null
           og_image: string | null
-          organization_id: string | null
           published: boolean
           published_at: string | null
           reading_time: number | null
@@ -452,7 +85,6 @@ export type Database = {
           meta_description?: string | null
           meta_keywords?: string[] | null
           og_image?: string | null
-          organization_id?: string | null
           published?: boolean
           published_at?: string | null
           reading_time?: number | null
@@ -480,7 +112,6 @@ export type Database = {
           meta_description?: string | null
           meta_keywords?: string[] | null
           og_image?: string | null
-          organization_id?: string | null
           published?: boolean
           published_at?: string | null
           reading_time?: number | null
@@ -493,15 +124,7 @@ export type Database = {
           updated_at?: string
           view_count?: number | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "news_articles_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       news_subscribers: {
         Row: {
@@ -557,72 +180,6 @@ export type Database = {
         }
         Relationships: []
       }
-      organization_types: {
-        Row: {
-          created_at: string
-          description: string | null
-          id: string
-          name: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          name: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      organizations: {
-        Row: {
-          address: Json | null
-          created_at: string
-          description: string | null
-          id: string
-          industry: string | null
-          logo_url: string | null
-          name: string
-          phone: string | null
-          status: string | null
-          subscription_tier: string | null
-          updated_at: string
-          website: string | null
-        }
-        Insert: {
-          address?: Json | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          industry?: string | null
-          logo_url?: string | null
-          name: string
-          phone?: string | null
-          status?: string | null
-          subscription_tier?: string | null
-          updated_at?: string
-          website?: string | null
-        }
-        Update: {
-          address?: Json | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          industry?: string | null
-          logo_url?: string | null
-          name?: string
-          phone?: string | null
-          status?: string | null
-          subscription_tier?: string | null
-          updated_at?: string
-          website?: string | null
-        }
-        Relationships: []
-      }
       page_versions: {
         Row: {
           change_log: Json | null
@@ -655,62 +212,6 @@ export type Database = {
           version?: string
         }
         Relationships: []
-      }
-      profiles: {
-        Row: {
-          avatar_url: string | null
-          created_at: string
-          department: string | null
-          email: string
-          first_name: string | null
-          id: string
-          job_title: string | null
-          last_name: string | null
-          organization: string | null
-          organization_id: string | null
-          organization_type: string | null
-          phone: string | null
-          updated_at: string
-        }
-        Insert: {
-          avatar_url?: string | null
-          created_at?: string
-          department?: string | null
-          email: string
-          first_name?: string | null
-          id: string
-          job_title?: string | null
-          last_name?: string | null
-          organization?: string | null
-          organization_id?: string | null
-          organization_type?: string | null
-          phone?: string | null
-          updated_at?: string
-        }
-        Update: {
-          avatar_url?: string | null
-          created_at?: string
-          department?: string | null
-          email?: string
-          first_name?: string | null
-          id?: string
-          job_title?: string | null
-          last_name?: string | null
-          organization?: string | null
-          organization_id?: string | null
-          organization_type?: string | null
-          phone?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       technical_acronyms: {
         Row: {
@@ -771,7 +272,6 @@ export type Database = {
           id: string
           priority: string
           reporter_name: string
-          state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
           ticket_number: number | null
           title: string
@@ -787,7 +287,6 @@ export type Database = {
           id?: string
           priority?: string
           reporter_name: string
-          state?: Database["public"]["Enums"]["ticket_state"]
           tags?: string[] | null
           ticket_number?: number | null
           title: string
@@ -803,7 +302,6 @@ export type Database = {
           id?: string
           priority?: string
           reporter_name?: string
-          state?: Database["public"]["Enums"]["ticket_state"]
           tags?: string[] | null
           ticket_number?: number | null
           title?: string
@@ -811,195 +309,11 @@ export type Database = {
         }
         Relationships: []
       }
-      user_activity_logs: {
-        Row: {
-          action: string
-          changes: Json | null
-          created_at: string
-          id: string
-          ip_address: string | null
-          organization_id: string | null
-          performed_by: string | null
-          target_user_id: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          changes?: Json | null
-          created_at?: string
-          id?: string
-          ip_address?: string | null
-          organization_id?: string | null
-          performed_by?: string | null
-          target_user_id?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          changes?: Json | null
-          created_at?: string
-          id?: string
-          ip_address?: string | null
-          organization_id?: string | null
-          performed_by?: string | null
-          target_user_id?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_activity_logs_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_invitations: {
-        Row: {
-          accepted_at: string | null
-          created_at: string
-          email: string
-          expires_at: string | null
-          id: string
-          invitation_token: string
-          invited_by: string | null
-          organization_id: string | null
-          roles: Database["public"]["Enums"]["app_role"][] | null
-          status: string | null
-          updated_at: string
-        }
-        Insert: {
-          accepted_at?: string | null
-          created_at?: string
-          email: string
-          expires_at?: string | null
-          id?: string
-          invitation_token?: string
-          invited_by?: string | null
-          organization_id?: string | null
-          roles?: Database["public"]["Enums"]["app_role"][] | null
-          status?: string | null
-          updated_at?: string
-        }
-        Update: {
-          accepted_at?: string | null
-          created_at?: string
-          email?: string
-          expires_at?: string | null
-          id?: string
-          invitation_token?: string
-          invited_by?: string | null
-          organization_id?: string | null
-          roles?: Database["public"]["Enums"]["app_role"][] | null
-          status?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_invitations_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_preferences: {
-        Row: {
-          created_at: string
-          document_notifications: boolean | null
-          email_notifications: boolean | null
-          id: string
-          language: string | null
-          theme: string | null
-          timezone: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          document_notifications?: boolean | null
-          email_notifications?: boolean | null
-          id?: string
-          language?: string | null
-          theme?: string | null
-          timezone?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          document_notifications?: boolean | null
-          email_notifications?: boolean | null
-          id?: string
-          language?: string | null
-          theme?: string | null
-          timezone?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_preferences_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_roles: {
-        Row: {
-          assigned_at: string
-          assigned_by: string | null
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          assigned_at?: string
-          assigned_by?: string | null
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          assigned_at?: string
-          assigned_by?: string | null
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_roles_assigned_by_fkey"
-            columns: ["assigned_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_roles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      accept_invitation: {
-        Args: { _invitation_token: string; _user_id: string }
-        Returns: boolean
-      }
       add_ticket: {
         Args: {
           _title: string
@@ -1019,7 +333,6 @@ export type Database = {
           id: string
           priority: string
           reporter_name: string
-          state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
           ticket_number: number | null
           title: string
@@ -1044,40 +357,11 @@ export type Database = {
           id: string
           priority: string
           reporter_name: string
-          state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
           ticket_number: number | null
           title: string
           updated_at: string
         }
-      }
-      assign_admin_role: {
-        Args: Record<PropertyKey, never> | { _email: string }
-        Returns: undefined
-      }
-      assign_user_role: {
-        Args: {
-          _user_id: string
-          _role: Database["public"]["Enums"]["app_role"]
-          _assigned_by?: string
-        }
-        Returns: undefined
-      }
-      create_newsletter_campaign: {
-        Args: {
-          article_id_param: string
-          subject_param: string
-          template_id_param?: string
-        }
-        Returns: string
-      }
-      current_user_has_role: {
-        Args: { _role: Database["public"]["Enums"]["app_role"] }
-        Returns: boolean
-      }
-      current_user_is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
       }
       get_all_page_versions: {
         Args: Record<PropertyKey, never>
@@ -1104,7 +388,6 @@ export type Database = {
           id: string
           priority: string
           reporter_name: string
-          state: Database["public"]["Enums"]["ticket_state"]
           tags: string[] | null
           ticket_number: number | null
           title: string
@@ -1145,14 +428,6 @@ export type Database = {
           version: string
         }[]
       }
-      get_recent_failed_logins: {
-        Args: { user_email: string; minutes?: number }
-        Returns: {
-          count: number
-          first_attempt: string
-          last_attempt: string
-        }[]
-      }
       get_subscriber_stats: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1162,43 +437,12 @@ export type Database = {
           recent_signups: number
         }[]
       }
-      get_user_organization: {
-        Args: { _user_id: string }
-        Returns: string
-      }
-      get_user_roles: {
-        Args: { _user_id: string }
-        Returns: Database["public"]["Enums"]["app_role"][]
-      }
-      has_role: {
-        Args: {
-          _user_id: string
-          _role: Database["public"]["Enums"]["app_role"]
-        }
-        Returns: boolean
-      }
       increment_acronym_dislikes: {
         Args: { acronym_id: string }
         Returns: undefined
       }
       increment_acronym_likes: {
         Args: { acronym_id: string }
-        Returns: undefined
-      }
-      is_admin_user: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_user_admin: {
-        Args: { _user_id: string }
-        Returns: boolean
-      }
-      remove_user_role: {
-        Args: {
-          _user_id: string
-          _role: Database["public"]["Enums"]["app_role"]
-          _removed_by?: string
-        }
         Returns: undefined
       }
       search_acronyms: {
@@ -1258,47 +502,9 @@ export type Database = {
         }
         Returns: Json
       }
-      update_ticket_state: {
-        Args: {
-          _ticket_id: string
-          _new_state: Database["public"]["Enums"]["ticket_state"]
-          _developer_notes?: string
-        }
-        Returns: {
-          assigned_to: string | null
-          category: string
-          completed_at: string | null
-          created_at: string
-          description: string
-          developer_notes: string | null
-          id: string
-          priority: string
-          reporter_name: string
-          state: Database["public"]["Enums"]["ticket_state"]
-          tags: string[] | null
-          ticket_number: number | null
-          title: string
-          updated_at: string
-        }
-      }
-      user_has_organisation: {
-        Args: { _user_id: string }
-        Returns: boolean
-      }
-      user_in_same_organization: {
-        Args: { _user_id1: string; _user_id2: string }
-        Returns: boolean
-      }
     }
     Enums: {
-      app_role: "admin" | "client" | "manager" | "support"
-      ticket_state:
-        | "found"
-        | "accepted"
-        | "rejected"
-        | "in_process"
-        | "testing"
-        | "completed"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1413,16 +619,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["admin", "client", "manager", "support"],
-      ticket_state: [
-        "found",
-        "accepted",
-        "rejected",
-        "in_process",
-        "testing",
-        "completed",
-      ],
-    },
+    Enums: {},
   },
 } as const
