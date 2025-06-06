@@ -1,70 +1,65 @@
 
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { PublicLayout } from '@/components/layout/PublicLayout';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/event-security/HeroSection';
-import ServicesSection from '@/components/event-security/ServicesSection';
-import SecurityProcessSection from '@/components/event-security/SecurityProcessSection';
-import QuoteSection from '@/components/event-security/QuoteSection';
 import InfoSection from '@/components/event-security/InfoSection';
+import ServicesSection from '@/components/event-security/ServicesSection';
+import QuoteSection from '@/components/event-security/QuoteSection';
+import SecurityProcessSection from '@/components/event-security/SecurityProcessSection';
 import CTASection from '@/components/event-security/CTASection';
 
 const EventSecurity = () => {
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
+  const location = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
-  const serviceDetails = [
+  const eventSecurityServices = [
     {
-      title: "Venue Security Assessment",
-      description: "Comprehensive evaluation of event venues to identify potential security vulnerabilities and develop mitigation strategies.",
+      title: "Venue Security Audits",
+      description: "Pre-event vulnerability assessment and security planning to identify and mitigate risks before your corporate event begins.",
       href: "/services/venue-security-audits",
-      imagePath: "/lovable-uploads/venue-security.jpg"
-    },
-    {
-      title: "Executive Protection", 
-      description: "Professional close protection services for high-profile attendees and VIP guests at corporate events.",
-      href: "/services/close-protection",
-      imagePath: "/lovable-uploads/executive-protection.jpg"
+      imagePath: "/lovable-uploads/a42f51ed-4188-4c54-a444-9294e06fd3eb.png"
     },
     {
       title: "Event Monitoring",
-      description: "Real-time surveillance and monitoring services to ensure event security throughout the duration.",
-      href: "/services/event-monitoring", 
-      imagePath: "/lovable-uploads/event-monitoring.jpg"
+      description: "Real-time surveillance and protection throughout your event, ensuring immediate response to any security concerns.",
+      href: "/services/event-monitoring",
+      imagePath: "/lovable-uploads/b4eb5728-fc18-4139-aac1-a88d01053ca3.png"
     },
     {
-      title: "TSCM Inspections",
-      description: "Technical surveillance countermeasures to detect and neutralise electronic eavesdropping devices.",
-      href: "/services/tscm-inspections",
-      imagePath: "/lovable-uploads/tscm-inspections.jpg"
+      title: "Secure Technology",
+      description: "Hardened communications and data protection solutions specifically designed for sensitive corporate events.",
+      href: "/services/secure-technology",
+      imagePath: "/lovable-uploads/e1b5532f-5840-4688-b9df-ae2e2926945d.png"
+    },
+    {
+      title: "Close Protection",
+      description: "Personal security services for VIPs and executives during high-profile events and sensitive meetings.",
+      href: "/services/close-protection",
+      imagePath: "/lovable-uploads/ccaa80f3-bbe5-46f3-a853-d7007fbff022.png"
     }
   ];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // Dummy function to maintain compatibility with existing props
+  const setServicesOpen = () => {};
 
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Event Security Services | SAPP Security</title>
-        <meta 
-          name="description" 
-          content="Professional event security services for corporate events, conferences, and executive gatherings. Comprehensive security planning and execution." 
-        />
-        <link rel="canonical" href="https://www.sappsecurity.com/event-security" />
-        <meta property="og:title" content="Event Security Services | SAPP Security" />
-        <meta property="og:description" content="Professional event security services for corporate events and executive gatherings." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.sappsecurity.com/event-security" />
-      </Helmet>
-      <PublicLayout>
+      <Navbar />
+      <main aria-labelledby="event-security-heading">
         <HeroSection setServicesOpen={setServicesOpen} />
-        <ServicesSection serviceDetails={serviceDetails} />
-        <SecurityProcessSection />
-        <QuoteSection />
         <InfoSection setServicesOpen={setServicesOpen} />
+        <QuoteSection />
+        <ServicesSection serviceDetails={eventSecurityServices} />
+        <SecurityProcessSection />
         <CTASection />
-      </PublicLayout>
+      </main>
+      <Footer />
     </div>
   );
 };

@@ -1,123 +1,58 @@
 
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import React from 'react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
-import ContactHeader from '@/components/home/contact/ContactHeader';
-import ContactFormSection from '@/components/home/contact/ContactFormSection';
-import ContactInfoSection from '@/components/home/contact/ContactInfoSection';
-import { useInView } from 'react-intersection-observer';
-import { ContactFormValues } from '@/components/home/contact/types';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { ContactForm } from '@/components/public/ContactForm';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Contact = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [messageLength, setMessageLength] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const contactInfo = [
-    {
-      icon: "mapPin",
-      title: "Offices",
-      details: "United Kingdom (HQ) and Estonia (Engineering)",
-    },
-    {
-      icon: "mail", 
-      title: "Email",
-      details: "contact@sappsecurity.com",
-    },
-    {
-      icon: "phone",
-      title: "Phone", 
-      details: "+44 (0) 2070 888 270",
-    },
-  ];
-
-  const topics = [
-    "Event Security",
-    "Security Audits", 
-    "Installations",
-    "Counter-Surveillance",
-    "Executive Protection",
-    "Cyber Security",
-    "General Enquiry"
-  ];
-
-  const handleSubmit = async (data: ContactFormValues) => {
-    setIsSubmitting(true);
-    
-    try {
-      const { error } = await supabase.rpc('submit_contact_form', {
-        name_input: data.name,
-        email_input: data.email,
-        organization_input: data.organization || null,
-        message_input: data.message,
-        pages_visited_input: {}
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Message sent!",
-        description: "Thank you for contacting us. We'll be in touch shortly.",
-        duration: 3000,
-      });
-      
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast({
-        title: "Failed to send message", 
-        description: "Please try again later or contact support if the issue persists.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen" ref={ref}>
-      <Helmet>
-        <title>Contact Us | SAPP Security</title>
-        <meta 
-          name="description" 
-          content="Get in touch with SAPP Security for professional security consultations and services. Contact our expert team today." 
-        />
-        <link rel="canonical" href="https://www.sappsecurity.com/contact" />
-        <meta property="og:title" content="Contact Us | SAPP Security" />
-        <meta property="og:description" content="Get in touch with SAPP Security for professional security consultations and services." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.sappsecurity.com/contact" />
-      </Helmet>
-      <PublicLayout>
-        <ContactHeader inView={inView} />
-        <div className="py-16 bg-slate-50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <ContactFormSection 
-                onSubmit={handleSubmit}
-                topics={topics}
-                messageLength={messageLength}
-                setMessageLength={setMessageLength}
-              />
-              <ContactInfoSection 
-                contactInfo={contactInfo}
-                inView={inView}
-              />
+    <PublicLayout>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <ContactForm />
+            </div>
+            
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Get in Touch</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <Mail className="h-5 w-5 text-blue-600" />
+                    <span>contact@example.com</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="h-5 w-5 text-blue-600" />
+                    <span>+1 (555) 123-4567</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <MapPin className="h-5 w-5 text-blue-600" />
+                    <span>123 Business Street, City, Country</span>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-semibold mb-2">Business Hours</h3>
+                  <div className="space-y-1 text-sm text-gray-600">
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p>Saturday: 10:00 AM - 4:00 PM</p>
+                    <p>Sunday: Closed</p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
-      </PublicLayout>
-    </div>
+      </div>
+    </PublicLayout>
   );
 };
 

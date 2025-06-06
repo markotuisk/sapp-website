@@ -1,29 +1,46 @@
-import { useState } from 'react';
+
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-export const useNewsletterCampaigns = () => {
-  const [isLoading, setIsLoading] = useState(false);
+export const useNewsletterCampaigns = (refetchData: () => Promise<void>) => {
+  const { toast } = useToast();
 
-  const sendNewsletter = async (subject: string, content: string) => {
-    setIsLoading(true);
+  const sendNewsletter = async (articleId: string, subject: string) => {
     try {
-      // Since we removed the email campaigns table, we'll just log this
-      console.log('Newsletter would be sent:', { subject, content });
+      console.log('Sending newsletter for article:', articleId, 'with subject:', subject);
       
-      // In a real implementation, this would call an edge function
-      // to send emails to all active subscribers
+      const { data, error } = await supabase
+        .rpc('create_newsletter_campaign', {
+          article_id_param: articleId,
+          subject_param: subject
+        });
+
+      if (error) {
+        console.error('Newsletter creation error:', error);
+        throw new Error(`Failed to send newsletter: ${error.message}`);
+      }
+
+      console.log('Newsletter campaign created successfully');
+      toast({
+        title: 'Success',
+        description: 'Newsletter campaign created successfully',
+      });
       
-      return { success: true, message: 'Newsletter functionality not yet implemented' };
+      // Refresh campaigns data
+      await refetchData();
+      return data;
     } catch (error) {
       console.error('Error sending newsletter:', error);
-      return { success: false, error };
-    } finally {
-      setIsLoading(false);
+      toast({
+        title: 'Error Sending Newsletter',
+        description: error instanceof Error ? error.message : 'Failed to send newsletter',
+        variant: 'destructive',
+      });
+      throw error;
     }
   };
 
   return {
     sendNewsletter,
-    isLoading
   };
 };

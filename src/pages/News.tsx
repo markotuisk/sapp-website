@@ -1,77 +1,28 @@
 
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import React from 'react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
-import NewsHero from '@/components/news/NewsHero';
-import SearchBar from '@/components/news/SearchBar';
-import CategoryFilter from '@/components/news/CategoryFilter';
-import NewsGrid from '@/components/news/NewsGrid';
-import { useNewsArticles } from '@/hooks/useNewsArticles';
+import { PublicNews } from '@/components/public/PublicNews';
+import { NewsletterSignup } from '@/components/public/NewsletterSignup';
 
 const News = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
-  const { data: articles = [], isLoading } = useNewsArticles();
-
-  // Filter articles based on search and category
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = searchTerm === '' || 
-      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (article.content && article.content.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesCategory = selectedCategory === null || 
-      article.category === selectedCategory;
-    
-    return matchesSearch && matchesCategory;
-  });
-
-  // Get unique categories from articles
-  const categories = Array.from(new Set(articles.map(article => article.category)));
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
-
-  const handleCategorySelect = (category: string | null) => {
-    setSelectedCategory(category);
-  };
-
   return (
-    <div className="min-h-screen">
-      <Helmet>
-        <title>News & Insights | SAPP Security</title>
-        <meta 
-          name="description" 
-          content="Stay updated with the latest security news, insights, and developments from SAPP Security. Expert analysis on security trends and best practices." 
-        />
-        <link rel="canonical" href="https://www.sappsecurity.com/news" />
-        <meta property="og:title" content="News & Insights | SAPP Security" />
-        <meta property="og:description" content="Latest security news, insights, and expert analysis from SAPP Security." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.sappsecurity.com/news" />
-      </Helmet>
-      <PublicLayout>
-        <NewsHero />
-        <section className="py-12 bg-slate-50">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row gap-6 mb-8">
-              <SearchBar onSearch={handleSearch} />
-              <CategoryFilter 
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onSelectCategory={handleCategorySelect}
-              />
+    <PublicLayout>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">Latest News & Updates</h1>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <PublicNews />
             </div>
-            <NewsGrid articles={filteredArticles} loading={isLoading} />
+            
+            <div className="space-y-6">
+              <NewsletterSignup />
+            </div>
           </div>
-        </section>
-      </PublicLayout>
-    </div>
+        </div>
+      </div>
+    </PublicLayout>
   );
 };
 

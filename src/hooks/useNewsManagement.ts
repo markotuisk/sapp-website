@@ -1,43 +1,39 @@
 
 import { useNewsData } from './news-management/useNewsData';
-import { useNewsArticleOperations } from './news-management/useNewsArticleOperations';
+import { useArticleManagement } from './news-management/useArticleManagement';
 import { useNewsletterCampaigns } from './news-management/useNewsletterCampaigns';
+import { useSubscriberStats } from './news-management/useSubscriberStats';
 
 export const useNewsManagement = () => {
   const {
     articles,
     subscribers,
+    campaigns,
     isLoading,
     setArticles,
-    setSubscribers
+    setSubscribers,
+    setCampaigns,
+    refetchData,
   } = useNewsData();
 
   const {
     createArticle,
     updateArticle,
     deleteArticle,
-  } = useNewsArticleOperations();
+  } = useArticleManagement(setArticles);
 
   const {
     sendNewsletter,
-  } = useNewsletterCampaigns();
+  } = useNewsletterCampaigns(refetchData);
 
-  const refetchData = async () => {
-    // Simple refetch placeholder
-    console.log('Refetching data...');
-  };
-
-  const getSubscriberStats = () => {
-    return {
-      total: subscribers.length,
-      active: subscribers.filter(s => s.status === 'active').length,
-      unsubscribed: subscribers.filter(s => s.status === 'unsubscribed').length
-    };
-  };
+  const {
+    getSubscriberStats,
+  } = useSubscriberStats();
 
   return {
     articles,
     subscribers,
+    campaigns,
     isLoading,
     createArticle,
     updateArticle,

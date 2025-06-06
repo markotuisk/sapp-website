@@ -10,13 +10,20 @@ type NewsArticle = Tables<'news_articles'>;
 
 export const useOrganizationAwareNews = () => {
   const { isAuthenticated } = useAuth();
-  const { articles, isLoading, refetch } = useNewsArticleFetch();
-  const { createArticle, updateArticle, deleteArticle } = useNewsArticleOperations();
+  const { fetchArticles, isLoading } = useNewsArticleFetch();
+  const { 
+    articles, 
+    setArticles, 
+    createArticle, 
+    updateArticle, 
+    deleteArticle 
+  } = useNewsArticleOperations();
   const { sendNewsletter } = useNewsletterOperations();
 
   const refetchArticles = async () => {
     try {
-      await refetch();
+      const data = await fetchArticles();
+      setArticles(data);
     } catch (error) {
       console.error('Error refetching articles:', error);
     }
@@ -35,6 +42,7 @@ export const useOrganizationAwareNews = () => {
     updateArticle,
     deleteArticle,
     sendNewsletter,
-    refetchArticles
+    refetchArticles,
+    setArticles
   };
 };
