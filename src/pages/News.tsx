@@ -18,7 +18,7 @@ const News = () => {
   const filteredArticles = articles.filter(article => {
     const matchesSearch = searchTerm === '' || 
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+      (article.content && article.content.toLowerCase().includes(searchTerm.toLowerCase()));
     
     const matchesCategory = selectedCategory === null || 
       article.category === selectedCategory;
