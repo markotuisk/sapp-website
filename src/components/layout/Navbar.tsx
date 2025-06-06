@@ -7,7 +7,7 @@ import NavLinks from './navbar/NavLinks';
 import NavActions from './navbar/NavActions';
 import MobileMenu from './navbar/MobileMenu';
 
-const Navbar = () => {
+export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
