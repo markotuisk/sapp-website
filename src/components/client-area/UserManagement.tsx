@@ -1,25 +1,16 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Users, UserPlus, Building2, Shield, Activity } from 'lucide-react';
+import { ArrowLeft, Users, AlertCircle } from 'lucide-react';
 import { AdminGuard } from '@/components/auth/AdminGuard';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { UsersList } from './user-management/UsersList';
-import { OrganizationManagement } from './user-management/OrganizationManagement';
-import { UserInvitations } from './user-management/UserInvitations';
-import { AuthenticationLogs } from './user-management/AuthenticationLogs';
-import { UserActivityLogs } from './user-management/UserActivityLogs';
-import { useOrganizationAwareData } from '@/hooks/useOrganizationAwareData';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface UserManagementProps {
   onBack: () => void;
 }
 
 export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState('users');
-  const { canAccessCrossOrganization, organizationId } = useOrganizationAwareData();
-
   return (
     <AdminGuard fallback={
       <div className="flex items-center justify-center p-8">
@@ -43,75 +34,58 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onBack }) => {
           </Button>
           <div className="text-center">
             <h1 className="text-2xl font-bold">User Management</h1>
-            {!canAccessCrossOrganization && (
-              <Badge variant="outline" className="mt-1">
-                Organization Scope
-              </Badge>
-            )}
           </div>
           <div></div>
         </div>
 
-        {/* Access Level Indicator */}
-        {!canAccessCrossOrganization && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-center gap-2">
-              <Building2 className="h-5 w-5 text-blue-600" />
-              <div>
-                <h3 className="font-semibold text-blue-900">Organization-Scoped Access</h3>
-                <p className="text-blue-800 text-sm">
-                  You can only manage users within your organization. Contact a SAPP Security admin for cross-organization access.
-                </p>
+        {/* Simplified Content */}
+        <Alert>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            Advanced user management features are not available in the simplified client area setup.
+          </AlertDescription>
+        </Alert>
+
+        <Card>
+          <CardHeader className="text-center">
+            <Users className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+            <CardTitle>User Management</CardTitle>
+            <CardDescription>
+              This area would typically contain advanced user management features including:
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3 text-gray-600">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span>User account management</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span>Role and permission assignments</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span>Organization management</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span>User invitations and onboarding</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                <span>Authentication and activity logs</span>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Main Content */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="users" className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Users
-            </TabsTrigger>
-            <TabsTrigger value="organizations" className="flex items-center gap-2">
-              <Building2 className="h-4 w-4" />
-              Organizations
-            </TabsTrigger>
-            <TabsTrigger value="invitations" className="flex items-center gap-2">
-              <UserPlus className="h-4 w-4" />
-              Invitations
-            </TabsTrigger>
-            <TabsTrigger value="auth-logs" className="flex items-center gap-2">
-              <Shield className="h-4 w-4" />
-              Auth Logs
-            </TabsTrigger>
-            <TabsTrigger value="activity" className="flex items-center gap-2">
-              <Activity className="h-4 w-4" />
-              Activity
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="users" className="space-y-6">
-            <UsersList />
-          </TabsContent>
-
-          <TabsContent value="organizations" className="space-y-6">
-            <OrganizationManagement />
-          </TabsContent>
-
-          <TabsContent value="invitations" className="space-y-6">
-            <UserInvitations />
-          </TabsContent>
-
-          <TabsContent value="auth-logs" className="space-y-6">
-            <AuthenticationLogs />
-          </TabsContent>
-
-          <TabsContent value="activity" className="space-y-6">
-            <UserActivityLogs />
-          </TabsContent>
-        </Tabs>
+            
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-800">
+                <strong>Note:</strong> Your current setup uses a simplified client area focused on news management. 
+                Advanced user management features would require additional database tables and complex role-based access control.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </AdminGuard>
   );
