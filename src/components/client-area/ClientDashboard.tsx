@@ -21,6 +21,7 @@ import { UserProfile } from './UserProfile';
 import { DocumentManagement } from './DocumentManagement';
 import { UserSettings } from './UserSettings';
 import { NewsManagement } from './NewsManagement';
+import { UserManagement } from './UserManagement';
 import { OrganisationAccessGuard } from './user-management/OrganisationAccessGuard';
 import { AdminGuard } from '@/components/auth/AdminGuard';
 import { AdminProfileBlock } from './AdminProfileBlock';
