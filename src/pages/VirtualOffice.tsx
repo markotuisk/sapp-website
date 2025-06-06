@@ -14,19 +14,15 @@ import { UnauthenticatedView } from '@/components/client-area/UnauthenticatedVie
 import { OTPDialog } from '@/components/client-area/OTPDialog';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 
-const ClientArea = () => {
+const VirtualOffice = () => {
   const navigate = useNavigate();
-  const { user, signOut, isOnline, isAuthenticated } = useAuth();
+  const { isOnline, isAuthenticated } = useAuth();
   const { isSubmitting, setIsSubmitting } = useOTPHandling();
   const [showOTPDialog, setShowOTPDialog] = useState(false);
   const [otpEmail, setOtpEmail] = useState('');
 
   const handleClose = () => {
     navigate('/');
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
   };
 
   const handleOTPRequired = (email: string) => {
@@ -108,4 +104,4 @@ const ClientArea = () => {
   );
 };
 
-export default ClientArea;
+export default VirtualOffice;
