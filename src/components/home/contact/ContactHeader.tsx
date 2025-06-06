@@ -6,7 +6,7 @@ interface ContactHeaderProps {
   inView: boolean;
 }
 
-const ContactHeader: React.FC<ContactHeaderProps> = ({ inView }) => {
+export const ContactHeader: React.FC<ContactHeaderProps> = ({ inView }) => {
   return (
     <div className="max-w-3xl mx-auto text-center mb-16">
       <span 
