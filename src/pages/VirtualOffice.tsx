@@ -7,33 +7,44 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useAuth } from '@/contexts/AuthContext';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { useOTPHandling } from '@/hooks/useOTPHandling';
 import { ClientAreaHeader } from '@/components/client-area/ClientAreaHeader';
-import { ClientDashboard } from '@/components/client-area/ClientDashboard';
-import { UnauthenticatedView } from '@/components/client-area/UnauthenticatedView';
-import { OTPDialog } from '@/components/client-area/OTPDialog';
-import { AuthGuard } from '@/components/auth/AuthGuard';
+import { SimpleClientDashboard } from '@/components/client-area/SimpleClientDashboard';
+import { SimpleUnauthenticatedView } from '@/components/client-area/SimpleUnauthenticatedView';
 import { ClientAreaErrorBoundary } from '@/components/client-area/ClientAreaErrorBoundary';
+import { useSimpleAuth } from '@/hooks/useSimpleAuth';
 
 const ClientArea = () => {
   const navigate = useNavigate();
-  const { user, signOut, isOnline, isAuthenticated } = useAuth();
-  const { isSubmitting, setIsSubmitting } = useOTPHandling();
-  const [showOTPDialog, setShowOTPDialog] = useState(false);
-  const [otpEmail, setOtpEmail] = useState('');
+  const { isOnline } = useAuth();
+  const { isAuthenticated, loading } = useSimpleAuth();
 
   const handleClose = () => {
     navigate('/');
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
-
-  const handleOTPRequired = (email: string) => {
-    setOtpEmail(email);
-    setShowOTPDialog(true);
-  };
+  if (loading) {
+    return (
+      <ClientAreaErrorBoundary>
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-grow pt-32 pb-20">
+            <div className="container mx-auto px-6">
+              <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+                <ClientAreaHeader />
+                <div className="p-8 text-center">
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+          <Footer />
+        </div>
+      </ClientAreaErrorBoundary>
+    );
+  }
 
   return (
     <ClientAreaErrorBoundary>
@@ -57,26 +68,11 @@ const ClientArea = () => {
               <ClientAreaHeader />
               
               <div className="p-8">
-                <AuthGuard 
-                  requireAuth={false}
-                  fallback={
-                    <UnauthenticatedView
-                      isSubmitting={isSubmitting}
-                      setIsSubmitting={setIsSubmitting}
-                      onOTPRequired={handleOTPRequired}
-                    />
-                  }
-                >
-                  {isAuthenticated ? (
-                    <ClientDashboard />
-                  ) : (
-                    <UnauthenticatedView
-                      isSubmitting={isSubmitting}
-                      setIsSubmitting={setIsSubmitting}
-                      onOTPRequired={handleOTPRequired}
-                    />
-                  )}
-                </AuthGuard>
+                {isAuthenticated ? (
+                  <SimpleClientDashboard />
+                ) : (
+                  <SimpleUnauthenticatedView />
+                )}
                 
                 {/* Only show Close button for unauthenticated users */}
                 {!isAuthenticated && (
@@ -96,14 +92,6 @@ const ClientArea = () => {
             </div>
           </div>
         </main>
-        
-        <OTPDialog
-          isOpen={showOTPDialog}
-          onClose={() => setShowOTPDialog(false)}
-          email={otpEmail}
-          isSubmitting={isSubmitting}
-          setIsSubmitting={setIsSubmitting}
-        />
         
         <Footer />
       </div>
