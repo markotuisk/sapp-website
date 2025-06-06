@@ -1,3 +1,5 @@
+
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -5,7 +7,7 @@ import {
 } from "react-router-dom";
 import {
   QueryClient,
-  QueryClientProvider as QueryClientProviderClient,
+  QueryClientProvider,
 } from "@tanstack/react-query";
 import { DisplayModeProvider } from "./contexts/DisplayModeContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -13,19 +15,19 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { DebugProvider } from "./contexts/DebugContext";
 import { Toaster } from "@/components/ui/toaster";
 import { Navbar } from "./components/layout/Navbar";
-import { Footer } from "./components/layout/Footer";
-import { Index } from "./pages/Index";
-import { About } from "./pages/About";
-import { Services } from "./pages/Services";
-import { Contact } from "./pages/Contact";
-import { ClientArea } from "./pages/client-area/ClientArea";
-import { ServiceDetails } from "./pages/ServiceDetails";
-import { Legal } from "./pages/Legal";
-import { News } from "./pages/News";
-import { NewsDetails } from "./pages/NewsDetails";
-import { Installations } from "./pages/Installations";
-import { InstallationDetails } from "./pages/InstallationDetails";
-import { ConsentBanner } from "./components/ConsentBanner";
+import Footer from "./components/layout/Footer";
+import Index from "./pages/Index";
+import About from "./pages/About";
+import EventSecurity from "./pages/EventSecurity";
+import VirtualOffice from "./pages/VirtualOffice";
+import SecurityAudits from "./pages/SecurityAudits";
+import CyberSecurity from "./pages/CyberSecurity";
+import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
+import Installations from "./pages/Installations";
+import ConsentBanner from "./components/ui/ConsentBanner";
+import VersionInfo from "./pages/VersionInfo";
+import AcronymDetail from "./pages/AcronymDetail";
 import { addSmoothScrollToAnchors } from '@/utils/smoothScroll';
 import { PageTransition } from '@/components/ui/PageTransition';
 
@@ -39,7 +41,7 @@ function App() {
 
   return (
     <Router>
-      <QueryClientProviderClient client={queryClient}>
+      <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <LanguageProvider>
             <DebugProvider>
@@ -61,34 +63,24 @@ function App() {
                           <About />
                         </PageTransition>
                       } />
-                      <Route path="/services" element={
+                      <Route path="/event-security" element={
                         <PageTransition>
-                          <Services />
+                          <EventSecurity />
                         </PageTransition>
                       } />
-                      <Route path="/services/:slug" element={
+                      <Route path="/security-audits" element={
                         <PageTransition>
-                          <ServiceDetails />
+                          <SecurityAudits />
+                        </PageTransition>
+                      } />
+                      <Route path="/cyber-security" element={
+                        <PageTransition>
+                          <CyberSecurity />
                         </PageTransition>
                       } />
                       <Route path="/installations" element={
                         <PageTransition>
                           <Installations />
-                        </PageTransition>
-                      } />
-                      <Route path="/installations/:slug" element={
-                        <PageTransition>
-                          <InstallationDetails />
-                        </PageTransition>
-                      } />
-                      <Route path="/contact" element={
-                        <PageTransition>
-                          <Contact />
-                        </PageTransition>
-                      } />
-                      <Route path="/legal" element={
-                        <PageTransition>
-                          <Legal />
                         </PageTransition>
                       } />
                       <Route path="/news" element={
@@ -98,12 +90,22 @@ function App() {
                       } />
                       <Route path="/news/:slug" element={
                         <PageTransition>
-                          <NewsDetails />
+                          <NewsDetail />
+                        </PageTransition>
+                      } />
+                      <Route path="/acronyms/:slug" element={
+                        <PageTransition>
+                          <AcronymDetail />
                         </PageTransition>
                       } />
                       <Route path="/client-area" element={
                         <PageTransition>
-                          <ClientArea />
+                          <VirtualOffice />
+                        </PageTransition>
+                      } />
+                      <Route path="/version-info" element={
+                        <PageTransition>
+                          <VersionInfo />
                         </PageTransition>
                       } />
                     </Routes>
@@ -115,7 +117,7 @@ function App() {
             </DebugProvider>
           </LanguageProvider>
         </AuthProvider>
-      </QueryClientProviderClient>
+      </QueryClientProvider>
     </Router>
   );
 }

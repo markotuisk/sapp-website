@@ -1,8 +1,9 @@
+
 import React from 'react';
-import { NavLinks } from './navbar/NavLinks';
-import { NavActions } from './navbar/NavActions';
-import { Logo } from './Logo';
-import { LanguageSelector } from './LanguageSelector';
+import NavLinks from './navbar/NavLinks';
+import NavActions from './navbar/NavActions';
+import Logo from './navbar/Logo';
+import LanguageSelector from './LanguageSelector';
 import { EnhancedMobileMenu } from './navbar/EnhancedMobileMenu';
 
 export const Navbar = () => {
