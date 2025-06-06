@@ -38,8 +38,10 @@ export const useSecurityMonitoring = () => {
         return null;
       }
       
-      // Parse the JSON response properly
-      const parsedData = typeof data === 'string' ? JSON.parse(data) : data as SecurityCheckResponse;
+      // Parse the JSON response properly with safe type conversion
+      const parsedData = typeof data === 'string' 
+        ? JSON.parse(data) 
+        : (data as unknown) as SecurityCheckResponse;
       
       const status: SecurityStatus = {
         isAccountLocked: parsedData.is_locked,
