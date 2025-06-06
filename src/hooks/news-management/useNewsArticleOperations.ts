@@ -8,12 +8,12 @@ type NewsArticle = Tables<'news_articles'>;
 export const useNewsArticleOperations = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const createArticle = async (articleData: Partial<NewsArticle>) => {
+  const createArticle = async (articleData: Omit<NewsArticle, 'id' | 'created_at' | 'updated_at'>) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase
         .from('news_articles')
-        .insert([articleData])
+        .insert(articleData)
         .select()
         .single();
 

@@ -7,21 +7,16 @@ export const useNewsletterOperations = () => {
 
   const sendNewsletter = async (articleId: string) => {
     try {
-      const { data, error } = await supabase
-        .rpc('create_newsletter_campaign', {
-          article_id_param: articleId,
-          subject_param: 'New Security Update from SAPP',
-          template_id_param: 'default'
-        });
-
-      if (error) throw error;
+      // Since the create_newsletter_campaign function doesn't exist,
+      // we'll just log this for now
+      console.log('Newsletter would be sent for article:', articleId);
 
       toast({
-        title: 'Newsletter Sent',
-        description: 'Newsletter campaign created successfully',
+        title: 'Newsletter Feature',
+        description: 'Newsletter functionality is not yet implemented',
       });
 
-      return data;
+      return { success: true, message: 'Newsletter functionality placeholder' };
     } catch (error) {
       console.error('Error sending newsletter:', error);
       toast({
