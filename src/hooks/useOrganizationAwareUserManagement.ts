@@ -22,7 +22,7 @@ export const useOrganizationAwareUserManagement = () => {
         throw new Error('User not authenticated');
       }
       
-      // Check if user has admin role
+      // Check if user has admin or manager role using the new safe functions
       const { data: userRoles, error: roleError } = await supabase
         .from('user_roles')
         .select('role')
@@ -106,7 +106,7 @@ export const useOrganizationAwareUserManagement = () => {
     try {
       console.log('🔄 Assigning role with organization context...');
       
-      // Use the updated organization-aware assign_user_role function
+      // Use the safe RPC function
       const { error } = await supabase.rpc('assign_user_role', {
         _user_id: userId,
         _role: role,

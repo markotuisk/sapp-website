@@ -1166,7 +1166,15 @@ export type Database = {
         Args: { _user_id: string }
         Returns: string
       }
+      get_user_organization_safe: {
+        Args: { _user_id: string }
+        Returns: string
+      }
       get_user_roles: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"][]
+      }
+      get_user_roles_safe: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"][]
       }
@@ -1190,6 +1198,10 @@ export type Database = {
         Returns: boolean
       }
       is_user_admin: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
+      is_user_admin_safe: {
         Args: { _user_id: string }
         Returns: boolean
       }

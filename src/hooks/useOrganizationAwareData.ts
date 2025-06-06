@@ -12,7 +12,7 @@ export const useOrganizationAwareData = () => {
 
   useEffect(() => {
     if (userProfile) {
-      // Get organization from client_data (primary source) or profile (fallback)
+      // Get organization from profile (now consolidated)
       const orgId = userProfile.organization?.id || userProfile.organization_id;
       setOrganizationId(orgId || null);
       setIsLoading(false);
@@ -20,7 +20,7 @@ export const useOrganizationAwareData = () => {
   }, [userProfile]);
 
   const getOrganizationSpecificQuery = (baseQuery: any, tableName: string) => {
-    // Enhanced admin check - admins can see all data
+    // Simplified admin check using the safe functions
     const userIsAdmin = isAdmin();
     console.log('🔍 getOrganizationSpecificQuery: Admin check result:', userIsAdmin);
     
@@ -36,14 +36,14 @@ export const useOrganizationAwareData = () => {
     }
 
     console.log('🏢 Regular user, applying organization filter:', organizationId);
-    // Regular users see only their organization's data
+    // Organization-scoped data access
     switch (tableName) {
       case 'news_articles':
         return baseQuery.or(`organization_id.eq.${organizationId},organization_id.is.null`);
       case 'user_activity_logs':
         return baseQuery.eq('organization_id', organizationId);
       case 'client_documents':
-        // This is handled by RLS policies
+        // This is handled by RLS policies now
         return baseQuery;
       default:
         return baseQuery.eq('organization_id', organizationId);

@@ -4,7 +4,7 @@ import { useRole } from '@/hooks/useRole';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Loader2, Mail, AlertTriangle, RefreshCw, Settings } from 'lucide-react';
+import { Shield, Loader2, Mail, AlertTriangle, RefreshCw } from 'lucide-react';
 
 interface AdminRoleGuardProps {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export const AdminRoleGuard: React.FC<AdminRoleGuardProps> = ({
   children,
   fallback,
 }) => {
-  const { isAdmin, isLoading, userProfile, error, refreshUserData, userRoles, emergencyMode } = useRole();
+  const { isAdmin, isLoading, userProfile, error, refreshUserData, userRoles } = useRole();
 
   if (isLoading) {
     return (
@@ -29,7 +29,7 @@ export const AdminRoleGuard: React.FC<AdminRoleGuardProps> = ({
   }
 
   // Show error state with retry option
-  if (error && !emergencyMode) {
+  if (error) {
     return (
       <Card className="max-w-2xl mx-auto mt-8">
         <CardHeader>
@@ -78,24 +78,7 @@ export const AdminRoleGuard: React.FC<AdminRoleGuardProps> = ({
     );
   }
 
-  // Emergency mode warning for admins
-  if (emergencyMode && isAdmin()) {
-    return (
-      <div className="space-y-4">
-        <Alert className="border-orange-200 bg-orange-50">
-          <Settings className="h-4 w-4" />
-          <AlertTitle className="text-orange-800">Emergency Admin Mode</AlertTitle>
-          <AlertDescription className="text-orange-700">
-            Database policies need updating. You have emergency admin access, but some features may be limited.
-            Contact your system administrator to resolve RLS policy issues.
-          </AlertDescription>
-        </Alert>
-        {children}
-      </div>
-    );
-  }
-
-  // Enhanced admin check
+  // Simple admin check - no more emergency mode
   const hasAdminAccess = isAdmin();
   
   if (!hasAdminAccess) {
