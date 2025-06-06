@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Shield } from 'lucide-react';
 import type { AppRole } from '@/types/roles';
 
 interface CurrentRolesCardProps {
@@ -22,21 +23,23 @@ export const CurrentRolesCard: React.FC<CurrentRolesCardProps> = ({ roles }) => 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Current Roles</CardTitle>
-        <CardDescription>User currently has these roles assigned</CardDescription>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Shield className="h-5 w-5" />
+          Current Roles
+        </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-wrap gap-2">
-          {(roles && roles.length > 0) ? (
-            roles.map(role => (
+        {roles.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {roles.map(role => (
               <Badge key={role} className={getRoleColor(role)}>
                 {role}
               </Badge>
-            ))
-          ) : (
-            <p className="text-gray-500">No roles assigned</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 italic">No roles assigned</p>
+        )}
       </CardContent>
     </Card>
   );

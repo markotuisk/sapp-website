@@ -38,6 +38,7 @@ export const useOrganizationData = () => {
         
         // Admins can see all organizations
         if (isAdmin()) {
+          console.log('useOrganizationData: Fetching all organizations for admin user');
           const { data: allOrgs, error } = await supabase
             .from('organizations')
             .select('*')
@@ -46,10 +47,12 @@ export const useOrganizationData = () => {
           if (error) {
             console.error('Error fetching all organizations:', error);
           } else {
+            console.log('useOrganizationData: Fetched organizations for admin:', allOrgs?.length || 0);
             setOrganizations(allOrgs || []);
           }
         } else if (organizationId) {
           // Regular users can only see their organization
+          console.log('useOrganizationData: Fetching organization for regular user:', organizationId);
           const { data: userOrg, error } = await supabase
             .from('organizations')
             .select('*')
@@ -60,10 +63,12 @@ export const useOrganizationData = () => {
             console.error('Error fetching user organization:', error);
             setOrganizations([]);
           } else {
+            console.log('useOrganizationData: Fetched user organization:', userOrg?.name);
             setOrganizations(userOrg ? [userOrg] : []);
           }
         } else {
           // No organization assigned
+          console.log('useOrganizationData: No organization assigned');
           setOrganizations([]);
         }
       } catch (error) {
@@ -88,21 +93,28 @@ export const useOrganizationData = () => {
     if (organizationId && organizations.length > 0) {
       const org = organizations.find(o => o.id === organizationId);
       setCurrentOrganization(org || null);
+      console.log('useOrganizationData: Set current organization:', org?.name || 'Not found');
     } else {
       setCurrentOrganization(null);
     }
   }, [organizationId, organizations]);
 
   const hasOrganization = (): boolean => {
-    return !!organizationId && organizationId !== '00000000-0000-0000-0000-000000000001';
+    const hasOrg = !!organizationId && organizationId !== '00000000-0000-0000-0000-000000000001';
+    console.log('useOrganizationData: hasOrganization check:', { organizationId, hasOrg });
+    return hasOrg;
   };
 
   const isGuestUser = (): boolean => {
-    return organizationId === '00000000-0000-0000-0000-000000000001';
+    const isGuest = organizationId === '00000000-0000-0000-0000-000000000001';
+    console.log('useOrganizationData: isGuestUser check:', { organizationId, isGuest });
+    return isGuest;
   };
 
   const canAccessCrossOrganization = (): boolean => {
-    return isAdmin();
+    const canAccess = isAdmin();
+    console.log('useOrganizationData: canAccessCrossOrganization check:', { isAdminResult: isAdmin(), canAccess });
+    return canAccess;
   };
 
   const getOrganizationName = (orgId?: string): string => {
@@ -115,6 +127,16 @@ export const useOrganizationData = () => {
     const org = organizations.find(o => o.id === orgId);
     return org?.name || 'Unknown Organization';
   };
+
+  console.log('useOrganizationData: Current state:', {
+    organizationId,
+    hasOrganization: hasOrganization(),
+    isGuestUser: isGuestUser(),
+    canAccessCrossOrganization: canAccessCrossOrganization(),
+    isAdmin: isAdmin(),
+    organizationsCount: organizations.length,
+    currentOrganization: currentOrganization?.name
+  });
 
   return {
     // Core data

@@ -3,7 +3,7 @@ import React from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, Building2, Mail, Users } from 'lucide-react';
+import { AlertTriangle, Building2, Mail, Users, Shield } from 'lucide-react';
 import { useOrganizationData } from '@/hooks/useOrganizationData';
 
 interface OrganisationAccessGuardProps {
@@ -23,8 +23,16 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
     isLoading 
   } = useOrganizationData();
 
+  console.log('OrganisationAccessGuard: Access check', {
+    hasOrganization: hasOrganization(),
+    isGuestUser: isGuestUser(),
+    canAccessCrossOrganization: canAccessCrossOrganization(),
+    currentOrganization: currentOrganization?.name
+  });
+
   // Admin users (SAPP Security) can always access everything
   if (canAccessCrossOrganization()) {
+    console.log('OrganisationAccessGuard: Allowing access for admin user');
     return <>{children}</>;
   }
 
@@ -42,6 +50,7 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
 
   // Special handling for guest users
   if (isGuestUser()) {
+    console.log('OrganisationAccessGuard: Blocking access for guest user');
     return fallback || (
       <Card className="max-w-2xl mx-auto mt-8">
         <CardHeader>
@@ -84,6 +93,7 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
 
   // Regular check for users without organisation
   if (!hasOrganization()) {
+    console.log('OrganisationAccessGuard: Blocking access for user without organization');
     return fallback || (
       <Card className="max-w-2xl mx-auto mt-8">
         <CardHeader>
@@ -124,5 +134,6 @@ export const OrganisationAccessGuard: React.FC<OrganisationAccessGuardProps> = (
   }
 
   // User has organisation (and it's not guest), allow access
+  console.log('OrganisationAccessGuard: Allowing access for user with organization:', currentOrganization?.name);
   return <>{children}</>;
 };
